@@ -1,4 +1,4 @@
-package com.deepexi.promotion.service.impl;
+package com.deepexi.promotion.service;
 
 import com.deepexi.promotion.dao.CommentSystemAppDAO;
 import com.deepexi.promotion.domain.CommentSystemAppDO;

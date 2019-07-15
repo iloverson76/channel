@@ -1,4 +1,4 @@
-package com.deepexi.promotion.service.impl;
+package com.deepexi.promotion.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.deepexi.promotion.constant.CommentConstants;

@@ -1,4 +1,4 @@
-package com.deepexi.promotion.service.impl;
+package com.deepexi.promotion.service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.deepexi.promotion.dao.CommentResourceDAO;

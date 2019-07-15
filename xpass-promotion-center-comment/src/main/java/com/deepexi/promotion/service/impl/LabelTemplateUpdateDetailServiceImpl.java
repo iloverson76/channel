@@ -1,4 +1,4 @@
-package com.deepexi.promotion.service.impl;
+package com.deepexi.promotion.service;
 
 import com.deepexi.promotion.domain.CommentLabelTemplateDTO;
 import com.deepexi.promotion.service.UpdateDetailService;
