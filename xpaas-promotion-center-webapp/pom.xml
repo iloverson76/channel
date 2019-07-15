@@ -18,7 +18,7 @@
     <dependencies>
         <dependency>
             <groupId>com.deepexi.xpaas</groupId>
-            <artifactId>xpass-promotion-center-couponPromotion</artifactId>
+            <artifactId>xpass-promotion-center-couponpromotion</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
