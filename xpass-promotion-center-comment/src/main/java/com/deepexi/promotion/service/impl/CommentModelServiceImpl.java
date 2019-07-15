@@ -1,6 +1,5 @@
 package com.deepexi.promotion.service.impl;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,12 +8,9 @@ import com.deepexi.promotion.dao.CommentBusinessModelConnectDAO;
 import com.deepexi.promotion.dao.CommentModelDAO;
 import com.deepexi.promotion.domain.CommentBusinessModelConnectDO;
 import com.deepexi.promotion.domain.CommentModelQuery;
-import com.deepexi.promotion.enums.ResultEnum;
 import com.deepexi.promotion.utils.RedisUtils;
-import com.deepexi.util.extension.ApplicationException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.deepexi.promotion.domain.CommentModelDO;
