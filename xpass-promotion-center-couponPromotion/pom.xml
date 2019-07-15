@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>xpaas-promotion-center</artifactId>
+        <groupId>com.deepexi.xpaas</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>xpass-promotion-center-couponPromotion</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+
+
+    <properties>
+        <oss.client.version>2.6.0</oss.client.version>
+        <skipTests>true</skipTests>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.deepexi.xpaas</groupId>
+            <artifactId>xpaas-promotion-center-common</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>${oss.client.version}</version>
+        </dependency>
+
+        <!--滴普缓存 及 分布式锁-->
+        <dependency>
+            <groupId>com.deepexi</groupId>
+            <artifactId>deepexi-cache-spring-boot-starter</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <!--滴普缓存 及 分布式锁-->
+        <dependency>
+            <groupId>com.deepexi</groupId>
+            <artifactId>deepexi-cache-spring-boot-starter</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+</project>

@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deepexi.promotion.mapper.CommentLabelGroupConnectMapper">
+    <resultMap type="com.deepexi.promotion.domain.CommentLabelGroupConnectDO" id="BaseResultMap">
+        <result property="id" column="id"/>
+        <result property="labelGroupId" column="label_group_id"/>
+        <result property="labelTemplateId" column="label_template_id"/>
+        <result property="appId" column="app_id"/>
+        <result property="dr" column="dr"/>
+        <result property="version" column="version"/>
+        <result property="createdTime" column="created_time"/>
+        <result property="updatedTime" column="updated_time"/>
+        <result property="remark" column="remark"/>
+        <result property="createdBy" column="created_by"/>
+        <result property="updatedBy" column="updated_by"/>
+        <result property="tenantId" column="tenant_id"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+            id,
+            label_group_id,
+            label_template_id,
+            app_id,
+            dr,
+            version,
+            created_time,
+            updated_time,
+            remark,
+            created_by,
+            updated_by,
+            tenant_id    </sql>
+
+    <update id="deleteByIds">
+        UPDATE comment_label_group_connect SET dr=1 WHERE dr = 0 AND id in
+        <foreach collection="ids" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM comment_label_group_connect
+        WHERE dr = 0
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="labelGroupId != null">
+            and label_group_id = #{labelGroupId}
+        </if>
+        <if test="labelTemplateId != null">
+            and label_template_id = #{labelTemplateId}
+        </if>
+        <if test="appId != null">
+            and app_id = #{appId}
+        </if>
+        <if test="dr != null">
+            and dr = #{dr}
+        </if>
+        <if test="version != null">
+            and version = #{version}
+        </if>
+        <if test="createdTime != null">
+            and created_time = #{createdTime}
+        </if>
+        <if test="updatedTime != null">
+            and updated_time = #{updatedTime}
+        </if>
+        <if test="remark != null and remark != ''">
+            and remark = #{remark}
+        </if>
+        <if test="createdBy != null and createdBy != ''">
+            and created_by = #{createdBy}
+        </if>
+        <if test="updatedBy != null and updatedBy != ''">
+            and updated_by = #{updatedBy}
+        </if>
+        <if test="tenantId != null and tenantId != ''">
+            and tenant_id = #{tenantId}
+        </if>
+    </select>
+    <update id="updateBatch" parameterType="java.util.List">
+        UPDATE comment_label_group_connect
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="label_group_id = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.labelGroupId}
+                </foreach>
+            </trim>
+            <trim prefix="label_template_id = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.labelTemplateId}
+                </foreach>
+            </trim>
+            <trim prefix="app_id = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.appId}
+                </foreach>
+            </trim>
+            <trim prefix="dr = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.dr}
+                </foreach>
+            </trim>
+            <trim prefix="version = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.version}
+                </foreach>
+            </trim>
+            <trim prefix="created_time = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.createdTime}
+                </foreach>
+            </trim>
+            <trim prefix="updated_time = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.updatedTime}
+                </foreach>
+            </trim>
+            <trim prefix="remark = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.remark}
+                </foreach>
+            </trim>
+            <trim prefix="created_by = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.createdBy}
+                </foreach>
+            </trim>
+            <trim prefix="updated_by = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.updatedBy}
+                </foreach>
+            </trim>
+            <trim prefix="tenant_id = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.tenantId}
+                </foreach>
+            </trim>
+        </trim>
+        WHERE id IN
+        <foreach close=")" collection="list" item="item" open="(" separator=", ">
+            #{item.id}
+        </foreach>
+    </update>
+    <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+        INSERT INTO comment_label_group_connect
+        ( label_group_id, label_template_id, app_id, dr, version, created_time, updated_time, remark, created_by,
+        updated_by, tenant_id )
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            ( #{item.labelGroupId}, #{item.labelTemplateId}, #{item.appId}, #{item.dr}, #{item.version},
+            #{item.createdTime}, #{item.updatedTime}, #{item.remark}, #{item.createdBy}, #{item.updatedBy},
+            #{item.tenantId})
+        </foreach>
+    </insert>
+    <insert id="insertOrUpdate" keyColumn="id" keyProperty="id"
+            parameterType="com.deepexi.promotion.domain.CommentLabelGroupConnectDO" useGeneratedKeys="true">
+        INSERT INTO comment_label_group_connect
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            label_group_id, label_template_id, app_id, dr, version, created_time, updated_time, remark, created_by,
+            updated_by, tenant_id
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            #{labelGroupId}, #{labelTemplateId}, #{appId}, #{dr}, #{version}, #{createdTime}, #{updatedTime}, #{remark},
+            #{createdBy}, #{updatedBy}, #{tenantId}
+        </trim>
+        on duplicate key update
+        <trim suffixOverrides=",">
+            <if test="id != null">
+                id = #{id},
+            </if>
+            label_group_id = #{labelGroupId}, label_template_id = #{labelTemplateId}, app_id = #{appId}, dr = #{dr},
+            version = #{version}, created_time = #{createdTime}, updated_time = #{updatedTime}, remark = #{remark},
+            created_by = #{createdBy}, updated_by = #{updatedBy}, tenant_id = #{tenantId}
+        </trim>
+    </insert>
+    <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id"
+            parameterType="com.deepexi.promotion.domain.CommentLabelGroupConnectDO" useGeneratedKeys="true">
+        INSERT INTO comment_label_group_connect
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="labelGroupId != null">
+                label_group_id,
+            </if>
+            <if test="labelTemplateId != null">
+                label_template_id,
+            </if>
+            <if test="appId != null">
+                app_id,
+            </if>
+            <if test="dr != null">
+                dr,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+            <if test="createdTime != null">
+                created_time,
+            </if>
+            <if test="updatedTime != null">
+                updated_time,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="createdBy != null">
+                created_by,
+            </if>
+            <if test="updatedBy != null">
+                updated_by,
+            </if>
+            <if test="tenantId != null">
+                tenant_id
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="labelGroupId != null">
+                #{labelGroupId},
+            </if>
+            <if test="labelTemplateId != null">
+                #{labelTemplateId},
+            </if>
+            <if test="appId != null">
+                #{appId},
+            </if>
+            <if test="dr != null">
+                #{dr},
+            </if>
+            <if test="version != null">
+                #{version},
+            </if>
+            <if test="createdTime != null">
+                #{createdTime},
+            </if>
+            <if test="updatedTime != null">
+                #{updatedTime},
+            </if>
+            <if test="remark != null">
+                #{remark},
+            </if>
+            <if test="createdBy != null">
+                #{createdBy},
+            </if>
+            <if test="updatedBy != null">
+                #{updatedBy},
+            </if>
+            <if test="tenantId != null">
+                #{tenantId}
+            </if>
+        </trim>
+        on duplicate key update
+        <trim suffixOverrides=",">
+            <if test="id != null">
+                id = #{id},
+            </if>
+            <if test="labelGroupId != null">
+                label_group_id = #{labelGroupId},
+            </if>
+            <if test="labelTemplateId != null">
+                label_template_id = #{labelTemplateId},
+            </if>
+            <if test="appId != null">
+                app_id = #{appId},
+            </if>
+            <if test="dr != null">
+                dr = #{dr},
+            </if>
+            <if test="version != null">
+                version = #{version},
+            </if>
+            <if test="createdTime != null">
+                created_time = #{createdTime},
+            </if>
+            <if test="updatedTime != null">
+                updated_time = #{updatedTime},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+            <if test="createdBy != null">
+                created_by = #{createdBy},
+            </if>
+            <if test="updatedBy != null">
+                updated_by = #{updatedBy},
+            </if>
+            <if test="tenantId != null">
+                tenant_id = #{tenantId}
+            </if>
+        </trim>
+    </insert>
+
+    <select id="selectBusinessIds" resultType="java.lang.Long">
+        SELECT t2.business_id
+        FROM comment_business_label_group_set t1
+        JOIN comment_business_model_connect t2 ON t1.business_model_connect_id = t2.id
+        WHERE t1.label_group_id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        AND t1.dr=0 AND t2.dr=0
+    </select>
+
+
+</mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deepexi.promotion.mapper.CommentStarTemplateMapper">
+
+
+    <select id="selectBusinessIds" resultType="java.lang.Long">
+        SELECT t3.business_id
+        FROM
+        comment_star_template t1
+        JOIN comment_business_star_set t2 ON t1.id = t2.star_template_id
+        JOIN comment_business_model_connect t3 ON t2.business_model_connect_id = t3.id
+        WHERE t1.id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        AND t1.dr=0 AND t2.dr=0 AND t3.dr=0
+    </select>
+</mapper>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deepexi.promotion.mapper.CommentLabelTemplateHistoryMapper">
+    <resultMap type="com.deepexi.promotion.domain.CommentLabelTemplateHistoryDO" id="BaseResultMap">
+        <result property="id" column="id" />
+        <result property="labelTemplateId" column="label_template_id" />
+        <result property="labelTemplateName" column="label_template_name" />
+        <result property="history" column="history" />
+        <result property="appId" column="app_id" />
+        <result property="updateType" column="update_type"/>
+        <result property="dr" column="dr" />
+        <result property="version" column="version" />
+        <result property="createdTime" column="created_time" />
+        <result property="updatedTime" column="updated_time" />
+        <result property="remark" column="remark" />
+        <result property="createdBy" column="created_by" />
+        <result property="updatedBy" column="updated_by" />
+        <result property="tenantId" column="tenant_id" />
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+            id,
+            label_template_id,
+            label_template_name,
+            history,
+            app_id,
+            update_type,
+            dr,
+            version,
+            created_time,
+            updated_time,
+            remark,
+            created_by,
+            updated_by,
+            tenant_id
+    </sql>
+
+
+    <select id="selectByLabelTemplateId" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM `comment_label_template_history`
+        WHERE `label_template_id` IN
+        <foreach collection="tIds" index="index" item="tId" open="(" separator="," close=")">
+            #{tId,jdbcType=BIGINT}
+        </foreach>
+        ORDER BY `id` DESC
+    </select>
+
+
+</mapper>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deepexi.promotion.mapper.CommentLabelGroupMapper">
+    <resultMap type="com.deepexi.promotion.domain.CommentLabelGroupDO" id="BaseResultMap">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="appId" column="app_id"/>
+        <result property="dr" column="dr"/>
+        <result property="version" column="version"/>
+        <result property="createdTime" column="created_time"/>
+        <result property="updatedTime" column="updated_time"/>
+        <result property="remark" column="remark"/>
+        <result property="createdBy" column="created_by"/>
+        <result property="updatedBy" column="updated_by"/>
+        <result property="tenantId" column="tenant_id"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+            id,
+            name,
+            app_id,
+            dr,
+            version,
+            created_time,
+            updated_time,
+            remark,
+            created_by,
+            updated_by,
+            tenant_id    </sql>
+
+    <update id="deleteByIds">
+        UPDATE comment_label_group SET dr=1 WHERE dr = 0 AND id in
+        <foreach collection="ids" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM comment_label_group
+        WHERE dr = 0
+        <if test="appId != null">
+            and app_id = #{appId}
+        </if>
+        <if test="groupId != null">
+            and id = #{groupId}
+        </if>
+        <if test="name != null and name != ''">
+            and name LIKE concat('%',#{name},'%')
+        </if>
+        <if test="tenantId != null and tenantId != ''">
+            and tenant_id = #{tenantId}
+        </if>
+        <if test="ids !=null">
+            and id in
+            <foreach close=")" collection="ids" item="item" open="(" separator=", ">
+                #{item}
+            </foreach>
+        </if>
+        order by id desc
+    </select>
+
+    <select id="findLabelDetail" resultType="com.deepexi.promotion.domain.CommentLabelDetailDO">
+        SELECT
+        	c.id AS label_template_id,
+        	c.`name` AS label_name,
+        	c.`code`,
+        	b.label_group_id,
+        	b.id AS connect_id
+        FROM
+        	comment_label_group_connect b,
+        	comment_label_template c
+        WHERE
+        	b.label_template_id = c.id
+        	AND b.dr=0
+        	AND c.dr=0
+        	<if test="labelName !=null and labelName!=''">
+             and  c.`name` LIKE concat('%',#{labelName},'%')
+            </if>
+            <if test="labelGroupId !=null and labelGroupId!=''">
+             and b.label_group_id=#{labelGroupId}
+            </if>
+            <if test="ids !=null">
+            and b.label_group_id in
+                <foreach close=")" collection="ids" item="item" open="(" separator=", ">
+                    #{item}
+                </foreach>
+            </if>
+    </select>
+
+
+</mapper>

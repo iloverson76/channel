@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deepexi.promotion.mapper.CommentStarTemplateHistoryMapper">
+    <resultMap id="BaseResultMap" type="com.deepexi.promotion.domain.CommentStarTemplateHistoryDO">
+        <result property="id" column="id" />
+        <result property="starTemplateId" column="star_template_id" />
+        <result property="starTemplateName" column="star_template_name" />
+        <result property="history" column="history" />
+        <result property="appId" column="app_id" />
+        <result property="dr" column="dr" />
+        <result property="version" column="version" />
+        <result property="createdTime" column="created_time" />
+        <result property="updatedTime" column="updated_time" />
+        <result property="remark" column="remark" />
+        <result property="createdBy" column="created_by" />
+        <result property="updatedBy" column="updated_by" />
+        <result property="tenantId" column="tenant_id" />
+    </resultMap>
+</mapper>

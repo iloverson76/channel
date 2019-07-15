@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deepexi.promotion.mapper.CommentAppBusinessMapper">
+    <resultMap type="com.deepexi.promotion.domain.CommentAppBusinessDO" id="BaseResultMap">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="appId" column="app_id"/>
+        <result property="code" column="code"/>
+        <result property="identificationCode" column="identification_code"/>
+        <result property="supportSettings" column="support_settings"/>
+        <result property="dr" column="dr"/>
+        <result property="version" column="version"/>
+        <result property="createdTime" column="created_time"/>
+        <result property="updatedTime" column="updated_time"/>
+        <result property="remark" column="remark"/>
+        <result property="createdBy" column="created_by"/>
+        <result property="updatedBy" column="updated_by"/>
+        <result property="tenantId" column="tenant_id"/>
+        <result property="enable" column="is_enable"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+            id,
+            name,
+            app_id,
+            code,
+            identification_code,
+            support_settings,
+            dr,
+            version,
+            created_time,
+            updated_time,
+            remark,
+            created_by,
+            updated_by,
+            tenant_id,
+            is_enable    </sql>
+
+    <update id="deleteByIds">
+        UPDATE comment_app_business SET dr=1 WHERE dr = 0 AND id in
+        <foreach collection="ids" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM comment_app_business
+        WHERE dr = 0
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="name != null and name != ''">
+            and name = #{name}
+        </if>
+        <if test="appId != null">
+            and app_id = #{appId}
+        </if>
+        <if test="code != null and code != ''">
+            and code = #{code}
+        </if>
+        <if test="identificationCode != null and identificationCode != ''">
+            and identification_code = #{identificationCode}
+        </if>
+        <if test="supportSettings != null and supportSettings != ''">
+            and support_settings = #{supportSettings}
+        </if>
+        <if test="dr != null">
+            and dr = #{dr}
+        </if>
+        <if test="version != null">
+            and version = #{version}
+        </if>
+        <if test="createdTime != null">
+            and created_time = #{createdTime}
+        </if>
+        <if test="updatedTime != null">
+            and updated_time = #{updatedTime}
+        </if>
+        <if test="remark != null and remark != ''">
+            and remark = #{remark}
+        </if>
+        <if test="createdBy != null and createdBy != ''">
+            and created_by = #{createdBy}
+        </if>
+        <if test="updatedBy != null and updatedBy != ''">
+            and updated_by = #{updatedBy}
+        </if>
+        <if test="tenantId != null and tenantId != ''">
+            and tenant_id = #{tenantId}
+        </if>
+        <if test="enable != null">
+            and is_enable = #{enable}
+        </if>
+        order by id desc
+    </select>
+    <select id="findByPage" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM comment_app_business
+        WHERE dr = 0
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="name != null and name != ''">
+            and name = #{name}
+        </if>
+        <if test="appId != null">
+            and app_id = #{appId}
+        </if>
+        <if test="code != null and code != ''">
+            and code = #{code}
+        </if>
+        <if test="identificationCode != null and identificationCode != ''">
+            and identification_code = #{identificationCode}
+        </if>
+        <if test="supportSettings != null and supportSettings != ''">
+            and support_settings = #{supportSettings}
+        </if>
+        <if test="dr != null">
+            and dr = #{dr}
+        </if>
+        <if test="version != null">
+            and version = #{version}
+        </if>
+        <if test="createdTime != null">
+            and created_time = #{createdTime}
+        </if>
+        <if test="updatedTime != null">
+            and updated_time = #{updatedTime}
+        </if>
+        <if test="remark != null and remark != ''">
+            and remark = #{remark}
+        </if>
+        <if test="createdBy != null and createdBy != ''">
+            and created_by = #{createdBy}
+        </if>
+        <if test="updatedBy != null and updatedBy != ''">
+            and updated_by = #{updatedBy}
+        </if>
+        <if test="tenantId != null and tenantId != ''">
+            and tenant_id = #{tenantId}
+        </if>
+        <if test="enable != null">
+            and is_enable = #{enable}
+        </if>
+        order by id desc
+    </select>
+    <update id="updateBatch" parameterType="java.util.List">
+        UPDATE comment_app_business
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="name = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.name}
+                </foreach>
+            </trim>
+            <trim prefix="app_id = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.appId}
+                </foreach>
+            </trim>
+            <trim prefix="code = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.code}
+                </foreach>
+            </trim>
+            <trim prefix="identification_code = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.identificationCode}
+                </foreach>
+            </trim>
+            <trim prefix="support_settings = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.supportSettings}
+                </foreach>
+            </trim>
+            <trim prefix="dr = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.dr}
+                </foreach>
+            </trim>
+            <trim prefix="version = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.version}
+                </foreach>
+            </trim>
+            <trim prefix="created_time = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.createdTime}
+                </foreach>
+            </trim>
+            <trim prefix="updated_time = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.updatedTime}
+                </foreach>
+            </trim>
+            <trim prefix="remark = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.remark}
+                </foreach>
+            </trim>
+            <trim prefix="created_by = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.createdBy}
+                </foreach>
+            </trim>
+            <trim prefix="updated_by = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.updatedBy}
+                </foreach>
+            </trim>
+            <trim prefix="tenant_id = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.tenantId}
+                </foreach>
+            </trim>
+            <trim prefix="is_enable = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id} then #{item.enable}
+                </foreach>
+            </trim>
+        </trim>
+        WHERE id IN
+        <foreach close=")" collection="list" item="item" open="(" separator=", ">
+            #{item.id}
+        </foreach>
+    </update>
+    <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+        INSERT INTO comment_app_business
+        (           name,           app_id,           code,           identification_code,           support_settings,           dr,           version,           created_time,           updated_time,           remark,           created_by,           updated_by,           tenant_id,           is_enable        )
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (                 #{item.name},                 #{item.appId},                 #{item.code},                 #{item.identificationCode},               #{item.supportSettings},                 #{item.dr},                 #{item.version},                 #{item.createdTime},                 #{item.updatedTime},                 #{item.remark},                 #{item.createdBy},                 #{item.updatedBy},                 #{item.tenantId},                 #{item.enable})
+        </foreach>
+    </insert>
+    <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="com.deepexi.promotion.domain.CommentAppBusinessDO" useGeneratedKeys="true">
+        INSERT INTO comment_app_business
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,            </if>
+            name,            app_id,            code,            identification_code,            support_settings,            dr,            version,            created_time,            updated_time,            remark,            created_by,            updated_by,            tenant_id,            is_enable        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},             </if>
+            #{name},             #{appId},             #{code},             #{identificationCode},             #{supportSettings},             #{dr},             #{version},             #{createdTime},             #{updatedTime},             #{remark},             #{createdBy},             #{updatedBy},             #{tenantId},             #{enable}        </trim>
+        on duplicate key update
+        <trim suffixOverrides=",">
+            <if test="id != null">
+                id = #{id},             </if>
+            name = #{name},             app_id = #{appId},             code = #{code},             identification_code = #{identificationCode},            support_settings = #{supportSettings},             dr = #{dr},             version = #{version},             created_time = #{createdTime},             updated_time = #{updatedTime},             remark = #{remark},             created_by = #{createdBy},             updated_by = #{updatedBy},             tenant_id = #{tenantId},             is_enable = #{enable}        </trim>
+    </insert>
+    <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="com.deepexi.promotion.domain.CommentAppBusinessDO" useGeneratedKeys="true">
+        INSERT INTO comment_app_business
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,             </if>
+            <if test="name != null">
+                name,             </if>
+            <if test="appId != null">
+                app_id,             </if>
+            <if test="code != null">
+                code,             </if>
+            <if test="identificationCode != null">
+                identification_code,             </if>
+            <if test="supportSettings != null">
+                support_settings,             </if>
+            <if test="dr != null">
+                dr,             </if>
+            <if test="version != null">
+                version,             </if>
+            <if test="createdTime != null">
+                created_time,             </if>
+            <if test="updatedTime != null">
+                updated_time,             </if>
+            <if test="remark != null">
+                remark,             </if>
+            <if test="createdBy != null">
+                created_by,             </if>
+            <if test="updatedBy != null">
+                updated_by,             </if>
+            <if test="tenantId != null">
+                tenant_id,             </if>
+            <if test="enable != null">
+                is_enable            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+               #{id},            </if>
+            <if test="name != null">
+               #{name},            </if>
+            <if test="appId != null">
+               #{appId},            </if>
+            <if test="code != null">
+               #{code},            </if>
+            <if test="identificationCode != null">
+               #{identificationCode},            </if>
+            <if test="supportSettings != null">
+               #{supportSettings},            </if>
+            <if test="dr != null">
+               #{dr},            </if>
+            <if test="version != null">
+               #{version},            </if>
+            <if test="createdTime != null">
+               #{createdTime},            </if>
+            <if test="updatedTime != null">
+               #{updatedTime},            </if>
+            <if test="remark != null">
+               #{remark},            </if>
+            <if test="createdBy != null">
+               #{createdBy},            </if>
+            <if test="updatedBy != null">
+               #{updatedBy},            </if>
+            <if test="tenantId != null">
+               #{tenantId},            </if>
+            <if test="enable != null">
+               #{enable}            </if>
+        </trim>
+        on duplicate key update
+        <trim suffixOverrides=",">
+            <if test="id != null">
+                id = #{id},            </if>
+            <if test="name != null">
+                name = #{name},            </if>
+            <if test="appId != null">
+                app_id = #{appId},            </if>
+            <if test="code != null">
+                code = #{code},            </if>
+            <if test="identificationCode != null">
+                identification_code = #{identificationCode},            </if>
+            <if test="supportSettings != null">
+                support_settings = #{supportSettings},            </if>
+            <if test="dr != null">
+                dr = #{dr},            </if>
+            <if test="version != null">
+                version = #{version},            </if>
+            <if test="createdTime != null">
+                created_time = #{createdTime},            </if>
+            <if test="updatedTime != null">
+                updated_time = #{updatedTime},            </if>
+            <if test="remark != null">
+                remark = #{remark},            </if>
+            <if test="createdBy != null">
+                created_by = #{createdBy},            </if>
+            <if test="updatedBy != null">
+                updated_by = #{updatedBy},            </if>
+            <if test="tenantId != null">
+                tenant_id = #{tenantId},            </if>
+            <if test="enable != null">
+                is_enable = #{enable}            </if>
+        </trim>
+    </insert>
+</mapper>

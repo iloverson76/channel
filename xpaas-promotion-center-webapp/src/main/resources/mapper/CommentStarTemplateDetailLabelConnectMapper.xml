@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deepexi.promotion.mapper.CommentStarTemplateDetailLabelConnectMapper">
+    <resultMap id="BaseResultMap" type="com.deepexi.promotion.domain.CommentStarTemplateDetailLabelConnectDO">
+        <result property="id" column="id"/>
+        <result property="starTemplateDetailId" column="star_template_detail_id"/>
+        <result property="labelTemplateId" column="label_template_id"/>
+        <result property="appId" column="app_id"/>
+        <result property="dr" column="dr"/>
+        <result property="version" column="version"/>
+        <result property="createdTime" column="created_time"/>
+        <result property="updatedTime" column="updated_time"/>
+        <result property="remark" column="remark"/>
+        <result property="createdBy" column="created_by"/>
+        <result property="updatedBy" column="updated_by"/>
+        <result property="tenantId" column="tenant_id"/>
+    </resultMap>
+    <update id="deleteByDO">
+        UPDATE `comment_star_template_detail_label_connect` SET
+        `dr` = 1,
+        `updated_time` = NOW(),
+        `updated_by` = #{updateBy,jdbcType=VARCHAR}
+        WHERE 0=1
+        <foreach collection="connects" item="connect">
+            OR (
+            `star_template_detail_id` = #{connect.starTemplateDetailId,jdbcType=BIGINT}
+            AND `label_template_id` = #{connect.labelTemplateId,jdbcType=BIGINT}
+            )
+        </foreach>
+    </update>
+
+
+    <select id="selectStarTemplateByLabelIds" resultType="java.lang.Long">
+        SELECT t2.star_template_id
+        FROM comment_star_template_detail_label_connect t1 JOIN comment_star_template_detail t2
+        ON t1.star_template_detail_id = t2.id
+        WHERE t1.label_template_id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        AND t1.dr=0 AND t2.dr=0
+    </select>
+</mapper>
