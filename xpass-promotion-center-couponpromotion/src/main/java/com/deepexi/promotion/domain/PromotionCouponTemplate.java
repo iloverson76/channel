@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author xsj
- * @since 2019-07-15
+ * @since 2019-07-16
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -48,8 +48,20 @@ public class PromotionCouponTemplate extends BaseEntity {
     @ApiModelProperty(value = "有效期结束日")
     private LocalDateTime effectiveEndDay;
 
-    @ApiModelProperty(value = "模板使用规则")
-    private String usageRuleId;
+    @ApiModelProperty(value = "是否可转让")
+    private Integer isTransfered;
+
+    @ApiModelProperty(value = "是否可退回")
+    private Integer isReturned;
+
+    @ApiModelProperty(value = "是否可叠加使用")
+    private Integer isSuperimposed;
+
+    @ApiModelProperty(value = "限额(每人最多能领取多少张张)")
+    private Integer limitQuantity;
+
+    @ApiModelProperty(value = "互斥模板")
+    private String enemyTemplateId;
 
     @ApiModelProperty(value = "是否已发布")
     private Integer isReleased;

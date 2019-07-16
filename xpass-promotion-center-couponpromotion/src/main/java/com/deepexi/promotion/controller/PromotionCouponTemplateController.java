@@ -3,11 +3,14 @@ package com.deepexi.promotion.controller;
 
 import com.deepexi.promotion.domain.PromotionCouponTypeVO;
 import com.deepexi.util.config.Payload;
+import com.google.common.collect.Lists;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 
 /**
@@ -26,11 +29,9 @@ public class PromotionCouponTemplateController {
     /**
      * 获得模板类型
      */
-    @GetMapping("/{appId:[a-zA-Z0-9,]+}/type")
-    public Payload<PromotionCouponTypeVO> getType(@PathVariable(value = "appId", required = true) String appId) {
-
-        return new Payload<>(new PromotionCouponTypeVO());
-
+    @GetMapping("/type")
+    public Payload<List<PromotionCouponTypeVO>> couponTemplateType() {
+        return new Payload<>(Lists.newArrayList(new PromotionCouponTypeVO()));
     }
 
 
