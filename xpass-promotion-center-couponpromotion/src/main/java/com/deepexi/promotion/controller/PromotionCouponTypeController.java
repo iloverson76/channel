@@ -14,7 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2019-07-16
  */
 @RestController
-@RequestMapping("/promotion-coupon-type")
+@RequestMapping("//api/v1/promotion/coupon/type")
 public class PromotionCouponTypeController {
+
+
+
+
 
 }
