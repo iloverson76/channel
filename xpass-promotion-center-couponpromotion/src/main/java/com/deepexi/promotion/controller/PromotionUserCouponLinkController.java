@@ -18,4 +18,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/promotion-user-coupon-link")
 public class PromotionUserCouponLinkController  {
 
+    //用户领取
+
+    //用户转让
+
+    //用户受让
+
+    //系统自动发放优惠券给用户
+
+
+
+
 }

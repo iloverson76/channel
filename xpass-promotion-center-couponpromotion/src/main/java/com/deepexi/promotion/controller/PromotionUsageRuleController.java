@@ -18,4 +18,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/promotion-usage-rule")
 public class PromotionUsageRuleController  {
 
+
 }
