@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class BaseEntity extends AbstractObject {
 
     @ApiModelProperty(value = "主键")
-    private String id;
+    private Long id;
 
     @ApiModelProperty(value = "租户")
     private String tenantId;
