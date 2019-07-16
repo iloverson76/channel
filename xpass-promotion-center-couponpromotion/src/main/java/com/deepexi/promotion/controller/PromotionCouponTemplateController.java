@@ -1,6 +1,7 @@
 package com.deepexi.promotion.controller;
 
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +16,18 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2019-07-15
  */
 @RestController
-@RequestMapping("/promotion-coupon-template")
+@RequestMapping("/api/v1/promotion/template")
 public class PromotionCouponTemplateController  {
+
+
+
+            @GetMapping("/type")
+            public void getType(){
+
+
+
+            }
+
+
 
 }

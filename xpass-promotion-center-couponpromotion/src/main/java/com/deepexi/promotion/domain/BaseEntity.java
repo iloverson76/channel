@@ -1,12 +1,13 @@
 package com.deepexi.promotion.domain;
 
+import com.deepexi.util.pojo.AbstractObject;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
-public class BaseEntity {
+public class BaseEntity extends AbstractObject {
 
     @ApiModelProperty(value = "主键")
     private String id;
