@@ -3,7 +3,7 @@ package com.deepexi.promotion.manager;
 import com.deepexi.promotion.domain.CommentLabelTemplateDTO;
 import com.deepexi.promotion.enums.ResultEnum;
 import com.deepexi.promotion.service.UpdateDetailService;
-import com.deepexi.promotion.service.impl.LabelTemplateUpdateDetailServiceImpl;
+import com.deepexi.promotion.service.LabelTemplateUpdateDetailServiceImpl;
 import com.deepexi.util.extension.ApplicationException;
 
 /**

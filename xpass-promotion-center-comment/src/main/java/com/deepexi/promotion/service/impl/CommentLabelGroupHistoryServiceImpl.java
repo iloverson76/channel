@@ -1,4 +1,4 @@
-package com.deepexi.promotion.service.impl;
+package com.deepexi.promotion.service;
 
 import com.deepexi.promotion.dao.CommentLabelGroupHistoryDAO;
 import lombok.extern.slf4j.Slf4j;

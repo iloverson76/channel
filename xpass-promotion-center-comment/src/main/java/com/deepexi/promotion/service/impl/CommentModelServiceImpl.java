@@ -1,4 +1,4 @@
-package com.deepexi.promotion.service.impl;
+package com.deepexi.promotion.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
