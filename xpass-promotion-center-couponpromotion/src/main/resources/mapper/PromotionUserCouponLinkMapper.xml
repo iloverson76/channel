@@ -2,4 +2,36 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.deepexi.promotion.mapper.PromotionUserCouponLinkMapper">
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.deepexi.promotion.domain.PromotionUserCouponLink">
+    <result column="id" property="id" />
+    <result column="tenant_id" property="tenantId" />
+    <result column="app_id" property="appId" />
+    <result column="is_deleted" property="isDeleted" />
+    <result column="created_time" property="createdTime" />
+    <result column="create_by" property="createBy" />
+    <result column="updated_time" property="updatedTime" />
+    <result column="updated_by" property="updatedBy" />
+        <result column="user_id" property="userId" />
+        <result column="user_name" property="userName" />
+        <result column="coupon_id" property="couponId" />
+        <result column="template_id" property="templateId" />
+        <result column="accepted_type" property="acceptedType" />
+        <result column="coupon_status" property="couponStatus" />
+        <result column="accepted_time" property="acceptedTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        tenant_id,
+        app_id,
+        is_deleted,
+        created_time,
+        create_by,
+        updated_time,
+        updated_by,
+        user_id, user_name, coupon_id, template_id, accepted_type, coupon_status, accepted_time
+    </sql>
+
 </mapper>

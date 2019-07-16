@@ -13,21 +13,23 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author xsj
- * @since 2019-07-15
+ * @since 2019-07-16
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@ApiModel(value="PromotionTemplateAssignRuleLink对象", description="优惠券模板和自定义规则关联表")
-public class PromotionTemplateAssignRuleLink extends BaseEntity {
+@ApiModel(value="PromotionTemplateRuleInstance对象", description="优惠券模板和自定义规则关联表")
+public class PromotionTemplateRuleInstance extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "模板")
-    private String templateId;
+    private Long templateId;
 
     @ApiModelProperty(value = "优惠券自定义规则")
-    private String assignRuleId;
+    private Long assignRuleId;
+
+    private String ruleValue;
 
 
 }

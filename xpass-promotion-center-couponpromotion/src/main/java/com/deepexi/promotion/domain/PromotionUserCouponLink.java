@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author xsj
- * @since 2019-07-15
+ * @since 2019-07-16
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -31,10 +31,10 @@ public class PromotionUserCouponLink extends BaseEntity {
     private String userName;
 
     @ApiModelProperty(value = "优惠券标识")
-    private String couponId;
+    private Long couponId;
 
     @ApiModelProperty(value = "模板标识")
-    private String templateId;
+    private Long templateId;
 
     @ApiModelProperty(value = "类型值名称")
     private String acceptedType;

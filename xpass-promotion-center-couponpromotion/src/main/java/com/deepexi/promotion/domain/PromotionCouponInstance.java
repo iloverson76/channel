@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author xsj
- * @since 2019-07-15
+ * @since 2019-07-16
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -24,12 +24,12 @@ public class PromotionCouponInstance extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "模板主键")
-    private String templateId;
+    private Long templateId;
 
     @ApiModelProperty(value = "优惠券编码")
     private String couponCode;
 
-    @ApiModelProperty(value = "券状态")
+    @ApiModelProperty(value = "券是否被活动关联(0:未被关联;1:已关联)")
     private String couponStatus;
 
 

@@ -18,7 +18,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@ApiModel(value="PromotionCouponType对象", description="优惠券类型")
+@ApiModel(value="PromotionCouponType对象", description="")
 public class PromotionCouponType extends BaseEntity {
 
     private static final long serialVersionUID = 1L;

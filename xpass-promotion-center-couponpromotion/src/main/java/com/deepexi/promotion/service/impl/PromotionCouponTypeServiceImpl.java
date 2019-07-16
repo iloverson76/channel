@@ -1,6 +1,5 @@
 package com.deepexi.promotion.service.impl;
 
-
 import com.deepexi.promotion.domain.PromotionCouponType;
 import com.deepexi.promotion.mapper.PromotionCouponTypeMapper;
 import com.deepexi.promotion.service.IPromotionCouponTypeService;

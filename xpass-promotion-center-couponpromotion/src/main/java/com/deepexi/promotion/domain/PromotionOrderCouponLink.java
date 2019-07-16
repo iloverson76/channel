@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author xsj
- * @since 2019-07-15
+ * @since 2019-07-16
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -24,7 +24,7 @@ public class PromotionOrderCouponLink extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "优惠券模板标识")
-    private String templateId;
+    private Long templateId;
 
     @ApiModelProperty(value = "订单标识")
     private String orderId;
@@ -36,7 +36,7 @@ public class PromotionOrderCouponLink extends BaseEntity {
     private Integer couponStatus;
 
     @ApiModelProperty(value = "优惠券标识")
-    private String couponId;
+    private Long couponId;
 
     @ApiModelProperty(value = "订单完成时间")
     private String completedTime;

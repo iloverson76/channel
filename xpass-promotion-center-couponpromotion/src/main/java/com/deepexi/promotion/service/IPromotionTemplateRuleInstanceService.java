@@ -1,6 +1,6 @@
 package com.deepexi.promotion.service;
 
-import com.deepexi.promotion.domain.PromotionTemplateAssignRuleLink;
+import com.deepexi.promotion.domain.PromotionTemplateRuleInstance;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author xsj
- * @since 2019-07-15
+ * @since 2019-07-16
  */
-public interface IPromotionTemplateAssignRuleLinkService extends IService<PromotionTemplateAssignRuleLink> {
+public interface IPromotionTemplateRuleInstanceService extends IService<PromotionTemplateRuleInstance> {
 
 }

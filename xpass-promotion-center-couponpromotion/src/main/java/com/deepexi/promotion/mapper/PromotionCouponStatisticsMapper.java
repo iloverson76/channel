@@ -1,8 +1,7 @@
 package com.deepexi.promotion.mapper;
 
-
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.deepexi.promotion.domain.PromotionCouponStatistics;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>

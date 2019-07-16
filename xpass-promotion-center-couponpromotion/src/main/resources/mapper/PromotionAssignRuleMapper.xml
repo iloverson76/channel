@@ -2,4 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.deepexi.promotion.mapper.PromotionAssignRuleMapper">
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.deepexi.promotion.domain.PromotionAssignRule">
+    <result column="id" property="id" />
+    <result column="tenant_id" property="tenantId" />
+    <result column="app_id" property="appId" />
+    <result column="is_deleted" property="isDeleted" />
+    <result column="created_time" property="createdTime" />
+    <result column="create_by" property="createBy" />
+    <result column="updated_time" property="updatedTime" />
+    <result column="updated_by" property="updatedBy" />
+        <result column="rule_name" property="ruleName" />
+        <result column="rule_type" property="ruleType" />
+        <result column="rule_code" property="ruleCode" />
+        <result column="parameter_src_database" property="parameterSrcDatabase" />
+        <result column="parameter_src_table" property="parameterSrcTable" />
+        <result column="parameter_name" property="parameterName" />
+        <result column="parameter_code" property="parameterCode" />
+        <result column="remark" property="remark" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        tenant_id,
+        app_id,
+        is_deleted,
+        created_time,
+        create_by,
+        updated_time,
+        updated_by,
+        rule_name, rule_type, rule_code, parameter_src_database, parameter_src_table, parameter_name, parameter_code, remark
+    </sql>
+
 </mapper>

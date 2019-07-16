@@ -1,6 +1,6 @@
 package com.deepexi.promotion.service;
 
-import com.deepexi.promotion.domain.PromotionActivity;
+import com.deepexi.promotion.domain.PromotionActivityTemplateLink;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author xsj
  * @since 2019-07-16
  */
-public interface IPromotionActivityService extends IService<PromotionActivity> {
+public interface IPromotionActivityTemplateLinkService extends IService<PromotionActivityTemplateLink> {
 
 }

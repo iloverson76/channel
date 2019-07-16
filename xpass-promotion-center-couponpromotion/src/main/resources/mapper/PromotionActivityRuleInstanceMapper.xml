@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.deepexi.promotion.mapper.PromotionOrderHistoryMapper">
+<mapper namespace="com.deepexi.promotion.mapper.PromotionActivityRuleInstanceMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.deepexi.promotion.domain.PromotionOrderHistory">
+    <resultMap id="BaseResultMap" type="com.deepexi.promotion.domain.PromotionActivityRuleInstance">
     <result column="id" property="id" />
     <result column="tenant_id" property="tenantId" />
     <result column="app_id" property="appId" />
@@ -12,14 +12,9 @@
     <result column="create_by" property="createBy" />
     <result column="updated_time" property="updatedTime" />
     <result column="updated_by" property="updatedBy" />
-        <result column="template_id" property="templateId" />
-        <result column="order_id" property="orderId" />
-        <result column="user_id" property="userId" />
-        <result column="coupon_status" property="couponStatus" />
-        <result column="coupon_id" property="couponId" />
-        <result column="completed_time" property="completedTime" />
-        <result column="coupon_operation" property="couponOperation" />
-        <result column="archive_time" property="archiveTime" />
+        <result column="activity_id" property="activityId" />
+        <result column="assign_rule_id" property="assignRuleId" />
+        <result column="rule_value" property="ruleValue" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -32,7 +27,7 @@
         create_by,
         updated_time,
         updated_by,
-        template_id, order_id, user_id, coupon_status, coupon_id, completed_time, coupon_operation, archive_time
+        activity_id, assign_rule_id, rule_value
     </sql>
 
 </mapper>

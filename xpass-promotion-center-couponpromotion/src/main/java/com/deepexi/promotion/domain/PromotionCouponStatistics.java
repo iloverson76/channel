@@ -18,13 +18,13 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@ApiModel(value="PromotionCouponStatistics对象", description="优惠券统计情况")
+@ApiModel(value="PromotionCouponStatistics对象", description="")
 public class PromotionCouponStatistics extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "模板id")
-    private String templateId;
+    private Long templateId;
 
     @ApiModelProperty(value = "优惠券总数")
     private Integer totalCount;

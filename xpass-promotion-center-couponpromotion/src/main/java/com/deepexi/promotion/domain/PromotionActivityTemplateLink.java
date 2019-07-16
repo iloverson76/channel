@@ -9,25 +9,28 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 优惠券发放规则实例表
+ * 活动表
  * </p>
  *
  * @author xsj
- * @since 2019-07-15
+ * @since 2019-07-16
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@ApiModel(value="PromotionAssignRuleInstance对象", description="优惠券发放规则实例表")
-public class PromotionAssignRuleInstance extends BaseEntity {
+@ApiModel(value="PromotionActivityTemplateLink对象", description="活动表")
+public class PromotionActivityTemplateLink extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "优惠券自定义规则表主键")
-    private String assignRuleId;
+    @ApiModelProperty(value = "活动id")
+    private Long activityId;
 
-    @ApiModelProperty(value = "参数编码值")
-    private String parameterCodeValue;
+    @ApiModelProperty(value = "优惠券模板id")
+    private Long templateId;
+
+    @ApiModelProperty(value = "发放总数")
+    private String sum;
 
 
 }
