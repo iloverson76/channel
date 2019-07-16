@@ -18,4 +18,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/promotion-coupon-instance")
 public class PromotionCouponInstanceController  {
 
+  //  //生成优惠券实例(在模板里生成)--调用service里的接口
+
+    //查询优惠券实例
+
+    //删除优惠券实例
+
+    //转让优惠券
+
+    //核销优惠券
+
+    //回收优惠券
 }
