@@ -27,8 +27,11 @@ public class PromotionCouponTemplate extends BaseEntity {
     @ApiModelProperty(value = "模板名称")
     private String templateName;
 
-    @ApiModelProperty(value = "优惠券类型")
-    private String couponType;
+    @ApiModelProperty(value = "模板编号")
+    private String templateCode;
+
+    @ApiModelProperty(value = "优惠券类型id")
+    private Long typeId;
 
     @ApiModelProperty(value = "面值")
     private Integer couponAmount;

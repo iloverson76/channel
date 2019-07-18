@@ -4,17 +4,18 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.deepexi.promotion.domain.PromotionCouponType">
-    <result column="id" property="id" />
-    <result column="tenant_id" property="tenantId" />
-    <result column="app_id" property="appId" />
-    <result column="is_deleted" property="isDeleted" />
-    <result column="created_time" property="createdTime" />
-    <result column="create_by" property="createBy" />
-    <result column="updated_time" property="updatedTime" />
-    <result column="updated_by" property="updatedBy" />
-        <result column="type_code" property="typeCode" />
-        <result column="type_name" property="typeName" />
-        <result column="is_stopped" property="isStopped" />
+        <result column="id" property="id"/>
+        <result column="tenant_id" property="tenantId"/>
+        <result column="app_id" property="appId"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="created_time" property="createdTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="updated_time" property="updatedTime"/>
+        <result column="updated_by" property="updatedBy"/>
+        <result column="type_code" property="typeCode"/>
+        <result column="desc" property="desc"/>
+        <result column="type_name" property="typeName"/>
+        <result column="is_stopped" property="isStopped"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -27,7 +28,10 @@
         create_by,
         updated_time,
         updated_by,
-        type_code, type_name, is_stopped
+        type_code,
+        type_name,
+        `desc`,
+        is_stopped
     </sql>
 
 </mapper>
