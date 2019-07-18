@@ -1,6 +1,5 @@
-package com.deepexi.promotion.domain;
+package com.deepexi.promotion.domain.coupon;
 
-import java.time.LocalDateTime;
 import com.deepexi.promotion.domain.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -8,19 +7,21 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.time.LocalDateTime;
+
 /**
  * <p>
  * 用户和优惠券关联表
  * </p>
  *
  * @author xsj
- * @since 2019-07-15
+ * @since 2019-07-16
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @ApiModel(value="PromotionUserCouponLink对象", description="用户和优惠券关联表")
-public class PromotionUserCouponLink extends BaseEntity {
+public class UserCouponLinkVO extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -31,10 +32,10 @@ public class PromotionUserCouponLink extends BaseEntity {
     private String userName;
 
     @ApiModelProperty(value = "优惠券标识")
-    private String couponId;
+    private Long couponId;
 
     @ApiModelProperty(value = "模板标识")
-    private String templateId;
+    private Long templateId;
 
     @ApiModelProperty(value = "类型值名称")
     private String acceptedType;

@@ -1,4 +1,4 @@
-package com.deepexi.promotion.domain;
+package com.deepexi.promotion.domain.coupon;
 
 import com.deepexi.promotion.domain.BaseEntity;
 import io.swagger.annotations.ApiModel;
@@ -18,8 +18,8 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@ApiModel(value="PromotionCouponType对象", description="优惠券类型")
-public class PromotionCouponType extends BaseEntity {
+@ApiModel(value="PromotionCouponType对象", description="")
+public class CouponTypeVO extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 

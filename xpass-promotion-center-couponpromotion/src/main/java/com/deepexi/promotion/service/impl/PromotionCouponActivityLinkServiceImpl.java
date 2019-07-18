@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author xsj
- * @since 2019-07-15
+ * @since 2019-07-16
  */
 @Service
 public class PromotionCouponActivityLinkServiceImpl extends ServiceImpl<PromotionCouponActivityLinkMapper, PromotionCouponActivityLink> implements IPromotionCouponActivityLinkService {

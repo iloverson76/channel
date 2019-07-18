@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author xsj
- * @since 2019-07-15
+ * @since 2019-07-16
  */
 public interface PromotionCouponActivityLinkMapper extends BaseMapper<PromotionCouponActivityLink> {
 

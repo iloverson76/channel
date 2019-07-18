@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deepexi.promotion.mapper.PromotionTemplateRuleInstanceMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.deepexi.promotion.domain.PromotionTemplateRuleInstance">
+    <result column="id" property="id" />
+    <result column="tenant_id" property="tenantId" />
+    <result column="app_id" property="appId" />
+    <result column="is_deleted" property="isDeleted" />
+    <result column="created_time" property="createdTime" />
+    <result column="create_by" property="createBy" />
+    <result column="updated_time" property="updatedTime" />
+    <result column="updated_by" property="updatedBy" />
+        <result column="template_id" property="templateId" />
+        <result column="assign_rule_id" property="assignRuleId" />
+        <result column="rule_value" property="ruleValue" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        tenant_id,
+        app_id,
+        is_deleted,
+        created_time,
+        create_by,
+        updated_time,
+        updated_by,
+        template_id, assign_rule_id, rule_value
+    </sql>
+
+</mapper>

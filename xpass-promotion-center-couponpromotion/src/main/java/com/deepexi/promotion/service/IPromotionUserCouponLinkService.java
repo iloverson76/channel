@@ -1,6 +1,6 @@
 package com.deepexi.promotion.service;
 
-import com.deepexi.promotion.domain.PromotionUserCouponLink;
+import com.deepexi.promotion.domain.coupon.UserCouponLink;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author xsj
- * @since 2019-07-15
+ * @since 2019-07-16
  */
-public interface IPromotionUserCouponLinkService extends IService<PromotionUserCouponLink> {
+public interface IPromotionUserCouponLinkService extends IService<UserCouponLink> {
 
 }

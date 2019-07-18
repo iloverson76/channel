@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author xsj
- * @since 2019-07-15
+ * @since 2019-07-16
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -29,8 +29,17 @@ public class PromotionActivity extends BaseEntity {
     @ApiModelProperty(value = "活动编码")
     private String activityCode;
 
-    @ApiModelProperty(value = "是否启动")
-    private Integer isStopped;
+    @ApiModelProperty(value = "描述")
+    private String activityDesc;
+
+    @ApiModelProperty(value = "是否发布")
+    private Boolean isPublish;
+
+    @ApiModelProperty(value = "是否已发放优惠券")
+    private Boolean isProvideCoupon;
+
+    @ApiModelProperty(value = "是否启用")
+    private Boolean isEbable;
 
 
 }

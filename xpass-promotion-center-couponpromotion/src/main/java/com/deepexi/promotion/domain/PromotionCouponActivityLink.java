@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author xsj
- * @since 2019-07-15
+ * @since 2019-07-16
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -24,13 +24,16 @@ public class PromotionCouponActivityLink extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "优惠券模板标识")
-    private String templateId;
+    private Long templateId;
 
     @ApiModelProperty(value = "优惠券(主键)")
-    private String couponId;
+    private Long couponId;
 
     @ApiModelProperty(value = "活动(主键)")
-    private String activityId;
+    private Long activityId;
+
+    @ApiModelProperty(value = "是否被活动关联(0:未被活动关联;1:已被关联)")
+    private Integer couponStatus;
 
     @ApiModelProperty(value = "创建人")
     private String createdBy;

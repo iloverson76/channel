@@ -1,7 +1,5 @@
 package com.deepexi.promotion.service.impl;
 
-
-import com.deepexi.promotion.domain.PromotionCouponStatistics;
 import com.deepexi.promotion.mapper.PromotionCouponStatisticsMapper;
 import com.deepexi.promotion.service.IPromotionCouponStatisticsService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

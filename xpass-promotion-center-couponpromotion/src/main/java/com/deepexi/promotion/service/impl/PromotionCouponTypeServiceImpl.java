@@ -1,7 +1,5 @@
 package com.deepexi.promotion.service.impl;
 
-
-import com.deepexi.promotion.domain.PromotionCouponType;
 import com.deepexi.promotion.mapper.PromotionCouponTypeMapper;
 import com.deepexi.promotion.service.IPromotionCouponTypeService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -17,5 +15,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class PromotionCouponTypeServiceImpl extends ServiceImpl<PromotionCouponTypeMapper, PromotionCouponType> implements IPromotionCouponTypeService {
+
 
 }

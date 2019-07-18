@@ -1,6 +1,6 @@
 package com.deepexi.promotion.service.impl;
 
-import com.deepexi.promotion.domain.PromotionUserCouponLink;
+import com.deepexi.promotion.domain.coupon.UserCouponLink;
 import com.deepexi.promotion.mapper.PromotionUserCouponLinkMapper;
 import com.deepexi.promotion.service.IPromotionUserCouponLinkService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author xsj
- * @since 2019-07-15
+ * @since 2019-07-16
  */
 @Service
-public class PromotionUserCouponLinkServiceImpl extends ServiceImpl<PromotionUserCouponLinkMapper, PromotionUserCouponLink> implements IPromotionUserCouponLinkService {
+public class PromotionUserCouponLinkServiceImpl extends ServiceImpl<PromotionUserCouponLinkMapper, UserCouponLink> implements IPromotionUserCouponLinkService {
 
 }

@@ -1,30 +1,21 @@
 package com.deepexi.promotion.domain.coupon;
 
-import com.deepexi.promotion.domain.BaseEntity;
 import com.deepexi.util.pojo.AbstractObject;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 
 /**
- * <p>
- * 优惠券实例表
- * </p>
- *
- * @author xsj
- * @since 2019-07-15
+ * created by chenpeng on
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
-@Accessors(chain = true)
-@ApiModel(value="PromotionCouponInstance对象", description="优惠券实例表")
-public class PromotionCouponInstance extends AbstractObject {
+public class CouponInstanceDTO extends AbstractObject {
 
     private static final long serialVersionUID = 1L;
+
+    @ApiModelProperty(value = "券总数")
+    private String totalCount;
 
     @ApiModelProperty(value = "主键")
     private Long id;
@@ -58,7 +49,5 @@ public class PromotionCouponInstance extends AbstractObject {
 
     @ApiModelProperty(value = "更新人")
     private String updatedBy;
-
-
 
 }

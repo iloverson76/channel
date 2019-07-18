@@ -2,4 +2,44 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.deepexi.promotion.mapper.PromotionCouponTemplateMapper">
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.deepexi.promotion.domain.PromotionCouponTemplate">
+    <result column="id" property="id" />
+    <result column="tenant_id" property="tenantId" />
+    <result column="app_id" property="appId" />
+    <result column="is_deleted" property="isDeleted" />
+    <result column="created_time" property="createdTime" />
+    <result column="create_by" property="createBy" />
+    <result column="updated_time" property="updatedTime" />
+    <result column="updated_by" property="updatedBy" />
+        <result column="template_name" property="templateName" />
+        <result column="coupon_type" property="couponType" />
+        <result column="coupon_amount" property="couponAmount" />
+        <result column="upper_limit" property="upperLimit" />
+        <result column="lower_limit" property="lowerLimit" />
+        <result column="total_count" property="totalCount" />
+        <result column="effective_start_day" property="effectiveStartDay" />
+        <result column="effective_end_day" property="effectiveEndDay" />
+        <result column="is_transfered" property="isTransfered" />
+        <result column="is_returned" property="isReturned" />
+        <result column="is_superimposed" property="isSuperimposed" />
+        <result column="limit_quantity" property="limitQuantity" />
+        <result column="enemy_template_id" property="enemyTemplateId" />
+        <result column="is_released" property="isReleased" />
+        <result column="is_stopped" property="isStopped" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        tenant_id,
+        app_id,
+        is_deleted,
+        created_time,
+        create_by,
+        updated_time,
+        updated_by,
+        template_name, coupon_type, coupon_amount, upper_limit, lower_limit, total_count, effective_start_day, effective_end_day, is_transfered, is_returned, is_superimposed, limit_quantity, enemy_template_id, is_released, is_stopped
+    </sql>
+
 </mapper>
