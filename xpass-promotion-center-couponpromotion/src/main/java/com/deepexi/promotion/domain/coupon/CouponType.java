@@ -1,5 +1,6 @@
 package com.deepexi.promotion.domain.coupon;
 
+import com.deepexi.promotion.domain.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
