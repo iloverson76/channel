@@ -18,7 +18,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@ApiModel(value="PromotionTemplateRuleInstance对象", description="优惠券模板和自定义规则关联表")
+@ApiModel(value="PromotionTemplateRuleInstance对象", description="优惠券模板对应自定义规则")
 public class PromotionTemplateRuleInstance extends BaseEntity {
 
     private static final long serialVersionUID = 1L;

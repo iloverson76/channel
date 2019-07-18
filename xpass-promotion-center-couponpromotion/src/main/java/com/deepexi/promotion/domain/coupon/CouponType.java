@@ -1,6 +1,5 @@
 package com.deepexi.promotion.domain.coupon;
 
-import com.deepexi.promotion.domain.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -28,6 +27,9 @@ public class CouponType extends BaseEntity {
 
     @ApiModelProperty(value = "优惠券类型名称")
     private Integer typeName;
+
+    @ApiModelProperty(value = "优惠券类型名称")
+    private String desc;
 
     @ApiModelProperty(value = "是否已停用")
     private Integer isStopped;
