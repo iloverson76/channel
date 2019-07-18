@@ -36,14 +36,9 @@ public class CouponInstanceController {
      */
     @PostMapping("/create")
     public Payload<Boolean> create(@RequestBody CouponInstanceVO coupInstVO) {
-        int batchSize=coupInstVO.getTotalCount();
         CouponInstanceDTO couponInstanceDto=coupInstVO.clone(CouponInstanceDTO.class);
-        CouponInstance coupInst=couponInstanceDto.clone(CouponInstance.class);
-        ArrayList<CouponInstance> entityList=new ArrayList<CouponInstance>();
-        for (int i=0;i<batchSize;i++) {
-            entityList.add(coupInst);
-        }
-        return new Payload<Boolean>(iCouponInstanceService.saveBatch(entityList,batchSize));
+        iCouponInstanceService.create(couponInstanceDto);
+        return new Payload<Boolean>();
     }
 
     /**

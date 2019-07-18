@@ -2,6 +2,7 @@ package com.deepexi.promotion.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.deepexi.promotion.domain.coupon.CouponInstance;
+import com.deepexi.promotion.domain.coupon.CouponInstanceDTO;
 
 /**
  * <p>
@@ -13,4 +14,10 @@ import com.deepexi.promotion.domain.coupon.CouponInstance;
  */
 public interface ICouponInstanceService extends IService<CouponInstance> {
 
+    /**
+     * 批量创建优惠券实例
+     * @param couponInstanceDto
+     * @return
+     */
+    public boolean create(CouponInstanceDTO couponInstanceDto);
 }

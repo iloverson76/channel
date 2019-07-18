@@ -25,7 +25,7 @@ public class PromotionUserCouponLinkController  {
     IPromotionUserCouponLinkService iPromotionUserCouponLinkService;
 
     //用户领取
-    @PostMapping
+    @PostMapping("/get")
     public Payload<Boolean> get(@RequestBody UserCouponLinkVO userCoupLinkVO) {
         UserCouponLinkDTO userCoupLinkDto=userCoupLinkVO.clone(UserCouponLinkDTO.class);
 //        return new Payload<Boolean>(iPromotionUserCouponLinkService.save(userCoupLinkDto));
