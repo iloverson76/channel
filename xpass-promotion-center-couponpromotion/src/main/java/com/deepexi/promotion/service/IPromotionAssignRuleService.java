@@ -1,7 +1,8 @@
 package com.deepexi.promotion.service;
 
-import com.deepexi.promotion.domain.PromotionAssignRule;
+import com.deepexi.promotion.domain.PromotionAssignRuleDO;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.deepexi.promotion.domain.PromotionAssignRuleDTO;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author xsj
  * @since 2019-07-16
  */
-public interface IPromotionAssignRuleService extends IService<PromotionAssignRule> {
+public interface IPromotionAssignRuleService {
 
+    Boolean create(PromotionAssignRuleDTO ruleDTO);
 }

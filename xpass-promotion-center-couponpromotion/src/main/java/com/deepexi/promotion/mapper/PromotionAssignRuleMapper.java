@@ -1,6 +1,6 @@
 package com.deepexi.promotion.mapper;
 
-import com.deepexi.promotion.domain.PromotionAssignRule;
+import com.deepexi.promotion.domain.PromotionAssignRuleDO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author xsj
  * @since 2019-07-16
  */
-public interface PromotionAssignRuleMapper extends BaseMapper<PromotionAssignRule> {
+public interface PromotionAssignRuleMapper extends BaseMapper<PromotionAssignRuleDO> {
 
 }
