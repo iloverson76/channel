@@ -18,11 +18,15 @@ public class AppRuntimeEnv {
 
     // 租户编码
     private ThreadLocal<String> tenantId = ThreadLocal.withInitial(() -> null);
+    // 应用编码
+    private ThreadLocal<String> appId = ThreadLocal.withInitial(() -> null);
     // token信息
     private ThreadLocal<String> token = ThreadLocal.withInitial(() -> null);
     // 登陆用户名
     private ThreadLocal<String> username = ThreadLocal.withInitial(() -> "ANONYMOUS");
 
+    // requestId
+    private ThreadLocal<String> requestId = ThreadLocal.withInitial(IdGenerator::getUuId);
 
     public AppRuntimeEnv ensureToken(String token) throws Exception {
         if (null == token) throw new ApplicationException(ResultEnum.TOKEN_NOT_FOUND);
@@ -66,11 +70,14 @@ public class AppRuntimeEnv {
         return username.get();
     }
 
-    // requestId
-    private ThreadLocal<String> requestId = ThreadLocal.withInitial(IdGenerator::getUuId);
-
     public String getRequestId() {
         return requestId.get();
     }
 
+    public void setAppId(String appId){
+        this.appId.set(appId);
+    }
+    public String getAppId(){
+        return appId.get();
+    }
 }

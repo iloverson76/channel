@@ -24,6 +24,8 @@ public class MetaObjectHandlerConfig implements MetaObjectHandler {
 
     private static final String TENANT_ID = "tenantId";
 
+    private static final String APP_ID = "appId";
+
     @Resource
     private AppRuntimeEnv appRuntimeEnv;
 
@@ -44,6 +46,9 @@ public class MetaObjectHandlerConfig implements MetaObjectHandler {
             if (getFieldValByName(CREATED_BY, metaObject) == null) {
                 setFieldValByName(CREATED_BY, appRuntimeEnv.getUsername(), metaObject);
                 setFieldValByName(UPDATED_BY, appRuntimeEnv.getUsername(), metaObject);
+            }
+            if (getFieldValByName(APP_ID,metaObject) == null){
+                setFieldValByName(APP_ID, appRuntimeEnv.getAppId(), metaObject);
             }
         } catch (Exception e) {
             log.error("自动注入创建人或者租户id失败：{}", e.getMessage());
