@@ -12,7 +12,7 @@ import com.deepexi.promotion.domain.coupon.CouponInstanceDTO;
  * @author xsj
  * @since 2019-07-16
  */
-public interface ICouponInstanceService extends IService<CouponInstanceDO> {
+public interface ICouponInstanceService{
 
     /**
      * 批量创建优惠券实例

@@ -1,7 +1,12 @@
 package com.deepexi.promotion.domain.coupon;
 
 import java.time.LocalDateTime;
+
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.deepexi.promotion.domain.BaseEntity;
+import com.deepexi.util.pojo.AbstractObject;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -20,7 +25,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @ApiModel(value="PromotionUserCouponLink对象", description="用户和优惠券关联表")
-public class UserCouponLink extends BaseEntity {
+public class UserCouponLink extends AbstractObject {
 
     private static final long serialVersionUID = 1L;
 
@@ -44,6 +49,27 @@ public class UserCouponLink extends BaseEntity {
 
     @ApiModelProperty(value = "领取时间")
     private LocalDateTime acceptedTime;
+
+    @ApiModelProperty(value = "是否已删除")
+    @TableLogic
+    @TableField(value = "`is_deleted`")
+    private Integer deleted;
+
+    @ApiModelProperty(value = "创建时间")
+    @TableField(value = "`create_by`", fill = FieldFill.INSERT)
+    private LocalDateTime createdTime;
+
+    @ApiModelProperty(value = "创建人")
+    @TableField(value = "`create_by`", fill = FieldFill.INSERT)
+    private String createBy;
+
+    @ApiModelProperty(value = "更新时间")
+    @TableField(value = "`updated_time`", fill = FieldFill.INSERT)
+    private LocalDateTime updatedTime;
+
+    @ApiModelProperty(value = "更新人")
+    @TableField(value = "`updated_by`", fill = FieldFill.INSERT)
+    private String updatedBy;
 
 
 }
