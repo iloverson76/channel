@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @ApiModel(value="PromotionCouponType对象", description="")
-public class CouponTypeDTO extends AbstractObject {
+public class CouponTypeDTO extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -37,30 +37,5 @@ public class CouponTypeDTO extends AbstractObject {
 
     @ApiModelProperty(value = "优惠券类型名称")
     private String desc;
-
-    @ApiModelProperty(value = "是否已停用")
-    private Integer stopped;
-
-    @ApiModelProperty(value = "是否已删除")
-    @TableLogic
-    @TableField(value = "`is_deleted`")
-    private Integer deleted;
-
-    @ApiModelProperty(value = "创建时间")
-    @TableField(value = "`create_by`", fill = FieldFill.INSERT)
-    private LocalDateTime createdTime;
-
-    @ApiModelProperty(value = "创建人")
-    @TableField(value = "`create_by`", fill = FieldFill.INSERT)
-    private String createBy;
-
-    @ApiModelProperty(value = "更新时间")
-    @TableField(value = "`updated_time`", fill = FieldFill.INSERT)
-    private LocalDateTime updatedTime;
-
-    @ApiModelProperty(value = "更新人")
-    @TableField(value = "`updated_by`", fill = FieldFill.INSERT)
-    private String updatedBy;
-
 
 }

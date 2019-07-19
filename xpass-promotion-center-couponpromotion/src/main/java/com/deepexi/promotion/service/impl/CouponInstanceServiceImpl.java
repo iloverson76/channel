@@ -3,6 +3,7 @@ package com.deepexi.promotion.service.impl;
 import com.deepexi.promotion.dao.ICouponInstanceDAO;
 import com.deepexi.promotion.domain.coupon.CouponInstanceDO;
 import com.deepexi.promotion.domain.coupon.CouponInstanceDTO;
+import com.deepexi.promotion.enums.CouponStatusEnum;
 import com.deepexi.promotion.service.ICouponInstanceService;
 import com.deepexi.util.pojo.AbstractObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,8 @@ public class CouponInstanceServiceImpl implements ICouponInstanceService{
     @Override
     public boolean create(CouponInstanceDTO dto){
         int batchSize=dto.getTotalCount();
+        dto.setCouponCode(dto.createCouponCode());
+        dto.setCouponStatus(Integer.valueOf(CouponStatusEnum.ACTIVITY_NOT_LINKED.getCode()));
         CouponInstanceDO inst=dto.clone(CouponInstanceDO.class);
         List<CouponInstanceDO> entityList=new ArrayList<CouponInstanceDO>();
         for (int i=0;i<batchSize;i++) {

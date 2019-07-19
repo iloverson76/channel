@@ -33,15 +33,15 @@ public class PromotionUserCouponLinkController  {
     }
 
     //用户转让/受让
-    @PostMapping
+    @PostMapping("/transfer")
     public Payload<Boolean> transfer(@RequestBody UserCouponLinkVO userCoupLinkVO) {
         UserCouponLinkDTO userCoupLinkDto=userCoupLinkVO.clone(UserCouponLinkDTO.class);
        // return new Payload<Boolean>(iPromotionUserCouponLinkService.update(userCoupLinkDto));
         return null;
     }
     //系统自动发放优惠券给用户
-    @PostMapping
-    public Payload<Boolean> autoAccepted(@RequestBody UserCouponLinkVO userCoupLinkVO) {
+    @PostMapping("/autoSend")
+    public Payload<Boolean> autoSend(@RequestBody UserCouponLinkVO userCoupLinkVO) {
         UserCouponLinkDTO userCoupLinkDto=userCoupLinkVO.clone(UserCouponLinkDTO.class);
        // return new Payload<Boolean>(iPromotionUserCouponLinkService.save(userCoupLinkDto));
         return null;

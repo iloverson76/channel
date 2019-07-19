@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * created by chenpeng on
@@ -33,7 +34,7 @@ public class CouponInstanceDTO extends AbstractObject {
     private String couponCode;
 
     @ApiModelProperty(value = "券状态")
-    private String couponStatus;
+    private int couponStatus;
 
     @ApiModelProperty(value = "是否已删除")
     private Integer deleted;
@@ -49,5 +50,10 @@ public class CouponInstanceDTO extends AbstractObject {
 
     @ApiModelProperty(value = "更新人")
     private String updatedBy;
+
+    public String createCouponCode(){
+        return "YHQ-"+UUID.randomUUID().toString().toUpperCase();
+    }
+
 
 }

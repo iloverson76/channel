@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @ApiModel(value="PromotionCouponInstance对象", description="优惠券实例表")
-public class CouponInstanceDO extends AbstractObject {
+public class CouponInstanceDO extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -43,22 +43,5 @@ public class CouponInstanceDO extends AbstractObject {
 
     @ApiModelProperty(value = "券状态")
     private String couponStatus;
-
-    @ApiModelProperty(value = "是否已删除")
-    private Integer deleted;
-
-    @ApiModelProperty(value = "创建时间")
-    private LocalDateTime createdTime;
-
-    @ApiModelProperty(value = "创建人")
-    private String createBy;
-
-    @ApiModelProperty(value = "更新时间")
-    private LocalDateTime updatedTime;
-
-    @ApiModelProperty(value = "更新人")
-    private String updatedBy;
-
-
 
 }

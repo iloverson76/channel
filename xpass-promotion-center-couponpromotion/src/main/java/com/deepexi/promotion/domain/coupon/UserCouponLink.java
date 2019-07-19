@@ -25,7 +25,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @ApiModel(value="PromotionUserCouponLink对象", description="用户和优惠券关联表")
-public class UserCouponLink extends AbstractObject {
+public class UserCouponLink extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -44,32 +44,10 @@ public class UserCouponLink extends AbstractObject {
     @ApiModelProperty(value = "类型值名称")
     private String acceptedType;
 
-    @ApiModelProperty(value = "是否已启用")
+    @ApiModelProperty(value = "优惠券状态")
     private Integer couponStatus;
 
     @ApiModelProperty(value = "领取时间")
     private LocalDateTime acceptedTime;
-
-    @ApiModelProperty(value = "是否已删除")
-    @TableLogic
-    @TableField(value = "`is_deleted`")
-    private Integer deleted;
-
-    @ApiModelProperty(value = "创建时间")
-    @TableField(value = "`create_by`", fill = FieldFill.INSERT)
-    private LocalDateTime createdTime;
-
-    @ApiModelProperty(value = "创建人")
-    @TableField(value = "`create_by`", fill = FieldFill.INSERT)
-    private String createBy;
-
-    @ApiModelProperty(value = "更新时间")
-    @TableField(value = "`updated_time`", fill = FieldFill.INSERT)
-    private LocalDateTime updatedTime;
-
-    @ApiModelProperty(value = "更新人")
-    @TableField(value = "`updated_by`", fill = FieldFill.INSERT)
-    private String updatedBy;
-
 
 }
