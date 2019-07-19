@@ -19,7 +19,6 @@
         <module>xpaas-promotion-center-webapp</module>
         <module>xpass-promotion-center-couponpromotion</module>
         <module>xpaas-promotion-center-common</module>
-        <module>xpass-promotion-center-comment</module>
     </modules>
 
     <!-- lombok插件 -->

@@ -13,6 +13,6 @@ public class TemplateTypeVO {
 
     private String desc;
 
-    private Integer isStopped;
+    private Integer isEnable;
 
 }

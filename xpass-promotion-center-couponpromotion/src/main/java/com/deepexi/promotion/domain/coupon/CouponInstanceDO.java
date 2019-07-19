@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 @ApiModel(value="PromotionCouponInstance对象", description="优惠券实例表")
 public class CouponInstanceDO extends AbstractObject {
 
-    private static final long serialVersionUID = 1L;
+
 
     @ApiModelProperty(value = "主键")
     private Long id;

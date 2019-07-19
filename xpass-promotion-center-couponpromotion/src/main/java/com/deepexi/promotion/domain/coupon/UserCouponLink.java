@@ -27,7 +27,7 @@ import lombok.experimental.Accessors;
 @ApiModel(value="PromotionUserCouponLink对象", description="用户和优惠券关联表")
 public class UserCouponLink extends AbstractObject {
 
-    private static final long serialVersionUID = 1L;
+
 
     @ApiModelProperty(value = "用户标识")
     private String userId;

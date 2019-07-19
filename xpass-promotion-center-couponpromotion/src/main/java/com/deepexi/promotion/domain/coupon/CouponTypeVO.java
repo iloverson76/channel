@@ -27,40 +27,27 @@ import java.time.LocalDateTime;
 @ApiModel(value="PromotionCouponType对象", description="")
 public class CouponTypeVO extends AbstractObject {
 
-    private static final long serialVersionUID = 1L;
-
-    @ApiModelProperty(value = "优惠券编码")
+    /**
+     * 当前type 的code唯一标识
+     */
     private String typeCode;
 
-    @ApiModelProperty(value = "优惠券类型名称")
-    private Integer typeName;
+    /**
+     * 当前 类型名称
+     */
+    private String typeName;
 
-    @ApiModelProperty(value = "优惠券类型名称")
+
+    /**
+     * id
+     */
+    private Long id;
+
+    @ApiModelProperty(value = "描述")
     private String desc;
 
     @ApiModelProperty(value = "是否已停用")
-    private Integer isStopped;
-
-    @ApiModelProperty(value = "是否已删除")
-    @TableLogic
-    @TableField(value = "`is_deleted`")
-    private Integer deleted;
-
-    @ApiModelProperty(value = "创建时间")
-    @TableField(value = "`create_by`", fill = FieldFill.INSERT)
-    private LocalDateTime createdTime;
-
-    @ApiModelProperty(value = "创建人")
-    @TableField(value = "`create_by`", fill = FieldFill.INSERT)
-    private String createBy;
-
-    @ApiModelProperty(value = "更新时间")
-    @TableField(value = "`updated_time`", fill = FieldFill.INSERT)
-    private LocalDateTime updatedTime;
-
-    @ApiModelProperty(value = "更新人")
-    @TableField(value = "`updated_by`", fill = FieldFill.INSERT)
-    private String updatedBy;
+    private Integer isEnable;
 
 
 }

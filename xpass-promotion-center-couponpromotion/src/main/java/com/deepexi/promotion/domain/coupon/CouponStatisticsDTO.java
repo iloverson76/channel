@@ -27,7 +27,7 @@ import java.time.LocalDateTime;
 @ApiModel(value="PromotionCouponStatistics对象", description="")
 public class CouponStatisticsDTO extends AbstractObject {
 
-    private static final long serialVersionUID = 1L;
+
 
     @ApiModelProperty(value = "模板id")
     private Long templateId;

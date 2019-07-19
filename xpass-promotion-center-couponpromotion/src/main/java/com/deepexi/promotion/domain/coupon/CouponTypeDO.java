@@ -27,7 +27,7 @@ import java.time.LocalDateTime;
 @ApiModel(value="PromotionCouponType对象", description="")
 public class CouponTypeDO extends AbstractObject {
 
-    private static final long serialVersionUID = 1L;
+
 
     @ApiModelProperty(value = "优惠券编码")
     private String typeCode;
@@ -39,7 +39,7 @@ public class CouponTypeDO extends AbstractObject {
     private String desc;
 
     @ApiModelProperty(value = "是否已停用")
-    private Integer stopped;
+    private Integer isEnable;
 
     @ApiModelProperty(value = "是否已删除")
     @TableLogic
