@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
 @ApiModel(value="PromotionCouponType对象", description="")
 public class CouponTypeDO extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
+
 
     @ApiModelProperty(value = "优惠券编码")
     private String typeCode;
@@ -33,7 +33,7 @@ public class CouponTypeDO extends BaseEntity {
     private String desc;
 
     @ApiModelProperty(value = "是否已停用")
-    private Integer isStopped;
+    private Integer isEnable;
 
 
 }

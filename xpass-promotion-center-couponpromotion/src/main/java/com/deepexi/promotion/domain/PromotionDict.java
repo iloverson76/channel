@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
 @ApiModel(value="PromotionDict对象", description="促销中心字典表")
 public class PromotionDict extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
+
 
     @ApiModelProperty(value = "类型编码")
     private String typeCode;
@@ -42,7 +42,7 @@ public class PromotionDict extends BaseEntity {
     private String remark;
 
     @ApiModelProperty(value = "是否已启用")
-    private Integer isStopped;
+    private Integer isEnable;
 
 
 }

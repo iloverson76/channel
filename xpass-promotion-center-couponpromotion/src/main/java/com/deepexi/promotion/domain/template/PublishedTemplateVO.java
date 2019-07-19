@@ -19,7 +19,7 @@ public class PublishedTemplateVO {
 
     private LocalDateTime createTime;
 
-    private Integer isStopped;
+    private Integer isEnable;
 
     private LocalDateTime effectiveStartTime;
 

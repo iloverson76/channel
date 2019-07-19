@@ -22,7 +22,7 @@ import lombok.experimental.Accessors;
 @ApiModel(value="PromotionCouponTemplate对象", description="优惠券模板表")
 public class PromotionCouponTemplate extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
+
 
     @ApiModelProperty(value = "模板名称")
     private String templateName;
@@ -70,7 +70,7 @@ public class PromotionCouponTemplate extends BaseEntity {
     private Integer isReleased;
 
     @ApiModelProperty(value = "是否已停用")
-    private Integer isStopped;
+    private Integer isEnable;
 
 
 }

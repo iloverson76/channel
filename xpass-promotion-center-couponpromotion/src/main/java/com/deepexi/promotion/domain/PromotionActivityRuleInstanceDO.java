@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
 @ApiModel(value="PromotionActivityRuleInstanceDO对象", description="活动和优惠劵发放规则关联表")
 public class PromotionActivityRuleInstanceDO extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
+
 
     @ApiModelProperty(value = "活动id")
     private Long activityId;

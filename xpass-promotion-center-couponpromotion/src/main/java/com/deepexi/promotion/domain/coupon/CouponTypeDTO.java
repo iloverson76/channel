@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 @ApiModel(value = "PromotionCouponType对象", description = "")
 public class CouponTypeDTO extends AbstractObject {
 
-    private static final long serialVersionUID = 1L;
+
 
 
     private String typeCode;
@@ -30,7 +30,7 @@ public class CouponTypeDTO extends AbstractObject {
     private Integer typeName;
 
 
-    private Integer isStopped;
+    private Integer isEnable;
 
 
     private Long id;

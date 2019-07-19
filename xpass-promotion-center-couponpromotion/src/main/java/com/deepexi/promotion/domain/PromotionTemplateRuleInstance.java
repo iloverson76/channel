@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
 @ApiModel(value="PromotionTemplateRuleInstance对象", description="优惠券模板对应自定义规则")
 public class PromotionTemplateRuleInstance extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
+
 
     @ApiModelProperty(value = "模板")
     private Long templateId;

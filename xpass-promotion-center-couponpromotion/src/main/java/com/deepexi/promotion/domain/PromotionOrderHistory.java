@@ -22,7 +22,7 @@ import lombok.experimental.Accessors;
 @ApiModel(value="PromotionOrderHistory对象", description="订单归档表")
 public class PromotionOrderHistory extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
+
 
     @ApiModelProperty(value = "优惠券模板标识")
     private Long templateId;

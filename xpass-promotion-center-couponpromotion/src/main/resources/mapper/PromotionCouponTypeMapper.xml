@@ -15,7 +15,7 @@
         <result column="type_code" property="typeCode"/>
         <result column="desc" property="desc"/>
         <result column="type_name" property="typeName"/>
-        <result column="is_stopped" property="isStopped"/>
+        <result column="is_enable" property="isEnable"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -31,7 +31,7 @@
         type_code,
         type_name,
         `desc`,
-        is_stopped
+        is_enable
     </sql>
 
 </mapper>

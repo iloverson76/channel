@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
 @ApiModel(value="PromotionCouponStatistics对象", description="")
 public class CouponStatisticsVO extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
+
 
     @ApiModelProperty(value = "模板id")
     private Long templateId;

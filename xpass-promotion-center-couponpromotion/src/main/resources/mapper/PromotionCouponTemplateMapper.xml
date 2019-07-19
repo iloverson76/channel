@@ -26,7 +26,7 @@
         <result column="limit_quantity" property="limitQuantity"/>
         <result column="enemy_template_id" property="enemyTemplateId"/>
         <result column="is_released" property="isReleased"/>
-        <result column="is_stopped" property="isStopped"/>
+        <result column="is_enable" property="isEnable"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -39,7 +39,7 @@
         create_by,
         updated_time,
         updated_by,
-        template_name, coupon_type, coupon_amount, upper_limit, lower_limit, total_count, effective_start_day, effective_end_day, is_transfered, is_returned, is_superimposed, limit_quantity, enemy_template_id, is_released, is_stopped
+        template_name, coupon_type, coupon_amount, upper_limit, lower_limit, total_count, effective_start_day, effective_end_day, is_transfered, is_returned, is_superimposed, limit_quantity, enemy_template_id, is_released, is_enable
     </sql>
     <select id="getTypeList" resultMap="BaseResultMap">
         SELECT
