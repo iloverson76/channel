@@ -1,6 +1,6 @@
 package com.deepexi.promotion.mapper;
 
-import com.deepexi.promotion.domain.PromotionActivityRuleInstance;
+import com.deepexi.promotion.domain.PromotionActivityRuleInstanceDO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author xsj
  * @since 2019-07-16
  */
-public interface PromotionActivityRuleInstanceMapper extends BaseMapper<PromotionActivityRuleInstance> {
+public interface PromotionActivityRuleInstanceMapper extends BaseMapper<PromotionActivityRuleInstanceDO> {
 
 }

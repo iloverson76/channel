@@ -18,8 +18,8 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@ApiModel(value="PromotionActivityRuleInstance对象", description="活动和优惠劵发放规则关联表")
-public class PromotionActivityRuleInstance extends BaseEntity {
+@ApiModel(value="PromotionActivityRuleInstanceDO对象", description="活动和优惠劵发放规则关联表")
+public class PromotionActivityRuleInstanceDO extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 

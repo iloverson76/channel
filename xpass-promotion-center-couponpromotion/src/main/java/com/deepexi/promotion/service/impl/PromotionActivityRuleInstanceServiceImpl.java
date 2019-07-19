@@ -1,6 +1,6 @@
 package com.deepexi.promotion.service.impl;
 
-import com.deepexi.promotion.domain.PromotionActivityRuleInstance;
+import com.deepexi.promotion.domain.PromotionActivityRuleInstanceDO;
 import com.deepexi.promotion.mapper.PromotionActivityRuleInstanceMapper;
 import com.deepexi.promotion.service.IPromotionActivityRuleInstanceService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2019-07-16
  */
 @Service
-public class PromotionActivityRuleInstanceServiceImpl extends ServiceImpl<PromotionActivityRuleInstanceMapper, PromotionActivityRuleInstance> implements IPromotionActivityRuleInstanceService {
+public class PromotionActivityRuleInstanceServiceImpl extends ServiceImpl<PromotionActivityRuleInstanceMapper, PromotionActivityRuleInstanceDO> implements IPromotionActivityRuleInstanceService {
 
 }

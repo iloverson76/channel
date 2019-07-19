@@ -18,7 +18,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@ApiModel(value="PromotionActivity对象", description="活动表")
+@ApiModel(value = "PromotionActivity对象", description = "活动表")
 public class PromotionActivity extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -39,7 +39,7 @@ public class PromotionActivity extends BaseEntity {
     private Boolean isProvideCoupon;
 
     @ApiModelProperty(value = "是否启用")
-    private Boolean isEbable;
+    private Boolean isEnable;
 
 
 }

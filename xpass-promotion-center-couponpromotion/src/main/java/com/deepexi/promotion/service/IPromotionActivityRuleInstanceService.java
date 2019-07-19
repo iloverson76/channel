@@ -1,6 +1,6 @@
 package com.deepexi.promotion.service;
 
-import com.deepexi.promotion.domain.PromotionActivityRuleInstance;
+import com.deepexi.promotion.domain.PromotionActivityRuleInstanceDO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author xsj
  * @since 2019-07-16
  */
-public interface IPromotionActivityRuleInstanceService extends IService<PromotionActivityRuleInstance> {
+public interface IPromotionActivityRuleInstanceService extends IService<PromotionActivityRuleInstanceDO> {
 
 }

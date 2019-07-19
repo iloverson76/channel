@@ -15,7 +15,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>xpaas-promotion-center-api</module>
+        <module>xpaas-promotion-center-couponpromotion-api</module>
         <module>xpaas-promotion-center-webapp</module>
         <module>xpass-promotion-center-couponpromotion</module>
         <module>xpaas-promotion-center-common</module>
