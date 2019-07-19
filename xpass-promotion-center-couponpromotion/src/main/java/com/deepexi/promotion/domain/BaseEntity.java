@@ -8,7 +8,6 @@ import com.deepexi.util.pojo.AbstractObject;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @EqualsAndHashCode(callSuper = true)
@@ -30,7 +29,7 @@ public abstract class BaseEntity extends AbstractObject {
     private Integer isDeleted;
 
     @TableField(value = "`create_by`", fill = FieldFill.INSERT)
-    private LocalDateTime createdTime;
+    private Date createdTime;
 
     @TableField(value = "`create_by`", fill = FieldFill.INSERT)
     private String createBy;
