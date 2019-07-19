@@ -1,4 +1,4 @@
-package com.deepexi.promotion.domain;
+package com.deepexi.promotion.domain.template;
 
 import java.time.LocalDateTime;
 import com.deepexi.promotion.domain.BaseEntity;
@@ -20,7 +20,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @ApiModel(value="PromotionCouponTemplate对象", description="优惠券模板表")
-public class PromotionCouponTemplate extends BaseEntity {
+public class PromotionCouponTemplateDO extends BaseEntity {
 
 
 
