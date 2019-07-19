@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @ApiModel(value="PromotionCouponInstance对象", description="优惠券实例表")
-public class CouponInstance extends AbstractObject {
+public class CouponInstanceDO extends AbstractObject {
 
     private static final long serialVersionUID = 1L;
 

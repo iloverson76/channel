@@ -1,7 +1,6 @@
 package com.deepexi.promotion.controller;
 
 
-import com.deepexi.promotion.domain.coupon.CouponInstance;
 import com.deepexi.promotion.domain.coupon.CouponInstanceDTO;
 import com.deepexi.promotion.domain.coupon.CouponInstanceVO;
 import com.deepexi.promotion.service.ICouponInstanceService;
@@ -9,9 +8,6 @@ import com.deepexi.util.config.Payload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 
 /**

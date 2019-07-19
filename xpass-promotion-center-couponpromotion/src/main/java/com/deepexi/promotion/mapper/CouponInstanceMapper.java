@@ -1,6 +1,6 @@
 package com.deepexi.promotion.mapper;
 
-import com.deepexi.promotion.domain.coupon.CouponInstance;
+import com.deepexi.promotion.domain.coupon.CouponInstanceDO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author xsj
  * @since 2019-07-16
  */
-public interface CouponInstanceMapper extends BaseMapper<CouponInstance> {
+public interface CouponInstanceMapper extends BaseMapper<CouponInstanceDO> {
 
 }
