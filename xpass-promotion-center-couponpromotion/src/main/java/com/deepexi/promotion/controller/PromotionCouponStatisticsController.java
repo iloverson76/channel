@@ -30,6 +30,6 @@ public class PromotionCouponStatisticsController {
      */
     @GetMapping("/{status}")
     public Payload detail() {
-        return new Payload(iPromotionCouponStatisticsService.detail());
+        return new Payload();
     }
 }
