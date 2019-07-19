@@ -1,8 +1,10 @@
 package com.deepexi.promotion.service;
 
-import com.deepexi.promotion.domain.PromotionAssignRuleDO;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.deepexi.promotion.domain.PromotionAssignRuleDTO;
+import com.deepexi.promotion.domain.PromotionAssignRuleQuery;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -15,4 +17,12 @@ import com.deepexi.promotion.domain.PromotionAssignRuleDTO;
 public interface IPromotionAssignRuleService {
 
     Boolean create(PromotionAssignRuleDTO ruleDTO);
+
+    Boolean update(PromotionAssignRuleDTO ruleDTO);
+
+    PromotionAssignRuleDTO detail(Long ruleId);
+
+    List<PromotionAssignRuleDTO> findPage(PromotionAssignRuleQuery query);
+
+    Boolean delete(Set<Long> ids);
 }
