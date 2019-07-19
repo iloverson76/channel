@@ -31,7 +31,7 @@ public class CouponInstanceController {
      * @param
      * @return
      */
-    @PostMapping("/create")
+    @PostMapping
     public Payload<Boolean> create(@RequestBody CouponInstanceVO coupInstVO) {
         CouponInstanceDTO couponInstanceDto=coupInstVO.clone(CouponInstanceDTO.class, CloneDirection.FORWARD);
         boolean result=iCouponInstanceService.create(couponInstanceDto);
