@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -24,16 +24,6 @@ import java.time.LocalDateTime;
 @ApiModel(value="PromotionCouponInstance对象", description="优惠券实例表")
 public class CouponInstanceDO extends BaseEntity {
 
-
-
-    @ApiModelProperty(value = "主键")
-    private Long id;
-
-    @ApiModelProperty(value = "租户")
-    private String tenantId;
-
-    @ApiModelProperty(value = "平台")
-    private String appId;
 
     @ApiModelProperty(value = "模板主键")
     private String templateId;

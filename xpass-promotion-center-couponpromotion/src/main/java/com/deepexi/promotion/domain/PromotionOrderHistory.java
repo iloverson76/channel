@@ -1,6 +1,6 @@
 package com.deepexi.promotion.domain;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import com.deepexi.promotion.domain.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -46,7 +46,7 @@ public class PromotionOrderHistory extends BaseEntity {
     private Integer couponOperation;
 
     @ApiModelProperty(value = "订单归档时间")
-    private LocalDateTime archiveTime;
+    private Date archiveTime;
 
 
 }

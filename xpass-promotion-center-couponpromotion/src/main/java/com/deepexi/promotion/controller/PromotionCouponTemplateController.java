@@ -2,7 +2,7 @@ package com.deepexi.promotion.controller;
 
 
 import com.deepexi.promotion.domain.PromotionCouponTypeVO;
-import com.deepexi.promotion.domain.coupon.CouponTypeVO;
+import com.deepexi.promotion.domain.template.CouponTypeVO;
 import com.deepexi.promotion.domain.template.CreateTemplateVO;
 import com.deepexi.promotion.domain.template.TemplateInfoVO;
 import com.deepexi.promotion.domain.template.TemplateQuery;

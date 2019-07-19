@@ -39,7 +39,7 @@ public class PromotionActivity extends BaseEntity {
     private Boolean isProvideCoupon;
 
     @ApiModelProperty(value = "是否启用")
-    private Boolean isEnable;
+    private Boolean enable;
 
 
 }

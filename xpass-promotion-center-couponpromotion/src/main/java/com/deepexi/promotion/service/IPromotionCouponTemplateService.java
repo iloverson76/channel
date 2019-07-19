@@ -2,7 +2,7 @@ package com.deepexi.promotion.service;
 
 import com.deepexi.promotion.domain.template.PromotionCouponTemplateDO;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.deepexi.promotion.domain.coupon.CouponTypeDTO;
+import com.deepexi.promotion.domain.template.CouponTypeDTO;
 
 import java.util.List;
 

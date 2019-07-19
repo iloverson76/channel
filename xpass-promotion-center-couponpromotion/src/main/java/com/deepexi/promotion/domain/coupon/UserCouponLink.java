@@ -1,6 +1,6 @@
 package com.deepexi.promotion.domain.coupon;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -48,6 +48,6 @@ public class UserCouponLink extends BaseEntity {
     private Integer couponStatus;
 
     @ApiModelProperty(value = "领取时间")
-    private LocalDateTime acceptedTime;
+    private Date acceptedTime;
 
 }

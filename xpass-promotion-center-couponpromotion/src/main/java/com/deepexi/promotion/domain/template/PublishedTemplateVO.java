@@ -2,7 +2,7 @@ package com.deepexi.promotion.domain.template;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 
 /**
@@ -17,13 +17,13 @@ public class PublishedTemplateVO {
 
     private String templateCode;
 
-    private LocalDateTime createTime;
+    private Date createTime;
 
-    private Integer isEnable;
+    private Integer enable;
 
-    private LocalDateTime effectiveStartTime;
+    private Date effectiveStartTime;
 
-    private LocalDateTime effectiveEndTime;
+    private Date effectiveEndTime;
 
     private Integer count;
 

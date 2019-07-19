@@ -1,7 +1,7 @@
 package com.deepexi.promotion.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.deepexi.promotion.domain.coupon.CouponTypeDO;
+import com.deepexi.promotion.domain.template.CouponTypeDO;
 
 /**
  * <p>

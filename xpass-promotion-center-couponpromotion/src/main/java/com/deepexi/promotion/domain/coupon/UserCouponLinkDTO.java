@@ -11,7 +11,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -48,6 +48,6 @@ public class UserCouponLinkDTO extends BaseEntity {
     private Integer couponStatus;
 
     @ApiModelProperty(value = "领取时间")
-    private LocalDateTime acceptedTime;
+    private Date acceptedTime;
 
 }

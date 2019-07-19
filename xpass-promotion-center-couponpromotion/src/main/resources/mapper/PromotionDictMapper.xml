@@ -18,7 +18,7 @@
         <result column="value_id" property="valueId" />
         <result column="value_name" property="valueName" />
         <result column="remark" property="remark" />
-        <result column="is_enable" property="isEnable" />
+        <result column="is_enable" property="enable" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
