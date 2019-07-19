@@ -29,7 +29,7 @@ public class BaseEntity extends AbstractObject {
     @ApiModelProperty(value = "是否已删除")
     @TableLogic
     @TableField(value = "`is_deleted`")
-    private Integer isDeleted;
+    private Integer deleted;
 
     @ApiModelProperty(value = "创建时间")
     @TableField(value = "`create_by`", fill = FieldFill.INSERT)
