@@ -5,6 +5,7 @@ import com.deepexi.promotion.domain.coupon.CouponInstanceDTO;
 import com.deepexi.promotion.domain.coupon.CouponInstanceVO;
 import com.deepexi.promotion.service.ICouponInstanceService;
 import com.deepexi.util.config.Payload;
+import com.deepexi.util.pojo.CloneDirection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +33,7 @@ public class CouponInstanceController {
      */
     @PostMapping("/create")
     public Payload<Boolean> create(@RequestBody CouponInstanceVO coupInstVO) {
-        CouponInstanceDTO couponInstanceDto=coupInstVO.clone(CouponInstanceDTO.class);
+        CouponInstanceDTO couponInstanceDto=coupInstVO.clone(CouponInstanceDTO.class, CloneDirection.FORWARD);
         boolean result=iCouponInstanceService.create(couponInstanceDto);
         return new Payload<Boolean>(result);
     }

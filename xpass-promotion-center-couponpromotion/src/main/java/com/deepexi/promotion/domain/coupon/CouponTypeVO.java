@@ -25,29 +25,21 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @ApiModel(value="PromotionCouponType对象", description="")
-public class CouponTypeVO extends AbstractObject {
+public class CouponTypeVO extends BaseEntity {
 
-    /**
-     * 当前type 的code唯一标识
-     */
+    private static final long serialVersionUID = 1L;
+
+    @ApiModelProperty(value = "优惠券编码")
     private String typeCode;
 
-    /**
-     * 当前 类型名称
-     */
-    private String typeName;
+    @ApiModelProperty(value = "优惠券类型名称")
+    private Integer typeName;
 
-
-    /**
-     * id
-     */
-    private Long id;
-
-    @ApiModelProperty(value = "描述")
+    @ApiModelProperty(value = "优惠券类型名称")
     private String desc;
 
     @ApiModelProperty(value = "是否已停用")
-    private Integer isEnable;
+    private Integer enable;
 
 
 }

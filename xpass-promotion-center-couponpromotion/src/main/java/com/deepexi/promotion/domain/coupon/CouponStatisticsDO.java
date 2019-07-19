@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @ApiModel(value="PromotionCouponStatistics对象", description="")
-public class CouponStatisticsDO extends AbstractObject {
+public class CouponStatisticsDO extends BaseEntity {
 
 
 
@@ -43,26 +43,5 @@ public class CouponStatisticsDO extends AbstractObject {
 
     @ApiModelProperty(value = "已使用总数")
     private Integer usedCount;
-
-    @ApiModelProperty(value = "是否已删除")
-    @TableLogic
-    @TableField(value = "`is_deleted`")
-    private Integer deleted;
-
-    @ApiModelProperty(value = "创建时间")
-    @TableField(value = "`create_by`", fill = FieldFill.INSERT)
-    private LocalDateTime createdTime;
-
-    @ApiModelProperty(value = "创建人")
-    @TableField(value = "`create_by`", fill = FieldFill.INSERT)
-    private String createBy;
-
-    @ApiModelProperty(value = "更新时间")
-    @TableField(value = "`updated_time`", fill = FieldFill.INSERT)
-    private LocalDateTime updatedTime;
-
-    @ApiModelProperty(value = "更新人")
-    @TableField(value = "`updated_by`", fill = FieldFill.INSERT)
-    private String updatedBy;
 
 }
