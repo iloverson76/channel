@@ -29,6 +29,7 @@ class LogAspect {
     private static Logger logger = LoggerFactory.getLogger(LogAspect.class);
 
     private final static String TENANT_KEY = "tenantId";
+    private final static String APP_ID = "appId";
     private final static String TOKEN_KEY = "userToken";
 
     @Autowired
@@ -50,6 +51,7 @@ class LogAspect {
         if (RequestContextHolder.getRequestAttributes() != null) {
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
             appRuntimeEnv.setTenantId(getParam(request, TENANT_KEY));
+            appRuntimeEnv.setAppId(getParam(request,APP_ID));
             appRuntimeEnv.setToken(getParam(request, TOKEN_KEY));
         }
 
