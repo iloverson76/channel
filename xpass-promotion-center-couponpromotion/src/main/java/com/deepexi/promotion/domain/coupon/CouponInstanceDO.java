@@ -45,7 +45,7 @@ public class CouponInstanceDO extends AbstractObject {
     private String couponStatus;
 
     @ApiModelProperty(value = "是否已删除")
-    private Integer isDeleted;
+    private Integer deleted;
 
     @ApiModelProperty(value = "创建时间")
     private LocalDateTime createdTime;

@@ -26,7 +26,7 @@ public abstract class BaseEntity extends AbstractObject {
 
     @TableLogic
     @TableField(value = "`is_deleted`")
-    private Integer isDeleted;
+    private Integer deleted;
 
     @TableField(value = "`create_by`", fill = FieldFill.INSERT)
     private Date createdTime;

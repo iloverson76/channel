@@ -1,5 +1,9 @@
 package com.deepexi.promotion.domain.coupon;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.deepexi.promotion.domain.BaseEntity;
 import com.deepexi.util.pojo.AbstractObject;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
@@ -19,7 +23,7 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@ApiModel(value = "PromotionCouponType对象", description = "")
+@ApiModel(value="CouponType对象", description="")
 public class CouponTypeDTO extends AbstractObject {
 
 
