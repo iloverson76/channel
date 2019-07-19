@@ -2,6 +2,10 @@ package com.deepexi.promotion.service;
 
 import com.deepexi.promotion.domain.PromotionCouponTemplate;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.deepexi.promotion.domain.coupon.CouponTypeDO;
+import com.deepexi.promotion.domain.coupon.CouponTypeDTO;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +17,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IPromotionCouponTemplateService extends IService<PromotionCouponTemplate> {
 
+    /**
+     * 获得优惠券类型配置
+     * @param couponTypeDO do
+     * @return
+     */
+    List<CouponTypeDTO> getTypeList();
 }

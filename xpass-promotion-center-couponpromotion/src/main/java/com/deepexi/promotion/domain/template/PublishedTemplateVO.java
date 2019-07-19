@@ -29,4 +29,6 @@ public class PublishedTemplateVO {
 
     private Integer usedCount;
 
+    private String templateName;
+
 }

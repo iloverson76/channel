@@ -1,6 +1,7 @@
 package com.deepexi.promotion.domain.coupon;
 
 import com.deepexi.promotion.domain.BaseEntity;
+import com.deepexi.util.pojo.AbstractObject;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -19,18 +20,22 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @ApiModel(value="PromotionCouponType对象", description="")
-public class CouponTypeVO extends BaseEntity {
+public class CouponTypeVO extends AbstractObject {
 
-    private static final long serialVersionUID = 1L;
-
-    @ApiModelProperty(value = "优惠券编码")
+    /**
+     * 当前type 的code唯一标识
+     */
     private String typeCode;
 
-    @ApiModelProperty(value = "优惠券类型名称")
-    private Integer typeName;
+    /**
+     * 当前 类型名称
+     */
+    private String typeName;
 
-    @ApiModelProperty(value = "是否已停用")
-    private Integer isStopped;
+    /**
+     * id
+     */
+    private Long id;
 
 
 }

@@ -2,6 +2,9 @@ package com.deepexi.promotion.mapper;
 
 import com.deepexi.promotion.domain.PromotionCouponTemplate;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.deepexi.promotion.domain.coupon.CouponTypeDO;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface PromotionCouponTemplateMapper extends BaseMapper<PromotionCouponTemplate> {
 
+    List<CouponTypeDO> getTypeList(CouponTypeDO couponTypeDO);
 }
