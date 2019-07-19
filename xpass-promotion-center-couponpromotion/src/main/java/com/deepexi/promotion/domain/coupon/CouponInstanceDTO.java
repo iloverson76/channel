@@ -13,7 +13,7 @@ import java.util.UUID;
 @Data
 public class CouponInstanceDTO extends AbstractObject {
 
-    private static final long serialVersionUID = 1L;
+
 
     @ApiModelProperty(value = "券总数")
     private int totalCount;

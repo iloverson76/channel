@@ -16,6 +16,8 @@ public class UnpublishedTemplateVO {
 
     private String templateCode;
 
+    private String templateName;
+
     private LocalDateTime saveTime;
 
 }

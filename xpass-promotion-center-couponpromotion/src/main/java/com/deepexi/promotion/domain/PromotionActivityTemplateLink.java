@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
 @ApiModel(value="PromotionActivityTemplateLink对象", description="活动表")
 public class PromotionActivityTemplateLink extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
+
 
     @ApiModelProperty(value = "活动id")
     private Long activityId;

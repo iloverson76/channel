@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
 @ApiModel(value="PromotionAssignRule对象", description="优惠发放规则表")
 public class PromotionAssignRule extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
+
 
     @ApiModelProperty(value = "优惠券自定义规则名称")
     private String ruleName;

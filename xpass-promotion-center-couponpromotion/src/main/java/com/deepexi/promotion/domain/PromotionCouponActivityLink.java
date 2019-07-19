@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
 @ApiModel(value="PromotionCouponActivityLink对象", description="活动和优惠券关联表")
 public class PromotionCouponActivityLink extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
+
 
     @ApiModelProperty(value = "优惠券模板标识")
     private Long templateId;
