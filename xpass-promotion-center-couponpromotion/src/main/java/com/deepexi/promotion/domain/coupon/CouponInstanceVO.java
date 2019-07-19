@@ -5,7 +5,7 @@ import com.deepexi.util.pojo.AbstractObject;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * created by chenpeng on

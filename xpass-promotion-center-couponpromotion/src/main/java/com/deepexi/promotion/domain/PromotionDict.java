@@ -42,7 +42,7 @@ public class PromotionDict extends BaseEntity {
     private String remark;
 
     @ApiModelProperty(value = "是否已启用")
-    private Integer isEnable;
+    private Integer enable;
 
 
 }

@@ -3,7 +3,7 @@
 <mapper namespace="com.deepexi.promotion.mapper.PromotionCouponTypeMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.deepexi.promotion.domain.coupon.CouponTypeDO">
+    <resultMap id="BaseResultMap" type="com.deepexi.promotion.domain.template.CouponTypeDO">
         <result column="id" property="id"/>
         <result column="tenant_id" property="tenantId"/>
         <result column="app_id" property="appId"/>
@@ -15,7 +15,7 @@
         <result column="type_code" property="typeCode"/>
         <result column="desc" property="desc"/>
         <result column="type_name" property="typeName"/>
-        <result column="is_enable" property="isEnable"/>
+        <result column="is_enable" property="enable"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->

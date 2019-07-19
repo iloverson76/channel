@@ -26,7 +26,7 @@
         <result column="limit_quantity" property="limitQuantity"/>
         <result column="enemy_template_id" property="enemyTemplateId"/>
         <result column="is_released" property="isReleased"/>
-        <result column="is_enable" property="isEnable"/>
+        <result column="is_enable" property="enable"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->

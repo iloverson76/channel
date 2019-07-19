@@ -17,7 +17,7 @@
         <result column="activity_desc" property="activityDesc" />
         <result column="is_publish" property="isPublish" />
         <result column="is_provide_coupon" property="isProvideCoupon" />
-        <result column="is_enable" property="isEnable" />
+        <result column="is_enable" property="enable" />
     </resultMap>
 
     <!-- 通用查询结果列 -->

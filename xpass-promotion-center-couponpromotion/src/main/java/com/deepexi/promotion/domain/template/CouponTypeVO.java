@@ -1,4 +1,4 @@
-package com.deepexi.promotion.domain.coupon;
+package com.deepexi.promotion.domain.template;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -11,7 +11,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @ApiModel(value="PromotionCouponType对象", description="")
-public class CouponTypeDO extends BaseEntity {
+public class CouponTypeVO extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -40,5 +40,6 @@ public class CouponTypeDO extends BaseEntity {
 
     @ApiModelProperty(value = "是否已停用")
     private Integer enable;
+
 
 }

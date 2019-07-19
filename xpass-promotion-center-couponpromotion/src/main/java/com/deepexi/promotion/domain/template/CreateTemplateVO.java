@@ -3,7 +3,7 @@ package com.deepexi.promotion.domain.template;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -27,9 +27,9 @@ public class CreateTemplateVO {
 
     private Integer totalCount;
 
-    private LocalDateTime effectiveStartTime;
+    private Date effectiveStartTime;
 
-    private LocalDateTime effectiveEndTime;
+    private Date effectiveEndTime;
 
     private Integer isTransfered;
 

@@ -1,6 +1,6 @@
 package com.deepexi.promotion.domain.template;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import com.deepexi.promotion.domain.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -46,10 +46,10 @@ public class PromotionCouponTemplateDO extends BaseEntity {
     private Integer totalCount;
 
     @ApiModelProperty(value = "有效期起始日")
-    private LocalDateTime effectiveStartDay;
+    private Date effectiveStartDay;
 
     @ApiModelProperty(value = "有效期结束日")
-    private LocalDateTime effectiveEndDay;
+    private Date effectiveEndDay;
 
     @ApiModelProperty(value = "是否可转让")
     private Integer isTransfered;
@@ -70,7 +70,7 @@ public class PromotionCouponTemplateDO extends BaseEntity {
     private Integer isReleased;
 
     @ApiModelProperty(value = "是否已停用")
-    private Integer isEnable;
+    private Integer enable;
 
 
 }

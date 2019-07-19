@@ -14,7 +14,7 @@ public class TemplateInfoVO extends CreateTemplateVO {
     private Integer isReleased;
 
 
-    private Integer isEnable;
+    private Integer enable;
 
 
     private String typeName;

@@ -4,7 +4,7 @@ import com.deepexi.util.pojo.AbstractObject;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -40,13 +40,13 @@ public class CouponInstanceDTO extends AbstractObject {
     private Integer deleted;
 
     @ApiModelProperty(value = "创建时间")
-    private LocalDateTime createdTime;
+    private Date createdTime;
 
     @ApiModelProperty(value = "创建人")
     private String createBy;
 
     @ApiModelProperty(value = "更新时间")
-    private LocalDateTime updatedTime;
+    private Date updatedTime;
 
     @ApiModelProperty(value = "更新人")
     private String updatedBy;

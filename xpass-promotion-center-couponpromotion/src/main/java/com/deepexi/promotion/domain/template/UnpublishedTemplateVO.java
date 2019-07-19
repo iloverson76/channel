@@ -2,7 +2,7 @@ package com.deepexi.promotion.domain.template;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * 未发布查询模板列表VO
@@ -18,6 +18,6 @@ public class UnpublishedTemplateVO {
 
     private String templateName;
 
-    private LocalDateTime saveTime;
+    private Date saveTime;
 
 }
