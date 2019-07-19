@@ -3,7 +3,7 @@
 <mapper namespace="com.deepexi.promotion.mapper.PromotionCouponStatisticsMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.deepexi.promotion.domain.coupon.CouponStatistics">
+    <resultMap id="BaseResultMap" type="com.deepexi.promotion.domain.coupon.CouponStatisticsDO">
     <result column="id" property="id" />
     <result column="tenant_id" property="tenantId" />
     <result column="app_id" property="appId" />

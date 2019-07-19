@@ -6,7 +6,7 @@ import lombok.Data;
  * created by chenpeng on
  */
 @Data
-public class CouponInstanceVO extends CouponInstance {
+public class CouponInstanceVO extends CouponInstanceDO {
 
     private int totalCount;//券数量
 

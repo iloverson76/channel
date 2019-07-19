@@ -8,20 +8,22 @@ import lombok.Data;
  */
 public enum CouponStatusEnum implements BaseEnumType{
 
+    NOT_INVALID("0","已过期"),
+    INVALID("1","未过期"),
 
-  /*  START_TIME_GREATERTHAN_END_TIME("400","起始时间大于结束时间"),
-    PARAM_MISS_ID_AND_CODE("400","id和code不能同时为空"),
-    COMMENT_DETAIL_IS_NULL("400","评价内容为空"),
-    ;*/
+    ACTIVITY_NOT_LINKED("2","未关联活动"),
+    ACTIVITY_LINKED("3","已关联活动用户未领用"),
 
-    NOT_LINK_ACTIVITY("0","未关联活动"),
-    LINK_ACTIVITY("1","已关联活动"),//未派发给用户
+    INITIATIVE_ACCEPTED("4","用户主动领取未使用"),
+    INITIATIVE_ACCEPTED_NOT_USED("5","用户主动领取已使用"),
 
-    //INITIATIVE_ACCEPTED_NOT_USED("2","主动领取-未使用"),
-    //INITIATIVE_ACCEPTED_USED("3","主动领取-已使用"),
+    TRANSFERED("6","用户已转让"),
+    ACCEPTED("7","用户受让未使用"),
+    ACCEPTED_USERD("8","用户受让已使用"),
 
-
-            ;
+    SYSTEM_ASSIGNED("8","系统派发未使用"),
+    SYSTEM_ASSIGNED_USED("10","系统派发已使用"),
+    ;
 
     private String code;
 

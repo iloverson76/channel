@@ -1,7 +1,7 @@
 package com.deepexi.promotion.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.deepexi.promotion.domain.coupon.CouponType;
+import com.deepexi.promotion.domain.coupon.CouponTypeDO;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import com.deepexi.promotion.domain.coupon.CouponType;
  * @author xsj
  * @since 2019-07-16
  */
-public interface IPromotionCouponTypeService extends IService<CouponType> {
+public interface IPromotionCouponTypeService extends IService<CouponTypeDO> {
 
 }
