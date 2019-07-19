@@ -21,7 +21,7 @@ public enum CouponStatusEnum implements BaseEnumType{
     ACCEPTED("7","用户受让未使用"),
     ACCEPTED_USERD("8","用户受让已使用"),
 
-    SYSTEM_ASSIGNED("8","系统派发未使用"),
+    SYSTEM_ASSIGNED("9","系统派发未使用"),
     SYSTEM_ASSIGNED_USED("10","系统派发已使用"),
     ;
 
