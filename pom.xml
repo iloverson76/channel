@@ -10,15 +10,15 @@
     </parent>
 
     <groupId>com.deepexi.xpaas</groupId>
-    <artifactId>xpaas-promotion-center</artifactId>
+    <artifactId>xpaas-channel-center</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
-        <module>xpaas-promotion-center-couponpromotion-api</module>
-        <module>xpaas-promotion-center-webapp</module>
-        <module>xpass-promotion-center-couponpromotion</module>
-        <module>xpaas-promotion-center-common</module>
+        <module>xpaas-channel-center-channel-api</module>
+        <module>xpaas-channel-center-webapp</module>
+        <module>xpaas-channel-center-channel</module>
+        <module>xpaas-channel-center-common</module>
     </modules>
 
     <!-- lombok插件 -->

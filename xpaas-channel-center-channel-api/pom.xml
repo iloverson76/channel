@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.deepexi.xpaas</groupId>
-        <artifactId>xpaas-promotion-center</artifactId>
+        <artifactId>xpaas-channel-center</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>xpaas-promotion-center-couponpromotion-api</artifactId>
+    <artifactId>xpaas-channel-center-channel-api</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
