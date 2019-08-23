@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.deepexi.util.pojo.AbstractObject;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -16,37 +17,47 @@ public abstract class BaseEntity extends AbstractObject {
 
     @TableId
     @TableField(value = "`id`")
+    @ApiModelProperty("主键")
     private Long id;
 
     @TableField(value = "`tenant_id`", fill = FieldFill.INSERT)
+    @ApiModelProperty("租户id")
     private String tenantId;
 
     @TableField(value = "`app_id`", fill = FieldFill.INSERT)
+    @ApiModelProperty("应用id")
     private String appId;
 
     @TableLogic
     @TableField(value = "`dr`")
+    @ApiModelProperty("是否已删除")
     private Integer dr;
 
     @TableField(value = "`created_time`", fill = FieldFill.INSERT)
+    @ApiModelProperty("创建时间")
     private Date createdTime;
 
     @TableField(value = "`created_by`", fill = FieldFill.INSERT)
+    @ApiModelProperty("创建人")
     private String createdBy;
 
     @TableField(value = "`updated_time`", fill = FieldFill.UPDATE)
+    @ApiModelProperty("更新时间")
     private Date updatedTime;
 
     @TableField(value = "`updated_by`", fill = FieldFill.UPDATE)
+    @ApiModelProperty("更新人")
     private String updatedBy;
 
     @TableField(value = "`remark`", fill = FieldFill.INSERT)
+    @ApiModelProperty("备注")
     private String remark;
 
     /**
      * 版本号，乐观锁
      */
     @TableField(value = "`version`", fill = FieldFill.INSERT)
+    @ApiModelProperty("版本号，乐观锁")
     private Integer version;
 
     /**
