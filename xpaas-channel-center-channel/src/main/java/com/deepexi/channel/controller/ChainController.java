@@ -20,10 +20,18 @@ import org.springframework.web.bind.annotation.RestController;
 @Api("连锁管理")
 public class ChainController {
 
-    @GetMapping("{id}")
+    @GetMapping()
+    @ApiOperation("查询连锁分类列表")
+    public void listChainPage(){
+
+    }
+
+    @GetMapping("/{id}")
     @ApiOperation("根据id获取连锁店详情")
     public void getChainById(Integer id){
 
     }
+
+
 
 }
