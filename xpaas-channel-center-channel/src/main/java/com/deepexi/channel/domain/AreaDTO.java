@@ -57,13 +57,4 @@ public class AreaDTO extends BaseEntity {
      */
     private String description;
 
-    /**
-     * 版本号，乐观锁
-     */
-    private Integer version;
-
-    /**
-     * 备注
-     */
-
 }

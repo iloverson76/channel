@@ -5,7 +5,9 @@ import com.deepexi.channel.domain.AreaDTO;
 import com.deepexi.channel.domain.AreaVO;
 import com.deepexi.channel.service.IAreaService;
 import com.deepexi.util.config.Payload;
+import com.deepexi.util.pageHelper.PageBean;
 import com.deepexi.util.pojo.CloneDirection;
+import com.deepexi.util.pojo.ObjectCloneUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,15 @@ public class AreaController {
     @GetMapping("/{id}")
     @ApiOperation("根据id获取区域详情")
     public Payload<AreaVO> getAreaById(@PathVariable Long id){
-        return new Payload<AreaVO>(iAreaService.getById(id).clone(AreaVO.class, CloneDirection.OPPOSITE));
+        AreaVO vo=iAreaService.getById(id).clone(AreaVO.class, CloneDirection.OPPOSITE);
+        return new Payload<>(vo);
     }
+/*
+    @GetMapping("/{id}")
+    @ApiOperation("根据id获取区域详情")
+    public Payload<PageBean<AreaVO>> getAreaById(@PathVariable Long id){
+        AreaVO vo=iAreaService.getById(id).clone(AreaVO.class, CloneDirection.OPPOSITE);
+        ObjectCloneUtils.convertList(dtoList, AcceptedAndUsedListVO.class);
+        return new Payload<>(new PageBean<>(vo));
+    }*/
 }
