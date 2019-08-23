@@ -63,9 +63,4 @@ public class AreaDO extends BaseEntity {
      */
     private Integer version;
 
-    /**
-     * 备注
-     */
-    private String remark;
-
 }

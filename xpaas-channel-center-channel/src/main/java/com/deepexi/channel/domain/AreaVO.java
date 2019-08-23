@@ -1,6 +1,7 @@
 package com.deepexi.channel.domain;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.deepexi.util.pojo.AbstractObject;
 import io.swagger.annotations.ApiModel;
 import lombok.*;
 import lombok.experimental.Accessors;
@@ -20,7 +21,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AreaVO extends BaseEntity {
+public class AreaVO extends AbstractObject {
 
     private static final long serialVersionUID = 1L;
 
@@ -58,10 +59,5 @@ public class AreaVO extends BaseEntity {
      * 版本号，乐观锁
      */
     private Integer version;
-
-    /**
-     * 备注
-     */
-    private String remark;
 
 }

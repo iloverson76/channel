@@ -1,7 +1,11 @@
 package com.deepexi.channel.controller;
 
+import com.deepexi.channel.domain.AreaDO;
+import com.deepexi.channel.domain.AreaDTO;
+import com.deepexi.channel.domain.AreaVO;
 import com.deepexi.channel.service.IAreaService;
 import com.deepexi.util.config.Payload;
+import com.deepexi.util.pojo.CloneDirection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +29,7 @@ public class AreaController {
     IAreaService iAreaService;
 
     @GetMapping("/{id}")
-    public Payload<Boolean> getAreaById(@PathVariable Long id){
-        return new Payload<Boolean>(iAreaService.getById(id));
+    public Payload<AreaVO> getAreaById(@PathVariable Long id){
+        return new Payload<AreaVO>(iAreaService.getById(id).clone(AreaVO.class, CloneDirection.OPPOSITE));
     }
 }

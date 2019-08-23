@@ -2,9 +2,13 @@ package com.deepexi.channel.service.impl;
 
 import com.deepexi.channel.dao.IAreaDAO;
 import com.deepexi.channel.domain.AreaDO;
+import com.deepexi.channel.domain.AreaDTO;
 import com.deepexi.channel.service.IAreaService;
+import com.deepexi.util.pojo.CloneDirection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.awt.geom.Area;
 
 /**
  * <p>
@@ -21,8 +25,7 @@ public class AreaServiceImpl implements IAreaService {
     IAreaDAO iAreaDAO;
 
     @Override
-    public boolean getById(Long id) {
-        iAreaDAO.getById(id);
-        return Boolean.TRUE;
+    public AreaDTO getById(Long id) {
+        return iAreaDAO.getById(id).clone(AreaDTO.class, CloneDirection.OPPOSITE);
     }
 }

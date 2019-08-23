@@ -1,8 +1,14 @@
 package com.deepexi.channel.domain;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.deepexi.util.pojo.AbstractObject;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -59,6 +65,5 @@ public class AreaDTO extends BaseEntity {
     /**
      * 备注
      */
-    private String remark;
 
 }

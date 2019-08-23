@@ -13,5 +13,5 @@ import com.deepexi.channel.domain.AreaDTO;
  */
 public interface IAreaService{
 
-    boolean getById(Long id);
+    AreaDTO getById(Long id);
 }
