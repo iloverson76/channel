@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AreaVO extends AbstractObject {
+public class AreaVO extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -54,10 +54,5 @@ public class AreaVO extends AbstractObject {
      * 描述
      */
     private String description;
-
-    /**
-     * 版本号，乐观锁
-     */
-    private Integer version;
 
 }

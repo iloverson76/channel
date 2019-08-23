@@ -58,9 +58,4 @@ public class AreaDO extends BaseEntity {
      */
     private String description;
 
-    /**
-     * 版本号，乐观锁
-     */
-    private Integer version;
-
 }

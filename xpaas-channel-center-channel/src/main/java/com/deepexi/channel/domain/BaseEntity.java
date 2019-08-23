@@ -44,6 +44,12 @@ public abstract class BaseEntity extends AbstractObject {
     private String remark;
 
     /**
+     * 版本号，乐观锁
+     */
+    @TableField(value = "`version`", fill = FieldFill.INSERT)
+    private Integer version;
+
+    /**
      * 这个字段为批量插入时的扩展字段，因为用的自增主键，如果批量时需要关联id，可能导致无法关联
      * 这里可以使用这个字段在业务层面关联，批量插入后，则可以使用这个字段取得id关联一次。
      * 这个字段不入库
