@@ -39,7 +39,7 @@ public class AreaController {
         AreaVO vo=iAreaService.getById(id).clone(AreaVO.class, CloneDirection.OPPOSITE);
         return new Payload<>(vo);
     }
-/*
+/*asdafs dasd
     @GetMapping("/{id}")
     @ApiOperation("根据id获取区域详情")
     public Payload<PageBean<AreaVO>> getAreaById(@PathVariable Long id){
