@@ -25,7 +25,8 @@
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id,
-        application_id,
+        tenant_id,
+        app_id,
         dr,
         created_time,
         updated_time,

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace=".area.mapper.AreaMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.deepexi.channel.domain.area.AreaTypeDO">
+        <result column="id" property="id" />
+        <result column="tenant_id" property="tenantId" />
+        <result column="app_id" property="appId" />
+        <result column="dr" property="dr" />
+        <result column="created_time" property="createdTime" />
+        <result column="updated_time" property="updatedTime" />
+        <result column="created_by" property="createdBy" />
+        <result column="update_by" property="updatedBy" />
+        <result column="" property="parentId" />
+        <result column="limit_parent" property="limitParent" />
+        <result column="area_type_name" property="areaTypeName" />
+        <result column="area_type_code" property="areaTypeCode" />
+        <result column="area_type_name_en" property="areaTypeNameEn" />
+        <result column="description" property="description" />
+        <result column="version" property="version" />
+        <result column="remark" property="remark" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        tenant_id,
+        app_id,
+        dr,
+        created_time,
+        updated_time,
+        created_by,
+        updated_by
+    </sql>
+
+</mapper>

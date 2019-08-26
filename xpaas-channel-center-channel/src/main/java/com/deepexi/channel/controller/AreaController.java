@@ -1,7 +1,6 @@
 package com.deepexi.channel.controller;
 
-import com.deepexi.channel.domain.area.AreaQuery;
-import com.deepexi.channel.domain.area.AreaVO;
+import com.deepexi.channel.domain.area.*;
 import com.deepexi.channel.domain.chain.ChainQuery;
 import com.deepexi.channel.domain.chain.ChainVO;
 import com.deepexi.channel.service.IAreaService;
@@ -18,7 +17,7 @@ import java.util.List;
 
 /**
  * <p>
- * 区域表 前端控制器
+ * 区域-前端控制器
  * </p>
  *
  * @author chp
@@ -52,18 +51,32 @@ public class AreaController {
 
     @GetMapping("/{id:[0-9,]+}")
     @ApiOperation("根据id获取区域详情")
-    public Payload<AreaVO> getChainById(@PathVariable Long id){
+    public Payload<AreaVO> getAreaById(@PathVariable Long id){
         return new Payload<>(new AreaVO());
     }
 
 
     @GetMapping()
     @ApiOperation("查询区域列表")
-    public Payload<PageBean<AreaVO>> listChainPage(@ApiParam(name = "query", required = true) AreaQuery query){
+    public Payload<PageBean<AreaVO>> listAreaPage(@ApiParam(name = "query", required = true) AreaQuery query){
         List<AreaVO> result = new ArrayList<>();
         result.add(new AreaVO());
         result.add(new AreaVO());
         return new Payload<>(new PageBean<>(result));
+    }
+
+    @GetMapping("/listLevel")
+    @ApiOperation("查询区域层级元素列表")
+    public Payload<PageBean<AreaVO>> listAreaLevelElement(@ApiParam(name = "query", required = true) AreaTreeQuery query){
+
+        return new Payload<>(new PageBean<>(null));
+    }
+
+    @GetMapping("/listTree")
+    @ApiOperation("查询区域树")
+    public Payload<PageBean<AreaTreeVO>> listAreaTree(@ApiParam(name = "query", required = true) AreaTreeQuery query){
+
+        return new Payload<>(new PageBean<>(null));
     }
 
 }

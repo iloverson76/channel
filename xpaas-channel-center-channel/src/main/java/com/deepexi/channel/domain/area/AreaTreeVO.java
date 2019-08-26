@@ -2,50 +2,54 @@ package com.deepexi.channel.domain.area;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.deepexi.channel.domain.BaseEntity;
+import io.swagger.annotations.ApiModel;
 import lombok.*;
 import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 区域类型表
+ * 区域表
  * </p>
  *
- * @author chp
- * @since 2019-08-26
+ * @author jobob
+ * @since 2019-08-23
  */
 @EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
+@TableName("cc_area")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AreaTypeDTO extends BaseEntity {
+@ApiModel(value="区域树")
+public class AreaTreeVO extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 父级分类ID
+     * 父节点ID
      */
-    private Long parentId;
+    private Integer parentId;
 
     /**
-     * 是否限制上级 0 不限制 1 限制
+     * 区域分类ID
      */
-    private Boolean limitParent;
+    private Integer areaTypeId;
 
     /**
-     * 区域分类名称
+     * 区域名称
      */
-    private String areaTypeName;
+    private String areaName;
 
     /**
-     * 区域分类编码
+     * 区域编码
      */
-    private String areaTypeCode;
+    private String areaCode;
 
     /**
-     * 区域分类英文名称
+     * 区域英文名称
      */
-    private String areaTypeNameEn;
+    private String areaNameEn;
 
     /**
      * 描述
