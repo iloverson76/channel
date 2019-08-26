@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import java.util.Set;
+
 /**
  * <p>
  * 连锁表
@@ -26,55 +28,51 @@ public class ChainVO extends BaseEntity {
     /**
      * 父节点ID
      */
-    @ApiModelProperty("父节点ID")
+    @ApiModelProperty(value = "父节点ID",example = "123")
     private Long parentId;
-
-    /**
-     * 父节点名称
-     */
-    @ApiModelProperty("父节点名称")
-    private String parentName;
 
     /**
      * 连锁分类ID
      */
-    @ApiModelProperty("连锁分类ID")
+    @ApiModelProperty(value = "连锁分类ID", example = "123")
     private Long chainTypeId;
 
     /**
      * 连锁分类名称
      */
-    @ApiModelProperty("连锁分类名称")
+    @ApiModelProperty(value = "连锁分类名称", example = "渠道")
     private String chainTypeName;
 
     /**
      * 连锁名称
      */
-    @ApiModelProperty("连锁名称")
+    @ApiModelProperty(value = "连锁名称", example = "家乐福")
     private String chainName;
 
     /**
      * 连锁编码
      */
-    @ApiModelProperty("连锁编码")
+    @ApiModelProperty(value = "连锁编码", example = "abcd1234")
     private String chainCode;
 
     /**
      * 连锁英文名称
      */
-    @ApiModelProperty("连锁英文名称")
+    @ApiModelProperty(value = "连锁英文名称", example = "jialefu")
     private String chainNameEn;
 
     /**
      * 描述
      */
-    @ApiModelProperty("描述")
+    @ApiModelProperty(value = "描述", example = "描述")
     private String description;
 
     /**
      * 营业执照
      */
-    @ApiModelProperty("营业执照")
+    @ApiModelProperty(value = "营业执照", example = "www.baidu.com")
     private String businessLicense;
 
+    @ApiModelProperty(value = "连锁子节点")
+    private Set<ChainVO> children;
 }

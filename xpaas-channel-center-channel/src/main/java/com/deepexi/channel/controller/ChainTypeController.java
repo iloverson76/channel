@@ -94,9 +94,9 @@ public class ChainTypeController {
      * @Author: mumu
      * @Date: 2019/8/26
     **/
-    @DeleteMapping("/{id:[0-9,]+}")
+    @DeleteMapping("/{ids:[0-9,]+}")
     @ApiOperation(value = "批量删除连锁分类")
-    public Payload<Boolean> deleteChainTypes(@PathVariable(value = "id", required = true) List<Long> ids) {
+    public Payload<Boolean> deleteChainTypes(@PathVariable(value = "ids", required = true) List<Long> ids) {
         return new Payload<>(true);
     }
 

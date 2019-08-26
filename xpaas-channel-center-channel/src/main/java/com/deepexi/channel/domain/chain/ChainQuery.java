@@ -28,34 +28,38 @@ public class ChainQuery extends BaseEntity {
     /**
      * 父节点ID
      */
+    @ApiModelProperty(value= "父节点ID",example = "123")
     private Long parentId;
 
     /**
      * 连锁分类ID
      */
+    @ApiModelProperty(value = "连锁分类ID",example = "123")
     private Long chainTypeId;
 
     /**
      * 连锁名称
      */
+    @ApiModelProperty(value = "连锁名称",example = "家乐福")
     private String chainName;
 
     /**
      * 连锁编码
      */
+    @ApiModelProperty(value = "连锁编码",example = "abcd123")
     private String chainCode;
 
 
     /**
      * 页码,传-1代表不分页查询
      */
-    @ApiModelProperty("页码")
+    @ApiModelProperty(value = "页码",example = "1")
     private Integer page;
 
     /**
      * 每页数量
      */
-    @ApiModelProperty("每页数量")
+    @ApiModelProperty(value = "每页数量", example = "10")
     private Integer size;
 
     /**
