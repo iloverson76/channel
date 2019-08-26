@@ -12,7 +12,7 @@ import java.util.Date;
 
 /**
  * <p>
- * 门店类型表
+ * 门店信息表
  * </p>
  *
  * @author mumu
@@ -23,35 +23,58 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ApiModel("门店类型")
-public class StoreTypeQuery  extends AbstractObject implements Pageable {
+@ApiModel("门店")
+public class StoreQuery  extends AbstractObject implements Pageable{
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 门店类型名称
+     * 门店名称
      */
-    @ApiModelProperty(value = "门店类型名称")
-    private String storeTypeName;
+    @ApiModelProperty(value = "门店名称")
+    private String storeName;
 
     /**
-     * 门店类型编码
+     * 门店编码
      */
-    @ApiModelProperty(value = "门店类型编码")
-    private String storeTypeCode;
+    @ApiModelProperty(value = "门店编码")
+    private String storeCode;
 
     /**
-     * 门店类型英文名称
+     * 门店英文名称
      */
-    @ApiModelProperty(value = "门店类型英文名称")
-    private String storeTypeNameEn;
+    @ApiModelProperty(value = "门店英文名称")
+    private String storeNameEn;
 
     /**
-     *
-     * 描述
+     * 客户名称
      */
-    @ApiModelProperty(value = "描述")
-    private String description;
+    @ApiModelProperty(value = "客户名称")
+    private String clientName;
+
+    /**
+     * 客户编码
+     */
+    @ApiModelProperty(value = "客户编码")
+    private String clientCode;
+
+    /**
+     * 门店地址
+     */
+    @ApiModelProperty(value = "门店地址")
+    private String storeAddress;
+
+    /**
+     * 门店图片
+     */
+    @ApiModelProperty(value = "门店图片")
+    private String storePhone;
+
+    /**
+     * 状态 1 启用 2 禁用
+     */
+    @ApiModelProperty(value = "状态 1 启用 2 禁用")
+    private Boolean status;
     @ApiModelProperty("页码")
     @Min(value = -1,message = "page最小为-1,代表不分页")
     @Builder.Default
@@ -87,6 +110,5 @@ public class StoreTypeQuery  extends AbstractObject implements Pageable {
      */
     @ApiModelProperty("更新结束时间")
     private Date updateEndTime;
-
 
 }
