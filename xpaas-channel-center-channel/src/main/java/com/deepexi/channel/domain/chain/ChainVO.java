@@ -1,10 +1,12 @@
 package com.deepexi.channel.domain.chain;
 
 import com.deepexi.channel.domain.BaseEntity;
+import com.deepexi.channel.domain.bank.BankVO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -73,6 +75,9 @@ public class ChainVO extends BaseEntity {
     @ApiModelProperty(value = "营业执照", example = "www.baidu.com")
     private String businessLicense;
 
+    @ApiModelProperty(value = "连锁账户")
+    private List<BankVO> bankList;
+
     @ApiModelProperty(value = "连锁子节点")
-    private Set<ChainVO> children;
+    private List<ChainVO> children;
 }

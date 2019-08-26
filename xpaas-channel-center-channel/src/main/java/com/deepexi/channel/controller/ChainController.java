@@ -94,9 +94,32 @@ public class ChainController {
         return new Payload<>(true);
     }
 
-    @GetMapping("tree")
-    public Payload<List<ChainVO>> tree(){
-        return null;
+    @GetMapping("/tree")
+    public Payload<List<ChainVO>> getTree(){
+        List<ChainVO> result = new ArrayList<>();
+        List<ChainVO> children = new ArrayList<>();
+        children.add(new ChainVO());
+        children.add(new ChainVO());
+        children.add(new ChainVO());
+        ChainVO parent = new ChainVO();
+        parent.setChildren(children);
+        result.add(parent);
+        result.add(new ChainVO());
+        result.add(new ChainVO());
+        return new Payload<>(result);
+    }
+
+    @PutMapping("/tree")
+    public Payload<Boolean> updateTree(@RequestBody List<ChainVO> list){
+        return new Payload<>(true);
+    }
+
+    @GetMapping("/list")
+    public Payload<PageBean<ChainVO>> getList(ChainQuery query){
+        List<ChainVO> result = new ArrayList<>();
+        result.add(new ChainVO());
+        result.add(new ChainVO());
+        return new Payload<>(new PageBean<>(result));
     }
 
 }
