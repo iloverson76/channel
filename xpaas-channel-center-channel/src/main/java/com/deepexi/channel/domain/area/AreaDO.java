@@ -18,11 +18,11 @@ import lombok.experimental.Accessors;
  */
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("cc_area")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@TableName("cc_area")
 @ApiModel(value="Area对象", description="区域表")
 public class AreaDO extends BaseEntity {
 

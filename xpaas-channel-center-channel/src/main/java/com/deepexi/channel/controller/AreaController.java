@@ -44,7 +44,7 @@ public class AreaController {
     }
 
     @PutMapping()
-    @ApiOperation(value = "更新区域")
+    @ApiOperation(value = "修改区域")
     public Payload<Boolean> updateArea(@RequestBody AreaVO vo) {
         return new Payload<>(true);
     }

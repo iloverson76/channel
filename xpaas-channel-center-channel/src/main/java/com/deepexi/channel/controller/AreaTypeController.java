@@ -40,7 +40,7 @@ public class AreaTypeController {
     }
 
     @PutMapping()
-    @ApiOperation(value = "更新区域分类")
+    @ApiOperation(value = "修改区域分类")
     public Payload<Boolean> updateAreaType(@RequestBody AreaTypeVO vo) {
         return new Payload<>(true);
     }
