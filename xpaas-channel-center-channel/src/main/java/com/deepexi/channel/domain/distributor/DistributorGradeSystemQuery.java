@@ -37,28 +37,4 @@ public class DistributorGradeSystemQuery extends CommQuery {
      */
     @ApiModelProperty("等级体系编码")
     private String gradeSystemCode;
-
-    /**
-     * 更新開始時間
-     */
-    @ApiModelProperty("更新时间-开始日期")
-    private Date updateStartTime;
-
-    /**
-     * 更新结束时间
-     */
-    @ApiModelProperty("更新时间-结束日期")
-    private Date updateEndTime;
-
-
-    @ApiModelProperty("页码")
-    @Min(value = -1,message = "page最小为-1,代表不分页")
-    @Builder.Default
-    private Integer page = -1;
-
-    @ApiModelProperty("每页数量")
-    @Min(value = 0,message = "size最小为0")
-    @Builder.Default
-    private Integer size = 10;
-
 }

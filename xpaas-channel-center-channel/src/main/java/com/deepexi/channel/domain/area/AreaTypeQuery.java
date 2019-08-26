@@ -35,10 +35,12 @@ public class AreaTypeQuery extends CommQuery {
     /**
      * 区域分类名称
      */
+    @ApiModelProperty("区域分类名称")
     private String areaTypeName;
 
     /**
      * 区域分类编码
      */
+    @ApiModelProperty("区域分类编码")
     private String areaTypeCode;
 }
