@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
  */
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("cc_chain")
+@TableName("cc_chain_type")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

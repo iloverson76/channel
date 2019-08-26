@@ -94,7 +94,8 @@ public class ChainController {
         return new Payload<>(true);
     }
 
-    @GetMapping("/tree")
+    @GetMapping("/listTree")
+    @ApiOperation("查询连锁树")
     public Payload<List<ChainVO>> getTree(){
         List<ChainVO> result = new ArrayList<>();
         List<ChainVO> children = new ArrayList<>();
@@ -109,12 +110,14 @@ public class ChainController {
         return new Payload<>(result);
     }
 
-    @PutMapping("/tree")
+    @PutMapping("/listTree")
+    @ApiOperation("修改连锁树")
     public Payload<Boolean> updateTree(@RequestBody List<ChainVO> list){
         return new Payload<>(true);
     }
 
-    @GetMapping("/list")
+    @GetMapping("/listLevel")
+    @ApiOperation("查询连锁层级元素列表")
     public Payload<PageBean<ChainVO>> getList(ChainQuery query){
         List<ChainVO> result = new ArrayList<>();
         result.add(new ChainVO());

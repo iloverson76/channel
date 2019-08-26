@@ -4,6 +4,7 @@ import com.deepexi.channel.domain.chain.ChainTypeDTO;
 import com.deepexi.channel.domain.chain.ChainTypeQuery;
 import com.deepexi.channel.domain.chain.ChainTypeVO;
 import com.deepexi.channel.service.IChainService;
+import com.deepexi.channel.service.IChainTypeService;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pageHelper.PageBean;
 import com.deepexi.util.pojo.ObjectCloneUtils;
@@ -30,7 +31,7 @@ import java.util.List;
 public class ChainTypeController {
 
     @Autowired
-    IChainService iChainService;
+    IChainTypeService iChainTypeService;
 
     /**
      * @MethodName: listChainTypePage
@@ -46,7 +47,7 @@ public class ChainTypeController {
         List<ChainTypeVO> result = new ArrayList<>();
         result.add(new ChainTypeVO());
         result.add(new ChainTypeVO());
-//        List<ChainTypeDTO> chainTypeDTOList = iChainService.listChainType(query);
+//        List<ChainTypeDTO> chainTypeDTOList = iChainTypeService.listChainType(query);
 //        List<ChainTypeVO> result = ObjectCloneUtils.convertList(chainTypeDTOList, ChainTypeVO.class);
         return new Payload<>(new PageBean<>(result));
     }
@@ -62,9 +63,9 @@ public class ChainTypeController {
     @GetMapping("/{id:[0-9,]+}")
     @ApiOperation(value = "根据id获取连锁类型")
     public Payload<ChainTypeVO> getChainType(@PathVariable(value = "id", required = true) Long id) {
-
-
-        return new Payload<>(new ChainTypeVO());
+        ChainTypeDTO chainTypeDTO = iChainTypeService.getChainType(id);
+        ChainTypeVO chainTypeVO = chainTypeDTO.clone(ChainTypeVO.class);
+        return new Payload<>(chainTypeVO);
     }
 
     /**
@@ -125,7 +126,5 @@ public class ChainTypeController {
         result.add(new ChainTypeVO());
         return new Payload<>(result);
     }
-
-
 
 }

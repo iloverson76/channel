@@ -2,6 +2,9 @@ package com.deepexi.channel.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.deepexi.channel.domain.chain.ChainTypeDTO;
+import com.deepexi.channel.domain.chain.ChainTypeQuery;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,7 @@ import com.deepexi.channel.domain.chain.ChainTypeDTO;
  */
 public interface IChainTypeService{
 
+    ChainTypeDTO getChainType(Long id);
+
+    List<ChainTypeDTO> listChainType(ChainTypeQuery query);
 }

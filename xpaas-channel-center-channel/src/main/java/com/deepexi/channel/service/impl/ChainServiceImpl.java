@@ -1,6 +1,7 @@
 package com.deepexi.channel.service.impl;
 
 import com.deepexi.channel.dao.IChainDAO;
+import com.deepexi.channel.domain.chain.ChainDTO;
 import com.deepexi.channel.domain.chain.ChainTypeDTO;
 import com.deepexi.channel.domain.chain.ChainTypeQuery;
 import com.deepexi.channel.domain.chain.ChainTypeVO;
@@ -16,8 +17,4 @@ public class ChainServiceImpl implements IChainService {
     @Autowired
     IChainDAO iChainDAO;
 
-    @Override
-    public List<ChainTypeDTO> listChainType(ChainTypeQuery query) {
-        return null;
-    }
 }
