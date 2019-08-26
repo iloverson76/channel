@@ -1,6 +1,6 @@
-package com.deepexi.channel.domain.distributor;
+package com.deepexi.channel.domain;
 
-import com.deepexi.channel.domain.CommQuery;
+import com.deepexi.util.pojo.AbstractObject;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -20,23 +20,23 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-@ApiModel("供应商等级体系查询")
-public class DistributorGradeSystemQuery extends CommQuery {
+@ApiModel("供应商查询")
+public class CommQuery extends AbstractObject implements Pageable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 等级体系名称
+     * 開始時間
      */
-    @ApiModelProperty("等级体系名称")
-    private String gradeSystemName;
+    @ApiModelProperty("创建时间-开始日期")
+    private Date startTime;
+
 
     /**
-     * 等级体系编码
+     * 结束时间
      */
-    @ApiModelProperty("等级体系编码")
-    private String gradeSystemCode;
+    @ApiModelProperty("创建时间-结束日期")
+    private Date endTime;
 
     /**
      * 更新開始時間
