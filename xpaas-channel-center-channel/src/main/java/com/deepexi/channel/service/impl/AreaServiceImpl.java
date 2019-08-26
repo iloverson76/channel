@@ -1,6 +1,7 @@
 package com.deepexi.channel.service.impl;
 
 import com.deepexi.channel.dao.IAreaDAO;
+import com.deepexi.channel.domain.area.AreaDTO;
 import com.deepexi.channel.service.IAreaService;
 import com.deepexi.util.pojo.CloneDirection;
 import org.springframework.beans.factory.annotation.Autowired;
