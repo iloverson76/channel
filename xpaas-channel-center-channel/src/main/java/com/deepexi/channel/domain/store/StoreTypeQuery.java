@@ -1,8 +1,5 @@
-package com.deepexi.channel.domain.chain;
+package com.deepexi.channel.domain.store;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.deepexi.channel.domain.BaseEntity;
 import com.deepexi.channel.domain.Pageable;
 import com.deepexi.util.pojo.AbstractObject;
@@ -12,50 +9,49 @@ import lombok.*;
 
 import javax.validation.constraints.Min;
 import java.util.Date;
-import java.util.List;
 
 /**
  * <p>
- * 连锁类型表
+ * 门店类型表
  * </p>
  *
  * @author mumu
  * @since 2019-08-26
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel("连锁类型")
-public class ChainTypeQuery extends AbstractObject implements Pageable {
+@Builder
+@ApiModel("门店类型")
+public class StoreTypeQuery  extends AbstractObject implements Pageable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "主键", example = "123")
-    private Long id;
     /**
-     * 品牌id数组
+     * 门店类型名称
      */
-    @ApiModelProperty("连锁类型id数组")
-    private List<Long> ids;
+    @ApiModelProperty(value = "门店类型名称")
+    private String storeTypeName;
 
     /**
-     * 父级分类ID
+     * 门店类型编码
      */
-    @ApiModelProperty("父节点ID")
-    private Long parentId;
+    @ApiModelProperty(value = "门店类型编码")
+    private String storeTypeCode;
 
     /**
-     * 连锁分类名称
+     * 门店类型英文名称
      */
-    @ApiModelProperty("连锁分类名称")
-    private String chainTypeName;
+    @ApiModelProperty(value = "门店类型英文名称")
+    private String storeTypeNameEn;
 
     /**
-     * 连锁分类编码
+     *
+     * 描述
      */
-    @ApiModelProperty("连锁分类编码")
-    private String chainTypeCode;
-
+    @ApiModelProperty(value = "描述")
+    private String description;
     @ApiModelProperty("页码")
     @Min(value = -1,message = "page最小为-1,代表不分页")
     @Builder.Default
@@ -72,6 +68,7 @@ public class ChainTypeQuery extends AbstractObject implements Pageable {
     @ApiModelProperty("開始時間")
     private Date startTime;
 
+
     /**
      * 结束时间
      */
@@ -84,9 +81,12 @@ public class ChainTypeQuery extends AbstractObject implements Pageable {
     @ApiModelProperty("更新開始時間")
     private Date updateStartTime;
 
+
     /**
      * 更新结束时间
      */
     @ApiModelProperty("更新结束时间")
     private Date updateEndTime;
+
+
 }

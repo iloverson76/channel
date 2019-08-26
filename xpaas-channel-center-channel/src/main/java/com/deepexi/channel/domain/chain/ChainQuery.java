@@ -1,10 +1,13 @@
 package com.deepexi.channel.domain.chain;
 
 import com.deepexi.channel.domain.BaseEntity;
+import com.deepexi.channel.domain.Pageable;
+import com.deepexi.util.pojo.AbstractObject;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.Min;
 import java.util.Date;
 
 /**
@@ -21,42 +24,46 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @ApiModel("连锁")
-public class ChainQuery extends BaseEntity {
+public class ChainQuery extends AbstractObject implements Pageable {
 
     private static final long serialVersionUID = 1L;
+
+    @ApiModelProperty(value = "主键", example = "123")
+    private Long id;
 
     /**
      * 父节点ID
      */
+    @ApiModelProperty(value= "父节点ID",example = "123")
     private Long parentId;
 
     /**
      * 连锁分类ID
      */
+    @ApiModelProperty(value = "连锁分类ID",example = "123")
     private Long chainTypeId;
 
     /**
      * 连锁名称
      */
+    @ApiModelProperty(value = "连锁名称",example = "家乐福")
     private String chainName;
 
     /**
      * 连锁编码
      */
+    @ApiModelProperty(value = "连锁编码",example = "abcd123")
     private String chainCode;
 
-
-    /**
-     * 页码,传-1代表不分页查询
-     */
     @ApiModelProperty("页码")
-    private Integer page;
+    @Min(value = -1,message = "page最小为-1,代表不分页")
+    @Builder.Default
+    private Integer page = -1;
 
-    /**
-     * 每页数量
-     */
     @ApiModelProperty("每页数量")
-    private Integer size;
+    @Min(value = 0,message = "size最小为0")
+    @Builder.Default
+    private Integer size = 10;
 
     /**
      * 開始時間

@@ -17,20 +17,20 @@ public abstract class BaseEntity extends AbstractObject {
 
     @TableId
     @TableField(value = "`id`")
-    @ApiModelProperty("主键")
+    @ApiModelProperty(value = "主键", example = "123")
     private Long id;
 
     @TableField(value = "`tenant_id`", fill = FieldFill.INSERT)
-    @ApiModelProperty("租户id")
+    @ApiModelProperty(value = "租户id", example = "123456")
     private String tenantId;
 
     @TableField(value = "`app_id`", fill = FieldFill.INSERT)
-    @ApiModelProperty("应用id")
+    @ApiModelProperty(value = "应用id", example = "123456789")
     private String appId;
 
     @TableLogic
     @TableField(value = "`dr`")
-    @ApiModelProperty("是否已删除")
+    @ApiModelProperty(value = "是否已删除", example = "0")
     private Integer dr;
 
     @TableField(value = "`created_time`", fill = FieldFill.INSERT)
@@ -38,7 +38,7 @@ public abstract class BaseEntity extends AbstractObject {
     private Date createdTime;
 
     @TableField(value = "`created_by`", fill = FieldFill.INSERT)
-    @ApiModelProperty("创建人")
+    @ApiModelProperty(value = "创建人", example = "mumu")
     private String createdBy;
 
     @TableField(value = "`updated_time`", fill = FieldFill.UPDATE)
@@ -46,18 +46,18 @@ public abstract class BaseEntity extends AbstractObject {
     private Date updatedTime;
 
     @TableField(value = "`updated_by`", fill = FieldFill.UPDATE)
-    @ApiModelProperty("更新人")
+    @ApiModelProperty(value = "更新人", example = "mumu")
     private String updatedBy;
 
     @TableField(value = "`remark`", fill = FieldFill.INSERT)
-    @ApiModelProperty("备注")
+    @ApiModelProperty(value = "备注", example = "备注")
     private String remark;
 
     /**
      * 版本号，乐观锁
      */
     @TableField(value = "`version`", fill = FieldFill.INSERT)
-    @ApiModelProperty("版本号，乐观锁")
+    @ApiModelProperty(value = "版本号，乐观锁" )
     private Integer version;
 
     /**

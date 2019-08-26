@@ -1,12 +1,16 @@
 package com.deepexi.channel.controller;
 
+import com.deepexi.channel.domain.chain.ChainTypeDTO;
 import com.deepexi.channel.domain.chain.ChainTypeQuery;
 import com.deepexi.channel.domain.chain.ChainTypeVO;
+import com.deepexi.channel.service.IChainService;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pageHelper.PageBean;
+import com.deepexi.util.pojo.ObjectCloneUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -25,6 +29,9 @@ import java.util.List;
 @Api("连锁类型管理")
 public class ChainTypeController {
 
+    @Autowired
+    IChainService iChainService;
+
     /**
      * @MethodName: listChainTypePage
      * @Description: 查询连锁类型列表
@@ -39,6 +46,8 @@ public class ChainTypeController {
         List<ChainTypeVO> result = new ArrayList<>();
         result.add(new ChainTypeVO());
         result.add(new ChainTypeVO());
+//        List<ChainTypeDTO> chainTypeDTOList = iChainService.listChainType(query);
+//        List<ChainTypeVO> result = ObjectCloneUtils.convertList(chainTypeDTOList, ChainTypeVO.class);
         return new Payload<>(new PageBean<>(result));
     }
 
@@ -94,9 +103,9 @@ public class ChainTypeController {
      * @Author: mumu
      * @Date: 2019/8/26
     **/
-    @DeleteMapping("/{id:[0-9,]+}")
+    @DeleteMapping("/{ids:[0-9,]+}")
     @ApiOperation(value = "批量删除连锁分类")
-    public Payload<Boolean> deleteChainTypes(@PathVariable(value = "id", required = true) List<Long> ids) {
+    public Payload<Boolean> deleteChainTypes(@PathVariable(value = "ids", required = true) List<Long> ids) {
         return new Payload<>(true);
     }
 

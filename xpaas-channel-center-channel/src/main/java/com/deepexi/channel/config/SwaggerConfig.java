@@ -26,7 +26,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 //页面标题
-                .title("Spring cloud 脚手架使用 Swagger2 构建RESTful API")
+                .title("渠道中心 RESTful API")
                 //创建人
                 .contact(new Contact("deepexi", "http://www.deepexi.com", "hudong@deepexi.com"))
                 //版本号
