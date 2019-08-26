@@ -1,25 +1,20 @@
-package com.deepexi.channel.domain.area;
+package com.deepexi.channel.domain.distributor;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.deepexi.channel.domain.BaseEntity;
 import com.deepexi.channel.domain.Pageable;
 import com.deepexi.util.pojo.AbstractObject;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 
 import javax.validation.constraints.Min;
 import java.util.Date;
 
 /**
  * <p>
- * 区域查询
+ * 等级体系表
  * </p>
  *
- * @author mumu
+ * @author chp
  * @since 2019-08-26
  */
 @EqualsAndHashCode(callSuper = true)
@@ -27,33 +22,21 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ApiModel("区域查询")
-public class AreaQuery extends AbstractObject implements Pageable {
+public class DistributorGradeSystemQuery extends AbstractObject implements Pageable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 区域名称
+     * 等级体系名称
      */
-    private String areaName;
+    @ApiModelProperty("等级体系名称")
+    private String gradeSystemName;
 
     /**
-     * 区域编码
+     * 等级体系编码
      */
-    private String areaCode;
-
-    /**
-     * 開始時間
-     */
-    @ApiModelProperty("创建时间-开始日期")
-    private Date startTime;
-
-
-    /**
-     * 结束时间
-     */
-    @ApiModelProperty("创建时间-结束日期")
-    private Date endTime;
+    @ApiModelProperty("等级体系编码")
+    private String gradeSystemCode;
 
     /**
      * 更新開始時間
@@ -77,4 +60,5 @@ public class AreaQuery extends AbstractObject implements Pageable {
     @Min(value = 0,message = "size最小为0")
     @Builder.Default
     private Integer size = 10;
+
 }

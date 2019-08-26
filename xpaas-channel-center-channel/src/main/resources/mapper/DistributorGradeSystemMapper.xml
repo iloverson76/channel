@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace=".area.mapper.AreaMapper">
+<mapper namespace="com.deepexi.channel.mapper.DistributorGradeMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.deepexi.channel.domain.area.AreaDO">
+    <resultMap id="BaseResultMap" type="com.deepexi.channel.domain.distributor.DistributorGradeSystemDO">
         <result column="id" property="id" />
         <result column="tenant_id" property="tenantId" />
         <result column="app_id" property="appId" />
@@ -12,14 +12,11 @@
         <result column="updated_time" property="updatedTime" />
         <result column="created_by" property="createdBy" />
         <result column="update_by" property="updatedBy" />
-        <result column="" property="parentId" />
-        <result column="area_type_id" property="areaTypeId" />
-        <result column="area_name" property="areaName" />
-        <result column="area_code" property="areaCode" />
-        <result column="area_name_en" property="areaNameEn" />
-        <result column="description" property="description" />
         <result column="version" property="version" />
         <result column="remark" property="remark" />
+        <result column="grade_system_name" property="gradeSystemName" />
+        <result column="grade_system_code" property="gradeSystemCode" />
+        <result column="description" property="description" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
