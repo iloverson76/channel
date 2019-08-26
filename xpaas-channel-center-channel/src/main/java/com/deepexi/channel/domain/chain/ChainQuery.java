@@ -1,6 +1,8 @@
 package com.deepexi.channel.domain.chain;
 
 import com.deepexi.channel.domain.BaseEntity;
+import com.deepexi.channel.domain.Pageable;
+import com.deepexi.util.pojo.AbstractObject;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -22,9 +24,12 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @ApiModel("连锁")
-public class ChainQuery extends BaseEntity {
+public class ChainQuery extends AbstractObject implements Pageable {
 
     private static final long serialVersionUID = 1L;
+
+    @ApiModelProperty(value = "主键", example = "123")
+    private Long id;
 
     /**
      * 父节点ID

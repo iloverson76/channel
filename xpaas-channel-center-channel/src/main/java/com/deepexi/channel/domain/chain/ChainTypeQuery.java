@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.deepexi.channel.domain.BaseEntity;
+import com.deepexi.channel.domain.Pageable;
+import com.deepexi.util.pojo.AbstractObject;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -24,10 +26,12 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ApiModel("连锁类型")
-public class ChainTypeQuery extends BaseEntity {
+public class ChainTypeQuery extends AbstractObject implements Pageable {
 
     private static final long serialVersionUID = 1L;
 
+    @ApiModelProperty(value = "主键", example = "123")
+    private Long id;
     /**
      * 品牌id数组
      */
