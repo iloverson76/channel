@@ -53,7 +53,7 @@ public class ChainController {
         return new Payload<>(true);
     }
 
-    @DeleteMapping("/{id:[0-9,]+}")
+    @DeleteMapping("/{ids:[0-9,]+}")
     @ApiOperation(value = "批量删除连锁")
     public Payload<Boolean> deleteChains(@PathVariable(value = "id", required = true) List<Long> ids) {
         return new Payload<>(true);

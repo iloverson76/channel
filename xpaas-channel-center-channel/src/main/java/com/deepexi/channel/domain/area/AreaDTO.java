@@ -1,9 +1,10 @@
-package com.deepexi.channel.domain;
+package com.deepexi.channel.domain.area;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.deepexi.channel.domain.BaseEntity;
 import com.deepexi.util.pojo.AbstractObject;
 import lombok.*;
 

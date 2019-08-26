@@ -2,7 +2,7 @@ package com.deepexi.channel.mapper;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.deepexi.channel.domain.AreaDO;
+import com.deepexi.channel.domain.area.AreaDO;
 
 /**
  * <p>
