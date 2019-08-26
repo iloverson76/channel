@@ -65,20 +65,18 @@ public class AreaController {
         return new Payload<>(new PageBean<>(result));
     }
 
-    @GetMapping()
+    @GetMapping("/listLevel")
     @ApiOperation("查询区域层级元素列表")
     public Payload<PageBean<AreaVO>> listAreaLevelElement(@ApiParam(name = "query", required = true) AreaTreeQuery query){
 
         return new Payload<>(new PageBean<>(null));
     }
 
-    @GetMapping()
+    @GetMapping("/listTree")
     @ApiOperation("查询区域树")
     public Payload<PageBean<AreaTreeVO>> listAreaTree(@ApiParam(name = "query", required = true) AreaTreeQuery query){
 
         return new Payload<>(new PageBean<>(null));
     }
-
-
 
 }

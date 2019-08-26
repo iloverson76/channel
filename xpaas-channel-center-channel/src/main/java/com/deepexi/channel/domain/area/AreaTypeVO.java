@@ -2,8 +2,7 @@ package com.deepexi.channel.domain.area;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.deepexi.channel.domain.BaseEntity;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 /**
@@ -14,10 +13,11 @@ import lombok.experimental.Accessors;
  * @author chp
  * @since 2019-08-26
  */
-@Data
 @EqualsAndHashCode(callSuper = true)
-@Accessors(chain = true)
-@TableName("cc_area_type")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class AreaTypeVO extends BaseEntity {
 
     private static final long serialVersionUID = 1L;

@@ -3,7 +3,7 @@
 <mapper namespace=".area.mapper.AreaMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.deepexi.channel.domain.AreaDO">
+    <resultMap id="BaseResultMap" type="com.deepexi.channel.domain.area.AreaDO">
         <result column="id" property="id" />
         <result column="tenant_id" property="tenantId" />
         <result column="app_id" property="appId" />
@@ -25,7 +25,8 @@
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id,
-        application_id,
+        tenant_id,
+        app_id,
         dr,
         created_time,
         updated_time,
