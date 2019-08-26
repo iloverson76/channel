@@ -18,5 +18,4 @@ import java.util.List;
  */
 public interface IChainService {
 
-    List<ChainTypeDTO> listChainType(ChainTypeQuery query);
 }
