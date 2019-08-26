@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.Min;
 import java.util.Date;
 
 /**
@@ -49,18 +50,15 @@ public class ChainQuery extends BaseEntity {
     @ApiModelProperty(value = "连锁编码",example = "abcd123")
     private String chainCode;
 
+    @ApiModelProperty("页码")
+    @Min(value = -1,message = "page最小为-1,代表不分页")
+    @Builder.Default
+    private Integer page = -1;
 
-    /**
-     * 页码,传-1代表不分页查询
-     */
-    @ApiModelProperty(value = "页码",example = "1")
-    private Integer page;
-
-    /**
-     * 每页数量
-     */
-    @ApiModelProperty(value = "每页数量", example = "10")
-    private Integer size;
+    @ApiModelProperty("每页数量")
+    @Min(value = 0,message = "size最小为0")
+    @Builder.Default
+    private Integer size = 10;
 
     /**
      * 開始時間

@@ -1,21 +1,20 @@
 package com.deepexi.channel.controller;
 
-import com.deepexi.channel.domain.AreaDO;
-import com.deepexi.channel.domain.AreaDTO;
-import com.deepexi.channel.domain.AreaVO;
+import com.deepexi.channel.domain.area.AreaQuery;
+import com.deepexi.channel.domain.area.AreaVO;
+import com.deepexi.channel.domain.chain.ChainQuery;
+import com.deepexi.channel.domain.chain.ChainVO;
 import com.deepexi.channel.service.IAreaService;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pageHelper.PageBean;
-import com.deepexi.util.pojo.CloneDirection;
-import com.deepexi.util.pojo.ObjectCloneUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -33,18 +32,38 @@ public class AreaController {
     @Autowired
     IAreaService iAreaService;
 
-    @GetMapping("/{id}")
-    @ApiOperation("根据id获取区域详情")
-    public Payload<AreaVO> getAreaById(@PathVariable Long id){
-        AreaVO vo=iAreaService.getById(id).clone(AreaVO.class, CloneDirection.OPPOSITE);
-        return new Payload<>(vo);
+    @PostMapping()
+    @ApiOperation(value = "新增区域分类")
+    public Payload<Boolean> saveArea(@RequestBody AreaVO vo) {
+        return new Payload<>(true);
     }
-/*asdafs dasd
-    @GetMapping("/{id}")
+
+    @DeleteMapping("/{ids:[0-9,]+}")
+    @ApiOperation(value = "删除区域分类")
+    public Payload<Boolean> deleteArea(@PathVariable(value = "ids", required = true) List<Long> ids) {
+        return new Payload<>(true);
+    }
+
+    @PutMapping()
+    @ApiOperation(value = "更新区域分类")
+    public Payload<Boolean> updateArea(@RequestBody AreaVO vo) {
+        return new Payload<>(true);
+    }
+
+    @GetMapping("/{id:[0-9,]+}")
     @ApiOperation("根据id获取区域详情")
-    public Payload<PageBean<AreaVO>> getAreaById(@PathVariable Long id){
-        AreaVO vo=iAreaService.getById(id).clone(AreaVO.class, CloneDirection.OPPOSITE);
-        ObjectCloneUtils.convertList(dtoList, AcceptedAndUsedListVO.class);
-        return new Payload<>(new PageBean<>(vo));
-    }*/
+    public Payload<AreaVO> getChainById(@PathVariable Long id){
+        return new Payload<>(new AreaVO());
+    }
+
+
+    @GetMapping()
+    @ApiOperation("查询区域分类列表")
+    public Payload<PageBean<AreaVO>> listChainPage(@ApiParam(name = "query", required = true) AreaQuery query){
+        List<AreaVO> result = new ArrayList<>();
+        result.add(new AreaVO());
+        result.add(new AreaVO());
+        return new Payload<>(new PageBean<>(result));
+    }
+
 }
