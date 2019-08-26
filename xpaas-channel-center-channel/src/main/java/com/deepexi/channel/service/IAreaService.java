@@ -1,5 +1,7 @@
 package com.deepexi.channel.service;
 
+import com.deepexi.channel.domain.area.AreaDTO;
+
 /**
  * <p>
  * 区域表 服务类

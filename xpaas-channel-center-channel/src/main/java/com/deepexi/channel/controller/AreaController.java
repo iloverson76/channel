@@ -33,19 +33,19 @@ public class AreaController {
     IAreaService iAreaService;
 
     @PostMapping()
-    @ApiOperation(value = "新增区域分类")
+    @ApiOperation(value = "新增区域")
     public Payload<Boolean> saveArea(@RequestBody AreaVO vo) {
         return new Payload<>(true);
     }
 
     @DeleteMapping("/{ids:[0-9,]+}")
-    @ApiOperation(value = "删除区域分类")
+    @ApiOperation(value = "删除区域")
     public Payload<Boolean> deleteArea(@PathVariable(value = "ids", required = true) List<Long> ids) {
         return new Payload<>(true);
     }
 
     @PutMapping()
-    @ApiOperation(value = "更新区域分类")
+    @ApiOperation(value = "更新区域")
     public Payload<Boolean> updateArea(@RequestBody AreaVO vo) {
         return new Payload<>(true);
     }
@@ -58,7 +58,7 @@ public class AreaController {
 
 
     @GetMapping()
-    @ApiOperation("查询区域分类列表")
+    @ApiOperation("查询区域列表")
     public Payload<PageBean<AreaVO>> listChainPage(@ApiParam(name = "query", required = true) AreaQuery query){
         List<AreaVO> result = new ArrayList<>();
         result.add(new AreaVO());
