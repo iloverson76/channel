@@ -24,12 +24,16 @@ import java.util.List;
 @RequestMapping("/api/v1/storeType")
 @Api("门店类型管理")
 public class StoreTypeController {
+
+
+
     @GetMapping()
     @ApiOperation("查询门店类型列表")
     public Payload<PageBean<StoreTypeVO>> listStoreTypePage(@ApiParam(name = "query", required = true) StoreTypeQuery query){
         List<StoreTypeVO> result = new ArrayList<>();
         result.add(new StoreTypeVO());
         result.add(new StoreTypeVO());
+
         return new Payload<>(new PageBean<>(result));
     }
 

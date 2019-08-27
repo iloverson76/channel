@@ -6,6 +6,8 @@ import com.deepexi.channel.domain.chain.ChainTypeDO;
 import com.deepexi.channel.domain.chain.ChainTypeQuery;
 import com.github.pagehelper.Page;
 
+import java.util.List;
+
 public interface IChainTypeDAO extends IService<ChainTypeDO> {
-    Page<ChainTypeDO> listChainTypePage(ChainTypeQuery query);
+    List<ChainTypeDO> listChainTypePage(ChainTypeQuery query);
 }

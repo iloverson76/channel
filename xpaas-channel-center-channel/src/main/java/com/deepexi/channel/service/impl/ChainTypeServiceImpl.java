@@ -6,6 +6,7 @@ import com.deepexi.channel.domain.chain.ChainTypeDTO;
 import com.deepexi.channel.domain.chain.ChainTypeQuery;
 import com.deepexi.channel.extension.AppRuntimeEnv;
 import com.deepexi.channel.service.IChainTypeService;
+import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import com.github.pagehelper.Page;
@@ -38,23 +39,30 @@ public class ChainTypeServiceImpl implements IChainTypeService {
     public List<ChainTypeDTO> listChainType(ChainTypeQuery query) {
 //        query.setTenantId(appRuntimeEnv.getTenantId());
 //        query.setAppId(appRuntimeEnv.getAppId());
-        Page<ChainTypeDO> result =  iChainTypeDAO.listChainTypePage(query);
+        List<ChainTypeDO> result =  iChainTypeDAO.listChainTypePage(query);
         return ObjectCloneUtils.convertList(result, ChainTypeDTO.class, CloneDirection.OPPOSITE);
     }
 
     @Override
     public Boolean insert(ChainTypeDTO dto) {
-        return iChainTypeDAO.save(dto.clone(ChainTypeDO.class,CloneDirection.FORWARD));
+        ChainTypeDO chainTypeDO = dto.clone(ChainTypeDO.class);
+        return iChainTypeDAO.save(chainTypeDO);
     }
 
     @Override
     public Boolean update(ChainTypeDTO dto) {
+        if (dto.getId() == null || dto.getId() == 0L) {
+            return false;
+        }
         boolean result = iChainTypeDAO.updateById(dto.clone(ChainTypeDO.class));
         return result;
     }
 
     @Override
     public Boolean delete(List<Long> ids) {
+        if(CollectionUtil.isEmpty(ids)){
+            return false;
+        }
         return iChainTypeDAO.removeByIds(ids);
     }
 }

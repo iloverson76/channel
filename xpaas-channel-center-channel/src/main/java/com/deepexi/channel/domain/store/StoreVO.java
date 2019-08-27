@@ -2,10 +2,15 @@ package com.deepexi.channel.domain.store;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.deepexi.channel.domain.BaseEntity;
+import com.deepexi.channel.domain.area.AreaVO;
+import com.deepexi.channel.domain.chain.ChainVO;
+import com.deepexi.channel.domain.distributor.DistributorVO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.Accessors;
+
+import java.util.List;
 
 /**
  * <p>
@@ -68,9 +73,23 @@ public class StoreVO extends BaseEntity {
     private String storePhone;
 
     /**
-     * 状态 1 启用 2 禁用
+     * 是否启用 0 禁用 1 启用
      */
-    @ApiModelProperty(value = "状态 1 启用 2 禁用")
-    private Boolean status;
+    @ApiModelProperty(value = "是否启用 0 禁用 1 启用")
+    private Boolean enable;
 
+    @ApiModelProperty(value = "门店等级")
+    private StoreTypeVO storeTypeVO;
+
+    @ApiModelProperty(value = "门店类型")
+    private StoreGradeVO storeGradeVO;
+
+    @ApiModelProperty(value = "区域信息")
+    private AreaVO areaVO;
+
+    @ApiModelProperty(value = "连锁信息")
+    private ChainVO chainVO;
+
+    @ApiModelProperty(value = "经销商信息")
+    private List<DistributorVO> distributorVOS;
 }

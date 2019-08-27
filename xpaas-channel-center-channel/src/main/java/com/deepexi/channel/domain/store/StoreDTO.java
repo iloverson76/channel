@@ -3,6 +3,7 @@ package com.deepexi.channel.domain.store;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.deepexi.channel.domain.BaseEntity;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -42,5 +43,10 @@ public class StoreDTO extends BaseEntity {
      * 描述
      */
     private String description;
+
+    /**
+     * 是否启用 0 禁用 1 启用
+     */
+    private Boolean enable;
 
 }

@@ -7,7 +7,6 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 @EqualsAndHashCode(callSuper = true)
-@Accessors(chain = true)
 @TableName("cc_bank")
 @Data
 @AllArgsConstructor

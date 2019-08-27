@@ -25,17 +25,15 @@ public class CommQuery extends AbstractObject implements Pageable {
 
     private static final long serialVersionUID = 1L;
     /**
-     * 租户id
+     * 開始時間
      */
-    @ApiModelProperty("租户id")
+    @ApiModelProperty("创建时间-开始日期")
     private String tenantId;
-
     /**
-     * 应用id
+     * 開始時間
      */
-    @ApiModelProperty("应用id")
+    @ApiModelProperty("创建时间-开始日期")
     private String appId;
-
     /**
      * 開始時間
      */

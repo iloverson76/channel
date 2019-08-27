@@ -17,7 +17,6 @@ import java.time.LocalDateTime;
  * @since 2019-08-26
  */
 @EqualsAndHashCode(callSuper = true)
-@Accessors(chain = true)
 @TableName("cc_store")
 @Data
 @AllArgsConstructor
@@ -62,10 +61,9 @@ public class StoreDO  extends BaseEntity{
      * 门店图片
      */
     private String storePhone;
-
     /**
-     * 状态 1 启用 2 禁用
+     * 是否启用 0 禁用 1 启用
      */
-    private Boolean status;
+    private Boolean enable;
 
 }
