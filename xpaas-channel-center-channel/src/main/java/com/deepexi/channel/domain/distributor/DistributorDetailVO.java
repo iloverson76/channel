@@ -23,8 +23,7 @@ import java.util.List;
 @Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-@ApiModel(value="经销商详细详情")
+@ApiModel(value="经销商详细信息")
 public class DistributorDetailVO extends DistributorVO {
 
     private static final long serialVersionUID = 1L;
