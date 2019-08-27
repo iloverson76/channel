@@ -1,6 +1,11 @@
 package com.deepexi.channel.service;
 
-import com.deepexi.channel.domain.area.AreaDTO;
+import com.deepexi.channel.domain.area.AreaTypeDTO;
+import com.deepexi.channel.domain.area.AreaTypeQuery;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -12,4 +17,13 @@ import com.deepexi.channel.domain.area.AreaDTO;
  */
 public interface IAreaTypeService {
 
+    boolean saveAreaType( AreaTypeDTO dto);
+
+    boolean updateAreaTypeById(AreaTypeDTO dto);
+
+    boolean deleteAreaTypeByIds(Set<Long> ids);
+
+    List<AreaTypeDTO> listAreaTypePage(AreaTypeQuery query);
+
+    AreaTypeDTO getAreaTypeById(Long id);
 }

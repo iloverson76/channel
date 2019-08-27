@@ -21,7 +21,6 @@ import java.util.Date;
  * @since 2019-08-26
  */
 @EqualsAndHashCode(callSuper = true)
-@Accessors(chain = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

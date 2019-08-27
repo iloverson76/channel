@@ -24,7 +24,6 @@ import java.util.List;
 @Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @ApiModel(value="经销商详细详情")
 public class DistributorDetailDTO extends DistributorDTO {
 

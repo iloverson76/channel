@@ -17,7 +17,6 @@ import lombok.experimental.Accessors;
  * @since 2019-08-26
  */
 @Data
-@Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

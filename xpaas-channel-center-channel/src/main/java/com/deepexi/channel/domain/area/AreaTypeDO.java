@@ -15,11 +15,9 @@ import lombok.experimental.Accessors;
  * @since 2019-08-26
  */
 @EqualsAndHashCode(callSuper = true)
-@Accessors(chain = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @TableName("cc_area_type")
 @ApiModel(value="AreaType对象", description="区域类型表")
 public class AreaTypeDO extends BaseEntity {

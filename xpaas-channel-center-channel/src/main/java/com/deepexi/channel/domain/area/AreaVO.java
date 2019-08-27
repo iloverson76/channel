@@ -31,7 +31,7 @@ public class AreaVO extends BaseEntity {
     /**
      * 父节点ID
      */
-    @ApiModelProperty("父节点ID")
+    @ApiModelProperty(value = "父节点ID")
     private Integer parentId;
 
     /**

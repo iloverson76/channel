@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.Date;
 
 
@@ -26,8 +25,7 @@ public class MetaObjectHandlerConfig implements MetaObjectHandler {
 
     private static final String APP_ID = "appId";
 
-    @Resource
-    private AppRuntimeEnv appRuntimeEnv;
+    AppRuntimeEnv appRuntimeEnv= AppRuntimeEnv.getInstance();
 
     /**
      *  mybatis-plus公共字段自动填充，https://baomidou.oschina.io/mybatis-plus-doc/#/auto-fill

@@ -1,6 +1,7 @@
 package com.deepexi.channel.service.impl;
 
 import com.deepexi.channel.dao.IAreaDAO;
+import com.deepexi.channel.domain.area.AreaDO;
 import com.deepexi.channel.domain.area.AreaDTO;
 import com.deepexi.channel.service.IAreaService;
 import com.deepexi.util.pojo.CloneDirection;
@@ -22,7 +23,10 @@ public class AreaServiceImpl implements IAreaService {
     IAreaDAO iAreaDAO;
 
     @Override
-    public AreaDTO getById(Long id) {
-        return iAreaDAO.getById(id).clone(AreaDTO.class, CloneDirection.OPPOSITE);
+    public boolean saveArea(AreaDTO dto) {
+
+        return iAreaDAO.save(dto.clone(AreaDO.class,CloneDirection.FORWARD));
     }
+
+
 }
