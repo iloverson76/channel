@@ -1,5 +1,6 @@
 package com.deepexi.channel.domain.area;
 
+import com.deepexi.channel.domain.CommQuery;
 import com.deepexi.channel.domain.Pageable;
 import com.deepexi.util.pojo.AbstractObject;
 import io.swagger.annotations.ApiModel;
@@ -23,7 +24,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @ApiModel("区域层级元素列表和树形结构查询")
-public class AreaTreeQuery extends AbstractObject{
+public class AreaTreeQuery extends CommQuery {
 
     private static final long serialVersionUID = 1L;
 

@@ -20,21 +20,28 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-@ApiModel("供应商等级体系查询")
-public class DistributorGradeSystemQuery extends CommQuery {
+@ApiModel("经销商查询")
+public class DistributorQuery extends CommQuery {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 等级体系名称
+     * 经销商名称
      */
-    @ApiModelProperty("等级体系名称")
-    private String gradeSystemName;
+    @ApiModelProperty("经销商名称(中英文都可以)")
+    private String distributoNname;
 
     /**
-     * 等级体系编码
+     * 经销商类型 1 厂商 2 经销商
      */
-    @ApiModelProperty("等级体系编码")
-    private String gradeSystemCode;
+    @ApiModelProperty("经销商类型 1 厂商 2 经销商")
+    private Integer distributorType;
+
+    /**
+     * 状态 0 禁用 1 启用
+     */
+    @ApiModelProperty("状态: 0 禁用 1 启用")
+    private Integer enable ;
+
+
 }
