@@ -20,4 +20,11 @@
         <result column="version" property="version" />
         <result column="remark" property="remark" />
     </resultMap>
+
+    <select id="listChainTypePage" resultMap="BaseResultMap">
+        SELECT * from cc_chain_type
+        <if test="id != null">
+            and cc.id = #{id}
+        </if>
+    </select>
 </mapper>

@@ -44,11 +44,11 @@ public class ChainTypeController {
     @GetMapping
     @ApiOperation(value = "查询连锁类型列表")
     public Payload<PageBean<ChainTypeVO>> listChainTypePage(@ApiParam(name = "query", required = true) ChainTypeQuery query) {
-        List<ChainTypeVO> result = new ArrayList<>();
-        result.add(new ChainTypeVO());
-        result.add(new ChainTypeVO());
-//        List<ChainTypeDTO> chainTypeDTOList = iChainTypeService.listChainType(query);
-//        List<ChainTypeVO> result = ObjectCloneUtils.convertList(chainTypeDTOList, ChainTypeVO.class);
+//        List<ChainTypeVO> result = new ArrayList<>();
+//        result.add(new ChainTypeVO());
+//        result.add(new ChainTypeVO());
+        List<ChainTypeDTO> chainTypeDTOList = iChainTypeService.listChainType(query, query.getPage(), query.getSize());
+        List<ChainTypeVO> result = ObjectCloneUtils.convertList(chainTypeDTOList, ChainTypeVO.class);
         return new Payload<>(new PageBean<>(result));
     }
 
