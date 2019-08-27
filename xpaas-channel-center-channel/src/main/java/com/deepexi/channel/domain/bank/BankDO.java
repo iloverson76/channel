@@ -18,6 +18,6 @@ public class BankDO extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    private String bank_name;
+    private String bankName;
 
 }

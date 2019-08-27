@@ -3,7 +3,7 @@
 <mapper namespace="com.deepexi.channel.mapper.BankMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.deepexi.channel.domain.area.AreaDO">
+    <resultMap id="BaseResultMap" type="com.deepexi.channel.domain.bank.BankDO">
         <result column="id" property="id" />
         <result column="bank_name" property="bankName" />
         <result column="tenant_id" property="tenantId" />
@@ -30,7 +30,7 @@
         `tenant_id`
     </sql>
 
-    <select id="findAll">
+    <select id="findAll" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM cc_bank

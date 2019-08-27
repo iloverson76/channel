@@ -18,6 +18,6 @@ public class BankVO extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
     @ApiModelProperty("银行名称")
-    private String bank_name;
+    private String bankName;
 
 }
