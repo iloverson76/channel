@@ -30,6 +30,12 @@ public class AreaTypeVO extends BaseEntity {
     private Long parentId;
 
     /**
+     * 上级名称
+     */
+    @ApiModelProperty("上级名称")
+    private String parentName;
+
+    /**
      * 是否限制上级 0 不限制 1 限制
      */
     @ApiModelProperty("是否限制上级 0 不限制 1 限制")

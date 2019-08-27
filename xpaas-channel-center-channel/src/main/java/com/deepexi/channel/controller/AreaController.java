@@ -34,6 +34,7 @@ public class AreaController {
     @PostMapping()
     @ApiOperation(value = "新增区域")
     public Payload<Boolean> saveArea(@RequestBody AreaVO vo) {
+
         return new Payload<>(true);
     }
 

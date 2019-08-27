@@ -2,7 +2,6 @@ package com.deepexi.channel.aop;
 
 import com.alibaba.fastjson.JSON;
 import com.deepexi.channel.extension.AppRuntimeEnv;
-
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -11,12 +10,11 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -32,8 +30,7 @@ class LogAspect {
     private final static String APP_ID = "appId";
     private final static String TOKEN_KEY = "userToken";
 
-    @Autowired
-    private AppRuntimeEnv appRuntimeEnv;
+    AppRuntimeEnv appRuntimeEnv= AppRuntimeEnv.getInstance();
 
     @Pointcut("execution (* com.deepexi.channel.controller..*.*(..))")
     public void apiLogAop() {

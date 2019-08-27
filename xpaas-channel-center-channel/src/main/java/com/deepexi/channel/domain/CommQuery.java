@@ -1,5 +1,8 @@
 package com.deepexi.channel.domain;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.deepexi.util.pojo.AbstractObject;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -18,12 +21,19 @@ import java.util.Date;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @ApiModel("供应商查询")
-public class CommQuery extends AbstractObject implements Pageable {
+public abstract class CommQuery extends AbstractObject{
 
     private static final long serialVersionUID = 1L;
+
+    @ApiModelProperty(value = "主键", example = "123")
+    private Long id;
+
+    @ApiModelProperty(value = "租户id", example = "123456")
+    private String tenantId;
+
+    @ApiModelProperty(value = "应用id", example = "123456789")
+    private String appId;
 
     /**
      * 開始時間
@@ -49,7 +59,6 @@ public class CommQuery extends AbstractObject implements Pageable {
      */
     @ApiModelProperty("更新时间-结束日期")
     private Date updateEndTime;
-
 
     @ApiModelProperty("页码")
     @Min(value = -1,message = "page最小为-1,代表不分页")

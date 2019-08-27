@@ -34,4 +34,53 @@
         updated_by
     </sql>
 
+    <select id="listAreaType" parameterType="com.deepexi.channel.domain.area.AreaTypeQuery"
+            resultType="com.deepexi.channel.domain.area.AreaTypePageDO">
+        SELECT
+        a.*, c.area_type_name AS parent_name
+        FROM
+        cc_area_type a,
+        (
+        SELECT
+        b.id,
+        b.area_type_name
+        FROM
+        cc_area_type b
+        WHERE
+        b.dr = 0
+        AND b.tenant_id = #{tenantId}
+        AND b.app_id = #{appId}
+        ) c
+        WHERE
+        a.dr = 0
+        AND a.tenant_id = #{tenantId}
+        AND a.app_id = #{appId}
+        AND a.parent_id = c.id
+        <if test="tenantId!=null">
+            AND tenant_id =#{tenantId}
+        </if>
+        <if test="appId!=null">
+            AND app_id =#{appId}
+        </if>
+        <if test="areaTypeName!=null">
+            AND area_type_name LIKE concat('%',#{areaTypeName},'%')
+        </if>
+        <if test="areaTypeCode!=null">
+            AND area_type_code =#{areaTypeCode}
+        </if>
+        <if test="updateStartTime!=null">
+            AND DATE_FORMAT(a.created_time,'%Y-%m-%d') <![CDATA[ >= ]]>DATE_FORMAT(#{startTime},'%Y-%m-%d')
+        </if>
+        <if test="endTime!=null">
+            AND DATE_FORMAT(a.created_time,'%Y-%m-%d') <![CDATA[ <= ]]>DATE_FORMAT(#{endTime},'%Y-%m-%d')
+        </if>
+        <if test="startTime!=null">
+            AND DATE_FORMAT(a.updated_time,'%Y-%m-%d') <![CDATA[ >= ]]>DATE_FORMAT(#{updateStartTime},'%Y-%m-%d')
+        </if>
+        <if test="updateEndTime!=null">
+            AND DATE_FORMAT(a.updated_time,'%Y-%m-%d') <![CDATA[ <= ]]>DATE_FORMAT(#{updateEndTime},'%Y-%m-%d')
+        </if>
+        order by a.updated_time desc
+    </select>
+
 </mapper>

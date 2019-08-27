@@ -16,21 +16,15 @@ import java.util.Date;
  * 区域类型查询
  * </p>
  *
- * @author mumu
+ * @author chp
  * @since 2019-08-26
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 @ApiModel("区域类型查询")
 public class AreaTypeQuery extends CommQuery {
 
     private static final long serialVersionUID = 1L;
-
-    @ApiModelProperty("主键")
-    private Long id;
 
     /**
      * 区域分类名称
