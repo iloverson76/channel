@@ -3,6 +3,8 @@ package com.deepexi.channel.domain.bank;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.deepexi.channel.domain.BaseEntity;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiOperation;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -15,7 +17,7 @@ import lombok.experimental.Accessors;
 public class BankVO extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
-
-    private String bank_name;
+    @ApiModelProperty("银行名称")
+    private String bankName;
 
 }

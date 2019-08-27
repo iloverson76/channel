@@ -18,5 +18,5 @@ public interface IChainTypeService{
 
     ChainTypeDTO getChainType(Long id);
 
-    List<ChainTypeDTO> listChainType(ChainTypeQuery query);
+    List<ChainTypeDTO> listChainType(ChainTypeQuery query, Integer page, Integer size);
 }

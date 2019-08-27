@@ -2,6 +2,8 @@ package com.deepexi.channel.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.deepexi.channel.domain.chain.ChainTypeDO;
+import com.deepexi.channel.domain.chain.ChainTypeQuery;
+import com.github.pagehelper.Page;
 
 /**
  * <p>
@@ -13,4 +15,5 @@ import com.deepexi.channel.domain.chain.ChainTypeDO;
  */
 public interface ChainTypeMapper extends BaseMapper<ChainTypeDO> {
 
+    Page<ChainTypeDO> listChainTypePage(ChainTypeQuery query);
 }
