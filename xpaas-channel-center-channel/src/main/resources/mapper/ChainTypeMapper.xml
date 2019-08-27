@@ -21,10 +21,40 @@
         <result column="remark" property="remark" />
     </resultMap>
 
-    <select id="listChainTypePage" resultMap="BaseResultMap">
-        SELECT * from cc_chain_type
+    <select id="listChainTypePage" resultMap="BaseResultMap" parameterType="com.deepexi.channel.domain.chain.ChainTypeQuery">
+        SELECT * from cc_chain_type where dr=0
         <if test="id != null">
-            and cc.id = #{id}
+            and id = #{id}
         </if>
+        <if test="ids != null">
+            <foreach collection="ids" item="tempId" index="index" open="(" close=")" separator=",">
+                #{tempId}
+            </foreach>
+        </if>
+        <if test="chainTypeCode != null and chainTypeCode != ''">
+            and chain_type_code  like concat('%',#{chainTypeCode},'%')
+        </if>
+        <if test="chainTypeName != null and chainTypeName != ''">
+            and chain_type_name like concat('%',#{chainTypeName},'%')
+        </if>
+        <if test="startTime != null">
+            and created_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null">
+            and created_time &lt;= #{endTime}
+        </if>
+        <if test="updateStartTime != null">
+            and updated_time &gt;= #{updateStartTime}
+        </if>
+        <if test="updateEndTime != null">
+            and updated_time &lt;= #{updateEndTime}
+        </if>
+        <if test="tenantId!=null">
+            AND n.tenant_id = #{tenantId}
+        </if>
+        <if test="appId!=null">
+            AND n.app_id =#{appId}
+        </if>
+        order by created_time desc
     </select>
 </mapper>

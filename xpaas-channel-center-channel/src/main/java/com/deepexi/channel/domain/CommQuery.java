@@ -24,6 +24,17 @@ import java.util.Date;
 public class CommQuery extends AbstractObject implements Pageable {
 
     private static final long serialVersionUID = 1L;
+    /**
+     * 租户id
+     */
+    @ApiModelProperty("租户id")
+    private String tenantId;
+
+    /**
+     * 应用id
+     */
+    @ApiModelProperty("应用id")
+    private String appId;
 
     /**
      * 開始時間

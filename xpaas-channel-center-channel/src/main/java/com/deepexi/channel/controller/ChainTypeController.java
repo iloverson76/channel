@@ -44,11 +44,11 @@ public class ChainTypeController {
     @GetMapping
     @ApiOperation(value = "查询连锁类型列表")
     public Payload<PageBean<ChainTypeVO>> listChainTypePage(@ApiParam(name = "query", required = true) ChainTypeQuery query) {
-//        List<ChainTypeVO> result = new ArrayList<>();
-//        result.add(new ChainTypeVO());
-//        result.add(new ChainTypeVO());
-        List<ChainTypeDTO> chainTypeDTOList = iChainTypeService.listChainType(query, query.getPage(), query.getSize());
-        List<ChainTypeVO> result = ObjectCloneUtils.convertList(chainTypeDTOList, ChainTypeVO.class);
+        List<ChainTypeVO> result = new ArrayList<>();
+        result.add(new ChainTypeVO());
+        result.add(new ChainTypeVO());
+//        List<ChainTypeDTO> chainTypeDTOList = iChainTypeService.listChainType(query);
+//        List<ChainTypeVO> result = ObjectCloneUtils.convertList(chainTypeDTOList, ChainTypeVO.class);
         return new Payload<>(new PageBean<>(result));
     }
 
@@ -79,7 +79,8 @@ public class ChainTypeController {
     @PostMapping()
     @ApiOperation(value = "保存连锁分类")
     public Payload<Boolean> saveChainType(@RequestBody ChainTypeVO vo) {
-        return new Payload<>(true);
+        Boolean result = iChainTypeService.insert(vo.clone(ChainTypeDTO.class));
+        return new Payload<>(result);
     }
 
     /**
@@ -93,7 +94,8 @@ public class ChainTypeController {
     @PutMapping()
     @ApiOperation(value = "更新连锁分类")
     public Payload<Boolean> updateChainType(@RequestBody ChainTypeVO vo) {
-        return new Payload<>(true);
+        Boolean result = iChainTypeService.update(vo.clone(ChainTypeDTO.class));
+        return new Payload<>(result);
     }
 
     /**
@@ -107,7 +109,8 @@ public class ChainTypeController {
     @DeleteMapping("/{ids:[0-9,]+}")
     @ApiOperation(value = "批量删除连锁分类")
     public Payload<Boolean> deleteChainTypes(@PathVariable(value = "ids", required = true) List<Long> ids) {
-        return new Payload<>(true);
+        Boolean result = iChainTypeService.delete(ids);
+        return new Payload<>(result);
     }
 
     /**

@@ -6,6 +6,7 @@ import com.deepexi.channel.domain.chain.ChainTypeDO;
 import com.deepexi.channel.domain.chain.ChainTypeQuery;
 import com.deepexi.channel.mapper.ChainTypeMapper;
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +18,9 @@ public class ChainTypeDAOImpl extends ServiceImpl<ChainTypeMapper, ChainTypeDO> 
 
     @Override
     public Page<ChainTypeDO> listChainTypePage(ChainTypeQuery query) {
+        if (query.isPage()) {
+            PageHelper.startPage(query.getPage(), query.getSize());
+        }
         return chainTypeMapper.listChainTypePage(query);
     }
 }
