@@ -37,31 +37,30 @@
     <select id="listAreaType" parameterType="com.deepexi.channel.domain.area.AreaTypeQuery"
             resultType="com.deepexi.channel.domain.area.AreaTypePageDO">
         SELECT
-        a.*, c.area_type_name AS parent_name
+        d.area_type_name AS parent_name,
+        b.*
         FROM
-        cc_area_type a,
         (
         SELECT
-        b.id,
-        b.area_type_name
+        a.*
         FROM
-        cc_area_type b
-        WHERE
-        b.dr = 0
-        AND b.tenant_id = #{tenantId}
-        AND b.app_id = #{appId}
-        ) c
+        cc_area_type a
         WHERE
         a.dr = 0
         AND a.tenant_id = #{tenantId}
         AND a.app_id = #{appId}
-        AND a.parent_id = c.id
-        <if test="tenantId!=null">
-            AND tenant_id =#{tenantId}
-        </if>
-        <if test="appId!=null">
-            AND app_id =#{appId}
-        </if>
+        ) b
+        LEFT JOIN (
+        SELECT
+        c.id,
+        c.area_type_name
+        FROM
+        cc_area_type c
+        WHERE
+        c.dr = 0
+        AND c.tenant_id = #{tenantId}
+        AND c.app_id = #{appId}
+        ) d ON b.parent_id = d.id
         <if test="areaTypeName!=null">
             AND area_type_name LIKE concat('%',#{areaTypeName},'%')
         </if>
@@ -80,7 +79,7 @@
         <if test="updateEndTime!=null">
             AND DATE_FORMAT(a.updated_time,'%Y-%m-%d') <![CDATA[ <= ]]>DATE_FORMAT(#{updateEndTime},'%Y-%m-%d')
         </if>
-        order by a.updated_time desc
+        order by updated_time desc
     </select>
 
 </mapper>
