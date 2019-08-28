@@ -26,7 +26,37 @@ public class AreaTypeDAOImpl extends ServiceImpl<AreaTypeMapper, AreaTypeDO> imp
     }
 
     @Override
-    public List<AreaTypeDO> listAreaType(AreaTypeQuery query) {
-        return baseMapper.listAreaType(query);
+    public List<AreaTypeDO> listAreaTypePage(AreaTypeQuery query) {
+        return baseMapper.listAreaTypePage(query);
+    }
+
+    @Override
+    public List<String> listAreaTypeCode(String tenantId, String appId) {
+        return baseMapper.listAreaTypeCode(tenantId, appId);
+    }
+
+    @Override
+    public List<AreaTypeDO> listChidren(String tenantId, String appId,Long id) {
+        return baseMapper.listChildren(tenantId,appId,id);
+    }
+
+    @Override
+    public List<AreaTypeDO> listParentForCreate(String tenantId, String appId) {
+        return baseMapper.listParentForCreate(tenantId,appId);
+    }
+
+    @Override
+    public List<AreaTypeDO> listNodeWithoutChildren(String tenantId, String appId) {
+        return baseMapper.listNodeWithoutChildren(tenantId,appId);
+    }
+
+    @Override
+    public AreaTypeDO getChildNode(String tenantId, String appId, Long id) {
+        return baseMapper.getChildNode(tenantId,appId,id);
+    }
+
+    @Override
+    public List<AreaTypeDO> listNotLimitedNode(String tenantId, String appId) {
+        return baseMapper.listNotLimitedNode(tenantId,appId);
     }
 }

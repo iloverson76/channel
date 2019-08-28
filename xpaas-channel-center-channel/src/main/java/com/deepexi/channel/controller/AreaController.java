@@ -1,9 +1,7 @@
 package com.deepexi.channel.controller;
 
 import com.deepexi.channel.domain.area.*;
-import com.deepexi.channel.domain.chain.ChainQuery;
-import com.deepexi.channel.domain.chain.ChainVO;
-import com.deepexi.channel.service.IAreaService;
+import com.deepexi.channel.service.AreaService;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pageHelper.PageBean;
 import io.swagger.annotations.Api;
@@ -29,7 +27,7 @@ import java.util.List;
 public class AreaController {
 
     @Autowired
-    IAreaService iAreaService;
+    AreaService areaService;
 
     @PostMapping()
     @ApiOperation(value = "新增区域")

@@ -10,7 +10,7 @@ import com.deepexi.channel.domain.area.AreaDTO;
  * @author jobob
  * @since 2019-08-23
  */
-public interface IAreaService{
+public interface AreaService {
 
     boolean saveArea(AreaDTO dto);
 }

@@ -30,9 +30,9 @@ public class AreaTypeDO extends BaseEntity {
     private Long parentId;
 
     /**
-     * 是否限制上级 0 不限制 1 限制
+     * 上级是否限制分类 0 不限制 1 限制
      */
-    private Boolean limitParent;
+    private Integer limitParent;
 
     /**
      * 区域分类名称

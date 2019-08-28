@@ -3,7 +3,7 @@ package com.deepexi.channel.service.impl;
 import com.deepexi.channel.dao.IAreaDAO;
 import com.deepexi.channel.domain.area.AreaDO;
 import com.deepexi.channel.domain.area.AreaDTO;
-import com.deepexi.channel.service.IAreaService;
+import com.deepexi.channel.service.AreaService;
 import com.deepexi.util.pojo.CloneDirection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
  * @since 2019-08-23
  */
 @Service
-public class AreaServiceImpl implements IAreaService {
+public class AreaServiceImpl implements AreaService {
 
     @Autowired
     IAreaDAO iAreaDAO;

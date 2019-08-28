@@ -28,14 +28,14 @@ public class AreaTypeDTO extends BaseEntity {
     private Long parentId;
 
     /**
+     * 上级是否限制分类 0 不限制 1 限制
+     */
+    private Integer limitParent;
+
+    /**
      * 上级名称
      */
     private String parentName;
-
-    /**
-     * 是否限制上级 0 不限制 1 限制
-     */
-    private Boolean limitParent;
 
     /**
      * 区域分类名称

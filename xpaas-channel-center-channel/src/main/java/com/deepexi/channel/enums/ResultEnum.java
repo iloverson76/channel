@@ -55,6 +55,7 @@ public enum ResultEnum implements BaseEnumType {
     ID_DO_NOT_NULL("400", "id不能为空"),
 
     AREA_TYPE_NULL("400","数据出错,没有对应的区域类型"),
+    AREA_TYPE_DUPLICATED("400","区域编码不能重复"),
     ;
 
     private String code;
