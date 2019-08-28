@@ -1,15 +1,9 @@
 package com.deepexi.channel.domain.area;
 
-import com.deepexi.channel.domain.BaseEntity;
 import com.deepexi.channel.domain.CommQuery;
-import com.deepexi.channel.domain.Pageable;
-import com.deepexi.util.pojo.AbstractObject;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-
-import javax.validation.constraints.Min;
-import java.util.Date;
 
 /**
  * <p>
