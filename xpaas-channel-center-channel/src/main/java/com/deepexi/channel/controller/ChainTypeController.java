@@ -3,8 +3,7 @@ package com.deepexi.channel.controller;
 import com.deepexi.channel.domain.chain.ChainTypeDTO;
 import com.deepexi.channel.domain.chain.ChainTypeQuery;
 import com.deepexi.channel.domain.chain.ChainTypeVO;
-import com.deepexi.channel.service.IChainService;
-import com.deepexi.channel.service.IChainTypeService;
+import com.deepexi.channel.service.ChainTypeService;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pageHelper.PageBean;
 import com.deepexi.util.pojo.CloneDirection;
@@ -15,7 +14,6 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,7 +30,7 @@ import java.util.List;
 public class ChainTypeController {
 
     @Autowired
-    IChainTypeService iChainTypeService;
+    ChainTypeService chainTypeService;
 
     /**
      * @MethodName: listChainTypePage
@@ -45,7 +43,7 @@ public class ChainTypeController {
     @GetMapping
     @ApiOperation(value = "查询连锁类型列表")
     public Payload<PageBean<ChainTypeVO>> listChainTypePage(@ApiParam(name = "query", required = true) ChainTypeQuery query) {
-        List<ChainTypeDTO> chainTypeDTOList = iChainTypeService.listChainType(query);
+        List<ChainTypeDTO> chainTypeDTOList = chainTypeService.listChainType(query);
         List<ChainTypeVO> result = ObjectCloneUtils.convertList(chainTypeDTOList, ChainTypeVO.class);
         return new Payload<>(new PageBean<>(result));
     }
@@ -61,7 +59,7 @@ public class ChainTypeController {
     @GetMapping("/{id:[0-9,]+}")
     @ApiOperation(value = "根据id获取连锁类型")
     public Payload<ChainTypeVO> getChainType(@PathVariable(value = "id", required = true) Long id) {
-        ChainTypeDTO chainTypeDTO = iChainTypeService.getChainType(id);
+        ChainTypeDTO chainTypeDTO = chainTypeService.getChainType(id);
         if(chainTypeDTO == null){
             return new Payload<>(null);
         }
@@ -80,7 +78,7 @@ public class ChainTypeController {
     @PostMapping()
     @ApiOperation(value = "保存连锁分类")
     public Payload<Boolean> saveChainType(@RequestBody ChainTypeVO vo) {
-        Boolean result = iChainTypeService.insert(vo.clone(ChainTypeDTO.class));
+        Boolean result = chainTypeService.insert(vo.clone(ChainTypeDTO.class));
         return new Payload<>(result);
     }
 
@@ -95,7 +93,7 @@ public class ChainTypeController {
     @PutMapping()
     @ApiOperation(value = "更新连锁分类")
     public Payload<Boolean> updateChainType(@RequestBody ChainTypeVO vo) {
-        Boolean result = iChainTypeService.update(vo.clone(ChainTypeDTO.class));
+        Boolean result = chainTypeService.update(vo.clone(ChainTypeDTO.class));
         return new Payload<>(result);
     }
 
@@ -110,7 +108,7 @@ public class ChainTypeController {
     @DeleteMapping("/{ids:[0-9,]+}")
     @ApiOperation(value = "批量删除连锁分类")
     public Payload<Boolean> deleteChainTypes(@PathVariable(value = "ids", required = true) List<Long> ids) {
-        Boolean result = iChainTypeService.delete(ids);
+        Boolean result = chainTypeService.delete(ids);
         return new Payload<>(result);
     }
 
@@ -125,7 +123,7 @@ public class ChainTypeController {
     @GetMapping("/list")
     @ApiOperation(value = "查询连锁分类列表，不查询上级分类信息")
     public Payload<List<ChainTypeVO>> getChainTypeList(){
-        List<ChainTypeDTO> chainTypeDTOS = iChainTypeService.listChainType();
+        List<ChainTypeDTO> chainTypeDTOS = chainTypeService.listChainType();
         List<ChainTypeVO> result = ObjectCloneUtils.convertList(chainTypeDTOS, ChainTypeVO.class, CloneDirection.OPPOSITE);
         return new Payload<>(result);
     }

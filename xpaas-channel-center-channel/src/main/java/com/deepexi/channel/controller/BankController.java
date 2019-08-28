@@ -2,11 +2,10 @@ package com.deepexi.channel.controller;
 
 import com.deepexi.channel.domain.bank.BankDTO;
 import com.deepexi.channel.domain.bank.BankVO;
-import com.deepexi.channel.service.IBankService;
+import com.deepexi.channel.service.BankService;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
-import com.netflix.discovery.converters.Auto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +30,12 @@ import java.util.List;
 public class BankController {
 
     @Autowired
-    IBankService iBankService;
+    BankService bankService;
 
     @GetMapping()
     @ApiOperation("查询银行列表")
     public Payload<List<BankVO>> listChainPage(){
-        List<BankDTO> bankDTOS = iBankService.listBank();
+        List<BankDTO> bankDTOS = bankService.listBank();
         return new Payload<>(ObjectCloneUtils.convertList(bankDTOS, BankVO.class, CloneDirection.OPPOSITE));
     }
 }

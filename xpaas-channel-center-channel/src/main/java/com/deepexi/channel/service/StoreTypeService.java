@@ -14,7 +14,7 @@ import java.util.List;
  * @author jobob
  * @since 2019-08-26
  */
-public interface IStoreTypeService {
+public interface StoreTypeService {
 
     StoreTypeDTO getStoreType(Long id);
 

@@ -2,19 +2,16 @@ package com.deepexi.channel.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.deepexi.channel.dao.IChainTypeDAO;
-import com.deepexi.channel.domain.chain.ChainDTO;
 import com.deepexi.channel.domain.chain.ChainTypeDO;
 import com.deepexi.channel.domain.chain.ChainTypeDTO;
 import com.deepexi.channel.domain.chain.ChainTypeQuery;
 import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.extension.AppRuntimeEnv;
-import com.deepexi.channel.service.IChainTypeService;
+import com.deepexi.channel.service.ChainTypeService;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.extension.ApplicationException;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +19,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class ChainTypeServiceImpl implements IChainTypeService {
+public class ChainTypeServiceImpl implements ChainTypeService {
 
     private AppRuntimeEnv appRuntimeEnv = AppRuntimeEnv.getInstance();
     @Autowired
@@ -88,8 +85,7 @@ public class ChainTypeServiceImpl implements IChainTypeService {
 
     @Override
     public Boolean insert(ChainTypeDTO dto) {
-        dto.setTenantId(appRuntimeEnv.getTenantId());
-        dto.setAppId(appRuntimeEnv.getTenantId());
+
         dto.setCreatedTime(new Date());
         dto.setCreatedBy("mumu");
         dto.setUpdatedTime(new Date());
@@ -104,8 +100,7 @@ public class ChainTypeServiceImpl implements IChainTypeService {
 
     @Override
     public Boolean update(ChainTypeDTO dto) {
-        dto.setTenantId(appRuntimeEnv.getTenantId());
-        dto.setAppId(appRuntimeEnv.getTenantId());
+
         dto.setUpdatedTime(new Date());
         dto.setUpdatedBy("mumu");
         if (dto.getId() == null || dto.getId() == 0L) {

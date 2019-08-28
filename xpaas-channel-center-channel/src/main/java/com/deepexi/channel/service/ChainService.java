@@ -13,7 +13,7 @@ import java.util.List;
  * @author jobob
  * @since 2019-08-26
  */
-public interface IChainService {
+public interface ChainService {
 
     ChainDTO getChain(Long id);
 

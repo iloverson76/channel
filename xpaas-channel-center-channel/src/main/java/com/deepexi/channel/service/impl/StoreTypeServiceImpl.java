@@ -4,12 +4,12 @@ import com.deepexi.channel.dao.IStoreTypeDAO;
 import com.deepexi.channel.domain.store.StoreTypeDO;
 import com.deepexi.channel.domain.store.StoreTypeDTO;
 import com.deepexi.channel.domain.store.StoreTypeQuery;
-import com.deepexi.channel.service.IStoreTypeService;
+import com.deepexi.channel.service.StoreTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-public class StoreTypeServiceImpl implements IStoreTypeService {
+public class StoreTypeServiceImpl implements StoreTypeService {
 
     @Autowired
     IStoreTypeDAO iStoreTypeDAO;

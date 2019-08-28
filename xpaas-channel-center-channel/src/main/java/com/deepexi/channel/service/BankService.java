@@ -5,6 +5,6 @@ import com.deepexi.channel.domain.bank.BankVO;
 
 import java.util.List;
 
-public interface IBankService {
+public interface BankService {
     List<BankDTO> listBank();
 }
