@@ -17,9 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.deepexi.channel.domain.ProductDTO;
-import com.deepexi.channel.domain.ProductQuery;
-import com.deepexi.channel.domain.ProductVO;
 import com.deepexi.channel.service.ProductService;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pageHelper.PageBean;

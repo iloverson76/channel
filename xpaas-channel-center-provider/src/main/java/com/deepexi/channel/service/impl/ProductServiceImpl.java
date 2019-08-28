@@ -8,9 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.deepexi.channel.domain.ProductDO;
-import com.deepexi.channel.domain.ProductDTO;
-import com.deepexi.channel.domain.ProductQuery;
 import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.mapper.ProductMapper;
 import com.deepexi.channel.service.ProductService;

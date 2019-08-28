@@ -2,9 +2,6 @@ package com.deepexi.channel.service;
 
 import java.util.List;
 
-import com.deepexi.channel.domain.ProductDTO;
-import com.deepexi.channel.domain.ProductQuery;
-
 /**
  * 产品Service组件
  * @author yangxi

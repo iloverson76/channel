@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deepexi.channel.mapper.DistributorMapper">
+    <resultMap type="com.deepexi.channel.domain.dto.CcDistributorDto" id="CcDistributorDtoResult">
+        <result property="id" column="id" />
+        <result property="distributorType" column="distributor_type" />
+        <result property="distributorName" column="distributor_name" />
+        <result property="distributorNameEn" column="distributor_name_en" />
+        <result property="distributorCode" column="distributor_code" />
+        <result property="businessType" column="business_type" />
+        <result property="businessLicenseNo" column="business_license_no" />
+        <result property="businessLicense" column="business_license" />
+        <result property="creditValue" column="credit_value" />
+        <result property="principalName" column="principal_name" />
+        <result property="principalIdCard" column="principal_id_card" />
+        <result property="qualification" column="qualification" />
+        <result property="address" column="address" />
+        <result property="enable" column="enable" />
+        <result property="version" column="version" />
+        <result property="remark" column="remark" />
+        <result property="dr" column="dr" />
+        <result property="createdBy" column="created_by" />
+        <result property="createdTime" column="created_time" />
+        <result property="updatedBy" column="updated_by" />
+        <result property="updatedTime" column="updated_time" />
+        <result property="appId" column="app_id" />
+        <result property="tenantId" column="tenant_id" />
+    </resultMap>
+    <select id="findList" resultType="com.deepexi.channel.domain.eo.CcDistributor">
+        SELECT * FROM cc_distributor WHERE 1=1
+    </select>
+
+    <update id="deleteByIds">
+        UPDATE cc_distributor set dr=1 where id in
+        <foreach collection="ids" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+</mapper>
