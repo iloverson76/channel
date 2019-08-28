@@ -1,5 +1,6 @@
 package com.deepexi.channel.controller;
 
+import com.deepexi.channel.domain.bank.BankAccountDTO;
 import com.deepexi.channel.domain.chain.ChainDTO;
 import com.deepexi.channel.domain.chain.ChainQuery;
 import com.deepexi.channel.domain.chain.ChainTypeQuery;
@@ -7,6 +8,8 @@ import com.deepexi.channel.domain.chain.ChainVO;
 import com.deepexi.channel.service.IChainService;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pageHelper.PageBean;
+import com.deepexi.util.pojo.CloneDirection;
+import com.deepexi.util.pojo.ObjectCloneUtils;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -61,7 +64,7 @@ public class ChainController {
     @ApiOperation("根据id获取连锁店详情")
     public Payload<ChainVO> getChainById(@PathVariable Long id){
         ChainDTO chainDTO = iChainService.getChain(id);
-        ChainVO chainVO = chainDTO.clone(ChainVO.class);
+        ChainVO chainVO = chainDTO.clone(ChainVO.class, CloneDirection.OPPOSITE);
         return new Payload<>(chainVO);
     }
     /**
@@ -76,6 +79,8 @@ public class ChainController {
     @ApiOperation(value = "保存连锁")
     public Payload<Boolean> saveChain(@RequestBody ChainVO vo) {
         ChainDTO chainDTO = vo.clone(ChainDTO.class);
+        List<BankAccountDTO> bankAccountList = ObjectCloneUtils.convertList(vo.getBankAccountList(),BankAccountDTO.class);
+        chainDTO.setBankAccountList(bankAccountList);
         Boolean result = iChainService.insert(chainDTO);
         return new Payload<>(result);
     }

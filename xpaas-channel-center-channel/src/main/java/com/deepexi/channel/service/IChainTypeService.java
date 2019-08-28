@@ -21,6 +21,12 @@ public interface IChainTypeService{
 
     List<ChainTypeDTO> listChainType(ChainTypeQuery query);
 
+    /**
+     * 不分页，不查询父级节点信息
+     * @return
+     */
+    List<ChainTypeDTO> listChainType();
+
     Boolean insert(ChainTypeDTO dto);
 
     Boolean update(ChainTypeDTO dto);

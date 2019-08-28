@@ -2,9 +2,14 @@ package com.deepexi.channel.domain.chain;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.deepexi.channel.domain.BaseEntity;
+import com.deepexi.channel.domain.bank.BankAccountDTO;
+import com.deepexi.channel.domain.bank.BankAccountVO;
+import com.deepexi.channel.domain.bank.BankVO;
 import io.swagger.annotations.ApiModel;
 import lombok.*;
 import lombok.experimental.Accessors;
+
+import java.util.List;
 
 /**
  * <p>
@@ -67,5 +72,8 @@ public class ChainDTO extends BaseEntity {
      * 营业执照
      */
     private String businessLicense;
-
+    /**
+     * 银行账户列表
+     */
+    private List<BankAccountDTO> bankAccountList;
 }

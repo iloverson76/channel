@@ -6,13 +6,16 @@ import com.deepexi.channel.dao.IChainTypeDAO;
 import com.deepexi.channel.domain.chain.ChainTypeDO;
 import com.deepexi.channel.domain.chain.ChainTypeQuery;
 import com.deepexi.channel.mapper.ChainTypeMapper;
+import com.deepexi.util.CollectionUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public class ChainTypeDAOImpl extends ServiceImpl<ChainTypeMapper, ChainTypeDO> implements IChainTypeDAO {
@@ -22,21 +25,32 @@ public class ChainTypeDAOImpl extends ServiceImpl<ChainTypeMapper, ChainTypeDO> 
 
     @Override
     public List<ChainTypeDO> listChainTypePage(ChainTypeQuery query) {
-        if (query.isPage()) {
+        if (query.getPage() != null && query.getPage() != -1) {
             PageHelper.startPage(query.getPage(), query.getSize());
         }
-        QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("app_id", query.getAppId());
-        if(StringUtils.isNotEmpty(query.getChainTypeCode())){
-            queryWrapper.like("chain_type_code",query.getChainTypeCode());
-        }
-        if(StringUtils.isNotEmpty(query.getChainTypeCode())){
-            queryWrapper.like("chain_type_name",query.getChainTypeName());
-        }
+        return chainTypeMapper.listChainTypePage(query);
+    }
 
-        queryWrapper.orderByDesc("created_time");
+    @Override
+    public List<ChainTypeDO> selectListByIds(Collection<Long> idList) {
+        return chainTypeMapper.selectList(new QueryWrapper<ChainTypeDO>().lambda().in(ChainTypeDO::getId, idList));
+    }
 
-//        return chainTypeMapper.listChainTypePage(query);
-        return baseMapper.selectList(queryWrapper);
+    @Override
+    public boolean haveChildren(List<Long> ids) {
+        //获得所有子节点
+        Collection<ChainTypeDO> chainTypeDOS = this.listByIds(ids);
+        //没有子节点
+        if(CollectionUtil.isEmpty(chainTypeDOS)){
+            return true;
+        }
+        //判断子节点是否也被删除，如果子节点不被删除，则拒绝删除
+        for(ChainTypeDO a : chainTypeDOS){
+            if(!ids.contains(a.getId())){
+                return false;
+            }
+        }
+        //父节点跟子节点一同删除
+        return true;
     }
 }

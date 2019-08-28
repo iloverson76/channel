@@ -7,6 +7,7 @@ import com.deepexi.channel.service.IChainService;
 import com.deepexi.channel.service.IChainTypeService;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pageHelper.PageBean;
+import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -44,9 +45,6 @@ public class ChainTypeController {
     @GetMapping
     @ApiOperation(value = "查询连锁类型列表")
     public Payload<PageBean<ChainTypeVO>> listChainTypePage(@ApiParam(name = "query", required = true) ChainTypeQuery query) {
-//        List<ChainTypeVO> result = new ArrayList<>();
-//        result.add(new ChainTypeVO());
-//        result.add(new ChainTypeVO());
         List<ChainTypeDTO> chainTypeDTOList = iChainTypeService.listChainType(query);
         List<ChainTypeVO> result = ObjectCloneUtils.convertList(chainTypeDTOList, ChainTypeVO.class);
         return new Payload<>(new PageBean<>(result));
@@ -67,7 +65,7 @@ public class ChainTypeController {
         if(chainTypeDTO == null){
             return new Payload<>(null);
         }
-        ChainTypeVO chainTypeVO = chainTypeDTO.clone(ChainTypeVO.class);
+        ChainTypeVO chainTypeVO = chainTypeDTO.clone(ChainTypeVO.class, CloneDirection.OPPOSITE);
         return new Payload<>(chainTypeVO);
     }
 
@@ -127,9 +125,8 @@ public class ChainTypeController {
     @GetMapping("/list")
     @ApiOperation(value = "查询连锁分类列表，不查询上级分类信息")
     public Payload<List<ChainTypeVO>> getChainTypeList(){
-        List<ChainTypeVO> result = new ArrayList<>();
-        result.add(new ChainTypeVO());
-        result.add(new ChainTypeVO());
+        List<ChainTypeDTO> chainTypeDTOS = iChainTypeService.listChainType();
+        List<ChainTypeVO> result = ObjectCloneUtils.convertList(chainTypeDTOS, ChainTypeVO.class, CloneDirection.OPPOSITE);
         return new Payload<>(result);
     }
 

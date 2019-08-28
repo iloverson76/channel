@@ -18,4 +18,5 @@ import java.util.List;
 public interface ChainTypeMapper extends BaseMapper<ChainTypeDO> {
 
     List<ChainTypeDO> listChainTypePage(ChainTypeQuery query);
+
 }

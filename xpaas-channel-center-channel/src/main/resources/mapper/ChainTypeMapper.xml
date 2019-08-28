@@ -50,10 +50,10 @@
             and updated_time &lt;= #{updateEndTime}
         </if>
         <if test="tenantId!=null">
-            AND n.tenant_id = #{tenantId}
+            AND tenant_id = #{tenantId}
         </if>
         <if test="appId!=null">
-            AND n.app_id =#{appId}
+            AND app_id =#{appId}
         </if>
         order by created_time desc
     </select>
