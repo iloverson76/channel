@@ -5,6 +5,6 @@ import com.deepexi.channel.domain.area.AreaDO;
 
 import java.util.Set;
 
-public interface IAreaDAO extends  IService<AreaDO> {
+public interface AreaDAO extends  IService<AreaDO> {
 
 }

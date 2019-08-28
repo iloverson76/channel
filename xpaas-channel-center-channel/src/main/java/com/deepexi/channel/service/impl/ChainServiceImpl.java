@@ -3,14 +3,12 @@ package com.deepexi.channel.service.impl;
 import com.deepexi.channel.dao.*;
 import com.deepexi.channel.domain.bank.BankAccountDO;
 import com.deepexi.channel.domain.bank.BankAccountDTO;
-import com.deepexi.channel.domain.bank.BankAccountVO;
 import com.deepexi.channel.domain.bank.ChainBankDO;
 import com.deepexi.channel.domain.chain.*;
 import com.deepexi.channel.service.IChainService;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,13 +19,13 @@ import java.util.List;
 @Service
 public class ChainServiceImpl implements IChainService {
     @Autowired
-    IChainDAO iChainDAO;
+    ChainDAO iChainDAO;
     @Autowired
-    IChainTypeDAO iChainTypeDAO;
+    ChainTypeDAO iChainTypeDAO;
     @Autowired
-    IBankAccountDAO iBankAccountDAO;
+    BankAccountDAO iBankAccountDAO;
     @Autowired
-    IChainBankDAO iChainBankDAO;
+    ChainBankDAO iChainBankDAO;
 
     @Override
     public ChainDTO getChain(Long id) {

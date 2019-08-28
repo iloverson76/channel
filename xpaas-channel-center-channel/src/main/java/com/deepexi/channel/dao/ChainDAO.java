@@ -4,5 +4,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.deepexi.channel.domain.chain.ChainDO;
 
 
-public interface IChainDAO extends IService<ChainDO> {
+public interface ChainDAO extends IService<ChainDO> {
 }

@@ -1,8 +1,7 @@
 package com.deepexi.channel.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.deepexi.channel.dao.IChainTypeDAO;
-import com.deepexi.channel.domain.chain.ChainDTO;
+import com.deepexi.channel.dao.ChainTypeDAO;
 import com.deepexi.channel.domain.chain.ChainTypeDO;
 import com.deepexi.channel.domain.chain.ChainTypeDTO;
 import com.deepexi.channel.domain.chain.ChainTypeQuery;
@@ -13,8 +12,6 @@ import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.extension.ApplicationException;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +23,7 @@ public class ChainTypeServiceImpl implements IChainTypeService {
 
     private AppRuntimeEnv appRuntimeEnv = AppRuntimeEnv.getInstance();
     @Autowired
-    IChainTypeDAO iChainTypeDAO;
+    ChainTypeDAO iChainTypeDAO;
 
     @Override
     public ChainTypeDTO getChainType(Long id) {

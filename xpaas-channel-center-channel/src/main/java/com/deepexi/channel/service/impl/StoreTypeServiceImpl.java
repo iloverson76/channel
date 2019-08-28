@@ -1,6 +1,6 @@
 package com.deepexi.channel.service.impl;
 
-import com.deepexi.channel.dao.IStoreTypeDAO;
+import com.deepexi.channel.dao.StoreTypeDAO;
 import com.deepexi.channel.domain.store.StoreTypeDO;
 import com.deepexi.channel.domain.store.StoreTypeDTO;
 import com.deepexi.channel.domain.store.StoreTypeQuery;
@@ -12,7 +12,7 @@ import java.util.List;
 public class StoreTypeServiceImpl implements IStoreTypeService {
 
     @Autowired
-    IStoreTypeDAO iStoreTypeDAO;
+    StoreTypeDAO iStoreTypeDAO;
 
     @Override
     public StoreTypeDTO getStoreType(Long id) {

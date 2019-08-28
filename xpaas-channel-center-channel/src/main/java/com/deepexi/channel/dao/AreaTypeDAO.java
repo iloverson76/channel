@@ -8,7 +8,7 @@ import com.deepexi.channel.domain.area.AreaTypeQuery;
 import java.util.List;
 import java.util.Set;
 
-public interface IAreaTypeDAO extends  IService<AreaTypeDO> {
+public interface AreaTypeDAO extends  IService<AreaTypeDO> {
 
     int removeAreaTypeByIds(Set<Long> ids);
 
