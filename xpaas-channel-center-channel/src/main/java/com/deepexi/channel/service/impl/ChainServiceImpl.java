@@ -19,9 +19,8 @@ import java.util.List;
 
 @Service
 public class ChainServiceImpl implements ChainService {
-    private AppRuntimeEnv appRuntimeEnv = AppRuntimeEnv.getInstance();
     @Autowired
-    IChainDAO iChainDAO;
+    ChainDAO chainDAO;
 //    @Autowired
 //    IChainTypeDAO iChainTypeDAO;
 //    @Autowired
@@ -32,7 +31,7 @@ public class ChainServiceImpl implements ChainService {
 
     @Override
     public ChainDTO getChain(Long id) {
-        ChainDO chainDO = iChainDAO.getById(id);
+        ChainDO chainDO = chainDAO.getById(id);
         if (null == chainDO) {
             return null;
         }
@@ -44,7 +43,7 @@ public class ChainServiceImpl implements ChainService {
     public Boolean insert(ChainDTO dto) {
         ChainDO chainDO = dto.clone(ChainDO.class);
         //新增连锁基本信息
-        boolean result = iChainDAO.save(chainDO);
+        boolean result = chainDAO.save(chainDO);
 
         return result;
     }
@@ -55,7 +54,7 @@ public class ChainServiceImpl implements ChainService {
             return false;
         }
         ChainDO chainDO = chainDTO.clone(ChainDO.class);
-        boolean result = iChainDAO.updateById(chainDO);
+        boolean result = chainDAO.updateById(chainDO);
         return result;
     }
 
@@ -64,6 +63,6 @@ public class ChainServiceImpl implements ChainService {
         if(CollectionUtil.isEmpty(ids)){
             return false;
         }
-        return iChainDAO.removeByIds(ids);
+        return chainDAO.removeByIds(ids);
     }
 }

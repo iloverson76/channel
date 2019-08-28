@@ -1,7 +1,7 @@
 package com.deepexi.channel.dao.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.deepexi.channel.dao.IStoreTypeDAO;
+import com.deepexi.channel.dao.StoreTypeDAO;
 import com.deepexi.channel.domain.store.StoreTypeDO;
 import com.deepexi.channel.domain.store.StoreTypeQuery;
 import com.deepexi.channel.mapper.StoreTypeMapper;
@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class StoreTypeDAOImpl extends ServiceImpl<StoreTypeMapper, StoreTypeDO> implements IStoreTypeDAO {
+public class StoreTypeDAOImpl extends ServiceImpl<StoreTypeMapper, StoreTypeDO> implements StoreTypeDAO {
     @Autowired
     StoreTypeMapper storeTypeMapper;
     @Override

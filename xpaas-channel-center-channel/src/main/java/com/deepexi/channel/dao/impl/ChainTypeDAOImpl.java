@@ -2,23 +2,20 @@ package com.deepexi.channel.dao.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.deepexi.channel.dao.IChainTypeDAO;
+import com.deepexi.channel.dao.ChainTypeDAO;
 import com.deepexi.channel.domain.chain.ChainTypeDO;
 import com.deepexi.channel.domain.chain.ChainTypeQuery;
 import com.deepexi.channel.mapper.ChainTypeMapper;
 import com.deepexi.util.CollectionUtil;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 @Repository
-public class ChainTypeDAOImpl extends ServiceImpl<ChainTypeMapper, ChainTypeDO> implements IChainTypeDAO {
+public class ChainTypeDAOImpl extends ServiceImpl<ChainTypeMapper, ChainTypeDO> implements ChainTypeDAO {
 
     @Autowired
     ChainTypeMapper chainTypeMapper;

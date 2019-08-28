@@ -1,6 +1,7 @@
 package com.deepexi.channel.service.impl;
 
-import com.deepexi.channel.dao.IBankAccountDAO;
+import com.deepexi.channel.dao.BankAccountDAO;
+import com.deepexi.channel.dao.*;
 import com.deepexi.channel.domain.bank.BankAccountDO;
 import com.deepexi.channel.domain.bank.BankAccountDTO;
 import com.deepexi.channel.service.BankAccountService;
@@ -13,11 +14,11 @@ import java.util.List;
 @Service
 public class BankAccountServiceImpl implements BankAccountService {
     @Autowired
-    IBankAccountDAO iBankAccountDAO;
+    BankAccountDAO bankAccountDAO;
 
     @Override
     public Boolean saveBatch(List<BankAccountDTO> bankAccountDTOS) {
         List<BankAccountDO> bankAccountDOS =ObjectCloneUtils.convertList(bankAccountDTOS, BankAccountDO.class);
-        return iBankAccountDAO.saveBatch(bankAccountDOS);
+        return bankAccountDAO.saveBatch(bankAccountDOS);
     }
 }

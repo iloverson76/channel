@@ -1,7 +1,7 @@
 package com.deepexi.channel.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.deepexi.channel.dao.IChainTypeDAO;
+import com.deepexi.channel.dao.ChainTypeDAO;
 import com.deepexi.channel.domain.chain.ChainTypeDO;
 import com.deepexi.channel.domain.chain.ChainTypeDTO;
 import com.deepexi.channel.domain.chain.ChainTypeQuery;
@@ -23,14 +23,14 @@ public class ChainTypeServiceImpl implements ChainTypeService {
 
     private AppRuntimeEnv appRuntimeEnv = AppRuntimeEnv.getInstance();
     @Autowired
-    IChainTypeDAO iChainTypeDAO;
+    ChainTypeDAO chainTypeDAO;
 
     @Override
     public ChainTypeDTO getChainType(Long id) {
         if (id == null || id == 0L) {
             return null;
         }
-        ChainTypeDO category = iChainTypeDAO.getById(id);
+        ChainTypeDO category = chainTypeDAO.getById(id);
         if (null == category) {
             return null;
         }
@@ -45,7 +45,7 @@ public class ChainTypeServiceImpl implements ChainTypeService {
         List<ChainTypeDTO> chainTypeDTOS = getChainTypeList(query);
         // 得到所有连锁类型id
         Set<Long> idList = chainTypeDTOS.stream().map(ChainTypeDTO::getId).collect(Collectors.toSet());
-        List<ChainTypeDO> parentChainTypeDOS = iChainTypeDAO.selectListByIds(idList);
+        List<ChainTypeDO> parentChainTypeDOS = chainTypeDAO.selectListByIds(idList);
         // id->连锁类型的map关系
         Map<Long, List<ChainTypeDO>> parentCollect =
                 parentChainTypeDOS.stream().collect(Collectors.groupingBy(ChainTypeDO::getId));
@@ -77,7 +77,7 @@ public class ChainTypeServiceImpl implements ChainTypeService {
     public List<ChainTypeDTO> getChainTypeList(ChainTypeQuery query){
         query.setTenantId(appRuntimeEnv.getTenantId());
         query.setAppId(appRuntimeEnv.getAppId());
-        List<ChainTypeDO> result =  iChainTypeDAO.listChainTypePage(query);
+        List<ChainTypeDO> result =  chainTypeDAO.listChainTypePage(query);
         List<ChainTypeDTO> chainTypeDTOS = ObjectCloneUtils.convertList(result, ChainTypeDTO.class, CloneDirection.OPPOSITE);
         return chainTypeDTOS;
     }
@@ -90,12 +90,12 @@ public class ChainTypeServiceImpl implements ChainTypeService {
         dto.setCreatedBy("mumu");
         dto.setUpdatedTime(new Date());
         dto.setUpdatedBy("mumu");
-        List<ChainTypeDO> list = iChainTypeDAO.list(new QueryWrapper<ChainTypeDO>().lambda().eq(ChainTypeDO::getChainTypeCode, dto.getChainTypeCode()));
+        List<ChainTypeDO> list = chainTypeDAO.list(new QueryWrapper<ChainTypeDO>().lambda().eq(ChainTypeDO::getChainTypeCode, dto.getChainTypeCode()));
         if(CollectionUtil.isNotEmpty(list)){
             throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
         }
         ChainTypeDO chainTypeDO = dto.clone(ChainTypeDO.class);
-        return iChainTypeDAO.save(chainTypeDO);
+        return chainTypeDAO.save(chainTypeDO);
     }
 
     @Override
@@ -106,7 +106,7 @@ public class ChainTypeServiceImpl implements ChainTypeService {
         if (dto.getId() == null || dto.getId() == 0L) {
             return false;
         }
-        boolean result = iChainTypeDAO.updateById(dto.clone(ChainTypeDO.class));
+        boolean result = chainTypeDAO.updateById(dto.clone(ChainTypeDO.class));
         return result;
     }
 
@@ -116,13 +116,13 @@ public class ChainTypeServiceImpl implements ChainTypeService {
             return false;
         }
         //判断是否有下级分类
-        if(iChainTypeDAO.haveChildren(ids)){
+        if(chainTypeDAO.haveChildren(ids)){
             throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
         }
         //判断是否有被连锁引用
         //TODO
 
-        return iChainTypeDAO.removeByIds(ids);
+        return chainTypeDAO.removeByIds(ids);
     }
 
 }

@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-public interface IChainTypeDAO extends IService<ChainTypeDO> {
+public interface ChainTypeDAO extends IService<ChainTypeDO> {
     List<ChainTypeDO> listChainTypePage(ChainTypeQuery query);
 
     List<ChainTypeDO> selectListByIds(Collection<Long> idList);

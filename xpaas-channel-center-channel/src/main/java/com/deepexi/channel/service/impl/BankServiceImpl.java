@@ -1,6 +1,6 @@
 package com.deepexi.channel.service.impl;
 
-import com.deepexi.channel.dao.IBankDAO;
+import com.deepexi.channel.dao.BankDAO;
 import com.deepexi.channel.domain.bank.BankDO;
 import com.deepexi.channel.domain.bank.BankDTO;
 import com.deepexi.channel.service.BankService;
@@ -15,7 +15,7 @@ import java.util.List;
 public class BankServiceImpl implements BankService {
 
     @Autowired
-    IBankDAO iBankDAO;
+    BankDAO iBankDAO;
 
     @Override
     public List<BankDTO> listBank() {

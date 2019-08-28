@@ -1,6 +1,6 @@
 package com.deepexi.channel.service.impl;
 
-import com.deepexi.channel.dao.IAreaDAO;
+import com.deepexi.channel.dao.AreaDAO;
 import com.deepexi.channel.domain.area.AreaDO;
 import com.deepexi.channel.domain.area.AreaDTO;
 import com.deepexi.channel.service.IAreaService;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 public class AreaServiceImpl implements IAreaService {
 
     @Autowired
-    IAreaDAO iAreaDAO;
+    AreaDAO iAreaDAO;
 
     @Override
     public boolean saveArea(AreaDTO dto) {
