@@ -17,7 +17,6 @@ import java.time.LocalDateTime;
  * @since 2019-08-26
  */
 @EqualsAndHashCode(callSuper = true)
-@Accessors(chain = true)
 @TableName("cc_bank_account")
 @Data
 @AllArgsConstructor

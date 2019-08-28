@@ -1,6 +1,7 @@
 package com.deepexi.channel.domain.chain;
 
 import com.deepexi.channel.domain.BaseEntity;
+import com.deepexi.channel.domain.CommQuery;
 import com.deepexi.channel.domain.Pageable;
 import com.deepexi.util.pojo.AbstractObject;
 import io.swagger.annotations.ApiModel;
@@ -24,7 +25,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @ApiModel("连锁")
-public class ChainQuery extends AbstractObject implements Pageable {
+public class ChainQuery extends CommQuery {
 
     private static final long serialVersionUID = 1L;
 
@@ -55,39 +56,4 @@ public class ChainQuery extends AbstractObject implements Pageable {
     @ApiModelProperty(value = "连锁编码",example = "abcd123")
     private String chainCode;
 
-    @ApiModelProperty("页码")
-    @Min(value = -1,message = "page最小为-1,代表不分页")
-    @Builder.Default
-    private Integer page = -1;
-
-    @ApiModelProperty("每页数量")
-    @Min(value = 0,message = "size最小为0")
-    @Builder.Default
-    private Integer size = 10;
-
-    /**
-     * 開始時間
-     */
-    @ApiModelProperty("開始時間")
-    private Date startTime;
-
-
-    /**
-     * 结束时间
-     */
-    @ApiModelProperty("结束时间")
-    private Date endTime;
-
-    /**
-     * 更新開始時間
-     */
-    @ApiModelProperty("更新開始時間")
-    private Date updateStartTime;
-
-
-    /**
-     * 更新结束时间
-     */
-    @ApiModelProperty("更新结束时间")
-    private Date updateEndTime;
 }

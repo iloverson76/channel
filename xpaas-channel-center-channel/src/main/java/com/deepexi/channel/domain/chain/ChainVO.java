@@ -1,6 +1,7 @@
 package com.deepexi.channel.domain.chain;
 
 import com.deepexi.channel.domain.BaseEntity;
+import com.deepexi.channel.domain.bank.BankAccountVO;
 import com.deepexi.channel.domain.bank.BankVO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -75,8 +76,8 @@ public class ChainVO extends BaseEntity {
     @ApiModelProperty(value = "营业执照", example = "www.baidu.com")
     private String businessLicense;
 
-    @ApiModelProperty(value = "连锁账户")
-    private List<BankVO> bankList;
+    @ApiModelProperty("银行账号列表")
+    private List<BankAccountVO> bankAccountList;
 
     @ApiModelProperty(value = "连锁子节点")
     private List<ChainVO> children;

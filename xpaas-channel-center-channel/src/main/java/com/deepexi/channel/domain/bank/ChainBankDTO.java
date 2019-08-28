@@ -2,21 +2,33 @@ package com.deepexi.channel.domain.bank;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.deepexi.channel.domain.BaseEntity;
-import io.swagger.annotations.ApiModel;
 import lombok.*;
-import lombok.experimental.Accessors;
 
+/**
+ * <p>
+ * 银行-账户表
+ * </p>
+ *
+ * @author jobob
+ * @since 2019-08-28
+ */
 @EqualsAndHashCode(callSuper = true)
-@TableName("cc_bank")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ApiModel(value="BankAccount对象", description="银行账户表")
-public class BankDO extends BaseEntity {
+public class ChainBankDTO extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    private String bankName;
+    /**
+     * 银行账户ID
+     */
+    private Long bankAccountId;
+
+    /**
+     * 连锁ID
+     */
+    private Long chainId;
 
 }

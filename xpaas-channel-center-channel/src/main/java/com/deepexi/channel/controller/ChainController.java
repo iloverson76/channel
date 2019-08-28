@@ -1,13 +1,18 @@
 package com.deepexi.channel.controller;
 
+import com.deepexi.channel.domain.bank.BankAccountDTO;
+import com.deepexi.channel.domain.chain.ChainDTO;
 import com.deepexi.channel.domain.chain.ChainQuery;
-import com.deepexi.channel.domain.chain.ChainTypeQuery;
 import com.deepexi.channel.domain.chain.ChainVO;
+import com.deepexi.channel.service.ChainService;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pageHelper.PageBean;
+import com.deepexi.util.pojo.CloneDirection;
+import com.deepexi.util.pojo.ObjectCloneUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -25,6 +30,9 @@ import java.util.List;
 @RequestMapping("/api/v1/chain")
 @Api("连锁管理")
 public class ChainController {
+    @Autowired
+    ChainService chainService;
+
     /**
      * @MethodName: listChainPage
      * @Description: 查询连锁分类列表
@@ -52,7 +60,9 @@ public class ChainController {
     @GetMapping("/{id:[0-9,]+}")
     @ApiOperation("根据id获取连锁店详情")
     public Payload<ChainVO> getChainById(@PathVariable Long id){
-        return new Payload<>(new ChainVO());
+        ChainDTO chainDTO = chainService.getChain(id);
+        ChainVO chainVO = chainDTO.clone(ChainVO.class, CloneDirection.OPPOSITE);
+        return new Payload<>(chainVO);
     }
     /**
      * @MethodName: saveChain
@@ -65,7 +75,11 @@ public class ChainController {
     @PostMapping()
     @ApiOperation(value = "保存连锁")
     public Payload<Boolean> saveChain(@RequestBody ChainVO vo) {
-        return new Payload<>(true);
+        ChainDTO chainDTO = vo.clone(ChainDTO.class);
+        List<BankAccountDTO> bankAccountList = ObjectCloneUtils.convertList(vo.getBankAccountList(),BankAccountDTO.class);
+        chainDTO.setBankAccountList(bankAccountList);
+        Boolean result = chainService.insert(chainDTO);
+        return new Payload<>(result);
     }
     /**
      * @MethodName: updateChain
@@ -78,7 +92,9 @@ public class ChainController {
     @PutMapping()
     @ApiOperation(value = "更新连锁")
     public Payload<Boolean> updateChain(@RequestBody ChainVO vo) {
-        return new Payload<>(true);
+        ChainDTO chainDTO = vo.clone(ChainDTO.class);
+        Boolean result = chainService.update(chainDTO);
+        return new Payload<>(result);
     }
     /**
      * @MethodName: deleteChains
@@ -91,6 +107,7 @@ public class ChainController {
     @DeleteMapping("/{ids:[0-9,]+}")
     @ApiOperation(value = "批量删除连锁")
     public Payload<Boolean> deleteChains(@PathVariable(value = "ids", required = true) List<Long> ids) {
+        Boolean result = chainService.delete(ids);
         return new Payload<>(true);
     }
 

@@ -5,6 +5,8 @@ import com.deepexi.channel.domain.chain.ChainTypeDO;
 import com.deepexi.channel.domain.chain.ChainTypeQuery;
 import com.github.pagehelper.Page;
 
+import java.util.List;
+
 /**
  * <p>
  * 连锁类型表 Mapper 接口
@@ -15,5 +17,6 @@ import com.github.pagehelper.Page;
  */
 public interface ChainTypeMapper extends BaseMapper<ChainTypeDO> {
 
-    Page<ChainTypeDO> listChainTypePage(ChainTypeQuery query);
+    List<ChainTypeDO> listChainTypePage(ChainTypeQuery query);
+
 }

@@ -2,7 +2,7 @@ package com.deepexi.channel.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.deepexi.channel.dao.IAreaTypeDAO;
+import com.deepexi.channel.dao.AreaTypeDAO;
 import com.deepexi.channel.domain.area.AreaTypeDO;
 import com.deepexi.channel.domain.area.AreaTypeDTO;
 import com.deepexi.channel.domain.area.AreaTypeQuery;
@@ -37,7 +37,7 @@ import java.util.Set;
 public class AreaTypeServiceImpl implements AreaTypeService {
 
     @Autowired
-    IAreaTypeDAO iAreaTypeDAO;
+    AreaTypeDAO iAreaTypeDAO;
 
     AppRuntimeEnv appRuntimeEnv= AppRuntimeEnv.getInstance();
 
