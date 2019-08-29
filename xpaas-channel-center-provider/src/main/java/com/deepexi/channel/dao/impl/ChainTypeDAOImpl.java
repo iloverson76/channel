@@ -14,12 +14,23 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Repository
-public class ChainTypeDAOImpl extends ServiceImpl<ChainTypeMapper, CcChainType> implements ChainTypeDAO {
+public class ChainTypeDAOImpl extends ServiceImpl<ChainTypeMapper, ChainTypeDO> implements ChainTypeDAO {
+    @Autowired
+    ChainTypeMapper chainTypeMapper;
 
-//    @Autowired
-//    ChainTypeMapper chainTypeMapper;
+    @Override
+    public List<ChainTypeDO> findList(ChainTypeQuery query) {
+        return chainTypeMapper.findList(query);
+    }
+
+    @Override
+    public List<ChainTypeDO> selectListByIds(Set<Long> idList) {
+        return chainTypeMapper.selectList(new QueryWrapper<ChainTypeDO>().lambda().in(ChainTypeDO::getId, idList));
+    }
+
 //
 //    @Override
 //    public List<ChainTypeDO> listChainTypePage(ChainTypeQuery query) {

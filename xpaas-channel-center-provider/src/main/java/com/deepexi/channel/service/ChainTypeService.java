@@ -1,5 +1,7 @@
 package com.deepexi.channel.service;
 
+import com.deepexi.channel.domain.chain.ChainTypeDTO;
+import com.deepexi.channel.domain.chain.ChainTypeQuery;
 import com.deepexi.channel.domain.eo.CcChainType;
 import com.deepexi.util.pageHelper.PageBean;
 
@@ -12,47 +14,41 @@ public interface ChainTypeService {
 
     /**
     * 分页获取列表
-    * @param eo
-    * @param page
-    * @param size
+    * @param query
     * @return
     */
-    PageBean<CcChainType> findPage(CcChainType eo, Integer page, Integer size);
+    List<ChainTypeDTO> findPage(ChainTypeQuery query);
     /**
     * 获取列表
     * @return
     */
-    List<CcChainType> findAll(CcChainType eo);
+    List<ChainTypeDTO> findAll(ChainTypeQuery query);
+
+//    ChainTypeDTO getChainType(Integer id);
 
     /**
       获取详情
     * @return
     */
-    CcChainType detail(Integer pk);
+    ChainTypeDTO detail(Integer pk);
 
     /**
      更新eo
-    * @param eo
+    * @param dto
     * @return
     */
-    Boolean update(Integer id, CcChainType eo);
+    Boolean update(Long id, ChainTypeDTO dto);
 
     /**
     * 创建eo
-    * @param eo
+    * @param dto
     * @return
     */
-    Boolean create(CcChainType eo);
-
-    /**
-     * 单个删除
-    * @return
-    */
-    Boolean delete(Integer pk);
+    Boolean create(ChainTypeDTO dto);
 
     /**
      批量删除
     * @return
     */
-    Boolean delete(Integer... pk);
+    Boolean delete(List<Long> ids);
 }

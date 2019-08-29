@@ -3,9 +3,7 @@ package com.deepexi.channel.domain;
 import com.deepexi.util.pojo.AbstractObject;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.validation.constraints.Min;
 import java.util.Date;
@@ -20,6 +18,8 @@ import java.util.Date;
  */
 @EqualsAndHashCode(callSuper = true)
 //@Data
+@Getter
+@Setter
 @ApiModel("供应商查询")
 public abstract class CommQuery extends AbstractObject {
 
@@ -28,7 +28,7 @@ public abstract class CommQuery extends AbstractObject {
     @ApiModelProperty(value = "主键", example = "123")
     private Long id;
 
-    @ApiModelProperty(value = "租户id", example = "123456")
+    @ApiModelProperty(value = "租户id", example = "123456789")
     private String tenantId;
 
     @ApiModelProperty(value = "应用id", example = "123456789")

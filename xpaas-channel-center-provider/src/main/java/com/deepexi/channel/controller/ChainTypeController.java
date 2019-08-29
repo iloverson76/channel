@@ -1,69 +1,69 @@
 package com.deepexi.channel.controller;
 
+import com.deepexi.channel.domain.chain.ChainTypeDTO;
+import com.deepexi.channel.domain.chain.ChainTypeQuery;
+import com.deepexi.channel.domain.chain.ChainTypeVO;
 import com.deepexi.util.config.Payload;
+import com.deepexi.util.pageHelper.PageBean;
+import com.deepexi.util.pojo.CloneDirection;
+import com.deepexi.util.pojo.ObjectCloneUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import com.deepexi.channel.service.ChainTypeService;
 import com.deepexi.channel.domain.eo.CcChainType;
 import org.springframework.web.bind.annotation.*;
-//import io.swagger.annotations.*;
+import io.swagger.annotations.*;
+
+import java.util.List;
 
 
-//@Api(value = "/连锁类型表", description = "$desc")
+@Api(value = "/连锁管理", description = "连锁管理页面")
 @RestController
-@RequestMapping("/api/v1/ccChainTypes")
+@RequestMapping("/api/v1/chainType")
 public class ChainTypeController {
 
     @Autowired
     private ChainTypeService chainTypeService;
 
-
     @GetMapping
-    //@ApiOperation(value = "分页查询", notes = "分页请求")
-    public  Payload findPage(CcChainType eo,
-                             @RequestParam(value = "page", defaultValue = "0") Integer page,
-                             @RequestParam(value = "size", defaultValue = "10") Integer size) {
-        return new Payload(chainTypeService.findPage(eo, page, size));
-    }
-
-    @GetMapping("/list")
-    //@ApiOperation(value = "树形查询", notes = "查询全部请求")
-    public Payload findAll(CcChainType eo) {
-        return new Payload(chainTypeService.findAll(eo));
+    @ApiOperation(value = "分页查询", notes = "分页请求,page传-1时返回全部连锁类型")
+    public  Payload findPage(@ApiParam(name = "query", required = true) ChainTypeQuery query) {
+        List<ChainTypeDTO> chainTypeDTOList = chainTypeService.findPage(query);
+        List<ChainTypeVO> result = ObjectCloneUtils.convertList(chainTypeDTOList, ChainTypeVO.class);
+        return new Payload<>(new PageBean<>(result));
     }
 
     @GetMapping("/{id}")
-    public Payload detail(@PathVariable(value = "id", required = true) Integer  pk) {
-        return new Payload(chainTypeService.detail(pk));
+    public Payload detail(@PathVariable(value = "id", required = true) Integer  id) {
+        ChainTypeDTO chainTypeDTO = chainTypeService.detail(id);
+        if(chainTypeDTO == null){
+            return new Payload<>(null);
+        }
+        ChainTypeVO chainTypeVO = chainTypeDTO.clone(ChainTypeVO.class, CloneDirection.OPPOSITE);
+        return new Payload<>(chainTypeVO);
     }
-
 
     @PutMapping("/{id}")
     @Transactional
-//@ApiOperation(value = "根据id修改", notes = "根据id修改CcChainType")
-    public Payload update(@PathVariable(value = "id", required = true) Integer  pk, @RequestBody CcChainType eo) {
-     eo.setId(pk);
-     return new Payload(chainTypeService.update(pk, eo));
+    @ApiOperation(value = "根据id修改", notes = "根据id修改连锁类型")
+    public Payload update(@PathVariable(value = "id", required = true) Long id, @RequestBody ChainTypeVO vo) {
+        ChainTypeDTO dto = vo.clone(ChainTypeDTO.class, CloneDirection.FORWARD);
+        return new Payload(chainTypeService.update(id, dto));
     }
 
     @PostMapping
-    //@ApiOperation(value = "创建CcChainType", notes = "创建CcChainType")
-    public Payload create(@RequestBody CcChainType eo) {
-        return new Payload(chainTypeService.create(eo));
+    @ApiOperation(value = "创建连锁类型", notes = "创建连锁类型")
+    public Payload create(@RequestBody  ChainTypeVO vo) {
+        ChainTypeDTO dto = vo.clone(ChainTypeDTO.class, CloneDirection.FORWARD);
+        return new Payload(chainTypeService.create(dto));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{ids}")
     @Transactional
-//@ApiOperation(value = "根据id删除CcChainType", notes = "根据id删除CcChainType")
-    public Payload delete(@PathVariable(value = "id", required = true) Integer  pk) {
-        return new Payload(chainTypeService.delete(pk));
-    }
-
-    @DeleteMapping
-    @Transactional
-    //@ApiOperation(value = "根据id批量删除CcChainType", notes = "根据id批量删除CcChainType")
-    public Payload delete(@RequestParam(required = true) Integer [] ids) {
+    @ApiOperation(value = "根据id批量删除CcChainType", notes = "根据id删除CcChainType")
+    public Payload delete(@PathVariable(value = "ids", required = true) List<Long> ids) {
         return new Payload(chainTypeService.delete(ids));
     }
+
 
 }

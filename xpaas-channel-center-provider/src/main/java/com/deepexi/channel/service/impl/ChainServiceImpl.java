@@ -1,5 +1,12 @@
 package com.deepexi.channel.service.impl;
 
+import com.deepexi.channel.dao.ChainDAO;
+import com.deepexi.channel.domain.chain.ChainDO;
+import com.deepexi.channel.domain.chain.ChainDTO;
+import com.deepexi.channel.domain.chain.ChainQuery;
+import com.deepexi.util.CollectionUtil;
+import com.deepexi.util.pojo.CloneDirection;
+import com.deepexi.util.pojo.ObjectCloneUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
@@ -18,62 +25,67 @@ public class ChainServiceImpl implements ChainService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    private ChainMapper chainMapper;
+    private ChainDAO chainDAO;
 
     @Override
-    public PageBean<CcChain> findPage(CcChain eo, Integer page, Integer size) {
-        PageHelper.startPage(page, size);
-        List<CcChain> pages =  chainMapper.findList(eo);
-        return new PageBean<CcChain>(pages);
-    }
-
-    @Override
-    public List<CcChain> findAll(CcChain eo) {
-        List<CcChain> list = chainMapper.findList(eo);
-        return list;
-    }
-    @Override
-    public CcChain detail(Integer  pk) {
-        CcChain eo = chainMapper.selectById(pk);
-        return eo;
-    }
-
-    @Override
-    public Boolean update(Integer  id,CcChain eo) {
-        CcChain old = chainMapper.selectById(id);
-        BeanPowerHelper.mapCompleteOverrider(eo,old); //部分更新
-        int result = chainMapper.updateById(old);
-        if (result > 0) {
-            return true;
+    public List<ChainDTO> findPage(ChainQuery query) {
+        if(query.getPage() != null && query.getPage() != -1){
+            PageHelper.startPage(query.getPage(), query.getSize());
         }
-        return false;
+        List<ChainDO> chainDOS =  chainDAO.findList(query);
+        if(CollectionUtil.isEmpty(chainDOS)){
+            return null;
+        }
+        return ObjectCloneUtils.convertList(chainDOS, ChainDTO.class, CloneDirection.OPPOSITE);
     }
 
-    @Override
-    public Boolean create(CcChain eo) {
-        int result = chainMapper.insert(eo);
-        if (result > 0) {
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public Boolean delete(Integer  pk) {
-        int result = chainMapper.deleteBatchIds(Arrays.asList(pk));
-        if (result > 0) {
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public Boolean delete(Integer ...pks) {
-        int result = chainMapper.deleteBatchIds(Arrays.asList(pks));
-        if (result > 0) {
-            return true;
-        }
-        return false;
-    }
+//    @Override
+//    public List<CcChain> findAll(CcChain eo) {
+//        List<CcChain> list = chainMapper.findList(eo);
+//        return list;
+//    }
+//    @Override
+//    public CcChain detail(Integer  pk) {
+//        CcChain eo = chainMapper.selectById(pk);
+//        return eo;
+//    }
+//
+//    @Override
+//    public Boolean update(Integer  id,CcChain eo) {
+//        CcChain old = chainMapper.selectById(id);
+//        BeanPowerHelper.mapCompleteOverrider(eo,old); //部分更新
+//        int result = chainMapper.updateById(old);
+//        if (result > 0) {
+//            return true;
+//        }
+//        return false;
+//    }
+//
+//    @Override
+//    public Boolean create(CcChain eo) {
+//        int result = chainMapper.insert(eo);
+//        if (result > 0) {
+//            return true;
+//        }
+//        return false;
+//    }
+//
+//    @Override
+//    public Boolean delete(Integer  pk) {
+//        int result = chainMapper.deleteBatchIds(Arrays.asList(pk));
+//        if (result > 0) {
+//            return true;
+//        }
+//        return false;
+//    }
+//
+//    @Override
+//    public Boolean delete(Integer ...pks) {
+//        int result = chainMapper.deleteBatchIds(Arrays.asList(pks));
+//        if (result > 0) {
+//            return true;
+//        }
+//        return false;
+//    }
 
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.deepexi.channel.mapper.ChainTypeMapper">
-    <resultMap type="com.deepexi.channel.domain.dto.CcChainTypeDto" id="CcChainTypeDtoResult">
+    <resultMap type="com.deepexi.channel.domain.chain.ChainTypeDO" id="ChainTypeResult">
         <result property="id" column="id" />
         <result property="parentId" column="parent_id" />
         <result property="limitParent" column="limit_parent" />
@@ -19,8 +19,41 @@
         <result property="appId" column="app_id" />
         <result property="tenantId" column="tenant_id" />
     </resultMap>
-    <select id="findList" resultType="com.deepexi.channel.domain.eo.CcChainType">
-        SELECT * FROM cc_chain_type WHERE 1=1
+    <select id="findList" resultType="com.deepexi.channel.domain.chain.ChainTypeDO">
+        SELECT * FROM cc_chain_type WHERE  dr=0
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="ids != null">
+            <foreach collection="ids" item="tempId" index="index" open="(" close=")" separator=",">
+                #{tempId}
+            </foreach>
+        </if>
+        <if test="chainTypeCode != null and chainTypeCode != ''">
+            and chain_type_code  like concat('%',#{chainTypeCode},'%')
+        </if>
+        <if test="chainTypeName != null and chainTypeName != ''">
+            and chain_type_name like concat('%',#{chainTypeName},'%')
+        </if>
+        <if test="startTime != null">
+            and created_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null">
+            and created_time &lt;= #{endTime}
+        </if>
+        <if test="updateStartTime != null">
+            and updated_time &gt;= #{updateStartTime}
+        </if>
+        <if test="updateEndTime != null">
+            and updated_time &lt;= #{updateEndTime}
+        </if>
+        <if test="tenantId!=null">
+            AND tenant_id = #{tenantId}
+        </if>
+        <if test="appId!=null">
+            AND app_id =#{appId}
+        </if>
+        order by created_time desc
     </select>
 
     <update id="deleteByIds">

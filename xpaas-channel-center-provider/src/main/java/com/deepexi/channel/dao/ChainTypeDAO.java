@@ -7,8 +7,13 @@ import com.deepexi.channel.domain.eo.CcChainType;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
-public interface ChainTypeDAO extends IService<CcChainType> {
+public interface ChainTypeDAO extends IService<ChainTypeDO> {
+    List<ChainTypeDO> findList(ChainTypeQuery query);
+
+    List<ChainTypeDO> selectListByIds(Set<Long> idList);
+
 //    List<ChainTypeDO> listChainTypePage(ChainTypeQuery query);
 //
 //    List<ChainTypeDO> selectListByIds(Collection<Long> idList);
