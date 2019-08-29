@@ -10,10 +10,17 @@ import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class StoreTypeDAOImpl extends ServiceImpl<StoreTypeMapper, CcStoreType> implements StoreTypeDAO {
-//    @Autowired
-//    StoreTypeMapper storeTypeMapper;
+public class StoreTypeDAOImpl extends ServiceImpl<StoreTypeMapper, StoreTypeDO> implements StoreTypeDAO {
+    @Autowired
+    StoreTypeMapper storeTypeMapper;
+
+    @Override
+    public List<StoreTypeDO> findList(StoreTypeQuery query) {
+        return storeTypeMapper.findList(query);
+    }
 //    @Override
 //    public Page<StoreTypeDO> listStoreTypePage(StoreTypeQuery query) {
 //        return storeTypeMapper.listStoreTypePage(query);

@@ -1,6 +1,9 @@
 package com.deepexi.channel.service;
 
 import com.deepexi.channel.domain.eo.CcStoreType;
+import com.deepexi.channel.domain.store.StoreTypeDO;
+import com.deepexi.channel.domain.store.StoreTypeDTO;
+import com.deepexi.channel.domain.store.StoreTypeQuery;
 import com.deepexi.util.pageHelper.PageBean;
 
 import java.util.List;
@@ -12,47 +15,35 @@ public interface StoreTypeService {
 
     /**
     * 分页获取列表
-    * @param eo
-    * @param page
-    * @param size
+    * @param query
     * @return
     */
-    PageBean<CcStoreType> findPage(CcStoreType eo, Integer page, Integer size);
-    /**
-    * 获取列表
-    * @return
-    */
-    List<CcStoreType> findAll(CcStoreType eo);
+    List<StoreTypeDTO> findPage(StoreTypeQuery query);
 
     /**
       获取详情
     * @return
     */
-    CcStoreType detail(Integer pk);
+    StoreTypeDTO detail(Integer pk);
 
     /**
      更新eo
-    * @param eo
+    * @param dto
     * @return
     */
-    Boolean update(Integer id, CcStoreType eo);
+    Boolean update(StoreTypeDTO dto);
 
     /**
     * 创建eo
-    * @param eo
+    * @param dto
     * @return
     */
-    Boolean create(CcStoreType eo);
+    Boolean create(StoreTypeDTO dto);
 
     /**
-     * 单个删除
+     * 批量删除
     * @return
     */
-    Boolean delete(Integer pk);
+    Boolean delete(List<Long> ids);
 
-    /**
-     批量删除
-    * @return
-    */
-    Boolean delete(Integer... pk);
 }

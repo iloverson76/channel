@@ -1,5 +1,13 @@
 package com.deepexi.channel.service.impl;
 
+import com.deepexi.channel.dao.StoreTypeDAO;
+import com.deepexi.channel.domain.store.StoreTypeDO;
+import com.deepexi.channel.domain.store.StoreTypeDTO;
+import com.deepexi.channel.domain.store.StoreTypeQuery;
+import com.deepexi.channel.domain.store.StoreTypeVO;
+import com.deepexi.util.CollectionUtil;
+import com.deepexi.util.pojo.CloneDirection;
+import com.deepexi.util.pojo.ObjectCloneUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
@@ -18,62 +26,55 @@ public class StoreTypeServiceImpl implements StoreTypeService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    private StoreTypeMapper storeTypeMapper;
+    private StoreTypeDAO storeTypeDAO;
 
     @Override
-    public PageBean<CcStoreType> findPage(CcStoreType eo, Integer page, Integer size) {
-        PageHelper.startPage(page, size);
-        List<CcStoreType> pages =  storeTypeMapper.findList(eo);
-        return new PageBean<CcStoreType>(pages);
-    }
-
-    @Override
-    public List<CcStoreType> findAll(CcStoreType eo) {
-        List<CcStoreType> list = storeTypeMapper.findList(eo);
-        return list;
-    }
-    @Override
-    public CcStoreType detail(Integer  pk) {
-        CcStoreType eo = storeTypeMapper.selectById(pk);
-        return eo;
-    }
-
-    @Override
-    public Boolean update(Integer  id,CcStoreType eo) {
-        CcStoreType old = storeTypeMapper.selectById(id);
-        BeanPowerHelper.mapCompleteOverrider(eo,old); //部分更新
-        int result = storeTypeMapper.updateById(old);
-        if (result > 0) {
-            return true;
+    public List<StoreTypeDTO> findPage(StoreTypeQuery query) {
+        if(query.getPage() != null && query.getPage() != -1){
+            PageHelper.startPage(query.getPage(), query.getSize());
         }
-        return false;
+        List<StoreTypeDO> storeTypeDOS =  storeTypeDAO.findList(query);
+        if(CollectionUtil.isEmpty(storeTypeDOS)){
+            return null;
+        }
+        return ObjectCloneUtils.convertList(storeTypeDOS, StoreTypeDTO.class, CloneDirection.OPPOSITE);
     }
 
     @Override
-    public Boolean create(CcStoreType eo) {
-        int result = storeTypeMapper.insert(eo);
-        if (result > 0) {
-            return true;
+    public StoreTypeDTO detail(Integer  pk) {
+        StoreTypeDO storeTypeDO = storeTypeDAO.getById(pk);
+        if(storeTypeDO == null){
+            return null;
         }
-        return false;
+        return storeTypeDO.clone(StoreTypeDTO.class);
     }
 
     @Override
-    public Boolean delete(Integer  pk) {
-        int result = storeTypeMapper.deleteBatchIds(Arrays.asList(pk));
-        if (result > 0) {
-            return true;
+    public Boolean update(StoreTypeDTO dto) {
+        if(dto == null){
+            return false;
         }
-        return false;
+        //TODO 判断编码是否重复
+        StoreTypeDO storeTypeDO = dto.clone(StoreTypeDO.class);
+        return storeTypeDAO.updateById(storeTypeDO);
     }
 
     @Override
-    public Boolean delete(Integer ...pks) {
-        int result = storeTypeMapper.deleteBatchIds(Arrays.asList(pks));
-        if (result > 0) {
-            return true;
+    public Boolean create(StoreTypeDTO dto) {
+        if(dto == null){
+            return false;
         }
-        return false;
+        //TODO 判断编码是否重复
+        StoreTypeDO storeTypeDO = dto.clone(StoreTypeDO.class);
+        return storeTypeDAO.save(storeTypeDO);
+    }
+
+    @Override
+    public Boolean delete(List<Long> ids) {
+        if(CollectionUtil.isEmpty(ids)){
+            return false;
+        }
+        return storeTypeDAO.removeByIds(ids);
     }
 
 }

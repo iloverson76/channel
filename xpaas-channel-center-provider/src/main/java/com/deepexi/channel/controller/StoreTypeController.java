@@ -1,9 +1,11 @@
 package com.deepexi.channel.controller;
 
+import com.deepexi.channel.domain.store.StoreTypeDTO;
 import com.deepexi.channel.domain.store.StoreTypeQuery;
 import com.deepexi.channel.domain.store.StoreTypeVO;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pageHelper.PageBean;
+import com.deepexi.util.pojo.CloneDirection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import com.deepexi.channel.service.StoreTypeService;
@@ -28,11 +30,11 @@ public class StoreTypeController {
     @ApiOperation(value = "分页查询", notes = "分页请求,page传-1时获取所有门店类型")
     public  Payload findPage(@ApiParam(name = "query", required = true) StoreTypeQuery query) {
 //        return new Payload(storeTypeService.findPage(eo, page, size));
-        List<StoreTypeVO> result = new ArrayList<>();
-        result.add(new StoreTypeVO());
-        result.add(new StoreTypeVO());
-
-        return new Payload<>(new PageBean<>(result));
+//        List<StoreTypeVO> result = new ArrayList<>();
+//        result.add(new StoreTypeVO());
+//        result.add(new StoreTypeVO());
+        List<StoreTypeDTO> storeTypeDTOS = storeTypeService.findPage(query);
+        return new Payload<>(new PageBean<>(storeTypeDTOS));
     }
 
 //    @GetMapping("/list")
@@ -43,7 +45,11 @@ public class StoreTypeController {
 //
     @GetMapping("/{id}")
     public Payload detail(@PathVariable(value = "id", required = true) Integer  id) {
-        return new Payload(storeTypeService.detail(id));
+        StoreTypeDTO storeTypeDTO = storeTypeService.detail(id);
+        if(storeTypeDTO == null){
+            return new Payload();
+        }
+        return new Payload(storeTypeDTO.clone(StoreTypeVO.class, CloneDirection.OPPOSITE));
     }
 
 
@@ -51,21 +57,21 @@ public class StoreTypeController {
     @Transactional
     @ApiOperation(value = "根据id修改", notes = "根据id修改门店类型")
     public Payload update(@PathVariable(value = "id", required = true) Long id, @RequestBody StoreTypeVO vo) {
-     vo.setId(id);
-     return new Payload(true);
+         vo.setId(id);
+         return new Payload(storeTypeService.update(vo.clone(StoreTypeDTO.class)));
     }
 
     @PostMapping
     @ApiOperation(value = "创建门店类型", notes = "创建门店类型")
     public Payload create(@RequestBody StoreTypeVO vo) {
-        return new Payload<>(true);
+        return new Payload<>(storeTypeService.create(vo.clone(StoreTypeDTO.class)));
     }
 
     @DeleteMapping("/{ids}")
     @Transactional
-    @ApiOperation(value = "根据id删除CcStoreType", notes = "根据id删除CcStoreType")
+    @ApiOperation(value = "根据id批量删除门店类型", notes = "根据id批量删除门店类型")
     public Payload delete(@PathVariable(value = "ids", required = true) List<Long> ids) {
-        return new Payload(true);
+        return new Payload(storeTypeService.delete(ids));
     }
 
 }
