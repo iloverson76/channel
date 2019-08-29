@@ -9,6 +9,6 @@ import com.deepexi.channel.mapper.ChainBankMapper;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ChainBankDAOImpl extends ServiceImpl<ChainBankMapper, CcChainBank> implements ChainBankDAO {
+public class ChainBankDAOImpl extends ServiceImpl<ChainBankMapper, ChainBankDO> implements ChainBankDAO {
 
 }

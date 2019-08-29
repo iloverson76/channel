@@ -60,14 +60,19 @@ public class ChainServiceImpl implements ChainService {
         return result;
     }
 //
-//    @Override
-//    public Boolean create(CcChain eo) {
-//        int result = chainMapper.insert(eo);
-//        if (result > 0) {
-//            return true;
-//        }
-//        return false;
-//    }
+    @Override
+    public Boolean create(ChainDTO dto) {
+        ChainDO chainDO = dto.clone(ChainDO.class);
+        //新增连锁基本信息
+        boolean result = chainDAO.save(chainDO);
+
+        return result;
+    }
+
+    @Override
+    public Boolean delete(List<Long> ids) {
+        return chainDAO.removeByIds(ids);
+    }
 //
 //    @Override
 //    public Boolean delete(Integer  pk) {
@@ -78,13 +83,5 @@ public class ChainServiceImpl implements ChainService {
 //        return false;
 //    }
 //
-//    @Override
-//    public Boolean delete(Integer ...pks) {
-//        int result = chainMapper.deleteBatchIds(Arrays.asList(pks));
-//        if (result > 0) {
-//            return true;
-//        }
-//        return false;
-//    }
 
 }

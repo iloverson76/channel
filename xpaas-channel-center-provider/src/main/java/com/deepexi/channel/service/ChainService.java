@@ -36,13 +36,13 @@ public interface ChainService {
     * @return
     */
     Boolean update(ChainDTO dto);
-//
-//    /**
-//    * 创建eo
-//    * @param eo
-//    * @return
-//    */
-//    Boolean create(CcChain eo);
+
+    /**
+    * 创建eo
+    * @param dto
+    * @return
+    */
+    Boolean create(ChainDTO dto);
 //
 //    /**
 //     * 单个删除
@@ -50,9 +50,9 @@ public interface ChainService {
 //    */
 //    Boolean delete(Integer pk);
 //
-//    /**
-//     批量删除
-//    * @return
-//    */
-//    Boolean delete(Integer... pk);
+    /**
+     批量删除
+    * @return
+    */
+    Boolean delete(List<Long> ids);
 }
