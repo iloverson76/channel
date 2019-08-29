@@ -1,14 +1,14 @@
 package com.deepexi.channel.service;
 
-import com.deepexi.channel.domain.eo.CcStoreChain;
-import com.deepexi.channel.domain.dto.CcStoreChainDto;
+import com.deepexi.channel.domain.eo.CcArea;
 import com.deepexi.util.pageHelper.PageBean;
+
 import java.util.List;
 
 /**
- * cc_store_chain
+ * cc_area
  */
-public interface StoreChainService {
+public interface AreaService {
 
     /**
     * 分页获取列表
@@ -17,42 +17,42 @@ public interface StoreChainService {
     * @param size
     * @return
     */
-    PageBean<CcStoreChain> findPage(CcStoreChain eo, Integer page, Integer size);
+    PageBean<CcArea> findPage(CcArea eo, Integer page, Integer size);
     /**
     * 获取列表
     * @return
     */
-    List<CcStoreChain> findAll(CcStoreChain eo);
+    List<CcArea> findAll(CcArea eo);
 
     /**
       获取详情
     * @return
     */
-    CcStoreChain detail(Integer  pk);
+    CcArea detail(Integer pk);
 
     /**
      更新eo
     * @param eo
     * @return
     */
-    Boolean update(Integer  id,CcStoreChain eo);
+    Boolean update(Integer id, CcArea eo);
 
     /**
     * 创建eo
     * @param eo
     * @return
     */
-    Boolean create(CcStoreChain eo);
+    Boolean create(CcArea eo);
 
     /**
      * 单个删除
     * @return
     */
-    Boolean delete(Integer  pk);
+    Boolean delete(Integer pk);
 
     /**
      批量删除
     * @return
     */
-    Boolean delete(Integer ...pk);
+    Boolean delete(Integer... pk);
 }

@@ -1,14 +1,14 @@
 package com.deepexi.channel.service;
 
-import com.deepexi.channel.domain.eo.CcDistributorArea;
-import com.deepexi.channel.domain.dto.CcDistributorAreaDto;
+import com.deepexi.channel.domain.eo.CcChain;
 import com.deepexi.util.pageHelper.PageBean;
+
 import java.util.List;
 
 /**
- * cc_distributor_area
+ * cc_chain
  */
-public interface DistributorAreaService {
+public interface ChainService {
 
     /**
     * 分页获取列表
@@ -17,42 +17,42 @@ public interface DistributorAreaService {
     * @param size
     * @return
     */
-    PageBean<CcDistributorArea> findPage(CcDistributorArea eo, Integer page, Integer size);
+    PageBean<CcChain> findPage(CcChain eo, Integer page, Integer size);
     /**
     * 获取列表
     * @return
     */
-    List<CcDistributorArea> findAll(CcDistributorArea eo);
+    List<CcChain> findAll(CcChain eo);
 
     /**
       获取详情
     * @return
     */
-    CcDistributorArea detail(Integer  pk);
+    CcChain detail(Integer pk);
 
     /**
      更新eo
     * @param eo
     * @return
     */
-    Boolean update(Integer  id,CcDistributorArea eo);
+    Boolean update(Integer id, CcChain eo);
 
     /**
     * 创建eo
     * @param eo
     * @return
     */
-    Boolean create(CcDistributorArea eo);
+    Boolean create(CcChain eo);
 
     /**
      * 单个删除
     * @return
     */
-    Boolean delete(Integer  pk);
+    Boolean delete(Integer pk);
 
     /**
      批量删除
     * @return
     */
-    Boolean delete(Integer ...pk);
+    Boolean delete(Integer... pk);
 }

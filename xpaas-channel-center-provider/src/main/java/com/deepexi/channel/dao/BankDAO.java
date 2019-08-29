@@ -6,7 +6,8 @@ import com.deepexi.channel.domain.eo.CcBank;
 
 import java.util.List;
 
-public interface BankDAO extends IService<CcBank> {
+public interface BankDAO extends IService<BankDO> {
 
-//    List<BankDO> findAll();
+    List<BankDO> findAll();
+
 }

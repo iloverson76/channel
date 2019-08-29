@@ -1,14 +1,14 @@
 package com.deepexi.channel.service;
 
-import com.deepexi.channel.domain.eo.CcStoreType;
-import com.deepexi.channel.domain.dto.CcStoreTypeDto;
+import com.deepexi.channel.domain.eo.CcBankAccount;
 import com.deepexi.util.pageHelper.PageBean;
+
 import java.util.List;
 
 /**
- * cc_store_type
+ * cc_bank_account
  */
-public interface StoreTypeService {
+public interface BankAccountService {
 
     /**
     * 分页获取列表
@@ -17,42 +17,42 @@ public interface StoreTypeService {
     * @param size
     * @return
     */
-    PageBean<CcStoreType> findPage(CcStoreType eo, Integer page, Integer size);
+    PageBean<CcBankAccount> findPage(CcBankAccount eo, Integer page, Integer size);
     /**
     * 获取列表
     * @return
     */
-    List<CcStoreType> findAll(CcStoreType eo);
+    List<CcBankAccount> findAll(CcBankAccount eo);
 
     /**
       获取详情
     * @return
     */
-    CcStoreType detail(Integer  pk);
+    CcBankAccount detail(Integer pk);
 
     /**
      更新eo
     * @param eo
     * @return
     */
-    Boolean update(Integer  id,CcStoreType eo);
+    Boolean update(Integer id, CcBankAccount eo);
 
     /**
     * 创建eo
     * @param eo
     * @return
     */
-    Boolean create(CcStoreType eo);
+    Boolean create(CcBankAccount eo);
 
     /**
      * 单个删除
     * @return
     */
-    Boolean delete(Integer  pk);
+    Boolean delete(Integer pk);
 
     /**
      批量删除
     * @return
     */
-    Boolean delete(Integer ...pk);
+    Boolean delete(Integer... pk);
 }

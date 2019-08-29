@@ -1,14 +1,14 @@
 package com.deepexi.channel.service;
 
-import com.deepexi.channel.domain.eo.CcArea;
-import com.deepexi.channel.domain.dto.CcAreaDto;
+import com.deepexi.channel.domain.eo.CcAreaType;
 import com.deepexi.util.pageHelper.PageBean;
+
 import java.util.List;
 
 /**
- * cc_area
+ * cc_area_type
  */
-public interface AreaService {
+public interface AreaTypeService {
 
     /**
     * 分页获取列表
@@ -17,42 +17,42 @@ public interface AreaService {
     * @param size
     * @return
     */
-    PageBean<CcArea> findPage(CcArea eo, Integer page, Integer size);
+    PageBean<CcAreaType> findPage(CcAreaType eo, Integer page, Integer size);
     /**
     * 获取列表
     * @return
     */
-    List<CcArea> findAll(CcArea eo);
+    List<CcAreaType> findAll(CcAreaType eo);
 
     /**
       获取详情
     * @return
     */
-    CcArea detail(Integer  pk);
+    CcAreaType detail(Integer pk);
 
     /**
      更新eo
     * @param eo
     * @return
     */
-    Boolean update(Integer  id,CcArea eo);
+    Boolean update(Integer id, CcAreaType eo);
 
     /**
     * 创建eo
     * @param eo
     * @return
     */
-    Boolean create(CcArea eo);
+    Boolean create(CcAreaType eo);
 
     /**
      * 单个删除
     * @return
     */
-    Boolean delete(Integer  pk);
+    Boolean delete(Integer pk);
 
     /**
      批量删除
     * @return
     */
-    Boolean delete(Integer ...pk);
+    Boolean delete(Integer... pk);
 }

@@ -16,45 +16,102 @@ import org.springframework.stereotype.Component;
 @Component
 public class AppRuntimeEnv {
 
-    // 租户编码
-    private ThreadLocal<String> tenantId = ThreadLocal.withInitial(() -> null);
-    // token信息
-    private ThreadLocal<String> token = ThreadLocal.withInitial(() -> null);
+    private static AppRuntimeEnv instance = null;
 
+    private AppRuntimeEnv() {
+
+    }
+
+    public static AppRuntimeEnv getInstance() {
+        if (null == instance) {
+            synchronized (AppRuntimeEnv.class) {
+                if (null == instance) {
+                    instance = new AppRuntimeEnv();
+                }
+            }
+        }
+        return instance;
+    }
+
+    /**
+     * 租户编码
+     */
+    private final static ThreadLocal<String> TENANT_ID = ThreadLocal.withInitial(() -> null);
+    /**
+     * 应用编码
+     */
+    private final static ThreadLocal<String> APP_ID = ThreadLocal.withInitial(() -> null);
+    /**
+     * token信息
+     */
+    private final static ThreadLocal<String> TOKEN = ThreadLocal.withInitial(() -> null);
+    /**
+     * 登陆用户名
+     */
+    private final static ThreadLocal<String> USERNAME = ThreadLocal.withInitial(() -> "ANONYMOUS");
+
+    /**
+     * requestId
+     */
+    private final static ThreadLocal<String> REQUEST_ID = ThreadLocal.withInitial(IdGenerator::getUuId);
 
     public AppRuntimeEnv ensureToken(String token) throws Exception {
-        if (null == token) throw new ApplicationException(ResultEnum.TOKEN_NOT_FOUND);
-        this.token.set(token);
+        if (null == token) {
+            throw new ApplicationException(ResultEnum.TOKEN_NOT_FOUND);
+        }
+        TOKEN.set(token);
         return this;
     }
 
     public AppRuntimeEnv ensureTenantId(String tenantId) throws Exception {
-        if (null == tenantId) throw new ApplicationException(ResultEnum.TENANT_NOT_FOUND);
-        this.tenantId.set(tenantId);
+        if (null == tenantId) {
+            throw new ApplicationException(ResultEnum.TENANT_NOT_FOUND);
+        }
+        TENANT_ID.set(tenantId);
+        return this;
+    }
+
+    public AppRuntimeEnv ensureUsername(String username) throws Exception {
+        if (null == username) {
+            throw new ApplicationException(ResultEnum.USERNAME_NOT_FOUND);
+        }
+        USERNAME.set(username);
         return this;
     }
 
     public void setTenantId(String tenantId) {
-        this.tenantId.set(tenantId);
+        TENANT_ID.set(tenantId);
     }
 
     public void setToken(String token) {
-        this.token.set(token);
+        TOKEN.set(token);
     }
 
     public String getTenantId() {
-        return tenantId.get();
+        return "123456789";//TENANT_ID.get();
     }
 
     public String getToken() {
-        return token.get();
+        return TOKEN.get();
     }
 
-    // requestId
-    private ThreadLocal<String> requestId = ThreadLocal.withInitial(IdGenerator::getUuId);
+    public void setUsername(String username) {
+        USERNAME.set(username);
+    }
+
+    public String getUsername() {
+        return USERNAME.get();
+    }
 
     public String getRequestId() {
-        return requestId.get();
+        return REQUEST_ID.get();
     }
 
+    public void setAppId(String appId) {
+        APP_ID.set(appId);
+    }
+
+    public String getAppId() {
+        return "123456789";//APP_ID.get();
+    }
 }

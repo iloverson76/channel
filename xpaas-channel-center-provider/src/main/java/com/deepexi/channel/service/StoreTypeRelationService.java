@@ -1,8 +1,8 @@
 package com.deepexi.channel.service;
 
 import com.deepexi.channel.domain.eo.CcStoreTypeRelation;
-import com.deepexi.channel.domain.dto.CcStoreTypeRelationDto;
 import com.deepexi.util.pageHelper.PageBean;
+
 import java.util.List;
 
 /**
@@ -28,14 +28,14 @@ public interface StoreTypeRelationService {
       获取详情
     * @return
     */
-    CcStoreTypeRelation detail(Integer  pk);
+    CcStoreTypeRelation detail(Integer pk);
 
     /**
      更新eo
     * @param eo
     * @return
     */
-    Boolean update(Integer  id,CcStoreTypeRelation eo);
+    Boolean update(Integer id, CcStoreTypeRelation eo);
 
     /**
     * 创建eo
@@ -48,11 +48,11 @@ public interface StoreTypeRelationService {
      * 单个删除
     * @return
     */
-    Boolean delete(Integer  pk);
+    Boolean delete(Integer pk);
 
     /**
      批量删除
     * @return
     */
-    Boolean delete(Integer ...pk);
+    Boolean delete(Integer... pk);
 }

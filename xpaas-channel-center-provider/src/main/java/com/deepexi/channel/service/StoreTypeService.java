@@ -1,14 +1,14 @@
 package com.deepexi.channel.service;
 
-import com.deepexi.channel.domain.eo.CcStoreGrade;
-import com.deepexi.channel.domain.dto.CcStoreGradeDto;
+import com.deepexi.channel.domain.eo.CcStoreType;
 import com.deepexi.util.pageHelper.PageBean;
+
 import java.util.List;
 
 /**
- * cc_store_grade
+ * cc_store_type
  */
-public interface StoreGradeService {
+public interface StoreTypeService {
 
     /**
     * 分页获取列表
@@ -17,42 +17,42 @@ public interface StoreGradeService {
     * @param size
     * @return
     */
-    PageBean<CcStoreGrade> findPage(CcStoreGrade eo, Integer page, Integer size);
+    PageBean<CcStoreType> findPage(CcStoreType eo, Integer page, Integer size);
     /**
     * 获取列表
     * @return
     */
-    List<CcStoreGrade> findAll(CcStoreGrade eo);
+    List<CcStoreType> findAll(CcStoreType eo);
 
     /**
       获取详情
     * @return
     */
-    CcStoreGrade detail(Integer  pk);
+    CcStoreType detail(Integer pk);
 
     /**
      更新eo
     * @param eo
     * @return
     */
-    Boolean update(Integer  id,CcStoreGrade eo);
+    Boolean update(Integer id, CcStoreType eo);
 
     /**
     * 创建eo
     * @param eo
     * @return
     */
-    Boolean create(CcStoreGrade eo);
+    Boolean create(CcStoreType eo);
 
     /**
      * 单个删除
     * @return
     */
-    Boolean delete(Integer  pk);
+    Boolean delete(Integer pk);
 
     /**
      批量删除
     * @return
     */
-    Boolean delete(Integer ...pk);
+    Boolean delete(Integer... pk);
 }

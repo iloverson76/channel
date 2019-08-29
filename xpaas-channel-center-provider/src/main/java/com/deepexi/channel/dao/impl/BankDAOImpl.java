@@ -12,13 +12,14 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class BankDAOImpl  extends ServiceImpl<BankMapper, CcBank> implements BankDAO {
+public class BankDAOImpl  extends ServiceImpl<BankMapper, BankDO> implements BankDAO {
 
-//    @Autowired
-//    BankMapper bankMapper;
-//
-//    @Override
-//    public List<BankDO> findAll() {
-//        return bankMapper.findAll();
-//    }
+    @Autowired
+    BankMapper bankMapper;
+
+    @Override
+    public List<BankDO> findAll() {
+        return bankMapper.findList(null);
+    }
+
 }

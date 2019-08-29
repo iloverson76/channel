@@ -1,8 +1,8 @@
 package com.deepexi.channel.service;
 
 import com.deepexi.channel.domain.eo.CcStoreArea;
-import com.deepexi.channel.domain.dto.CcStoreAreaDto;
 import com.deepexi.util.pageHelper.PageBean;
+
 import java.util.List;
 
 /**
@@ -28,14 +28,14 @@ public interface StoreAreaService {
       获取详情
     * @return
     */
-    CcStoreArea detail(Integer  pk);
+    CcStoreArea detail(Integer pk);
 
     /**
      更新eo
     * @param eo
     * @return
     */
-    Boolean update(Integer  id,CcStoreArea eo);
+    Boolean update(Integer id, CcStoreArea eo);
 
     /**
     * 创建eo
@@ -48,11 +48,11 @@ public interface StoreAreaService {
      * 单个删除
     * @return
     */
-    Boolean delete(Integer  pk);
+    Boolean delete(Integer pk);
 
     /**
      批量删除
     * @return
     */
-    Boolean delete(Integer ...pk);
+    Boolean delete(Integer... pk);
 }

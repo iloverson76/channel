@@ -1,5 +1,6 @@
 package com.deepexi.channel.controller;
 
+import com.deepexi.channel.domain.bank.BankDO;
 import com.deepexi.channel.domain.bank.BankDTO;
 import com.deepexi.channel.domain.bank.BankVO;
 import com.deepexi.util.config.Payload;
@@ -24,12 +25,12 @@ public class BankController {
     @Autowired
     private BankService bankService;
 
-//    @GetMapping()
-//    @ApiOperation("查询银行列表")
-//    public Payload<List<BankVO>> listChainPage(){
-//        List<BankDTO> bankDTOS = bankService.listBank();
-//        return new Payload<>(ObjectCloneUtils.convertList(bankDTOS, BankVO.class, CloneDirection.OPPOSITE));
-//    }
+    @GetMapping()
+    @ApiOperation("查询银行列表")
+    public Payload<List<BankVO>> listChainPage(){
+        List<BankDTO> bankDTOS = bankService.listBank();
+        return new Payload<>(ObjectCloneUtils.convertList(bankDTOS, BankVO.class, CloneDirection.OPPOSITE));
+    }
 
 //    @GetMapping
 //    //@ApiOperation(value = "分页查询", notes = "分页请求")
@@ -59,11 +60,11 @@ public class BankController {
 //     return new Payload(bankService.update(pk, eo));
 //    }
 //
-//    @PostMapping
-//    //@ApiOperation(value = "创建CcBank", notes = "创建CcBank")
-//    public Payload create(@RequestBody CcBank eo) {
-//        return new Payload(bankService.create(eo));
-//    }
+    @PostMapping
+    //@ApiOperation(value = "创建CcBank", notes = "创建CcBank")
+    public Payload create(@RequestBody BankVO bankVO) {
+        return new Payload(bankService.create(bankVO.clone(BankDTO.class)));
+    }
 //
 //    @DeleteMapping("/{id}")
 //    @Transactional

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.deepexi.channel.mapper.BankMapper">
-    <resultMap type="com.deepexi.channel.domain.dto.CcBankDto" id="CcBankDtoResult">
+    <resultMap type="com.deepexi.channel.domain.bank.BankDO" id="BankDOResult">
         <result property="id" column="id" />
         <result property="bankName" column="bank_name" />
         <result property="version" column="version" />
@@ -14,7 +14,7 @@
         <result property="appId" column="app_id" />
         <result property="tenantId" column="tenant_id" />
     </resultMap>
-    <select id="findList" resultType="com.deepexi.channel.domain.eo.CcBank">
+    <select id="findList" resultType="com.deepexi.channel.domain.bank.BankDO">
         SELECT * FROM cc_bank WHERE 1=1
     </select>
 

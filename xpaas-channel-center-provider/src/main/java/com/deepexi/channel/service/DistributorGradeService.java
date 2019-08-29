@@ -1,14 +1,14 @@
 package com.deepexi.channel.service;
 
-import com.deepexi.channel.domain.eo.CcDistributorBank;
-import com.deepexi.channel.domain.dto.CcDistributorBankDto;
+import com.deepexi.channel.domain.eo.CcDistributorGrade;
 import com.deepexi.util.pageHelper.PageBean;
+
 import java.util.List;
 
 /**
- * cc_distributor_bank
+ * cc_distributor_grade
  */
-public interface DistributorBankService {
+public interface DistributorGradeService {
 
     /**
     * 分页获取列表
@@ -17,42 +17,42 @@ public interface DistributorBankService {
     * @param size
     * @return
     */
-    PageBean<CcDistributorBank> findPage(CcDistributorBank eo, Integer page, Integer size);
+    PageBean<CcDistributorGrade> findPage(CcDistributorGrade eo, Integer page, Integer size);
     /**
     * 获取列表
     * @return
     */
-    List<CcDistributorBank> findAll(CcDistributorBank eo);
+    List<CcDistributorGrade> findAll(CcDistributorGrade eo);
 
     /**
       获取详情
     * @return
     */
-    CcDistributorBank detail(Integer  pk);
+    CcDistributorGrade detail(Integer pk);
 
     /**
      更新eo
     * @param eo
     * @return
     */
-    Boolean update(Integer  id,CcDistributorBank eo);
+    Boolean update(Integer id, CcDistributorGrade eo);
 
     /**
     * 创建eo
     * @param eo
     * @return
     */
-    Boolean create(CcDistributorBank eo);
+    Boolean create(CcDistributorGrade eo);
 
     /**
      * 单个删除
     * @return
     */
-    Boolean delete(Integer  pk);
+    Boolean delete(Integer pk);
 
     /**
      批量删除
     * @return
     */
-    Boolean delete(Integer ...pk);
+    Boolean delete(Integer... pk);
 }

@@ -1,14 +1,14 @@
 package com.deepexi.channel.service;
 
-import com.deepexi.channel.domain.eo.CcBank;
-import com.deepexi.channel.domain.dto.CcBankDto;
+import com.deepexi.channel.domain.eo.CcChainBank;
 import com.deepexi.util.pageHelper.PageBean;
+
 import java.util.List;
 
 /**
- * cc_bank
+ * cc_chain_bank
  */
-public interface BankService {
+public interface ChainBankService {
 
     /**
     * 分页获取列表
@@ -17,42 +17,42 @@ public interface BankService {
     * @param size
     * @return
     */
-    PageBean<CcBank> findPage(CcBank eo, Integer page, Integer size);
+    PageBean<CcChainBank> findPage(CcChainBank eo, Integer page, Integer size);
     /**
     * 获取列表
     * @return
     */
-    List<CcBank> findAll(CcBank eo);
+    List<CcChainBank> findAll(CcChainBank eo);
 
     /**
       获取详情
     * @return
     */
-    CcBank detail(Integer  pk);
+    CcChainBank detail(Integer pk);
 
     /**
      更新eo
     * @param eo
     * @return
     */
-    Boolean update(Integer  id,CcBank eo);
+    Boolean update(Integer id, CcChainBank eo);
 
     /**
     * 创建eo
     * @param eo
     * @return
     */
-    Boolean create(CcBank eo);
+    Boolean create(CcChainBank eo);
 
     /**
      * 单个删除
     * @return
     */
-    Boolean delete(Integer  pk);
+    Boolean delete(Integer pk);
 
     /**
      批量删除
     * @return
     */
-    Boolean delete(Integer ...pk);
+    Boolean delete(Integer... pk);
 }

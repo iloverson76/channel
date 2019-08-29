@@ -1,8 +1,8 @@
 package com.deepexi.channel.service;
 
 import com.deepexi.channel.domain.eo.CcDistributorGradeRelation;
-import com.deepexi.channel.domain.dto.CcDistributorGradeRelationDto;
 import com.deepexi.util.pageHelper.PageBean;
+
 import java.util.List;
 
 /**
@@ -28,14 +28,14 @@ public interface DistributorGradeRelationService {
       获取详情
     * @return
     */
-    CcDistributorGradeRelation detail(Integer  pk);
+    CcDistributorGradeRelation detail(Integer pk);
 
     /**
      更新eo
     * @param eo
     * @return
     */
-    Boolean update(Integer  id,CcDistributorGradeRelation eo);
+    Boolean update(Integer id, CcDistributorGradeRelation eo);
 
     /**
     * 创建eo
@@ -48,11 +48,11 @@ public interface DistributorGradeRelationService {
      * 单个删除
     * @return
     */
-    Boolean delete(Integer  pk);
+    Boolean delete(Integer pk);
 
     /**
      批量删除
     * @return
     */
-    Boolean delete(Integer ...pk);
+    Boolean delete(Integer... pk);
 }
