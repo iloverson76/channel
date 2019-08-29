@@ -47,10 +47,9 @@ public class ChainController {
     @PutMapping("/{id}")
     @Transactional
     @ApiOperation(value = "根据id修改", notes = "根据id修改连锁")
-    public Payload update(@PathVariable(value = "id", required = true) Integer  id, @RequestBody ChainVO vo) {
-//         vo.setId(id);
-//         return new Payload(chainService.update(pk, eo));
-         return new Payload();
+    public Payload update(@PathVariable(value = "id", required = true) Long id, @RequestBody ChainVO vo) {
+         vo.setId(id);
+         return new Payload(chainService.update(vo.clone(ChainDTO.class)));
     }
 //
 //    @PostMapping

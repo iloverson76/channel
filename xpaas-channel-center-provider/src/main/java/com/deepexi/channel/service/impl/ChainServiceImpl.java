@@ -49,17 +49,16 @@ public class ChainServiceImpl implements ChainService {
         ChainDO chainDO = chainDAO.getById(id);
         return chainDO.clone(ChainDTO.class,CloneDirection.OPPOSITE);
     }
-//
-//    @Override
-//    public Boolean update(Integer  id,CcChain eo) {
-//        CcChain old = chainMapper.selectById(id);
-//        BeanPowerHelper.mapCompleteOverrider(eo,old); //部分更新
-//        int result = chainMapper.updateById(old);
-//        if (result > 0) {
-//            return true;
-//        }
-//        return false;
-//    }
+
+    @Override
+    public Boolean update(ChainDTO dto) {
+        if (dto.getId() == null || dto.getId() == 0L) {
+            return false;
+        }
+        ChainDO chainDO = dto.clone(ChainDO.class);
+        boolean result = chainDAO.updateById(chainDO);
+        return result;
+    }
 //
 //    @Override
 //    public Boolean create(CcChain eo) {
