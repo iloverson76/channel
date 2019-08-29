@@ -12,7 +12,4 @@ docker run --rm \
    -v $proj_home:/usr/src/mymaven \
    -w /usr/src/mymaven $img_mvn mvn clean package -U
 
-mv $PROJ_HOME/xpaas-channel-center-webapp/target/xpaas-channel-center-webapp-*.jar $PROJ_HOME/xpaas-channel-center-webapp/target/demo.jar
-
-echo "构建镜像"
-docker build -t $APP_NAME:v$VERSION .
+mv $PROJECT_HOME/xpaas-channel-center-webapp/target/xpaas-channel-center-webapp-*.jar $PROJECT_HOME/xpaas-channel-center-webapp/target/demo.jar
