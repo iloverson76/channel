@@ -68,7 +68,7 @@ public class ChainTypeServiceImpl implements ChainTypeService {
     }
 
     @Override
-    public ChainTypeDTO detail(Integer id) {
+    public ChainTypeDTO detail(Long id) {
         if (id == null || id == 0L) {
             return null;
         }

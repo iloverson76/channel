@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class BankAccountDAOImpl extends ServiceImpl<BankAccountMapper, CcBankAccount> implements BankAccountDAO {
+public class BankAccountDAOImpl extends ServiceImpl<BankAccountMapper, BankAccountDO> implements BankAccountDAO {
 
 //    @Autowired
 //    BankAccountMapper bankAccountMapper;

@@ -30,7 +30,7 @@ public interface ChainTypeService {
       获取详情
     * @return
     */
-    ChainTypeDTO detail(Integer pk);
+    ChainTypeDTO detail(Long id);
 
     /**
      更新eo

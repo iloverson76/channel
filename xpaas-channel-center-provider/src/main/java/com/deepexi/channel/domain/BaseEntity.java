@@ -21,7 +21,7 @@ public abstract class BaseEntity extends AbstractObject {
     private Long id;
 
     @TableField(value = "`tenant_id`", fill = FieldFill.INSERT)
-    @ApiModelProperty(value = "租户id", example = "123456")
+    @ApiModelProperty(value = "租户id", example = "123456789")
     private String tenantId;
 
     @TableField(value = "`app_id`", fill = FieldFill.INSERT)

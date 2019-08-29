@@ -34,7 +34,7 @@ public class ChainTypeController {
     }
 
     @GetMapping("/{id}")
-    public Payload detail(@PathVariable(value = "id", required = true) Integer  id) {
+    public Payload detail(@PathVariable(value = "id", required = true) Long id) {
         ChainTypeDTO chainTypeDTO = chainTypeService.detail(id);
         if(chainTypeDTO == null){
             return new Payload<>(null);
