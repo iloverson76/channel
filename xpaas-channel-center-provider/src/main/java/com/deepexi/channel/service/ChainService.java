@@ -29,13 +29,13 @@ public interface ChainService {
     * @return
     */
     ChainDTO detail(Long id);
-//
-//    /**
-//     更新eo
-//    * @param eo
-//    * @return
-//    */
-//    Boolean update(Integer id, CcChain eo);
+
+    /**
+     更新eo
+    * @param dto
+    * @return
+    */
+    Boolean update(ChainDTO dto);
 //
 //    /**
 //    * 创建eo
