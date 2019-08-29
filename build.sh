@@ -13,7 +13,7 @@ docker run --rm \
    -v $proj_home:/usr/src/mymaven \
    -w /usr/src/mymaven $img_mvn mvn clean package -U -Dmaven.test.skip=true
 
-mv $PROJECT_HOME/target/xpaas-channel-center-webapp-*.jar $PROJECT_HOME/target/xpaas-channel-center-webapp-*.jar
+mv $PROJECT_HOME/target/xpaas-channel-center-webapp-*.jar $PROJECT_HOME/target/demo.jar
 
 docker build -t $APP_NAME:v$VERSION .
 
