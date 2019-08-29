@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="82f03ada-c49b-4d8b-813b-d18117fbb362" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-api/xpaas-channel-center-api.iml" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-api/xpaas-channel-center-api.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/xpaas-channel-center-provider.iml" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/xpaas-channel-center-provider.iml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/xpaas-channel-center-api/target/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -46,8 +42,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/resources/application.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="35" lean-forward="true" selection-start-line="9" selection-start-column="35" selection-end-line="9" selection-end-column="35" />
+            <state relative-caret-position="92">
+              <caret line="58" lean-forward="true" selection-start-line="58" selection-end-line="58" />
             </state>
           </provider>
         </entry>
@@ -269,7 +265,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1567084017143" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1567085129098" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -310,12 +306,20 @@
       <option name="presentableId" value="Default" />
       <updated>1566992060758</updated>
       <workItem from="1566992065269" duration="4164000" />
-      <workItem from="1567083063933" duration="841000" />
+      <workItem from="1567083063933" duration="1949000" />
     </task>
+    <task id="LOCAL-00001" summary="端口号修改为8305">
+      <created>1567084103262</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1567084103262</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5167000" />
+    <option name="totallyTimeSpent" value="6275000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -334,7 +338,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32884097" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.1819407" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.42857143" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -360,6 +364,10 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="端口号修改为8305" />
+    <option name="LAST_COMMIT_MESSAGE" value="端口号修改为8305" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/DistributorAreaMapper.java">
@@ -544,8 +552,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/resources/application.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="35" lean-forward="true" selection-start-line="9" selection-start-column="35" selection-end-line="9" selection-end-column="35" />
+        <state relative-caret-position="92">
+          <caret line="58" lean-forward="true" selection-start-line="58" selection-end-line="58" />
         </state>
       </provider>
     </entry>
