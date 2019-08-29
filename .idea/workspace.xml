@@ -1,0 +1,1001 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="6efcc9ce-86bf-4cb0-92d4-43feed795ac4" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/junitgenerator-prj-settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/AreaService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/AreaTypeService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/BankAccountService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/BankService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/ChainBankService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/ChainService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/ChainTypeService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/DistributorAreaService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/DistributorBankService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/DistributorGradeRelationService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/DistributorGradeService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/DistributorGradeSystemService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/DistributorService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/StoreAreaService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/StoreChainService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/StoreDistributorRelationService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/StoreGradeRelationService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/StoreGradeService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/StoreService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/StoreTypeRelationService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/StoreTypeService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/AreaController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/AreaMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/AreaMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/AreaTypeMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/AreaTypeMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/BankAccountMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/BankAccountMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/BankMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/BankMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/ChainBankMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/ChainBankMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/ChainMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/ChainMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/ChainTypeMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/ChainTypeMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/DistributorAreaMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/DistributorAreaMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/DistributorBankMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/DistributorBankMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/DistributorGradeMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/DistributorGradeMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/DistributorGradeRelationMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/DistributorGradeRelationMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/DistributorGradeSystemMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/DistributorGradeSystemMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/DistributorMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/DistributorMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/StoreAreaMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/StoreAreaMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/StoreChainMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/StoreChainMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/StoreDistributorRelationMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/StoreDistributorRelationMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/StoreGradeMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/StoreGradeMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/StoreGradeRelationMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/StoreGradeRelationMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/StoreMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/StoreMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/StoreTypeMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/StoreTypeMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/StoreTypeRelationMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/StoreTypeRelationMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/AreaServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/AreaTypeServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/BankAccountServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/BankServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/ChainServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/ChainTypeServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/DistributorAreaServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/DistributorBankServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/DistributorGradeRelationServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/DistributorGradeServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/DistributorGradeSystemServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/DistributorServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/StoreAreaServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/StoreChainServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/StoreDistributorRelationServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/StoreGradeRelationServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/StoreGradeServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/StoreServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/StoreTypeRelationServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/StoreTypeServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/domain/eo/CcArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/domain/eo/CcArea.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/CcAreaService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/CcAreaTypeService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/CcBankAccountService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/CcBankService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/CcChainBankService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/CcChainService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/CcChainTypeService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/CcDistributorAreaService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/CcDistributorBankService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/CcDistributorGradeRelationService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/CcDistributorGradeService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/CcDistributorGradeSystemService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/CcDistributorService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/CcStoreAreaService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/CcStoreChainService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/CcStoreDistributorRelationService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/CcStoreGradeRelationService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/CcStoreGradeService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/CcStoreService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/CcStoreTypeRelationService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/CcStoreTypeService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/CcAreaController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/CcAreaTypeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/AreaTypeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/CcBankAccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/BankAccountController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/CcBankController.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/BankController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/CcChainBankController.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/ChainBankController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/CcChainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/ChainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/CcChainTypeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/ChainTypeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/CcDistributorAreaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/DistributorAreaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/CcDistributorBankController.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/DistributorBankController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/CcDistributorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/DistributorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/CcDistributorGradeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/DistributorGradeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/CcDistributorGradeRelationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/DistributorGradeRelationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/CcDistributorGradeSystemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/DistributorGradeSystemController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/CcStoreAreaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/StoreAreaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/CcStoreChainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/StoreChainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/CcStoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/StoreController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/CcStoreDistributorRelationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/StoreDistributorRelationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/CcStoreGradeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/StoreGradeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/CcStoreGradeRelationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/StoreGradeRelationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/CcStoreTypeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/StoreTypeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/CcStoreTypeRelationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/StoreTypeRelationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/ProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/domain/ProductDO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/domain/ProductDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/domain/ProductQuery.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/domain/ProductVO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/domain/SuperEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcAreaMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcAreaMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcAreaTypeMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcAreaTypeMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcBankAccountMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcBankAccountMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcBankMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcBankMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcChainBankMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcChainBankMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcChainMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcChainMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcChainTypeMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcChainTypeMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcDistributorAreaMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcDistributorAreaMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcDistributorBankMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcDistributorBankMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcDistributorGradeMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcDistributorGradeMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcDistributorGradeRelationMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcDistributorGradeRelationMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcDistributorGradeSystemMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcDistributorGradeSystemMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcDistributorMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcDistributorMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcStoreAreaMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcStoreAreaMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcStoreChainMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcStoreChainMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcStoreDistributorRelationMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcStoreDistributorRelationMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcStoreGradeMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcStoreGradeMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcStoreGradeRelationMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcStoreGradeRelationMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcStoreMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcStoreMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcStoreTypeMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcStoreTypeMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcStoreTypeRelationMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/CcStoreTypeRelationMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/ProductMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/ProductMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/ProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/CcAreaServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/CcAreaTypeServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/CcBankAccountServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/CcBankServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/CcChainBankServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/ChainBankServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/CcChainServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/CcChainTypeServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/CcDistributorAreaServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/CcDistributorBankServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/CcDistributorGradeRelationServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/CcDistributorGradeServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/CcDistributorGradeSystemServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/CcDistributorServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/CcStoreAreaServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/CcStoreChainServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/CcStoreDistributorRelationServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/CcStoreGradeRelationServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/CcStoreGradeServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/CcStoreServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/CcStoreTypeRelationServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/CcStoreTypeServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/ProductServiceImpl.java" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/xpaas-channel-center-api/target/" />
+    <ignored path="$PROJECT_DIR$/target/" />
+    <ignored path="$PROJECT_DIR$/xpaas-channel-center-provider/target/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/StoreTypeService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/AreaServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="20" column="16" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/AreaMapper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="11" column="12" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="15" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/domain/eo/CcArea.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1207">
+              <caret line="19" column="20" lean-forward="true" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/ChainBankServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>CcArea</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>Area</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="ROOT_SYNC" value="SYNC" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/StoreChainController.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/StoreController.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/StoreDistributorRelationController.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/StoreGradeController.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/StoreGradeRelationController.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/StoreTypeController.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/controller/StoreTypeRelationController.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/AreaMapper.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/AreaTypeMapper.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/BankAccountMapper.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/BankMapper.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/ChainBankMapper.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/ChainMapper.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/ChainTypeMapper.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/DistributorAreaMapper.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/DistributorBankMapper.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/DistributorGradeMapper.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/DistributorGradeRelationMapper.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/DistributorGradeSystemMapper.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/DistributorMapper.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/StoreAreaMapper.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/StoreChainMapper.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/StoreDistributorRelationMapper.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/StoreGradeMapper.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/StoreGradeRelationMapper.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/StoreMapper.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/StoreTypeMapper.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/StoreTypeRelationMapper.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/AreaService.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/AreaTypeService.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/BankAccountService.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/BankService.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/ChainBankService.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/ChainTypeService.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/DistributorAreaService.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/ChainService.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/DistributorBankService.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/DistributorGradeRelationService.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/DistributorGradeService.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/DistributorGradeSystemService.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/DistributorService.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/StoreAreaService.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/StoreChainService.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/StoreDistributorRelationService.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/StoreGradeRelationService.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/StoreGradeService.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/StoreService.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/StoreTypeRelationService.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/StoreTypeService.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/domain/eo/CcArea.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/ChainBankServiceImpl.java" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="G:/maven/apache-maven-3.6.1-bin/apache-maven-3.6.1" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1616" />
+    <option name="height" value="876" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="xpaas-channel-center" type="b2602c69:ProjectViewProjectNode" />
+              <item name="xpaas-channel-center" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="xpaas-channel-center" type="b2602c69:ProjectViewProjectNode" />
+              <item name="xpaas-channel-center" type="462c0819:PsiDirectoryNode" />
+              <item name="xpaas-channel-center-api" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="xpaas-channel-center" type="b2602c69:ProjectViewProjectNode" />
+              <item name="xpaas-channel-center" type="462c0819:PsiDirectoryNode" />
+              <item name="xpaas-channel-center-api" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="xpaas-channel-center" type="b2602c69:ProjectViewProjectNode" />
+              <item name="xpaas-channel-center" type="462c0819:PsiDirectoryNode" />
+              <item name="xpaas-channel-center-api" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="xpaas-channel-center" type="b2602c69:ProjectViewProjectNode" />
+              <item name="xpaas-channel-center" type="462c0819:PsiDirectoryNode" />
+              <item name="xpaas-channel-center-api" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="xpaas-channel-center" type="b2602c69:ProjectViewProjectNode" />
+              <item name="xpaas-channel-center" type="462c0819:PsiDirectoryNode" />
+              <item name="xpaas-channel-center-api" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="channel" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="xpaas-channel-center" type="b2602c69:ProjectViewProjectNode" />
+              <item name="xpaas-channel-center" type="462c0819:PsiDirectoryNode" />
+              <item name="xpaas-channel-center-api" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="channel" type="462c0819:PsiDirectoryNode" />
+              <item name="domain" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="xpaas-channel-center" type="b2602c69:ProjectViewProjectNode" />
+              <item name="xpaas-channel-center" type="462c0819:PsiDirectoryNode" />
+              <item name="xpaas-channel-center-provider" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="xpaas-channel-center" type="b2602c69:ProjectViewProjectNode" />
+              <item name="xpaas-channel-center" type="462c0819:PsiDirectoryNode" />
+              <item name="xpaas-channel-center-provider" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="xpaas-channel-center" type="b2602c69:ProjectViewProjectNode" />
+              <item name="xpaas-channel-center" type="462c0819:PsiDirectoryNode" />
+              <item name="xpaas-channel-center-provider" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="xpaas-channel-center" type="b2602c69:ProjectViewProjectNode" />
+              <item name="xpaas-channel-center" type="462c0819:PsiDirectoryNode" />
+              <item name="xpaas-channel-center-provider" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="xpaas-channel-center" type="b2602c69:ProjectViewProjectNode" />
+              <item name="xpaas-channel-center" type="462c0819:PsiDirectoryNode" />
+              <item name="xpaas-channel-center-provider" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="channel" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="xpaas-channel-center" type="b2602c69:ProjectViewProjectNode" />
+              <item name="xpaas-channel-center" type="462c0819:PsiDirectoryNode" />
+              <item name="xpaas-channel-center-provider" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="channel" type="462c0819:PsiDirectoryNode" />
+              <item name="domain" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="xpaas-channel-center" type="b2602c69:ProjectViewProjectNode" />
+              <item name="xpaas-channel-center" type="462c0819:PsiDirectoryNode" />
+              <item name="xpaas-channel-center-provider" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1566997262555" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.48505747" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="StartupApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="xpaas-channel-center-provider" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.deepexi.channel.StartupApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6efcc9ce-86bf-4cb0-92d4-43feed795ac4" name="Default Changelist" comment="" />
+      <created>1566992060758</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1566992060758</updated>
+      <workItem from="1566992065269" duration="4164000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="4164000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
+    <layout>
+      <window_info id="Designer" />
+      <window_info id="Image Layers" />
+      <window_info id="Capture Tool" />
+      <window_info id="UI Designer" />
+      <window_info id="Favorites" side_tool="true" />
+      <window_info id="Web" side_tool="true" />
+      <window_info id="Learn" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.30398458" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Spring" />
+      <window_info anchor="bottom" id="Terminal" visible="true" weight="0.32884097" />
+      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Java Enterprise" />
+      <window_info anchor="bottom" id="Database Changes" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="Maven" />
+      <window_info anchor="right" id="PlantUML" />
+      <window_info anchor="right" id="Palette" />
+      <window_info anchor="right" id="Capture Analysis" />
+      <window_info anchor="right" id="Database" />
+      <window_info anchor="right" id="Palette&#9;" />
+      <window_info anchor="right" id="Theme Preview" />
+      <window_info anchor="right" id="Bean Validation" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/BankMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/BankMapper.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/ChainMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/ChainTypeMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/DistributorAreaMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/DistributorBankMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/DistributorGradeMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/DistributorGradeRelationMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/DistributorGradeSystemMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/DistributorMapper.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/DistributorMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/StoreAreaMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/StoreChainMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/StoreDistributorRelationMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/StoreGradeMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/StoreGradeRelationMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/StoreMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/StoreTypeMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/StoreTypeRelationMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/ChainBankMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/StartupApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/AreaService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="10" column="28" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/AreaTypeService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/BankAccountService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/BankService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/ChainBankService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/ChainTypeService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/DistributorAreaService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/ChainService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/DistributorBankService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/DistributorGradeRelationService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/DistributorGradeService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/DistributorGradeSystemService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/DistributorService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/StoreAreaService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/StoreChainService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/StoreDistributorRelationService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/StoreGradeRelationService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="10" column="20" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/StoreGradeService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/StoreService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/StoreTypeRelationService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="16" column="17" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/StoreTypeService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/AreaServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="20" column="16" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/mapper/AreaMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="11" column="12" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/domain/eo/CcArea.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1207">
+          <caret line="19" column="20" lean-forward="true" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/domain/ProductVO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/domain/ProductDTO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/domain/ProductQuery.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/domain/ProductDO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="25" column="5" lean-forward="true" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/domain/SuperEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1139">
+          <caret line="76" column="29" lean-forward="true" selection-start-line="76" selection-start-column="29" selection-end-line="76" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-provider/src/main/java/com/deepexi/channel/service/impl/ChainBankServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>Spring</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.48505747" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.48505747" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>xpaas-channel-center-api</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.48505747" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Maven: antlr:antlr:2.7.7</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.48505747" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
