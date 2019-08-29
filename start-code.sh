@@ -20,7 +20,7 @@ docker run --rm \
    -v $proj_home:/usr/src/mymaven \
    -w /usr/src/mymaven $img_mvn mvn clean package -U
 echo "mv jar start"
-sudo mv $proj_home/xpaas-channel-center-provider/target/xpaas-channel-center-*.jar $proj_home/xpaas-channel-center-provider/target/demo.jar # 兼容所有sh脚本
+sudo mv $proj_home/xpaas-channel-center-webapp/target/xpaas-channel-center-*.jar $proj_home/xpaas-channel-center-webapp/target/demo.jar # 兼容所有sh脚本
 docker build -t $img_output .
 
 mkdir -p $PWD/logs
