@@ -44,11 +44,11 @@ public class ChainServiceImpl implements ChainService {
 //        List<CcChain> list = chainMapper.findList(eo);
 //        return list;
 //    }
-//    @Override
-//    public CcChain detail(Integer  pk) {
-//        CcChain eo = chainMapper.selectById(pk);
-//        return eo;
-//    }
+    @Override
+    public ChainDTO detail(Long id) {
+        ChainDO chainDO = chainDAO.getById(id);
+        return chainDO.clone(ChainDTO.class,CloneDirection.OPPOSITE);
+    }
 //
 //    @Override
 //    public Boolean update(Integer  id,CcChain eo) {

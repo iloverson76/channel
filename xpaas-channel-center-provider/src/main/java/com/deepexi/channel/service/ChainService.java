@@ -24,11 +24,11 @@ public interface ChainService {
 //    */
 //    List<CcChain> findAll(CcChain eo);
 //
-//    /**
-//      获取详情
-//    * @return
-//    */
-//    CcChain detail(Integer pk);
+    /**
+      获取详情
+    * @return
+    */
+    ChainDTO detail(Long id);
 //
 //    /**
 //     更新eo

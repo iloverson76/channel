@@ -1,7 +1,10 @@
 package com.deepexi.channel.controller;
 
+import com.deepexi.channel.domain.chain.ChainDTO;
 import com.deepexi.channel.domain.chain.ChainQuery;
+import com.deepexi.channel.domain.chain.ChainVO;
 import com.deepexi.util.config.Payload;
+import com.deepexi.util.pojo.CloneDirection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import com.deepexi.channel.service.ChainService;
@@ -30,19 +33,25 @@ public class ChainController {
 //        return new Payload(chainService.findAll(eo));
 //    }
 //
-//    @GetMapping("/{id}")
-//    public Payload detail(@PathVariable(value = "id", required = true) Integer  pk) {
-//        return new Payload(chainService.detail(pk));
-//    }
-//
-//
-//    @PutMapping("/{id}")
-//    @Transactional
-////@ApiOperation(value = "根据id修改", notes = "根据id修改CcChain")
-//    public Payload update(@PathVariable(value = "id", required = true) Integer  pk, @RequestBody CcChain eo) {
-//     eo.setId(pk);
-//     return new Payload(chainService.update(pk, eo));
-//    }
+    @GetMapping("/{id}")
+    @ApiOperation("根据id获取连锁店详情")
+    public Payload detail(@PathVariable(value = "id", required = true) Long id) {
+        ChainDTO chainDTO =chainService.detail(id);
+        if(chainDTO == null){
+            return new Payload(null);
+        }
+        return new Payload(chainDTO.clone(ChainVO.class, CloneDirection.OPPOSITE));
+    }
+
+
+    @PutMapping("/{id}")
+    @Transactional
+    @ApiOperation(value = "根据id修改", notes = "根据id修改连锁")
+    public Payload update(@PathVariable(value = "id", required = true) Integer  id, @RequestBody ChainVO vo) {
+//         vo.setId(id);
+//         return new Payload(chainService.update(pk, eo));
+         return new Payload();
+    }
 //
 //    @PostMapping
 //    //@ApiOperation(value = "创建CcChain", notes = "创建CcChain")
