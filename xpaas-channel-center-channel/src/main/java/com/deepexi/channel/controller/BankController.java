@@ -1,0 +1,41 @@
+package com.deepexi.channel.controller;
+
+import com.deepexi.channel.domain.bank.BankDTO;
+import com.deepexi.channel.domain.bank.BankVO;
+import com.deepexi.channel.service.BankService;
+import com.deepexi.util.config.Payload;
+import com.deepexi.util.pojo.CloneDirection;
+import com.deepexi.util.pojo.ObjectCloneUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+/**
+ * <p>
+ * 银行账户表 前端控制器
+ * </p>
+ *
+ * @author jobob
+ * @since 2019-08-23
+ */
+@RestController
+@RequestMapping("/api/v1/bank")
+@Api("银行管理")
+public class BankController {
+
+    @Autowired
+    BankService bankService;
+
+    @GetMapping()
+    @ApiOperation("查询银行列表")
+    public Payload<List<BankVO>> listChainPage(){
+        List<BankDTO> bankDTOS = bankService.listBank();
+        return new Payload<>(ObjectCloneUtils.convertList(bankDTOS, BankVO.class, CloneDirection.OPPOSITE));
+    }
+}
