@@ -6,4 +6,4 @@ USER root
 ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
 
-COPY xpaas-channel-wepapp/target/demo.jar /home/
+COPY xpaas-channel-webapp/target/demo.jar /home/
