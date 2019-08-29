@@ -19,7 +19,7 @@ import java.util.Date;
  * @since 2019-08-26
  */
 @EqualsAndHashCode(callSuper = true)
-@Data
+//@Data
 @ApiModel("供应商查询")
 public abstract class CommQuery extends AbstractObject {
 
