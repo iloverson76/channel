@@ -3,7 +3,6 @@ cd `dirname $0`
 
 img_mvn="maven:3.3.3-jdk-8"                 # docker image of maven
 m2_cache=~/.m2                              # the local maven cache dir
-proj_home=$PWD                              # the project root dir
 
 git pull  # should use git clone https://name:pwd@xxx.git
 
@@ -13,4 +12,4 @@ docker run --rm \
    -v $proj_home:/usr/src/mymaven \
    -w /usr/src/mymaven $img_mvn mvn clean package -U
 
-mv $proj_home/xpaas-channel-center-webapp/target/xpaas-channel-center-webapp-*.jar $proj_home/xpaas-channel-center-webapp/target/demo.jar
+mv $PROJ_HOME/xpaas-channel-center-webapp/target/xpaas-channel-center-webapp-*.jar $PROJ_HOME/xpaas-channel-center-webapp/target/demo.jar
