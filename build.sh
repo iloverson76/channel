@@ -13,4 +13,4 @@ docker run --rm \
    -v $proj_home:/usr/src/mymaven \
    -w /usr/src/mymaven $img_mvn mvn clean package -U
 
-mv $proj_home/xpaas-channel-center-provider/target/xpaas-channel-center-provider-*.jar $proj_home/xpaas-channel-center-provider/target/demo.jar
+mv $proj_home/xpaas-channel-center-wepapp/target/xpaas-channel-center-wepapp-*.jar $proj_home/xpaas-channel-center-wepapp/target/demo.jar
