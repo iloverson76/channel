@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.deepexi.channel.mapper.StoreMapper">
-    <resultMap type="com.deepexi.channel.domain.dto.CcStoreDto" id="CcStoreDtoResult">
+    <resultMap type="com.deepexi.channel.domain.store.StoreDO" id="StoreDOResult">
         <result property="id" column="id" />
         <result property="storeName" column="store_name" />
         <result property="storeCode" column="store_code" />
@@ -21,14 +21,8 @@
         <result property="appId" column="app_id" />
         <result property="tenantId" column="tenant_id" />
     </resultMap>
-    <select id="findList" resultType="com.deepexi.channel.domain.eo.CcStore">
+    <select id="findList" resultType="com.deepexi.channel.domain.store.StoreDO">
         SELECT * FROM cc_store WHERE 1=1
     </select>
 
-    <update id="deleteByIds">
-        UPDATE cc_store set dr=1 where id in
-        <foreach collection="ids" index="index" item="id" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-    </update>
 </mapper>

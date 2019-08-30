@@ -1,16 +1,19 @@
 package com.deepexi.channel.service.impl;
 
+import com.deepexi.channel.dao.StoreDAO;
+import com.deepexi.channel.domain.store.StoreDO;
+import com.deepexi.channel.domain.store.StoreDTO;
+import com.deepexi.channel.domain.store.StoreQuery;
+import com.deepexi.util.CollectionUtil;
+import com.deepexi.util.pojo.CloneDirection;
+import com.deepexi.util.pojo.ObjectCloneUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.deepexi.channel.domain.eo.CcStore;
 import com.deepexi.channel.service.StoreService;
-import com.deepexi.channel.mapper.StoreMapper;
 import java.util.Arrays;import java.util.List;
-import com.deepexi.util.pageHelper.PageBean;
 import com.github.pagehelper.PageHelper;
-import com.deepexi.util.BeanPowerHelper;
 
 @Service
 public class StoreServiceImpl implements StoreService {
@@ -18,62 +21,54 @@ public class StoreServiceImpl implements StoreService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    private StoreMapper storeMapper;
+    private StoreDAO storeDAO;
 
     @Override
-    public PageBean<CcStore> findPage(CcStore eo, Integer page, Integer size) {
-        PageHelper.startPage(page, size);
-        List<CcStore> pages =  storeMapper.findList(eo);
-        return new PageBean<CcStore>(pages);
-    }
-
-    @Override
-    public List<CcStore> findAll(CcStore eo) {
-        List<CcStore> list = storeMapper.findList(eo);
-        return list;
-    }
-    @Override
-    public CcStore detail(Integer  pk) {
-        CcStore eo = storeMapper.selectById(pk);
-        return eo;
-    }
-
-    @Override
-    public Boolean update(Integer  id,CcStore eo) {
-        CcStore old = storeMapper.selectById(id);
-        BeanPowerHelper.mapCompleteOverrider(eo,old); //部分更新
-        int result = storeMapper.updateById(old);
-        if (result > 0) {
-            return true;
+    public List<StoreDTO> findPage(StoreQuery query) {
+        if(query.getPage() != null && query.getPage() != -1){
+            PageHelper.startPage(query.getPage(), query.getSize());
         }
-        return false;
+        List<StoreDO> storeDOS =  storeDAO.findList(query);
+        if(CollectionUtil.isEmpty(storeDOS)){
+            return null;
+        }
+        return ObjectCloneUtils.convertList(storeDOS, StoreDTO.class, CloneDirection.OPPOSITE);
     }
 
     @Override
-    public Boolean create(CcStore eo) {
-        int result = storeMapper.insert(eo);
-        if (result > 0) {
-            return true;
+    public StoreDTO detail(Integer  pk) {
+        StoreDO storeDO = storeDAO.getById(pk);
+        if(storeDO == null ){
+            return null;
         }
-        return false;
+        return storeDO.clone(StoreDTO.class);
     }
 
     @Override
-    public Boolean delete(Integer  pk) {
-        int result = storeMapper.deleteBatchIds(Arrays.asList(pk));
-        if (result > 0) {
-            return true;
+    public Boolean update(StoreDTO dto) {
+        if(dto == null){
+            return false;
         }
-        return false;
+        //TODO 判断编码是否重复
+        StoreDO storeDO = dto.clone(StoreDO.class);
+        return storeDAO.updateById(storeDO);
+    }
+    @Override
+    public Boolean create(StoreDTO dto) {
+        if(dto == null){
+            return false;
+        }
+        //TODO 判断编码是否重复
+        StoreDO storeDO = dto.clone(StoreDO.class);
+        return storeDAO.save(storeDO);
     }
 
     @Override
-    public Boolean delete(Integer ...pks) {
-        int result = storeMapper.deleteBatchIds(Arrays.asList(pks));
-        if (result > 0) {
-            return true;
+    public Boolean delete(List<Long> ids) {
+        if(CollectionUtil.isEmpty(ids)){
+            return false;
         }
-        return false;
+        return storeDAO.removeByIds(ids);
     }
 
 }
