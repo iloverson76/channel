@@ -37,6 +37,11 @@ public class AreaTypeDO extends BaseEntity {
     private Integer limitParent;
 
     /**
+     * 层级路径
+     */
+    private String path;
+
+    /**
      * 区域分类名称
      */
     private String areaTypeName;

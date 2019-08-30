@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/ccAreas")
 public class AreaController {
 
-    @Autowired
+    /*@Autowired
     private AreaService areaService;
 
 
@@ -64,6 +64,6 @@ public class AreaController {
     //@ApiOperation(value = "根据id批量删除CcArea", notes = "根据id批量删除CcArea")
     public Payload delete(@RequestParam(required = true) Integer [] ids) {
         return new Payload(areaService.delete(ids));
-    }
+    }*/
 
 }
