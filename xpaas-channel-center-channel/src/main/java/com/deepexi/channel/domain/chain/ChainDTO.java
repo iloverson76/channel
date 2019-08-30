@@ -71,4 +71,6 @@ public class ChainDTO extends BaseEntity {
      * 银行账户列表
      */
     private List<BankAccountDTO> bankAccountList;
+
+    private String path;
 }

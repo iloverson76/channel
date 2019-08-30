@@ -1,11 +1,16 @@
 package com.deepexi.channel.controller;
 
+import com.deepexi.channel.domain.bank.BankAccountDTO;
+import com.deepexi.channel.domain.bank.BankAccountVO;
 import com.deepexi.channel.domain.chain.ChainDTO;
 import com.deepexi.channel.domain.chain.ChainQuery;
 import com.deepexi.channel.domain.chain.ChainVO;
 import com.deepexi.channel.businness.ChainBusinessService;
+import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.config.Payload;
+import com.deepexi.util.pageHelper.PageBean;
 import com.deepexi.util.pojo.CloneDirection;
+import com.deepexi.util.pojo.ObjectCloneUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import com.deepexi.channel.service.ChainService;
@@ -28,7 +33,9 @@ public class ChainController {
     @GetMapping
     @ApiOperation(value = "分页查询", notes = "分页请求")
     public  Payload findPage(@ApiParam(name = "query", required = true) ChainQuery query) {
-        return new Payload(chainService.findPage(query));
+        List<ChainDTO> chainDTOS = chainBusinessService.findPage(query);
+        List<ChainVO> chainVOS = ObjectCloneUtils.convertList(chainDTOS,ChainVO.class, CloneDirection.OPPOSITE);
+        return new Payload(new PageBean<>(chainVOS));
     }
 
 //    @GetMapping("/list")
@@ -65,9 +72,12 @@ public class ChainController {
         if(chainVO == null){
             return new Payload(false);
         }
-        return new Payload(chainBusinessService.insertChain(chainVO.clone(ChainDTO.class)));
+        ChainDTO dto = chainVO.clone(ChainDTO.class);
+        List<BankAccountDTO> bankAccountList = ObjectCloneUtils.convertList(chainVO.getBankAccountList(), BankAccountDTO.class);
+        dto.setBankAccountList(bankAccountList);
+        return new Payload(chainBusinessService.insertChain(dto));
     }
-//
+
     @DeleteMapping("/{ids}")
     @Transactional
     @ApiOperation(value = "根据id批量删除连锁", notes = "根据id删除连锁")

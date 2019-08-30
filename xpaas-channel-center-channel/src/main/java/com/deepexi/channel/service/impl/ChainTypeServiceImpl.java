@@ -51,9 +51,9 @@ public class ChainTypeServiceImpl implements ChainTypeService {
                 if (CollectionUtil.isEmpty(dos)) {
                     m.setParentName("");
                 } else {
-                    ChainTypeDO brandAttachmentDO = dos.get(0);
-                    m.setParentName(brandAttachmentDO.getChainTypeName() == null ? "" :
-                            brandAttachmentDO.getChainTypeName());
+                    ChainTypeDO chainTypeDO = dos.get(0);
+                    m.setParentName(chainTypeDO.getChainTypeName() == null ? "" :
+                            chainTypeDO.getChainTypeName());
                 }
             });
             return chainTypeDTOS;

@@ -79,4 +79,7 @@ public class ChainVO extends BaseEntity {
 
     @ApiModelProperty(value = "连锁子节点")
     private List<ChainVO> children;
+
+    @ApiModelProperty(value = "层级关系")
+    private String path;
 }

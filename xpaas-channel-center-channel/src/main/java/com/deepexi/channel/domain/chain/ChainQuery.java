@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import java.util.List;
+
 /**
  * <p>
  * 连锁表
@@ -25,6 +27,8 @@ public class ChainQuery extends CommQuery {
 
     @ApiModelProperty(value = "主键", example = "123")
     private Long id;
+    @ApiModelProperty(value = "主键列表", example = "123")
+    private List<Long> ids;
 
     /**
      * 父节点ID
@@ -49,5 +53,8 @@ public class ChainQuery extends CommQuery {
      */
     @ApiModelProperty(value = "连锁编码",example = "abcd123")
     private String chainCode;
+
+    @ApiModelProperty(value = "连锁层级路径，前端不用理")
+    private String path;
 
 }

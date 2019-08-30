@@ -42,7 +42,7 @@ public interface ChainService {
     * @param dto
     * @return
     */
-    Boolean create(ChainDTO dto);
+    Long create(ChainDTO dto);
 //
 //    /**
 //     * 单个删除
@@ -57,4 +57,6 @@ public interface ChainService {
     Boolean delete(List<Long> ids);
 
     Integer getChainCountByTypeIds(List<Long> ids);
+
+    boolean isCodeUnique(ChainDTO dto);
 }

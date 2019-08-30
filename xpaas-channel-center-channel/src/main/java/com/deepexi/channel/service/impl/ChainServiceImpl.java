@@ -1,5 +1,6 @@
 package com.deepexi.channel.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.deepexi.channel.dao.ChainDAO;
 import com.deepexi.channel.domain.chain.ChainDO;
 import com.deepexi.channel.domain.chain.ChainDTO;
@@ -61,12 +62,12 @@ public class ChainServiceImpl implements ChainService {
     }
 //
     @Override
-    public Boolean create(ChainDTO dto) {
+    public Long create(ChainDTO dto) {
         ChainDO chainDO = dto.clone(ChainDO.class);
         //新增连锁基本信息
         boolean result = chainDAO.save(chainDO);
 
-        return result;
+        return chainDO.getId();
     }
 
     @Override
@@ -77,6 +78,26 @@ public class ChainServiceImpl implements ChainService {
     @Override
     public Integer getChainCountByTypeIds(List<Long> typeIds) {
         return chainDAO.getChainCountByTypeIds(typeIds);
+    }
+
+    @Override
+    public boolean isCodeUnique(ChainDTO dto) {
+        List<ChainDO> list = chainDAO.list(new QueryWrapper<ChainDO>().lambda()
+                .eq(ChainDO::getChainCode,dto.getChainCode())
+                .eq(ChainDO::getTenantId,dto.getTenantId())
+                .eq(ChainDO::getAppId,dto.getAppId()));
+        if(CollectionUtil.isNotEmpty(list)){
+            //不为空，还有可能是更新时自身的编码
+            if(list.size()==1){
+                ChainDO chainDO = list.get(0);
+                //该code是本身，不属于重复
+                if(chainDO.getId().equals(dto.getId())){
+                    return true;
+                }
+            }
+            return false;
+        }
+        return true;
     }
 //
 //    @Override

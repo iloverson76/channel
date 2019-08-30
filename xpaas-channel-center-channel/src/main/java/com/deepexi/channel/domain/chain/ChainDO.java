@@ -59,4 +59,5 @@ public class ChainDO extends BaseEntity {
      */
     private String businessLicense;
 
+    private String path;
 }

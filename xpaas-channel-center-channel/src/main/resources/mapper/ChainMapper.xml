@@ -23,6 +23,46 @@
     </resultMap>
     <select id="findList" resultType="com.deepexi.channel.domain.chain.ChainQuery">
         SELECT * FROM cc_chain WHERE dr=0
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="ids != null">
+            and id in
+            <foreach collection="ids" item="tempId" index="index" open="(" close=")" separator=",">
+                #{tempId}
+            </foreach>
+        </if>
+        <if test="chainCode != null and chainCode != ''">
+            and chain_code  like concat('%',#{chainCode},'%')
+        </if>
+        <if test="chainName != null and chainName != ''">
+            and chain_name like concat('%',#{chainName},'%')
+        </if>
+        <if test="chainTypeId != null and chainTypeId != ''">
+            and chain_type_id like concat('%',#{chainTypeId},'%')
+        </if>
+        <if test="path != null and path != ''">
+            and path like concat('%',#{path},'%')
+        </if>
+        <if test="startTime != null">
+            and created_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null">
+            and created_time &lt;= #{endTime}
+        </if>
+        <if test="updateStartTime != null">
+            and updated_time &gt;= #{updateStartTime}
+        </if>
+        <if test="updateEndTime != null">
+            and updated_time &lt;= #{updateEndTime}
+        </if>
+        <if test="tenantId!=null">
+            AND tenant_id = #{tenantId}
+        </if>
+        <if test="appId!=null">
+            AND app_id =#{appId}
+        </if>
+        order by created_time desc
     </select>
 
     <update id="deleteByIds">
