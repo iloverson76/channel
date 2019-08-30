@@ -1,6 +1,8 @@
 package com.deepexi.channel.service;
 
 import com.deepexi.channel.domain.eo.CcStoreGrade;
+import com.deepexi.channel.domain.store.StoreGradeDTO;
+import com.deepexi.channel.domain.store.StoreGradeQuery;
 import com.deepexi.util.pageHelper.PageBean;
 
 import java.util.List;
@@ -12,47 +14,45 @@ public interface StoreGradeService {
 
     /**
     * 分页获取列表
-    * @param eo
-    * @param page
-    * @param size
+    * @param query
     * @return
     */
-    PageBean<CcStoreGrade> findPage(CcStoreGrade eo, Integer page, Integer size);
-    /**
-    * 获取列表
-    * @return
-    */
-    List<CcStoreGrade> findAll(CcStoreGrade eo);
+    List<StoreGradeDTO> findPage(StoreGradeQuery query);
+//    /**
+//    * 获取列表
+//    * @return
+//    */
+//    List<CcStoreGrade> findAll(CcStoreGrade eo);
 
     /**
       获取详情
     * @return
     */
-    CcStoreGrade detail(Integer pk);
+    StoreGradeDTO detail(Integer pk);
 
     /**
      更新eo
-    * @param eo
+    * @param dto
     * @return
     */
-    Boolean update(Integer id, CcStoreGrade eo);
+    Boolean update(StoreGradeDTO dto);
 
     /**
     * 创建eo
-    * @param eo
+    * @param dto
     * @return
     */
-    Boolean create(CcStoreGrade eo);
+    Boolean create(StoreGradeDTO dto);
 
-    /**
-     * 单个删除
-    * @return
-    */
-    Boolean delete(Integer pk);
+//    /**
+//     * 单个删除
+//    * @return
+//    */
+//    Boolean delete(Integer pk);
 
     /**
      批量删除
     * @return
     */
-    Boolean delete(Integer... pk);
+    Boolean delete(List<Long> ids);
 }
