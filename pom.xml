@@ -16,8 +16,10 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>xpaas-channel-center-api</module>
-		<module>xpaas-channel-center-provider</module>
+		<module>xpaas-channel-center-channel-api</module>
+		<module>xpaas-channel-center-channel</module>
+		<module>xpaas-channel-center-web-provider</module>
+		<module>xpaas-channel-center-common</module>
 	</modules>
 
 	<dependencies>
