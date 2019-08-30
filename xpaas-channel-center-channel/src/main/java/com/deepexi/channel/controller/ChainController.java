@@ -3,7 +3,7 @@ package com.deepexi.channel.controller;
 import com.deepexi.channel.domain.chain.ChainDTO;
 import com.deepexi.channel.domain.chain.ChainQuery;
 import com.deepexi.channel.domain.chain.ChainVO;
-import com.deepexi.channel.service.ChainBusinessService;
+import com.deepexi.channel.businness.ChainBusinessService;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pojo.CloneDirection;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +60,7 @@ public class ChainController {
     }
 
     @PostMapping
-    @ApiOperation(value = "创建连锁", notes = "创建连锁")
+    @ApiOperation(value = "创建连锁", notes = "创建连锁,创建成功返回id")
     public Payload create(@RequestBody ChainVO chainVO) {
         if(chainVO == null){
             return new Payload(false);

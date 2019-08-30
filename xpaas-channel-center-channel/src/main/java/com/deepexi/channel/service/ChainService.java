@@ -55,4 +55,6 @@ public interface ChainService {
     * @return
     */
     Boolean delete(List<Long> ids);
+
+    Integer getChainCountByTypeIds(List<Long> ids);
 }

@@ -60,11 +60,11 @@ public class BankController {
 //     return new Payload(bankService.update(pk, eo));
 //    }
 //
-    @PostMapping
-    //@ApiOperation(value = "创建CcBank", notes = "创建CcBank")
-    public Payload create(@RequestBody BankVO bankVO) {
-        return new Payload(bankService.create(bankVO.clone(BankDTO.class)));
-    }
+//    @PostMapping
+//    //@ApiOperation(value = "创建CcBank", notes = "创建CcBank")
+//    public Payload create(@RequestBody BankVO bankVO) {
+//        return new Payload(bankService.create(bankVO.clone(BankDTO.class)));
+//    }
 //
 //    @DeleteMapping("/{id}")
 //    @Transactional

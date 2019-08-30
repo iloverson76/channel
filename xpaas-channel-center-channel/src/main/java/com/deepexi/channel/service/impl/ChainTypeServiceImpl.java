@@ -82,21 +82,31 @@ public class ChainTypeServiceImpl implements ChainTypeService {
     @Override
     public Boolean update(Long id,ChainTypeDTO dto) {
         dto.setId(id);
-        //TODO 更新是否合法校验
+        //判断编码是否重复
+        if(!isCodeUnique(dto)){
+            throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
+        }
+        //TODO 判断父级节点是否合法,是否出现环形结构
+
         boolean result = chainTypeDAO.updateById(dto.clone(ChainTypeDO.class));
         return result;
     }
 
     @Override
-    public Boolean create(ChainTypeDTO dto) {
+    public Long create(ChainTypeDTO dto) {
         //新增校验,编码不能重复
-        List<ChainTypeDO> list = chainTypeDAO.list(new QueryWrapper<ChainTypeDO>().lambda().eq(ChainTypeDO::getChainTypeCode, dto.getChainTypeCode()));
-        if(CollectionUtil.isNotEmpty(list)){
+        if(!isCodeUnique(dto)){
             throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
         }
         //插入
         ChainTypeDO chainTypeDO = dto.clone(ChainTypeDO.class);
-        return chainTypeDAO.save(chainTypeDO);
+        boolean result = chainTypeDAO.save(chainTypeDO);
+        if(result){
+            return chainTypeDO.getId();
+        }else{
+            return 0L;
+        }
+
     }
 
 
@@ -105,22 +115,19 @@ public class ChainTypeServiceImpl implements ChainTypeService {
         if(CollectionUtil.isEmpty(ids)){
             return false;
         }
-        //判断是否节点是否具有儿子节点,并且不在ids中
-        if(haveChilder(ids)){
-            throw new ApplicationException(ResultEnum.HAVE_CHILDREN);
-        }
-        //判断是否有被连锁引用
-        //TODO
-
         return chainTypeDAO.removeByIds(ids);
     }
 
-    /**
-     * 是否具有儿子节点,并且不在ids中
-     * @param ids
-     * @return
-     */
-    public Boolean haveChilder(List<Long> ids){
+     /**
+      * @MethodName: haveChilder
+      * @Description: 是否具有儿子节点,并且不在ids中
+      * @Param: [ids]
+      * @Return: java.lang.Boolean
+      * @Author: mumu
+      * @Date: 2019/8/30
+     **/
+     @Override
+    public Boolean haveChildren(List<Long> ids){
         //获得所有子节点
         Collection<ChainTypeDO> chainTypeDOS = chainTypeDAO.listByIds(ids);
         //没有子节点
@@ -136,6 +143,35 @@ public class ChainTypeServiceImpl implements ChainTypeService {
         //父节点跟子节点一同删除, 允许删除
         return false;
     }
+
+    /**
+     * @MethodName: isCodeUnique
+     * @Description: 判断连锁类型编码是否重复
+     * @Param: [code]
+     * @Return: boolean 编码唯一, true 编码唯一 ， false 编码不唯一
+     * @Author: mumu
+     * @Date: 2019/8/30
+    **/
+    @Override
+    public boolean isCodeUnique(ChainTypeDTO dto){
+        List<ChainTypeDO> list = chainTypeDAO.list(new QueryWrapper<ChainTypeDO>().lambda()
+                .eq(ChainTypeDO::getChainTypeCode,dto.getChainTypeCode())
+                .eq(ChainTypeDO::getTenantId,dto.getTenantId())
+                .eq(ChainTypeDO::getAppId,dto.getAppId()));
+        if(CollectionUtil.isNotEmpty(list)){
+            //不为空，还有可能是更新时自身的编码
+            if(list.size()==1){
+                ChainTypeDO chainTypeDO = list.get(0);
+                //该code是本身，不属于重复
+               if(chainTypeDO.getId().equals(dto.getId())){
+                   return true;
+               }
+            }
+            return false;
+        }
+        return true;
+    }
+
 
 
 }

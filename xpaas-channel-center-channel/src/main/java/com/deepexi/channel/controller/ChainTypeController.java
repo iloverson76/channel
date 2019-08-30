@@ -1,5 +1,6 @@
 package com.deepexi.channel.controller;
 
+import com.deepexi.channel.businness.ChainTypeBusinessService;
 import com.deepexi.channel.domain.chain.ChainTypeDTO;
 import com.deepexi.channel.domain.chain.ChainTypeQuery;
 import com.deepexi.channel.domain.chain.ChainTypeVO;
@@ -24,6 +25,8 @@ public class ChainTypeController {
 
     @Autowired
     private ChainTypeService chainTypeService;
+    @Autowired
+    private ChainTypeBusinessService chainTypeBusinessService;
 
     @GetMapping
     @ApiOperation(value = "分页查询", notes = "分页请求,page传-1时返回全部连锁类型")
@@ -52,17 +55,17 @@ public class ChainTypeController {
     }
 
     @PostMapping
-    @ApiOperation(value = "创建连锁类型", notes = "创建连锁类型")
+    @ApiOperation(value = "创建连锁类型", notes = "创建连锁类型，创建成功返回id")
     public Payload create(@RequestBody  ChainTypeVO vo) {
         ChainTypeDTO dto = vo.clone(ChainTypeDTO.class, CloneDirection.FORWARD);
-        return new Payload(chainTypeService.create(dto));
+        return new Payload( chainTypeService.create(dto));
     }
 
     @DeleteMapping("/{ids}")
     @Transactional
-    @ApiOperation(value = "根据id批量删除CcChainType", notes = "根据id删除CcChainType")
+    @ApiOperation(value = "根据id批量删除连锁类型", notes = "根据id批量删除连锁类型，id用逗号隔开")
     public Payload delete(@PathVariable(value = "ids", required = true) List<Long> ids) {
-        return new Payload(chainTypeService.delete(ids));
+        return new Payload(chainTypeBusinessService.deleteChainType(ids));
     }
 
 

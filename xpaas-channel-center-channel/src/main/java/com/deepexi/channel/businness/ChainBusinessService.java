@@ -1,4 +1,4 @@
-package com.deepexi.channel.service;
+package com.deepexi.channel.businness;
 
 import com.deepexi.channel.domain.chain.ChainDTO;
 

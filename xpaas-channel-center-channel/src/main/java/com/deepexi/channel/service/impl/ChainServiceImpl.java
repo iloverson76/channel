@@ -73,6 +73,12 @@ public class ChainServiceImpl implements ChainService {
     public Boolean delete(List<Long> ids) {
         return chainDAO.removeByIds(ids);
     }
+
+    @Override
+    public Integer getChainCountByTypeIds(List<Long> typeIds) {
+        chainDAO.getChainCountByTypeIds(typeIds);
+        return null;
+    }
 //
 //    @Override
 //    public Boolean delete(Integer  pk) {

@@ -22,7 +22,7 @@
         <result property="tenantId" column="tenant_id" />
     </resultMap>
     <select id="findList" resultType="com.deepexi.channel.domain.chain.ChainQuery">
-        SELECT * FROM cc_chain WHERE 1=1
+        SELECT * FROM cc_chain WHERE dr=0
     </select>
 
     <update id="deleteByIds">
@@ -31,4 +31,11 @@
             #{id}
         </foreach>
     </update>
+
+    <select id="getChainCountByTypeIds" resultType="java.lang.Integer">
+        select count(*) from cc_chain where dr=0
+        <foreach collection="typeIds" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
 </mapper>

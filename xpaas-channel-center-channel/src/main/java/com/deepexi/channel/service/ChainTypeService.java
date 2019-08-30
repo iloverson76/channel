@@ -44,11 +44,25 @@ public interface ChainTypeService {
     * @param dto
     * @return
     */
-    Boolean create(ChainTypeDTO dto);
+    Long create(ChainTypeDTO dto);
 
     /**
      批量删除
     * @return
     */
     Boolean delete(List<Long> ids);
+
+    /**
+     * 判断编码是否重复，具备排除本身功能
+     * @param dto
+     * @return
+     */
+    boolean isCodeUnique(ChainTypeDTO dto);
+
+    /**
+     * 判断id列表是否具有子节点,并且不在ids中
+     * @param ids
+     * @return
+     */
+    Boolean haveChildren(List<Long> ids);
 }

@@ -15,7 +15,7 @@
         <result property="tenantId" column="tenant_id" />
     </resultMap>
     <select id="findList" resultType="com.deepexi.channel.domain.bank.BankDO">
-        SELECT * FROM cc_bank WHERE 1=1
+        SELECT * FROM cc_bank WHERE dr=0
     </select>
 
     <update id="deleteByIds">
