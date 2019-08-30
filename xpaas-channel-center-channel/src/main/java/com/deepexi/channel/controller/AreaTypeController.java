@@ -1,69 +1,119 @@
 package com.deepexi.channel.controller;
 
+
+import com.deepexi.channel.domain.area.AreaTypeDTO;
+import com.deepexi.channel.domain.area.AreaTypeQuery;
+import com.deepexi.channel.domain.area.AreaTypeVO;
+import com.deepexi.channel.extension.AppRuntimeEnv;
+import com.deepexi.channel.service.business.AreaTypeService;
 import com.deepexi.util.config.Payload;
+import com.deepexi.util.pageHelper.PageBean;
+import com.deepexi.util.pojo.CloneDirection;
+import com.deepexi.util.pojo.ObjectCloneUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-import com.deepexi.channel.service.AreaTypeService;
-import com.deepexi.channel.domain.eo.CcAreaType;
 import org.springframework.web.bind.annotation.*;
-//import io.swagger.annotations.*;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 
-//@Api(value = "/区域类型表", description = "$desc")
+/**
+ * <p>
+ * 区域类型-前端控制器
+ * </p>
+ *
+ * @author chp
+ * @since 2019-08-23
+ */
 @RestController
-@RequestMapping("/api/v1/ccAreaTypes")
+@RequestMapping("/api/v1/areaType")
+@Api("区域类型管理")
 public class AreaTypeController {
 
     @Autowired
-    private AreaTypeService areaTypeService;
+    AreaTypeService areaTypeService;
 
+    AppRuntimeEnv appRuntimeEnv = AppRuntimeEnv.getInstance();
 
-    @GetMapping
-    //@ApiOperation(value = "分页查询", notes = "分页请求")
-    public  Payload findPage(CcAreaType eo,
-                             @RequestParam(value = "page", defaultValue = "0") Integer page,
-                             @RequestParam(value = "size", defaultValue = "10") Integer size) {
-        return new Payload(areaTypeService.findPage(eo, page, size));
+    @PostMapping()
+    @ApiOperation(value = "新增区域类型")
+    public Payload<Boolean> saveAreaType(@RequestBody AreaTypeVO vo) {
+
+        AreaTypeDTO dto = vo.clone(AreaTypeDTO.class, CloneDirection.FORWARD);
+
+        boolean result = areaTypeService.saveAreaType(dto);
+
+        return new Payload<>(result);
     }
 
-    @GetMapping("/list")
-    //@ApiOperation(value = "树形查询", notes = "查询全部请求")
-    public Payload findAll(CcAreaType eo) {
-        return new Payload(areaTypeService.findAll(eo));
+    @DeleteMapping()
+    @ApiOperation(value = "删除区域类型")
+    public Payload<Boolean> deleteAreaTypeByIds(@RequestBody Set<HashMap<Long,Long>> ids) {
+
+        Boolean result = areaTypeService.deleteAreaTypeByIds(ids);
+
+        return new Payload<>(result);
     }
 
-    @GetMapping("/{id}")
-    public Payload detail(@PathVariable(value = "id", required = true) Integer  pk) {
-        return new Payload(areaTypeService.detail(pk));
+    @PutMapping()
+    @ApiOperation(value = "修改区域类型")
+    public Payload<Boolean> updateAreaTypeById(@RequestBody AreaTypeVO vo) {
+
+        AreaTypeDTO dto = vo.clone(AreaTypeDTO.class, CloneDirection.FORWARD);
+
+        boolean result = areaTypeService.updateAreaTypeById(dto);
+
+        return new Payload<>(result);
     }
 
+    @GetMapping("/{id:[0-9,]+}")
+    @ApiOperation("根据id获取类目详情")
+    public Payload<AreaTypeVO> getAreaTypeById(@PathVariable Long id) {
 
-    @PutMapping("/{id}")
-    @Transactional
-//@ApiOperation(value = "根据id修改", notes = "根据id修改CcAreaType")
-    public Payload update(@PathVariable(value = "id", required = true) Integer  pk, @RequestBody CcAreaType eo) {
-     eo.setId(pk);
-     return new Payload(areaTypeService.update(pk, eo));
+        AreaTypeDTO dto = areaTypeService.getAreaTypeById(id);
+
+        AreaTypeVO vo = dto.clone(AreaTypeVO.class, CloneDirection.OPPOSITE);
+
+        return new Payload<>(vo);
     }
 
-    @PostMapping
-    //@ApiOperation(value = "创建CcAreaType", notes = "创建CcAreaType")
-    public Payload create(@RequestBody CcAreaType eo) {
-        return new Payload(areaTypeService.create(eo));
+    @GetMapping()
+    @ApiOperation("查询区域类型列表")
+    public Payload<PageBean<AreaTypeVO>> listAreaTypePage(@ApiParam(name = "query", required = true) AreaTypeQuery query) {
+
+        query.setTenantId(appRuntimeEnv.getTenantId());
+
+        query.setAppId(appRuntimeEnv.getAppId());
+
+        List<AreaTypeDTO> dtoList = areaTypeService.listAreaTypePage(query);
+
+        List<AreaTypeVO> voList = ObjectCloneUtils.convertList(dtoList, AreaTypeVO.class);
+
+        return new Payload<>(new PageBean<>(voList));
     }
 
-    @DeleteMapping("/{id}")
-    @Transactional
-//@ApiOperation(value = "根据id删除CcAreaType", notes = "根据id删除CcAreaType")
-    public Payload delete(@PathVariable(value = "id", required = true) Integer  pk) {
-        return new Payload(areaTypeService.delete(pk));
+    @GetMapping("/limitedCreate")
+    @ApiOperation("查询未受分类限制上级-新增用")
+    public Payload<PageBean<AreaTypeVO>> listParentForCreate() {
+
+        List<AreaTypeDTO> dtoList = areaTypeService.listParentForCreate();
+
+        List<AreaTypeVO> voList = ObjectCloneUtils.convertList(dtoList, AreaTypeVO.class);
+
+        return new Payload<>(new PageBean<>(voList));
     }
 
-    @DeleteMapping
-    @Transactional
-    //@ApiOperation(value = "根据id批量删除CcAreaType", notes = "根据id批量删除CcAreaType")
-    public Payload delete(@RequestParam(required = true) Integer [] ids) {
-        return new Payload(areaTypeService.delete(ids));
-    }
+    @GetMapping("/limitedUpdaTe/{parentId:[0-9,]+}")
+    @ApiOperation("查询未受分类限制上级-更新用")
+    public Payload<PageBean<AreaTypeVO>> listParentForUpdate(@PathVariable Long id,@PathVariable Long parentId) {
 
+        List<AreaTypeDTO> dtoList = areaTypeService.listParentForUpdate(id,parentId);
+
+        List<AreaTypeVO> voList = ObjectCloneUtils.convertList(dtoList, AreaTypeVO.class);
+
+        return new Payload<>(new PageBean<>(voList));
+    }
 }

@@ -36,6 +36,12 @@ public class AreaTypeVO extends BaseEntity {
     private Integer limitParent;
 
     /**
+     * 层级路径
+     */
+    @ApiModelProperty("层级路径")
+    private String path;
+
+    /**
      * 上级名称
      */
     @ApiModelProperty("上级名称")
