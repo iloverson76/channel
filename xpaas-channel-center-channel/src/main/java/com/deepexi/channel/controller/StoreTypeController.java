@@ -3,9 +3,11 @@ package com.deepexi.channel.controller;
 import com.deepexi.channel.domain.store.StoreTypeDTO;
 import com.deepexi.channel.domain.store.StoreTypeQuery;
 import com.deepexi.channel.domain.store.StoreTypeVO;
+import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pageHelper.PageBean;
 import com.deepexi.util.pojo.CloneDirection;
+import com.deepexi.util.pojo.ObjectCloneUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import com.deepexi.channel.service.StoreTypeService;
@@ -29,12 +31,12 @@ public class StoreTypeController {
     @GetMapping
     @ApiOperation(value = "分页查询", notes = "分页请求,page传-1时获取所有门店类型")
     public  Payload findPage(@ApiParam(name = "query", required = true) StoreTypeQuery query) {
-//        return new Payload(storeTypeService.findPage(eo, page, size));
-//        List<StoreTypeVO> result = new ArrayList<>();
-//        result.add(new StoreTypeVO());
-//        result.add(new StoreTypeVO());
         List<StoreTypeDTO> storeTypeDTOS = storeTypeService.findPage(query);
-        return new Payload<>(new PageBean<>(storeTypeDTOS));
+        if(CollectionUtil.isEmpty(storeTypeDTOS)){
+            return new Payload(null);
+        }
+        List<StoreTypeVO> storeTypeVOS = ObjectCloneUtils.convertList(storeTypeDTOS, StoreTypeVO.class, CloneDirection.OPPOSITE);
+        return new Payload<>(new PageBean<>(storeTypeVOS));
     }
 
 //    @GetMapping("/list")
