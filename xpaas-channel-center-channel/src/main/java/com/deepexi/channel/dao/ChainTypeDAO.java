@@ -14,6 +14,8 @@ public interface ChainTypeDAO extends IService<ChainTypeDO> {
 
     List<ChainTypeDO> selectListByIds(Set<Long> idList);
 
+    List<ChainTypeDO> findParentList(List<Long> ids);
+
 //    List<ChainTypeDO> listChainTypePage(ChainTypeQuery query);
 //
 //    List<ChainTypeDO> selectListByIds(Collection<Long> idList);

@@ -33,7 +33,7 @@
     </update>
 
     <select id="getChainCountByTypeIds" resultType="java.lang.Integer">
-        select count(*) from cc_chain where dr=0
+        select count(*) from cc_chain where dr=0 and chain_type_id in
         <foreach collection="typeIds" index="index" item="id" open="(" separator="," close=")">
             #{id}
         </foreach>

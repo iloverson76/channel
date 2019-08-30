@@ -25,6 +25,7 @@
             and id = #{id}
         </if>
         <if test="ids != null">
+          and id in
             <foreach collection="ids" item="tempId" index="index" open="(" close=")" separator=",">
                 #{tempId}
             </foreach>
@@ -62,4 +63,14 @@
             #{id}
         </foreach>
     </update>
+
+    <select id="findParentList"  resultType="com.deepexi.channel.domain.chain.ChainTypeDO">
+      SELECT * FROM cc_chain_type WHERE  dr=0
+        <if test="ids != null">
+            and parent_id in
+            <foreach collection="ids" item="tempId" index="index" open="(" close=")" separator=",">
+                #{tempId}
+            </foreach>
+        </if>
+    </select>
 </mapper>

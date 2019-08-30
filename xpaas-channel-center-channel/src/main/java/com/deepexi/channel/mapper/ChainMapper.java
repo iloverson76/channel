@@ -15,5 +15,5 @@ public interface ChainMapper extends BaseMapper<ChainDO> {
 
     int deleteByIds(@Param("ids") List<Integer> ids);
 
-    Integer getChainCountByTypeIds(List<Long> typeIds);
+    Integer getChainCountByTypeIds(@Param("typeIds")List<Long> typeIds);
 }

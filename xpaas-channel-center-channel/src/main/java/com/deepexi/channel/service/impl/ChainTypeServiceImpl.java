@@ -129,7 +129,7 @@ public class ChainTypeServiceImpl implements ChainTypeService {
      @Override
     public Boolean haveChildren(List<Long> ids){
         //获得所有子节点
-        Collection<ChainTypeDO> chainTypeDOS = chainTypeDAO.listByIds(ids);
+        List<ChainTypeDO> chainTypeDOS = chainTypeDAO.findParentList(ids);
         //没有子节点
         if(CollectionUtil.isEmpty(chainTypeDOS)){
             return false;

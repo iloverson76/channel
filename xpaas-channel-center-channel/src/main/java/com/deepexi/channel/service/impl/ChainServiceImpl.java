@@ -76,8 +76,7 @@ public class ChainServiceImpl implements ChainService {
 
     @Override
     public Integer getChainCountByTypeIds(List<Long> typeIds) {
-        chainDAO.getChainCountByTypeIds(typeIds);
-        return null;
+        return chainDAO.getChainCountByTypeIds(typeIds);
     }
 //
 //    @Override

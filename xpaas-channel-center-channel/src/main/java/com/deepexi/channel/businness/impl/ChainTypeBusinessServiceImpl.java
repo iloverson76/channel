@@ -54,7 +54,7 @@ public class ChainTypeBusinessServiceImpl implements ChainTypeBusinessService {
      * @Author: mumu
      * @Date: 2019/8/30
      **/
-    private boolean haveChainRelation(ChainTypeDTO dto){
-        return true;
-    }
+//    private boolean haveChainRelation(ChainTypeDTO dto){
+//        return true;
+//    }
 }
