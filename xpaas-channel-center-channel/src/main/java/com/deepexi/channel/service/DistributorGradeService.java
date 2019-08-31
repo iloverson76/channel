@@ -1,5 +1,7 @@
 package com.deepexi.channel.service;
 
+import com.deepexi.channel.domain.distributor.DistributorGradeDTO;
+import com.deepexi.channel.domain.distributor.DistributorGradeQuery;
 import com.deepexi.channel.domain.eo.CcDistributorGrade;
 import com.deepexi.util.pageHelper.PageBean;
 
@@ -12,47 +14,26 @@ public interface DistributorGradeService {
 
     /**
     * 分页获取列表
-    * @param eo
-    * @param page
-    * @param size
-    * @return
     */
-    PageBean<CcDistributorGrade> findPage(CcDistributorGrade eo, Integer page, Integer size);
-    /**
-    * 获取列表
-    * @return
-    */
-    List<CcDistributorGrade> findAll(CcDistributorGrade eo);
+    List<DistributorGradeDTO> findPage(DistributorGradeQuery query);
 
     /**
       获取详情
-    * @return
     */
-    CcDistributorGrade detail(Integer pk);
+    DistributorGradeDTO detail(Long pk);
 
     /**
-     更新eo
-    * @param eo
-    * @return
+     更新经销商等级
     */
-    Boolean update(Integer id, CcDistributorGrade eo);
+    Boolean update(DistributorGradeDTO dto);
 
     /**
-    * 创建eo
-    * @param eo
-    * @return
+    * 创建经销商等级
     */
-    Boolean create(CcDistributorGrade eo);
+    Long create(DistributorGradeDTO dto);
 
     /**
-     * 单个删除
-    * @return
+     批量删除经销商等级
     */
-    Boolean delete(Integer pk);
-
-    /**
-     批量删除
-    * @return
-    */
-    Boolean delete(Integer... pk);
+    Boolean delete(List<Long> ids);
 }

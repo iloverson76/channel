@@ -44,8 +44,14 @@ public class AreaTypeVO extends BaseEntity {
     /**
      * 上级名称
      */
-    @ApiModelProperty("上级名称")
+    @ApiModelProperty("上级名称-中文")
     private String parentName;
+
+    /**
+     * 上级名称
+     */
+    @ApiModelProperty("上级名称-英文")
+    private String parentNameEn;
 
 
     /**

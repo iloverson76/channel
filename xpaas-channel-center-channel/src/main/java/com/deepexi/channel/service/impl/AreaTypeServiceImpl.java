@@ -16,15 +16,11 @@ import com.deepexi.util.pojo.ObjectCloneUtils;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * <p>
@@ -49,65 +45,52 @@ public class AreaTypeServiceImpl implements AreaTypeService {
     saveAreaType(AreaTypeDTO dto) {
 
         log.info("保存区域分类");
+        if(null==dto){
+            return false;
+        }
 
         //编码不能重复
         ValidateAareaTypeCode(dto.getAreaTypeCode());
 
-        //路径处理
-        long parentId=dto.getParentId();
+        //如果所选上级原来有下级,且不被被其下级限制
+        updateUnLimitedChildNodesParentIdAndPathInfo(dto);
+
+        //插入新节点
+        setCommonColumns(dto);
+
+        AreaTypeDO newNode=dto.clone(AreaTypeDO.class,CloneDirection.FORWARD);
+
+        //save后,ado是插入数据库后返回的新数据,包括id,ado克隆要拆成两步写
+        areaTypeDAO.save(newNode);
+
+        //设置处理(id路径)
+        long newId=newNode.getId();
+
+        long parentId=newNode.getParentId();
 
         if (0==parentId) {
 
-            dto.setPath("1");
+            newNode.setPath(String.valueOf(newId));//首次创建
 
         } else {
 
-            String parent_path=areaTypeDAO.getById(dto.getParentId()).getPath();
+            String parent_path=areaTypeDAO.getById(parentId).getPath()+"/"+newId;
 
-            if(parent_path.equals("1")){
-
-                parent_path=parent_path+"/";
-
-            }
-
-            long pid=Long.valueOf(StringUtils.substring(parent_path,parent_path.lastIndexOf("/")));
-
-            dto.setPath(parent_path+ "/"+pid);
-
+            newNode.setPath(parent_path);
         }
 
-        //如果新上级原来有下级,且不被被其下级限制
-       long newParentId=dto.getParentId();
-
-       AreaTypeDTO origChildNode=getChildNodeById(newParentId);
-
-       if(null!=origChildNode){
-
-           boolean unLimited=(LimitedEnum.UNLIMITED.getCode()==origChildNode.getLimitParent());
-
-           if(unLimited){
-
-               origChildNode.setParentId((long)0);//断开原来下级关系
-
-               areaTypeDAO.updateById(origChildNode.clone(AreaTypeDO.class,CloneDirection.FORWARD));
-           }
-       }
-
-        setCommonColumn(dto);
-
-        //原来的上级关系不用维护,新的信息直接覆盖
-        return areaTypeDAO.save(dto.clone(AreaTypeDO.class,CloneDirection.FORWARD));
+        return areaTypeDAO.updateById(newNode);
     }
 
     @Transactional
     @Override
-    public boolean updateAreaTypeById(AreaTypeDTO dto) {//新的dto的数据
+    public boolean updateAreaTypeById(AreaTypeDTO dto) {//新的dto的数据--
 
         UpdateWrapper<AreaTypeDO> wrapper = new UpdateWrapper<>();
 
         wrapper.eq("id", dto.getId());
 
-        setCommonColumn(dto);
+        setCommonColumns(dto);
 
         AreaTypeDO ado=dto.clone(AreaTypeDO.class,CloneDirection.FORWARD);
 
@@ -116,45 +99,20 @@ public class AreaTypeServiceImpl implements AreaTypeService {
 
     @Transactional
     @Override
-    public boolean deleteAreaTypeByIds(Set<HashMap<Long,Long>> idSet) {
+    public boolean deleteAreaTypeByIds(Set<Long> ids) {
 
-        if (CollectionUtils.isEmpty(idSet)) {
-            throw new ApplicationException(ResultEnum.IDS_NOT_EMPTY);
+        log.info("批量删除区域类型");
+
+        if (CollectionUtils.isEmpty(ids)) {
+            return false;
         }
 
-        idSet.forEach(map->{
+        if(ids.contains(0)){
 
-            long id=map.get("id");
+            ids.remove(0);//parent=0不能作为id=0来删除
+        }
 
-            long parentId=map.get("parentId");
-
-            //如果有上级
-            AreaTypeDTO parentDTO=getParentNodeById(parentId);
-
-            if(null!=parentDTO){
-
-                AreaTypeDO ado=new AreaTypeDO();
-
-                ado.setId(id);
-
-                ado.setParentId((long)0);//断开上级关系
-
-                areaTypeDAO.updateById(ado);
-            }
-            //如果有下级
-            AreaTypeDTO childDTO=getChildNodeById(id);
-
-            if(null!=childDTO){
-
-                childDTO.setParentId((long)0);//断开下级关系
-
-                areaTypeDAO.updateById(childDTO.clone(AreaTypeDO.class,CloneDirection.FORWARD));
-            }
-
-            areaTypeDAO.removeById(id);
-        });
-
-        return Boolean.TRUE;
+        return areaTypeDAO.removeByIds(ids);
     }
 
     @Override
@@ -163,10 +121,23 @@ public class AreaTypeServiceImpl implements AreaTypeService {
         AreaTypeDO ado=areaTypeDAO.getOne(getQueryWrapper(id));
 
         if (null==ado) {
-            throw new ApplicationException(ResultEnum.AREA_TYPE_NULL);
+            return null;
         }
 
-        return ado.clone(AreaTypeDTO.class,CloneDirection.OPPOSITE);
+        AreaTypeDTO node = ado.clone(AreaTypeDTO.class,CloneDirection.OPPOSITE);
+
+        long parentId=node.getParentId();
+
+        if(0!=parentId){
+
+            AreaTypeDO parent=areaTypeDAO.getOne(getQueryWrapper(parentId));
+
+            node.setParentName(parent.getAreaTypeName());
+
+            node.setParentNameEn(parent.getAreaTypeNameEn());
+        }
+
+        return node;
     }
 
     @Override
@@ -188,7 +159,9 @@ public class AreaTypeServiceImpl implements AreaTypeService {
      *
      */
     @Override
-    public List<AreaTypeDTO> listParentForCreate() {
+    public List<AreaTypeDTO> listParentNodesForCreate() {
+
+        log.info("创建区域分类接口:查询可用上级分类");
 
         //没有被限制分类的节点
         List<AreaTypeDO> doList=areaTypeDAO.listNotLimitedNode(appRuntimeEnv.getTenantId(),appRuntimeEnv.getAppId());
@@ -204,39 +177,59 @@ public class AreaTypeServiceImpl implements AreaTypeService {
     }
 
     @Override
-    public List<AreaTypeDTO> listParentForUpdate(Long id,Long parentId) {
+    public List<AreaTypeDTO> listParentNodesForUpdate(Long id) {
+
+        log.info("更新区域分类接口:查询可用上级分类");
 
         //没有被限制分类的节点
-        List<AreaTypeDO> doList=areaTypeDAO.listNotLimitedNode(appRuntimeEnv.getTenantId(),appRuntimeEnv.getAppId());
+        List<AreaTypeDO> unLimitedNodes=areaTypeDAO.listNotLimitedNode(appRuntimeEnv.getTenantId(),appRuntimeEnv.getAppId());
 
-        List<AreaTypeDTO> dtoList= ObjectCloneUtils.convertList(doList,AreaTypeDTO.class);
+        if(CollectionUtils.isEmpty(unLimitedNodes)){
+            return null;
+        }
+        //如果自己原来的上级被限制了,也要选上
+        AreaTypeDTO node=getAreaTypeById(id);
 
-        //加上自己的上级
-        if(0!=parentId){
+        long parentId=node.getParentId();
+
+        boolean limited=LimitedEnum.LIMITED.getCode().equals(node.getLimitParent());
+
+        if(0!=parentId&&limited){
 
             AreaTypeDTO parentDTO=getAreaTypeById(parentId);
 
-            dtoList.add(parentDTO);
+            unLimitedNodes.add(parentDTO.clone(AreaTypeDO.class,CloneDirection.FORWARD));
         }
 
-        //不能选自己的下级
-        AreaTypeDTO childDTO=getChildNodeById(id);
+        //不能选自己和自己的所有子节点
+        AreaTypeDO self=areaTypeDAO.getById(id);
 
-        if(null!=childDTO){
+        List<AreaTypeDO>  childNodes=areaTypeDAO.listChildNodes(appRuntimeEnv.getTenantId(),appRuntimeEnv.getAppId(),id+"/");
 
-            dtoList.remove(childDTO);
-        }
+        List<AreaTypeDO> removeList=new ArrayList<>();
 
-        //不能选自己
-        doList.forEach(list->{
+        unLimitedNodes.forEach(u->{
 
-            if(list.getId()==id){
+            if(u.getId().equals(self.getId())){
 
-                doList.remove(list);
+                removeList.add(u);
+            }
+
+            if(CollectionUtils.isNotEmpty(childNodes)){
+
+                childNodes.forEach(c->{
+
+                    if(c.getId().equals(u.getId())){
+
+                        removeList.add(u);
+                    }
+                });
             }
         });
 
-        return dtoList;
+        unLimitedNodes.removeAll(removeList);
+
+        return ObjectCloneUtils.convertList(unLimitedNodes,AreaTypeDTO.class);
     }
 
     private AreaTypeDTO getParentNodeById(Long parentId){
@@ -244,16 +237,6 @@ public class AreaTypeServiceImpl implements AreaTypeService {
         QueryWrapper<AreaTypeDO> wp=getQueryWrapper(parentId);
 
         AreaTypeDO ado=areaTypeDAO.getOne(wp);
-
-        if(null!=ado){
-            return ado.clone(AreaTypeDTO.class,CloneDirection.OPPOSITE);
-        }
-        return null;
-    }
-
-    private AreaTypeDTO getChildNodeById(Long id){
-
-        AreaTypeDO ado=areaTypeDAO.getChildNode(appRuntimeEnv.getTenantId(),appRuntimeEnv.getAppId(),id);
 
         if(null!=ado){
             return ado.clone(AreaTypeDTO.class,CloneDirection.OPPOSITE);
@@ -289,7 +272,7 @@ public class AreaTypeServiceImpl implements AreaTypeService {
         }
     }
 
-    public void setCommonColumn(AreaTypeDTO dto){
+    public void setCommonColumns(AreaTypeDTO dto){
 
         dto.setTenantId(appRuntimeEnv.getTenantId());
 
@@ -299,6 +282,33 @@ public class AreaTypeServiceImpl implements AreaTypeService {
 
         dto.setUpdatedTime(new Date());
 
+    }
+
+    private void updateUnLimitedChildNodesParentIdAndPathInfo(AreaTypeDTO dto){
+
+        //如果所选上级原来有下级,且不被被其下级限制
+        long parentId=dto.getParentId();
+
+        List<AreaTypeDO> childNodes=areaTypeDAO.listChildNodes(appRuntimeEnv.getTenantId(),appRuntimeEnv.getAppId(),parentId+"/");
+
+        if(null!=childNodes){
+
+            childNodes.forEach(ado->{
+
+                long childNodeParentId=ado.getParentId();
+
+                if(parentId==childNodeParentId&&(LimitedEnum.UNLIMITED.getCode().equals(ado.getLimitParent()))){
+                    //断开原来直接下级关系,使其成为自由节点
+                    ado.setParentId((long)0);
+                    areaTypeDAO.updateById(ado);
+                }
+
+                //删掉原来子节点的父节点路径
+                ado.setPath(ado.getPath().replaceAll(parentId+"/",""));
+
+            });
+            areaTypeDAO.updateBatchById(childNodes);
+        }
     }
 
 }

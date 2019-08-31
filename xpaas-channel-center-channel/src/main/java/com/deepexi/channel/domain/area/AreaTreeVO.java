@@ -16,7 +16,6 @@ import lombok.experimental.Accessors;
  * @since 2019-08-23
  */
 @EqualsAndHashCode(callSuper = true)
-@Accessors(chain = true)
 @TableName("cc_area")
 @Data
 @AllArgsConstructor

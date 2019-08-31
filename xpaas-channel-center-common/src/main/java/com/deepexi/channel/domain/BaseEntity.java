@@ -53,6 +53,10 @@ public abstract class BaseEntity extends AbstractObject {
     @ApiModelProperty(value = "备注", example = "备注")
     private String remark;
 
+    @TableField(value = "`description`", fill = FieldFill.INSERT)
+    @ApiModelProperty(value = "描述", example = "描述")
+    private String description;
+
     /**
      * 版本号，乐观锁
      */

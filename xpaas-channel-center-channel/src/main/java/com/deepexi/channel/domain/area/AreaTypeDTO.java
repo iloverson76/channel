@@ -36,6 +36,11 @@ public class AreaTypeDTO extends BaseEntity {
     private String parentName;
 
     /**
+     * 上级名称
+     */
+    private String parentNameEn;
+
+    /**
      * 层级路径
      */
     private String path;
