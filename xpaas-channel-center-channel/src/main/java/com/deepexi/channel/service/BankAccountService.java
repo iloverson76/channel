@@ -10,7 +10,9 @@ import java.util.List;
  * cc_bank_account
  */
 public interface BankAccountService {
-    boolean saveBatch(List<BankAccountDTO> bankAccountDTOS);
+    List<BankAccountDTO>  saveBatch(List<BankAccountDTO> bankAccountDTOS);
+
+    List<BankAccountDTO> getBankAccountByIds(List<Long> bankAccountIds);
 
 //    /**
 //    * 分页获取列表

@@ -15,4 +15,5 @@ public interface BankAccountMapper extends BaseMapper<BankAccountDO> {
 
     int deleteByIds(@Param("ids") List<Integer > ids);
 
+    List<BankAccountDO> getBankAccountByIds(@Param("ids") List<Long> ids);
 }

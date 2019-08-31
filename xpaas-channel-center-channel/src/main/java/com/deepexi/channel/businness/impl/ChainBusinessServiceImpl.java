@@ -2,6 +2,7 @@ package com.deepexi.channel.businness.impl;
 
 import com.deepexi.channel.businness.ChainBusinessService;
 import com.deepexi.channel.domain.bank.BankAccountDTO;
+import com.deepexi.channel.domain.bank.BankDTO;
 import com.deepexi.channel.domain.bank.ChainBankDTO;
 import com.deepexi.channel.domain.chain.ChainDO;
 import com.deepexi.channel.domain.chain.ChainDTO;
@@ -31,6 +32,8 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
     ChainBankService chainBankService;
     @Autowired
     ChainTypeService chainTypeService;
+    @Autowired
+    BankService bankService;
 
     @Override
     @Transactional
@@ -46,18 +49,25 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         if(CollectionUtil.isEmpty(bankAccountDTOS)){
             return result;
         }
-        boolean insertBankAccountResult = bankAccountService.saveBatch(bankAccountDTOS);
+        bankAccountDTOS = bankAccountService.saveBatch(bankAccountDTOS);
 
         //批量新增账户、连锁关联信息
         List<ChainBankDTO> chainBankDTOS = new ArrayList<>();
         for(BankAccountDTO bankAccount:bankAccountDTOS){
-            ChainBankDTO chainBankDO = ChainBankDTO.builder()
+            ChainBankDTO chainBankDTO = ChainBankDTO.builder()
                     .bankAccountId(bankAccount.getId())
-                    .chainId(dto.getId())
+                    .chainId(result)
                     .build();
-            chainBankDO.setVersion(dto.getVersion());
+            //TODO 下面这段代码设置租户id等是否必要，没设置会报不能为空
+            chainBankDTO.setTenantId(dto.getTenantId());
+            chainBankDTO.setAppId(dto.getAppId());
+            chainBankDTO.setVersion(dto.getVersion());
+            chainBankDTO.setUpdatedBy(dto.getUpdatedBy());
+            chainBankDTO.setCreatedBy(dto.getCreatedBy());
+            chainBankDTO.setCreatedTime(dto.getCreatedTime());
+            chainBankDTO.setUpdatedTime(dto.getUpdatedTime());
 
-            chainBankDTOS.add(chainBankDO);
+            chainBankDTOS.add(chainBankDTO);
         }
         boolean insertChainBankResult = chainBankService.saveBatch(chainBankDTOS);
         return result;
@@ -80,8 +90,29 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         }
 
         //查询连锁的所有账户，获取账户信息
-        //TODO
+        //查询所有账户id
+        List<ChainBankDTO> chainBankDTOS = chainBankService.getChainBankByChainId(id);
+        if(CollectionUtil.isEmpty(chainBankDTOS)){
+            return dto;
+        }
+        //查询所有账户详细信息
+        List<Long> bankAccountIds = chainBankDTOS.stream().map(ChainBankDTO::getBankAccountId).collect(Collectors.toList());
+        List<BankAccountDTO> bankAccountDTOS = bankAccountService.getBankAccountByIds(bankAccountIds);
 
+        //查询所有账户所属银行
+        List<Long> bankIds = bankAccountDTOS.stream().map(BankAccountDTO::getBankId).collect(Collectors.toList());
+        List<BankDTO> bankDTOS = bankService.getBankByIds(bankIds);
+
+        //拼接账户跟银行信息
+        Map<Long, List<BankDTO>> bankMap =
+                bankDTOS.stream().collect(Collectors.groupingBy(BankDTO::getId));
+        bankAccountDTOS.forEach(b ->{
+            List<BankDTO> bank = bankMap.get(b.getBankId());
+            b.setBankName(bank.get(0).getBankName());
+        });
+
+        //拼接账户列表到银行中
+        dto.setBankAccountList(bankAccountDTOS);
 
         return dto;
     }
@@ -122,7 +153,7 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         Map<Long, List<ChainDTO>> parentCollect =
                 parentChainDTOS.stream().collect(Collectors.groupingBy(ChainDTO::getId));
         chainDTOS.forEach(m -> {
-            // 根据id对应设置attachmentPath字段
+            // 根据id对应设置父级名称字段
             List<ChainDTO> dos = parentCollect.get(m.getParentId());
             if (CollectionUtil.isEmpty(dos)) {
                 m.setParentName("");

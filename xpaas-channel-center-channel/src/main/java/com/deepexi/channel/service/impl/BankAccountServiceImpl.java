@@ -3,6 +3,7 @@ package com.deepexi.channel.service.impl;
 import com.deepexi.channel.dao.BankAccountDAO;
 import com.deepexi.channel.domain.bank.BankAccountDO;
 import com.deepexi.channel.domain.bank.BankAccountDTO;
+import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,9 +26,21 @@ public class BankAccountServiceImpl implements BankAccountService {
     private BankAccountDAO bankAccountDAO;
 
     @Override
-    public boolean saveBatch(List<BankAccountDTO> bankAccountDTOS) {
+    public List<BankAccountDTO>  saveBatch(List<BankAccountDTO> bankAccountDTOS) {
         List<BankAccountDO> bankAccountDOS = ObjectCloneUtils.convertList(bankAccountDTOS, BankAccountDO.class);
-        return bankAccountDAO.saveBatch(bankAccountDOS);
+//        return
+        bankAccountDAO.saveBatch(bankAccountDOS);
+        List<BankAccountDTO> bankAccountDTOS1 = ObjectCloneUtils.convertList(bankAccountDOS, BankAccountDTO.class, CloneDirection.OPPOSITE);
+        return bankAccountDTOS1;
+    }
+
+    @Override
+    public List<BankAccountDTO> getBankAccountByIds(List<Long> bankAccountIds) {
+        List<BankAccountDO> bankAccountDOS = bankAccountDAO.getBankAccountByIds(bankAccountIds);
+        if(bankAccountDOS == null){
+            return null;
+        }
+        return ObjectCloneUtils.convertList(bankAccountDOS, BankAccountDTO.class, CloneDirection.OPPOSITE);
     }
 //
 //    @Override

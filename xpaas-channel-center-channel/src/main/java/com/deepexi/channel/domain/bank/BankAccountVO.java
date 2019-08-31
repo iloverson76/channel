@@ -47,4 +47,7 @@ public class BankAccountVO extends BaseEntity {
     @ApiModelProperty(value = "银行编码")
     private String bankCode;
 
+    @ApiModelProperty(value = "银行名称,例如建设银行")
+    private String bankName;
+
 }

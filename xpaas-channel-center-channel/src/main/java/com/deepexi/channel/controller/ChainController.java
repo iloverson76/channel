@@ -47,7 +47,7 @@ public class ChainController {
     @GetMapping("/{id}")
     @ApiOperation("根据id获取连锁店详情")
     public Payload detail(@PathVariable(value = "id", required = true) Long id) {
-        ChainDTO chainDTO =chainService.detail(id);
+        ChainDTO chainDTO = chainBusinessService.getChain(id);
         if(chainDTO == null){
             return new Payload(null);
         }

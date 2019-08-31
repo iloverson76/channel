@@ -18,7 +18,7 @@
         <result property="tenantId" column="tenant_id" />
     </resultMap>
     <select id="findList" resultType="com.deepexi.channel.domain.bank.BankAccountDO">
-        SELECT * FROM cc_bank_account WHERE 1=1
+        SELECT * FROM cc_bank_account WHERE dr = 0
     </select>
 
     <update id="deleteByIds">
@@ -27,4 +27,14 @@
             #{id}
         </foreach>
     </update>
+
+    <select id="getBankAccountByIds" resultType="com.deepexi.channel.domain.bank.BankAccountDO">
+        select * from cc_bank_account where dr = 0
+        <if test="ids != null">
+            and id in
+            <foreach collection="ids" item="tempId" index="index" open="(" close=")" separator=",">
+                #{tempId}
+            </foreach>
+        </if>
+    </select>
 </mapper>

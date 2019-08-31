@@ -40,4 +40,6 @@ public class BankAccountDTO extends BaseEntity {
      */
     private String bankCode;
 
+    private String bankName;
+
 }

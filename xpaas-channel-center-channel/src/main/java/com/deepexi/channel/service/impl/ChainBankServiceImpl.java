@@ -3,6 +3,8 @@ package com.deepexi.channel.service.impl;
 import com.deepexi.channel.dao.ChainBankDAO;
 import com.deepexi.channel.domain.bank.ChainBankDO;
 import com.deepexi.channel.domain.bank.ChainBankDTO;
+import com.deepexi.util.CollectionUtil;
+import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,15 @@ public class ChainBankServiceImpl implements ChainBankService {
     public boolean saveBatch(List<ChainBankDTO> chainBankDTOS) {
         List<ChainBankDO> list = ObjectCloneUtils.convertList(chainBankDTOS,ChainBankDO.class);
         return chainBankDAO.saveBatch(list);
+    }
+
+    @Override
+    public List<ChainBankDTO> getChainBankByChainId(Long id) {
+        List<ChainBankDO> chainBankDOS = chainBankDAO.getChainBankByChainId(id);
+        if(CollectionUtil.isEmpty(chainBankDOS)){
+            return null;
+        }
+        return ObjectCloneUtils.convertList(chainBankDOS, ChainBankDTO.class, CloneDirection.OPPOSITE);
     }
 
 //    @Override

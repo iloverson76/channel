@@ -12,6 +12,8 @@ import java.util.List;
 public interface ChainBankService {
     boolean saveBatch(List<ChainBankDTO> chainBankDTOS);
 
+    List<ChainBankDTO> getChainBankByChainId(Long id);
+
 //    /**
 //    * 分页获取列表
 //    * @param eo

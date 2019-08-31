@@ -57,4 +57,7 @@ public interface BankService {
 //    Boolean delete(Integer ...pk);
 
     List<BankDTO> listBank();
+
+
+    List<BankDTO> getBankByIds(List<Long> bankIds);
 }

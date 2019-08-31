@@ -25,4 +25,9 @@
             #{id}
         </foreach>
     </update>
+
+    <select id="getChainBankByChainId" resultType="com.deepexi.channel.domain.bank.ChainBankDO">
+        select * from cc_chain_bank where dr = 0
+        and chain_id = #{id}
+    </select>
 </mapper>
