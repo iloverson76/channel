@@ -1,15 +1,13 @@
 package com.deepexi.channel.controller;
 
-import com.deepexi.channel.domain.area.AreaTypeQuery;
-import com.deepexi.channel.domain.area.AreaTypeVO;
 import com.deepexi.channel.domain.distributor.DistributorGradeDTO;
 import com.deepexi.channel.domain.distributor.DistributorGradeQuery;
 import com.deepexi.channel.domain.distributor.DistributorGradeVO;
-import com.deepexi.channel.domain.eo.CcDistributorGrade;
 import com.deepexi.channel.service.DistributorGradeService;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pageHelper.PageBean;
 import com.deepexi.util.pojo.CloneDirection;
+import com.deepexi.util.pojo.ObjectCloneUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -21,7 +19,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @Api(description = "经销商等级管理")
 @RestController
 @RequestMapping("/api/v1/distributorGrade")
@@ -30,12 +27,15 @@ public class DistributorGradeController {
     @Autowired
     private DistributorGradeService distributorGradeService;
 
-
     @GetMapping
     @ApiOperation(value = "分页查询", notes = "分页请求")
-    public  Payload<PageBean<AreaTypeVO>> listAreaTypePage(@ApiParam(name = "query", required = true) DistributorGradeQuery query) {
+    public  Payload<PageBean<DistributorGradeVO>> findPage(@ApiParam(name = "query", required = true) DistributorGradeQuery query) {
 
-        return new Payload(distributorGradeService.findPage(query));
+        List<DistributorGradeDTO> dtoList=distributorGradeService.findPage(query);
+
+        List<DistributorGradeVO> voList= ObjectCloneUtils.convertList(dtoList, DistributorGradeVO.class);;
+
+        return new Payload<>(new PageBean<>(voList));
     }
 
     @GetMapping("/{id}")
@@ -45,7 +45,6 @@ public class DistributorGradeController {
 
         return new Payload<>(vo);
     }
-
 
     @PutMapping("/{id:[0-9]}")
     @Transactional

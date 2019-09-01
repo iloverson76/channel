@@ -1,16 +1,20 @@
 package com.deepexi.channel.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.deepexi.channel.dao.DistributorGradeSystemDAO;
+import com.deepexi.channel.domain.distributor.DistributorGradeSystemDO;
+import com.deepexi.channel.domain.distributor.DistributorGradeSystemDTO;
+import com.deepexi.channel.domain.distributor.DistributorGradeSystemQuery;
+import com.deepexi.channel.service.DistributorGradeSystemService;
+import com.deepexi.util.pageHelper.PageBean;
+import com.deepexi.util.pojo.CloneDirection;
+import com.deepexi.util.pojo.ObjectCloneUtils;
+import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.deepexi.channel.domain.eo.CcDistributorGradeSystem;
-import com.deepexi.channel.service.DistributorGradeSystemService;
-import com.deepexi.channel.mapper.DistributorGradeSystemMapper;
-import java.util.Arrays;import java.util.List;
-import com.deepexi.util.pageHelper.PageBean;
-import com.github.pagehelper.PageHelper;
-import com.deepexi.util.BeanPowerHelper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class DistributorGradeSystemServiceImpl implements DistributorGradeSystemService {
@@ -18,62 +22,55 @@ public class DistributorGradeSystemServiceImpl implements DistributorGradeSystem
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    private DistributorGradeSystemMapper ccDistributorGradeSystemMapper;
+    private DistributorGradeSystemDAO distributorGradeSystemDAO;
 
     @Override
-    public PageBean<CcDistributorGradeSystem> findPage(CcDistributorGradeSystem eo, Integer page, Integer size) {
-        PageHelper.startPage(page, size);
-        List<CcDistributorGradeSystem> pages =  ccDistributorGradeSystemMapper.findList(eo);
-        return new PageBean<CcDistributorGradeSystem>(pages);
+    public DistributorGradeSystemDTO detail(Long  pk) {
+
+        DistributorGradeSystemDO eo = distributorGradeSystemDAO.getById(pk);
+
+        return eo.clone(DistributorGradeSystemDTO.class,CloneDirection.OPPOSITE);
     }
 
     @Override
-    public List<CcDistributorGradeSystem> findAll(CcDistributorGradeSystem eo) {
-        List<CcDistributorGradeSystem> list = ccDistributorGradeSystemMapper.findList(eo);
-        return list;
-    }
-    @Override
-    public CcDistributorGradeSystem detail(Integer  pk) {
-        CcDistributorGradeSystem eo = ccDistributorGradeSystemMapper.selectById(pk);
-        return eo;
-    }
+    public long create(DistributorGradeSystemDTO dto) {
 
-    @Override
-    public Boolean update(Integer  id,CcDistributorGradeSystem eo) {
-        CcDistributorGradeSystem old = ccDistributorGradeSystemMapper.selectById(id);
-        BeanPowerHelper.mapCompleteOverrider(eo,old); //部分更新
-        int result = ccDistributorGradeSystemMapper.updateById(old);
-        if (result > 0) {
-            return true;
+        DistributorGradeSystemDO eo=dto.clone(DistributorGradeSystemDO.class, CloneDirection.FORWARD);
+
+        distributorGradeSystemDAO.save(eo);
+
+        long id=eo.getId();
+
+        if (id > 0) {
+            return id;
         }
-        return false;
+        return 0L;
     }
 
     @Override
-    public Boolean create(CcDistributorGradeSystem eo) {
-        int result = ccDistributorGradeSystemMapper.insert(eo);
-        if (result > 0) {
-            return true;
-        }
-        return false;
+    public Boolean update(DistributorGradeSystemDTO dto) {
+
+        return distributorGradeSystemDAO.updateById(dto.clone(DistributorGradeSystemDO.class,CloneDirection.FORWARD));
     }
 
     @Override
-    public Boolean delete(Integer  pk) {
-        int result = ccDistributorGradeSystemMapper.deleteBatchIds(Arrays.asList(pk));
-        if (result > 0) {
-            return true;
-        }
-        return false;
+    public Boolean delete(List<Long> idList) {
+
+        Boolean result = distributorGradeSystemDAO.removeByIds(idList);
+
+        return result;
     }
 
     @Override
-    public Boolean delete(Integer ...pks) {
-        int result = ccDistributorGradeSystemMapper.deleteBatchIds(Arrays.asList(pks));
-        if (result > 0) {
-            return true;
+    public List<DistributorGradeSystemDTO> findPage(DistributorGradeSystemQuery query ) {
+
+        if (query.getPage() != null && query.getPage() != -1) {
+            PageHelper.startPage(query.getPage(), query.getSize());
         }
-        return false;
+
+        List<DistributorGradeSystemDO> eoList = distributorGradeSystemDAO.findPage(query);
+
+        return ObjectCloneUtils.convertList(eoList,DistributorGradeSystemDTO.class,CloneDirection.OPPOSITE);
     }
 
 }

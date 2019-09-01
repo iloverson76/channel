@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5c389b89-fe3d-49ad-9ae2-5337d4158854" name="Default Changelist" comment="经销商等级和体系管理功能实现">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+    <list default="true" id="5c389b89-fe3d-49ad-9ae2-5337d4158854" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/controller/DistributorGradeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/controller/DistributorGradeController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/controller/DistributorGradeSystemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/controller/DistributorGradeSystemController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/dao/DistributorGradeSystemDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/dao/DistributorGradeSystemDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/dao/impl/DistributorGradeSystemDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/dao/impl/DistributorGradeSystemDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/domain/distributor/DistributorGradeSystemQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/domain/distributor/DistributorGradeSystemQuery.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/mapper/DistributorGradeSystemMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/mapper/DistributorGradeSystemMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/service/DistributorGradeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/service/DistributorGradeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/service/DistributorGradeSystemService.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/service/DistributorGradeSystemService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/service/impl/DistributorGradeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/service/impl/DistributorGradeServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/service/impl/DistributorGradeSystemServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/service/impl/DistributorGradeSystemServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/resources/mapper/DistributorGradeSystemMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/resources/mapper/DistributorGradeSystemMapper.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/xpaas-channel-center-api/target/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -38,37 +45,22 @@
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/service/impl/DistributorGradeServiceImpl.java">
+        <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/service/impl/DistributorGradeSystemServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="40" selection-start-line="40" selection-end-line="40" />
+            <state relative-caret-position="323">
+              <caret line="19" column="68" selection-start-line="19" selection-start-column="68" selection-end-line="19" selection-end-column="68" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/domain/area/AreaTreeVO.java">
+        <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/service/DistributorGradeSystemService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="149">
-              <caret line="48" column="7" selection-start-line="48" selection-start-column="7" selection-end-line="48" selection-end-column="7" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/domain/distributor/DistributorDO.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="68" column="7" lean-forward="true" selection-start-line="68" selection-start-column="7" selection-end-line="68" selection-end-column="7" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/xpaas-channel-center-common/src/main/java/com/deepexi/channel/domain/BaseEntity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="15" column="22" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
+            <state relative-caret-position="405">
+              <caret line="37" column="7" lean-forward="true" selection-start-line="37" selection-start-column="7" selection-end-line="37" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -76,39 +68,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/service/DistributorGradeService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="16" column="6" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/dao/DistributorGradeDAO.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="9" column="36" selection-start-line="9" selection-start-column="36" selection-end-line="9" selection-end-column="36" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/dao/impl/DistributorGradeDAOImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="21" column="40" selection-start-line="21" selection-start-column="40" selection-end-line="21" selection-end-column="40" />
-              <folding>
-                <element signature="e#762#763#0" expanded="true" />
-                <element signature="e#789#790#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/controller/DistributorGradeController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="29" column="4" selection-start-line="29" selection-start-column="4" selection-end-line="77" selection-end-column="5" />
+            <state relative-caret-position="405">
+              <caret line="34" column="13" lean-forward="true" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -116,17 +77,62 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/controller/DistributorGradeSystemController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
+            <state relative-caret-position="391">
+              <caret line="44" column="33" lean-forward="true" selection-start-line="44" selection-start-column="33" selection-end-line="44" selection-end-column="33" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/resources/mapper/DistributorGradeMapper.xml">
+        <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/controller/DistributorGradeController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="213">
-              <caret line="26" column="23" selection-start-line="26" selection-start-column="23" selection-end-line="26" selection-end-column="23" />
+            <state relative-caret-position="340">
+              <caret line="43" column="8" selection-start-line="43" selection-start-column="8" selection-end-line="45" selection-end-column="33" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/controller/AreaTypeController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="320">
+              <caret line="123" column="39" selection-start-line="123" selection-start-column="19" selection-end-line="123" selection-end-column="39" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/dao/impl/DistributorGradeSystemDAOImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="24" column="31" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="31" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/mapper/DistributorGradeSystemMapper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="15" column="35" lean-forward="true" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/mapper/DistributorGradeMapper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="13" column="67" lean-forward="true" selection-start-line="13" selection-start-column="67" selection-end-line="13" selection-end-column="67" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/service/impl/DistributorGradeServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="286">
+              <caret line="64" column="62" selection-start-line="64" selection-start-column="62" selection-end-line="64" selection-end-column="62" />
             </state>
           </provider>
         </entry>
@@ -155,6 +161,7 @@
       <find>getCode()</find>
       <find>listChildNodes</find>
       <find>//</find>
+      <find>@Transactional</find>
     </findStrings>
     <replaceStrings>
       <replace>Area</replace>
@@ -175,13 +182,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/DistributorService.java" />
-        <option value="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/StoreAreaService.java" />
-        <option value="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/StoreChainService.java" />
-        <option value="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/StoreDistributorRelationService.java" />
-        <option value="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/StoreGradeRelationService.java" />
-        <option value="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/StoreGradeService.java" />
-        <option value="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/StoreService.java" />
         <option value="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/StoreTypeRelationService.java" />
         <option value="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/service/StoreTypeService.java" />
         <option value="$PROJECT_DIR$/xpaas-channel-center-api/src/main/java/com/deepexi/channel/domain/eo/CcArea.java" />
@@ -219,12 +219,19 @@
         <option value="$PROJECT_DIR$/xpaas-channel-center-common/src/main/java/com/deepexi/channel/domain/BaseEntity.java" />
         <option value="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/mapper/DistributorGradeMapper.java" />
         <option value="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/resources/mapper/DistributorGradeMapper.xml" />
-        <option value="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/controller/DistributorGradeController.java" />
-        <option value="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/service/impl/DistributorGradeServiceImpl.java" />
-        <option value="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/service/DistributorGradeService.java" />
         <option value="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/dao/DistributorGradeDAO.java" />
         <option value="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/dao/impl/DistributorGradeDAOImpl.java" />
         <option value="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/domain/area/AreaTreeVO.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/dao/DistributorGradeSystemDAO.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/resources/mapper/DistributorGradeSystemMapper.xml" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/mapper/DistributorGradeSystemMapper.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/dao/impl/DistributorGradeSystemDAOImpl.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/domain/distributor/DistributorGradeSystemQuery.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/service/impl/DistributorGradeServiceImpl.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/service/impl/DistributorGradeSystemServiceImpl.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/service/DistributorGradeSystemService.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/service/DistributorGradeService.java" />
+        <option value="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/controller/DistributorGradeController.java" />
         <option value="$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/controller/DistributorGradeSystemController.java" />
       </list>
     </option>
@@ -584,6 +591,32 @@
               <item name="extension" type="462c0819:PsiDirectoryNode" />
               <item name="service" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="xpaas-channel-center" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Maven: com.deepexi.common:optimus-common:1.1.7-SNAPSHOT" type="70bed36:NamedLibraryElementNode" />
+            </path>
+            <path>
+              <item name="xpaas-channel-center" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Maven: com.deepexi.common:optimus-common:1.1.7-SNAPSHOT" type="70bed36:NamedLibraryElementNode" />
+              <item name="optimus-common-1.1.7-20190827.073711-8.jar" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="xpaas-channel-center" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Maven: com.deepexi.common:optimus-common:1.1.7-SNAPSHOT" type="70bed36:NamedLibraryElementNode" />
+              <item name="optimus-common-1.1.7-20190827.073711-8.jar" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="xpaas-channel-center" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Maven: com.deepexi.common:optimus-common:1.1.7-SNAPSHOT" type="70bed36:NamedLibraryElementNode" />
+              <item name="optimus-common-1.1.7-20190827.073711-8.jar" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
+              <item name="pojo" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -597,7 +630,7 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1567312731186" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1567352928636" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../commodity/xpaas-commodity-center" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -714,11 +747,18 @@
       <option name="project" value="LOCAL" />
       <updated>1567293627279</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="经销商体系添加删除">
+      <created>1567312780707</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1567312780708</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="70071000" />
+    <option name="totallyTimeSpent" value="77420000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -733,7 +773,7 @@
     <frame x="-8" y="-8" width="1616" height="876" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26156813" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24871466" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Learn" order="3" />
@@ -777,7 +817,8 @@
     <MESSAGE value="端口号修改为8305" />
     <MESSAGE value="mapper包位置移动" />
     <MESSAGE value="经销商等级和体系管理功能实现" />
-    <option name="LAST_COMMIT_MESSAGE" value="经销商等级和体系管理功能实现" />
+    <MESSAGE value="经销商体系添加删除" />
+    <option name="LAST_COMMIT_MESSAGE" value="经销商体系添加删除" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -792,80 +833,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/dao/impl/AreaDAOImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="13" column="24" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/logs/xpaas-channel-center.log">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="22548" column="1775" selection-start-line="22548" selection-start-column="1775" selection-end-line="22548" selection-end-column="1775" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/resources/mapper/AreaMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-85">
-          <caret line="13" column="57" lean-forward="true" selection-start-line="13" selection-start-column="57" selection-end-line="13" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-web-provider/src/main/resources/application-dev.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="37" selection-start-line="11" selection-start-column="37" selection-end-line="11" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/dao/AreaTypeDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="10" column="28" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://D:/psoft/jdk/jdk18/inspack/src.zip!/java/util/function/Consumer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="48" column="9" selection-start-line="48" selection-start-column="9" selection-end-line="48" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://D:/psoft/jdk/jdk18/inspack/src.zip!/java/util/ArrayList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="714" column="54" lean-forward="true" selection-start-line="714" selection-start-column="54" selection-end-line="714" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-web-provider/src/main/resources/application.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="34" column="31" selection-start-line="34" selection-start-column="31" selection-end-line="34" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-common/src/main/java/com/deepexi/channel/extension/AppRuntimeEnv.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
-          <folding>
-            <element signature="e#2548#2549#0" expanded="true" />
-            <element signature="e#2586#2587#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://D:/psoft/jdk/jdk18/inspack/src.zip!/java/util/List.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="283" column="23" selection-start-line="283" selection-start-column="12" selection-end-line="283" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/commons-collections/commons-collections/3.2.2/commons-collections-3.2.2.jar!/org/apache/commons/collections/FastArrayList.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="184">
@@ -891,13 +858,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
           <caret line="512" selection-start-line="512" selection-end-line="512" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/dao/impl/AreaTypeDAOImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="21" column="47" selection-start-line="21" selection-start-column="47" selection-end-line="21" selection-end-column="47" />
         </state>
       </provider>
     </entry>
@@ -1008,13 +968,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/domain/distributor/DistributorGradeSystemQuery.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/domain/distributor/DistributorQuery.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -1026,13 +979,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
           <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/controller/AreaTypeController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="101" column="49" lean-forward="true" selection-start-line="101" selection-start-column="49" selection-end-line="101" selection-end-column="49" />
         </state>
       </provider>
     </entry>
@@ -1081,63 +1027,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/mapper/DistributorGradeMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="13" column="37" selection-start-line="13" selection-start-column="29" selection-end-line="13" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/resources/mapper/AreaTypeMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="526">
           <caret line="88" column="34" selection-start-line="70" selection-start-column="8" selection-end-line="88" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/domain/distributor/DistributorGradeQuery.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="37" column="39" selection-start-line="37" selection-start-column="19" selection-end-line="37" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/resources/mapper/DistributorGradeMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="26" column="23" selection-start-line="26" selection-start-column="23" selection-end-line="26" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/service/DistributorGradeService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="16" column="6" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/dao/DistributorGradeDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="9" column="36" selection-start-line="9" selection-start-column="36" selection-end-line="9" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/dao/impl/DistributorGradeDAOImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="21" column="40" selection-start-line="21" selection-start-column="40" selection-end-line="21" selection-end-column="40" />
-          <folding>
-            <element signature="e#762#763#0" expanded="true" />
-            <element signature="e#789#790#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/service/impl/DistributorGradeServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="40" selection-start-line="40" selection-end-line="40" />
         </state>
       </provider>
     </entry>
@@ -1158,21 +1051,168 @@
     <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/domain/distributor/DistributorDO.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
-          <caret line="68" column="7" lean-forward="true" selection-start-line="68" selection-start-column="7" selection-end-line="68" selection-end-column="7" />
+          <caret line="68" column="7" selection-start-line="68" selection-start-column="7" selection-end-line="68" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/dao/impl/AreaTypeDAOImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="18" column="63" selection-start-line="18" selection-start-column="49" selection-end-line="18" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/resources/mapper/DistributorGradeMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="422">
+          <caret line="47" column="13" lean-forward="true" selection-start-line="23" selection-start-column="4" selection-end-line="47" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/deepexi/common/optimus-common/1.1.7-SNAPSHOT/optimus-common-1.1.7-20190827.073711-8.jar!/com/deepexi/util/pojo/CloneDirection.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="9" column="32" selection-start-line="9" selection-start-column="32" selection-end-line="9" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/resources/mapper/DistributorGradeSystemMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/mapper/DistributorGradeRelationMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="11" column="91" lean-forward="true" selection-start-line="11" selection-start-column="3" selection-end-line="11" selection-end-column="91" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/domain/distributor/DistributorGradeSystemDO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="19" column="41" lean-forward="true" selection-start-line="19" selection-start-column="41" selection-end-line="19" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/domain/distributor/DistributorGradeQuery.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="18" selection-start-line="18" selection-end-line="22" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/domain/distributor/DistributorGradeSystemQuery.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="446">
+          <caret line="35" column="1" lean-forward="true" selection-start-line="35" selection-start-column="1" selection-end-line="35" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/domain/distributor/DistributorGradeSystemDTO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="16" column="18" lean-forward="true" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/dao/DistributorGradeSystemDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/dao/DistributorGradeDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="12" column="37" selection-start-line="12" selection-start-column="29" selection-end-line="12" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/dao/impl/DistributorGradeDAOImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="21" column="42" lean-forward="true" selection-start-line="21" selection-start-column="42" selection-end-line="21" selection-end-column="42" />
+          <folding>
+            <element signature="e#762#763#0" expanded="true" />
+            <element signature="e#811#812#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/dao/impl/DistributorGradeSystemDAOImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="24" column="31" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/mapper/DistributorGradeMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="13" column="67" lean-forward="true" selection-start-line="13" selection-start-column="67" selection-end-line="13" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/mapper/DistributorGradeSystemMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="15" column="35" lean-forward="true" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/service/impl/DistributorGradeSystemServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="68" selection-start-line="19" selection-start-column="68" selection-end-line="19" selection-end-column="68" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/service/DistributorGradeSystemService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="37" column="7" lean-forward="true" selection-start-line="37" selection-start-column="7" selection-end-line="37" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/service/DistributorGradeService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="34" column="13" lean-forward="true" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/service/impl/DistributorGradeServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="64" column="62" selection-start-line="64" selection-start-column="62" selection-end-line="64" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/controller/AreaTypeController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="123" column="39" selection-start-line="123" selection-start-column="19" selection-end-line="123" selection-end-column="39" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/controller/DistributorGradeController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="29" column="4" selection-start-line="29" selection-start-column="4" selection-end-line="77" selection-end-column="5" />
+        <state relative-caret-position="340">
+          <caret line="43" column="8" selection-start-line="43" selection-start-column="8" selection-end-line="45" selection-end-column="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/xpaas-channel-center-channel/src/main/java/com/deepexi/channel/controller/DistributorGradeSystemController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
+        <state relative-caret-position="391">
+          <caret line="44" column="33" lean-forward="true" selection-start-line="44" selection-start-column="33" selection-end-line="44" selection-end-column="33" />
         </state>
       </provider>
     </entry>

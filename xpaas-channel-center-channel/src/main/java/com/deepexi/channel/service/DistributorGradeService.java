@@ -13,10 +13,9 @@ import java.util.List;
 public interface DistributorGradeService {
 
     /**
-    * 分页获取列表
-    */
-    List<DistributorGradeDTO> findPage(DistributorGradeQuery query);
-
+     * 创建经销商等级
+     */
+    Long create(DistributorGradeDTO dto);
     /**
       获取详情
     */
@@ -28,12 +27,12 @@ public interface DistributorGradeService {
     Boolean update(DistributorGradeDTO dto);
 
     /**
-    * 创建经销商等级
-    */
-    Long create(DistributorGradeDTO dto);
-
-    /**
      批量删除经销商等级
     */
     Boolean delete(List<Long> ids);
+
+    /**
+     * 分页获取列表
+     */
+    List<DistributorGradeDTO> findPage(DistributorGradeQuery query);
 }

@@ -17,7 +17,6 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @ApiModel("供应商等级体系查询")
 public class DistributorGradeSystemQuery extends CommQuery {
 

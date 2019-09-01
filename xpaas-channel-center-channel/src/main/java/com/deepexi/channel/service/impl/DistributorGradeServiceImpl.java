@@ -39,16 +39,11 @@ public class DistributorGradeServiceImpl implements DistributorGradeService {
         return eo.getId();
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
-    public List<DistributorGradeDTO> findPage(DistributorGradeQuery query) {
+    public Boolean update(DistributorGradeDTO dto) {
 
-        if (query.getPage() != null && query.getPage() != -1) {
-            PageHelper.startPage(query.getPage(), query.getSize());
-        }
-
-        List<DistributorGradeDO> eoList = distributorGradeDAO.findPage(query);
-
-        return ObjectCloneUtils.convertList(eoList, DistributorGradeDTO.class, CloneDirection.OPPOSITE);
+        return distributorGradeDAO.updateById(dto.clone(DistributorGradeDO.class,CloneDirection.FORWARD));
     }
 
     @Override
@@ -61,15 +56,20 @@ public class DistributorGradeServiceImpl implements DistributorGradeService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public Boolean update(DistributorGradeDTO dto) {
-
-        return distributorGradeDAO.updateById(dto.clone(DistributorGradeDO.class,CloneDirection.FORWARD));
-    }
-
-    @Transactional(rollbackFor = Exception.class)
-    @Override
     public Boolean delete(List<Long> ids) {
 
         return distributorGradeDAO.removeByIds(ids);
+    }
+
+    @Override
+    public List<DistributorGradeDTO> findPage(DistributorGradeQuery query) {
+
+        if (query.getPage() != null && query.getPage() != -1) {
+            PageHelper.startPage(query.getPage(), query.getSize());
+        }
+
+        List<DistributorGradeDO> eoList = distributorGradeDAO.findPage(query);
+
+        return ObjectCloneUtils.convertList(eoList, DistributorGradeDTO.class, CloneDirection.OPPOSITE);
     }
 }
