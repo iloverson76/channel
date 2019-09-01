@@ -35,9 +35,5 @@ public class DistributorGradeSystemVO extends BaseEntity {
     @ApiModelProperty("等级体系编码")
     private String gradeSystemCode;
 
-    /**
-     * 描述
-     */
-    @ApiModelProperty("描述")
-    private String description;
+
 }
