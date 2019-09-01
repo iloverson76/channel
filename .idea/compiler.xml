@@ -6,21 +6,31 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="xpaas-channel-center-api" />
-        <module name="xpaas-channel-center-provider" />
+        <module name="xpaas-channel-center-channel" />
+        <module name="xpaas-channel-center-channel-api" />
+        <module name="xpaas-channel-center-common" />
+        <module name="xpaas-channel-center-web-provider" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="deepexi-channel-center" target="1.8" />
       <module name="xpaas-channel-center" target="1.8" />
       <module name="xpaas-channel-center-api" target="1.8" />
+      <module name="xpaas-channel-center-channel" target="1.8" />
+      <module name="xpaas-channel-center-channel-api" target="1.8" />
+      <module name="xpaas-channel-center-common" target="1.8" />
       <module name="xpaas-channel-center-provider" target="1.8" />
+      <module name="xpaas-channel-center-web-provider" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="xpaas-channel-center-api" options="-parameters" />
+      <module name="xpaas-channel-center-channel" options="-parameters" />
+      <module name="xpaas-channel-center-channel-api" options="-parameters" />
+      <module name="xpaas-channel-center-common" options="-parameters" />
       <module name="xpaas-channel-center-provider" options="-parameters" />
+      <module name="xpaas-channel-center-web-provider" options="-parameters" />
     </option>
   </component>
 </project>

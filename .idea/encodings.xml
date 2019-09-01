@@ -3,6 +3,10 @@
   <component name="Encoding" addBOMForNewFiles="with NO BOM">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/xpaas-channel-center-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xpaas-channel-center-channel" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xpaas-channel-center-channel-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xpaas-channel-center-common" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/xpaas-channel-center-provider" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xpaas-channel-center-web-provider" charset="UTF-8" />
   </component>
 </project>
