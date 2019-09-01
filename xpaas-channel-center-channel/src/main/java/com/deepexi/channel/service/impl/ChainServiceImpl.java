@@ -5,6 +5,7 @@ import com.deepexi.channel.dao.ChainDAO;
 import com.deepexi.channel.domain.chain.ChainDO;
 import com.deepexi.channel.domain.chain.ChainDTO;
 import com.deepexi.channel.domain.chain.ChainQuery;
+import com.deepexi.channel.domain.chain.ChainTypeDO;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
@@ -98,6 +99,24 @@ public class ChainServiceImpl implements ChainService {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public boolean haveChildren(List<Long> ids) {
+        //获得所有子节点
+        List<ChainDO> chainDOS = chainDAO.findParentList(ids);
+        //没有子节点
+        if(CollectionUtil.isEmpty(chainDOS)){
+            return false;
+        }
+        //判断子节点是否也被删除，如果子节点不被删除，则拒绝删除
+        for(ChainDO a : chainDOS){
+            if(!ids.contains(a.getId())){
+                return true;
+            }
+        }
+        //父节点跟子节点一同删除, 允许删除
+        return false;
     }
 //
 //    @Override

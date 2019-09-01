@@ -8,4 +8,6 @@ import java.util.List;
 public interface ChainBankDAO extends IService<ChainBankDO> {
 
     List<ChainBankDO> getChainBankByChainId(Long id);
+
+    boolean deleteByChainId(Long id);
 }

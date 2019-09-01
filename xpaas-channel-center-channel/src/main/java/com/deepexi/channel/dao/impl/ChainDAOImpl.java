@@ -26,4 +26,9 @@ public class ChainDAOImpl extends ServiceImpl<ChainMapper, ChainDO> implements C
     public Integer getChainCountByTypeIds(List<Long> typeIds) {
         return chainMapper.getChainCountByTypeIds(typeIds);
     }
+
+    @Override
+    public List<ChainDO> findParentList(List<Long> ids) {
+        return chainMapper.findParentList(ids);
+    }
 }

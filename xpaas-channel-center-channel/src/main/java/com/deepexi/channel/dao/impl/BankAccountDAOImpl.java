@@ -23,6 +23,11 @@ public class BankAccountDAOImpl extends ServiceImpl<BankAccountMapper, BankAccou
         return bankAccountMapper.getBankAccountByIds(bankAccountIds);
     }
 
+    @Override
+    public int deleteBatchIds(List<Long> ids) {
+        return bankAccountMapper.deleteBatchIds(ids);
+    }
+
 //    @Autowired
 //    BankAccountMapper bankAccountMapper;
 

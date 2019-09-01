@@ -13,4 +13,6 @@ public interface ChainDAO extends IService<ChainDO> {
     List<ChainDO> findList(ChainQuery query);
 
     Integer getChainCountByTypeIds(List<Long> typeIds);
+
+    List<ChainDO> findParentList(List<Long> ids);
 }

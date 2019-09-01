@@ -41,6 +41,11 @@ public class ChainBankServiceImpl implements ChainBankService {
         return ObjectCloneUtils.convertList(chainBankDOS, ChainBankDTO.class, CloneDirection.OPPOSITE);
     }
 
+    @Override
+    public boolean deleteByChainId(Long id) {
+        return chainBankDAO.deleteByChainId(id);
+    }
+
 //    @Override
 //    public PageBean<CcChainBank> findPage(CcChainBank eo, Integer page, Integer size) {
 //        PageHelper.startPage(page, size);

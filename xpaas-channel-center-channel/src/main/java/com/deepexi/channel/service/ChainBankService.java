@@ -14,6 +14,8 @@ public interface ChainBankService {
 
     List<ChainBankDTO> getChainBankByChainId(Long id);
 
+    boolean deleteByChainId(Long id);
+
 //    /**
 //    * 分页获取列表
 //    * @param eo

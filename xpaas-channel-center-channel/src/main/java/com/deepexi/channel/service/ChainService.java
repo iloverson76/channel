@@ -59,4 +59,6 @@ public interface ChainService {
     Integer getChainCountByTypeIds(List<Long> ids);
 
     boolean isCodeUnique(ChainDTO dto);
+
+    boolean haveChildren(List<Long> ids);
 }

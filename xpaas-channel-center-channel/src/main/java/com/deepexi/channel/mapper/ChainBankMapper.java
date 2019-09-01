@@ -15,4 +15,6 @@ public interface ChainBankMapper extends BaseMapper<ChainBankDO> {
     int deleteByIds(@Param("ids") List<Integer > ids);
 
     List<ChainBankDO> getChainBankByChainId(@Param("id")Long id);
+
+    boolean deleteByChainId(@Param("chainId") Long chainId);
 }

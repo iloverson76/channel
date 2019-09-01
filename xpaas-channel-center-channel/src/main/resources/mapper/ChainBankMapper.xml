@@ -30,4 +30,9 @@
         select * from cc_chain_bank where dr = 0
         and chain_id = #{id}
     </select>
+
+    <update id="deleteByChainId">
+        UPDATE cc_chain_bank set dr=1 where chain_id = #{chainId}
+    </update>
+
 </mapper>

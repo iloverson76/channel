@@ -90,13 +90,13 @@ public class BankAccountServiceImpl implements BankAccountService {
 //        return false;
 //    }
 //
-//    @Override
-//    public Boolean delete(Integer ...pks) {
-//        int result = bankAccountMapper.deleteBatchIds(Arrays.asList(pks));
-//        if (result > 0) {
-//            return true;
-//        }
-//        return false;
-//    }
+    @Override
+    public Boolean delete(List<Long> ids) {
+        int result = bankAccountDAO.deleteBatchIds(ids);
+        if (result > 0) {
+            return true;
+        }
+        return false;
+    }
 
 }

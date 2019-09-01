@@ -44,32 +44,9 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         }
         //新增连锁基本信息
         Long result = chainService.create(dto);
+        dto.setId(result);
         //批量新增连锁账户信息
-        List<BankAccountDTO> bankAccountDTOS = dto.getBankAccountList();
-        if(CollectionUtil.isEmpty(bankAccountDTOS)){
-            return result;
-        }
-        bankAccountDTOS = bankAccountService.saveBatch(bankAccountDTOS);
-
-        //批量新增账户、连锁关联信息
-        List<ChainBankDTO> chainBankDTOS = new ArrayList<>();
-        for(BankAccountDTO bankAccount:bankAccountDTOS){
-            ChainBankDTO chainBankDTO = ChainBankDTO.builder()
-                    .bankAccountId(bankAccount.getId())
-                    .chainId(result)
-                    .build();
-            //TODO 下面这段代码设置租户id等是否必要，没设置会报不能为空
-            chainBankDTO.setTenantId(dto.getTenantId());
-            chainBankDTO.setAppId(dto.getAppId());
-            chainBankDTO.setVersion(dto.getVersion());
-            chainBankDTO.setUpdatedBy(dto.getUpdatedBy());
-            chainBankDTO.setCreatedBy(dto.getCreatedBy());
-            chainBankDTO.setCreatedTime(dto.getCreatedTime());
-            chainBankDTO.setUpdatedTime(dto.getUpdatedTime());
-
-            chainBankDTOS.add(chainBankDTO);
-        }
-        boolean insertChainBankResult = chainBankService.saveBatch(chainBankDTOS);
+        this.saveChainAccountBrach(dto);
         return result;
     }
 
@@ -119,8 +96,10 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
 
     @Override
     public Boolean deleteChain(List<Long> ids) {
-        //TODO 判断连锁删除是否合法,是否具有子节点
-
+        //判断连锁删除是否合法,是否具有子节点
+        if(chainService.haveChildren(ids)){
+            throw new ApplicationException(ResultEnum.HAVE_CHILDREN);
+        }
         //TODO 删除的连锁是否被其他门店所关联
 
         //删除合法
@@ -130,8 +109,15 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
     @Override
     @Transactional
     public Boolean updateChain(ChainDTO dto) {
+        //判断编码是否重复
+        if(!chainService.isCodeUnique(dto)){
+            throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
+        }
         //TODO 更新银行账户信息
-
+        //删除旧的关联账户
+        chainBankService.deleteByChainId(dto.getId());
+        //新增所有账号
+        this.saveChainAccountBrach(dto);
         //更新连锁店基本信息
         return chainService.update(dto);
     }
@@ -165,4 +151,42 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         });
         return chainDTOS;
     }
+
+    /**
+     * @MethodName: saveChainAccountBrach
+     * @Description: 批量保存连锁账号，银行账号
+     * @Param: [dto]
+     * @Return: boolean
+     * @Author: mumu
+     * @Date: 2019/9/1
+    **/
+    private boolean saveChainAccountBrach(ChainDTO dto){
+        List<BankAccountDTO> bankAccountDTOS = dto.getBankAccountList();
+        if(CollectionUtil.isEmpty(bankAccountDTOS)){
+            return true;
+        }
+        bankAccountDTOS = bankAccountService.saveBatch(bankAccountDTOS);
+
+        //批量新增账户、连锁关联信息
+        List<ChainBankDTO> chainBankDTOS = new ArrayList<>();
+        for(BankAccountDTO bankAccount:bankAccountDTOS){
+            ChainBankDTO chainBankDTO = ChainBankDTO.builder()
+                    .bankAccountId(bankAccount.getId())
+                    .chainId(dto.getId())
+                    .build();
+            //TODO 下面这段代码设置租户id等是否必要，没设置会报不能为空
+            chainBankDTO.setTenantId(dto.getTenantId());
+            chainBankDTO.setAppId(dto.getAppId());
+            chainBankDTO.setVersion(dto.getVersion());
+            chainBankDTO.setUpdatedBy(dto.getUpdatedBy());
+            chainBankDTO.setCreatedBy(dto.getCreatedBy());
+            chainBankDTO.setCreatedTime(dto.getCreatedTime());
+            chainBankDTO.setUpdatedTime(dto.getUpdatedTime());
+
+            chainBankDTOS.add(chainBankDTO);
+        }
+        boolean insertChainBankResult = chainBankService.saveBatch(chainBankDTOS);
+        return insertChainBankResult;
+    }
+
 }

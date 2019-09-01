@@ -54,9 +54,9 @@ public interface BankAccountService {
 //    */
 //    Boolean delete(Integer pk);
 //
-//    /**
-//     批量删除
-//    * @return
-//    */
-//    Boolean delete(Integer... pk);
+    /**
+     批量删除
+    * @return
+    */
+    Boolean delete(List<Long> ids);
 }

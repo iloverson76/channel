@@ -21,4 +21,9 @@ public class ChainBankDAOImpl extends ServiceImpl<ChainBankMapper, ChainBankDO> 
     public List<ChainBankDO> getChainBankByChainId(Long id) {
         return chainBankMapper.getChainBankByChainId(id);
     }
+
+    @Override
+    public boolean deleteByChainId(Long chainId) {
+        return chainBankMapper.deleteByChainId(chainId);
+    }
 }

@@ -62,8 +62,11 @@ public class ChainController {
         if(vo == null){
             return new Payload(false);
         }
-         vo.setId(id);
-         return new Payload(chainBusinessService.updateChain(vo.clone(ChainDTO.class)));
+        vo.setId(id);
+        ChainDTO dto = vo.clone(ChainDTO.class);
+        List<BankAccountDTO> bankAccountList = ObjectCloneUtils.convertList(vo.getBankAccountList(), BankAccountDTO.class);
+        dto.setBankAccountList(bankAccountList);
+         return new Payload(chainBusinessService.updateChain(dto));
     }
 
     @PostMapping
@@ -81,7 +84,7 @@ public class ChainController {
     @DeleteMapping("/{ids}")
     @Transactional
     @ApiOperation(value = "根据id批量删除连锁", notes = "根据id删除连锁")
-    public Payload delete(@PathVariable(value = "id", required = true) List<Long> ids) {
+    public Payload delete(@PathVariable(value = "ids", required = true) List<Long> ids) {
         return new Payload(chainBusinessService.deleteChain(ids));
     }
 }
