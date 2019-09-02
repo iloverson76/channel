@@ -2,11 +2,8 @@ package com.deepexi.channel.dao.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.deepexi.channel.dao.DistributorGradeSystemDAO;
-import com.deepexi.channel.domain.distributor.DistributorGradeDO;
-import com.deepexi.channel.domain.distributor.DistributorGradeQuery;
 import com.deepexi.channel.domain.distributor.DistributorGradeSystemDO;
 import com.deepexi.channel.domain.distributor.DistributorGradeSystemQuery;
-import com.deepexi.channel.domain.eo.CcDistributorGradeSystem;
 import com.deepexi.channel.mapper.DistributorGradeSystemMapper;
 import org.springframework.stereotype.Repository;
 

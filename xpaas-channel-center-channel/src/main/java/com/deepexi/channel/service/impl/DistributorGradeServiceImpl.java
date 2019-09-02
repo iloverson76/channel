@@ -1,14 +1,10 @@
 package com.deepexi.channel.service.impl;
 
 import com.deepexi.channel.dao.DistributorGradeDAO;
-import com.deepexi.channel.domain.area.AreaTypeDO;
-import com.deepexi.channel.domain.area.AreaTypeDTO;
 import com.deepexi.channel.domain.distributor.DistributorGradeDO;
 import com.deepexi.channel.domain.distributor.DistributorGradeDTO;
 import com.deepexi.channel.domain.distributor.DistributorGradeQuery;
-import com.deepexi.channel.domain.eo.CcDistributorGrade;
 import com.deepexi.channel.service.DistributorGradeService;
-import com.deepexi.util.pageHelper.PageBean;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import com.github.pagehelper.PageHelper;

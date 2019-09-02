@@ -5,14 +5,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.deepexi.channel.dao.ChainTypeDAO;
 import com.deepexi.channel.domain.chain.ChainTypeDO;
 import com.deepexi.channel.domain.chain.ChainTypeQuery;
-import com.deepexi.channel.domain.eo.CcChainType;
 import com.deepexi.channel.mapper.ChainTypeMapper;
-import com.deepexi.util.CollectionUtil;
-import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 

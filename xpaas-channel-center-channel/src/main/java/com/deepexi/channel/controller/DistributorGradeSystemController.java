@@ -1,17 +1,18 @@
 package com.deepexi.channel.controller;
 
-import com.deepexi.channel.dao.DistributorGradeSystemDAO;
-import com.deepexi.channel.domain.distributor.*;
+import com.deepexi.channel.domain.distributor.DistributorGradeSystemDTO;
+import com.deepexi.channel.domain.distributor.DistributorGradeSystemQuery;
+import com.deepexi.channel.domain.distributor.DistributorGradeSystemVO;
+import com.deepexi.channel.service.DistributorGradeSystemService;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pageHelper.PageBean;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-import com.deepexi.channel.service.DistributorGradeSystemService;
-import com.deepexi.channel.domain.eo.CcDistributorGradeSystem;
 import org.springframework.web.bind.annotation.*;
-import io.swagger.annotations.*;
 
 import java.util.Arrays;
 import java.util.List;

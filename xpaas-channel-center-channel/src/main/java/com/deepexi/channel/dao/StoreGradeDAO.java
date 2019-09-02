@@ -1,10 +1,8 @@
 package com.deepexi.channel.dao;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.deepexi.channel.domain.eo.CcStoreType;
 import com.deepexi.channel.domain.store.StoreGradeDO;
 import com.deepexi.channel.domain.store.StoreGradeQuery;
-import com.deepexi.channel.domain.store.StoreQuery;
 
 import java.util.List;
 

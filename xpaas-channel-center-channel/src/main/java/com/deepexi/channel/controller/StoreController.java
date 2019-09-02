@@ -2,17 +2,18 @@ package com.deepexi.channel.controller;
 
 import com.deepexi.channel.domain.store.StoreQuery;
 import com.deepexi.channel.domain.store.StoreVO;
+import com.deepexi.channel.service.StoreService;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pageHelper.PageBean;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import com.deepexi.channel.service.StoreService;
-import com.deepexi.channel.domain.eo.CcStore;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import io.swagger.annotations.*;
 
 
 @Api(value = "/门店信息表", description = "查询门店列表")

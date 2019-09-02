@@ -4,7 +4,6 @@ import com.deepexi.channel.businness.ChainBusinessService;
 import com.deepexi.channel.domain.bank.BankAccountDTO;
 import com.deepexi.channel.domain.bank.BankDTO;
 import com.deepexi.channel.domain.bank.ChainBankDTO;
-import com.deepexi.channel.domain.chain.ChainDO;
 import com.deepexi.channel.domain.chain.ChainDTO;
 import com.deepexi.channel.domain.chain.ChainQuery;
 import com.deepexi.channel.domain.chain.ChainTypeDTO;
