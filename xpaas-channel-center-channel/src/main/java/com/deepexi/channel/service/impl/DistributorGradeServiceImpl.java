@@ -28,6 +28,10 @@ public class DistributorGradeServiceImpl implements DistributorGradeService {
     @Override
     public Long create(DistributorGradeDTO dto) {
 
+        if(null==dto){
+            return -1L;
+        }
+
         DistributorGradeDO eo=dto.clone(DistributorGradeDO.class, CloneDirection.FORWARD);
 
         distributorGradeDAO.save(eo);

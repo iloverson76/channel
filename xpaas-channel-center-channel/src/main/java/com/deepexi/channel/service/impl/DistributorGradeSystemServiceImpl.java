@@ -1,11 +1,11 @@
 package com.deepexi.channel.service.impl;
 
 import com.deepexi.channel.dao.DistributorGradeSystemDAO;
-import com.deepexi.channel.domain.distributor.DistributorGradeSystemDO;
-import com.deepexi.channel.domain.distributor.DistributorGradeSystemDTO;
-import com.deepexi.channel.domain.distributor.DistributorGradeSystemQuery;
+import com.deepexi.channel.domain.distributor.*;
+import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.extension.AppRuntimeEnv;
 import com.deepexi.channel.service.DistributorGradeSystemService;
+import com.deepexi.util.extension.ApplicationException;
 import com.deepexi.util.pageHelper.PageBean;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
@@ -39,7 +39,31 @@ public class DistributorGradeSystemServiceImpl implements DistributorGradeSystem
     @Override
     public long create(DistributorGradeSystemDTO dto) {
 
+        if(null==dto){
+            return 0L;
+        }
+
         DistributorGradeSystemDO eo=dto.clone(DistributorGradeSystemDO.class, CloneDirection.FORWARD);
+
+        DistributorGradeSystemQuery query=new DistributorGradeSystemQuery();
+
+        query.setPage(-1);
+
+        List<DistributorGradeSystemDTO> pageDTO= findPage(query);
+
+        pageDTO.forEach(page->{
+
+            if(dto.getGradeSystemCode().equals(page.getGradeSystemCode())){
+
+                throw new ApplicationException(ResultEnum.GRADE_SYSTEM_CODE_DUPLICATED);
+            }
+
+            if(dto.getGradeSystemName().equals(page.getGradeSystemName())){
+
+                throw new ApplicationException(ResultEnum.GRADE_SYSTEM_NAME_DUPLICATED);
+            }
+
+        });
 
         dto.setTenantId(appRuntimeEnv.getTenantId());
 

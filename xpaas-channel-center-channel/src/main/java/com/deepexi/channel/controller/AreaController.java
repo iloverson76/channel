@@ -1,17 +1,18 @@
 package com.deepexi.channel.controller;
 
-import com.deepexi.channel.domain.area.AreaDTO;
-import com.deepexi.channel.domain.area.AreaVO;
+import com.deepexi.channel.domain.area.*;
 import com.deepexi.channel.service.AreaService;
 import com.deepexi.util.config.Payload;
+import com.deepexi.util.pageHelper.PageBean;
 import com.deepexi.util.pojo.CloneDirection;
+import com.deepexi.util.pojo.ObjectCloneUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @Api(description = "区域管理")
@@ -51,15 +52,6 @@ public class AreaController {
      return new Payload(areaService.update(pk, eo));
     }
 */
-    @PostMapping
-    @ApiOperation(value = "创建区域")
-    public Payload<Long> create(@RequestBody AreaVO vo) {
-
-       Long result= areaService.create(vo.clone(AreaDTO.class, CloneDirection.FORWARD));
-
-        return new Payload<>(result);
-    }
-
 /*
     @DeleteMapping("/{id}")
     @Transactional
@@ -75,4 +67,24 @@ public class AreaController {
         return new Payload(areaService.delete(ids));
     }
 */
+
+    @PostMapping
+    @ApiOperation(value = "创建区域")
+    public Payload<Long> create(@RequestBody AreaVO vo) {
+
+        Long result= areaService.create(vo.clone(AreaDTO.class, CloneDirection.FORWARD));
+
+        return new Payload<>(result);
+    }
+
+    /*@GetMapping()
+    @ApiOperation("查询区域类型列表")
+    public Payload<PageBean<AreaVO>> listAreaPage(@ApiParam(name = "query", required = true) AreaQuery query) {
+
+        List<AreaDTO> dtoList = areaService.listAreaPage(query);
+
+        List<AreaVO> voList = ObjectCloneUtils.convertList(dtoList, AreaVO.class);
+
+        return new Payload<>(new PageBean<>(voList));
+    }*/
 }
