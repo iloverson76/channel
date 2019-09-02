@@ -5,19 +5,23 @@ import com.deepexi.channel.dao.StoreTypeDAO;
 import com.deepexi.channel.domain.store.StoreTypeDO;
 import com.deepexi.channel.domain.store.StoreTypeDTO;
 import com.deepexi.channel.domain.store.StoreTypeQuery;
+import com.deepexi.channel.domain.store.StoreTypeVO;
 import com.deepexi.channel.enums.ResultEnum;
-import com.deepexi.channel.service.StoreTypeService;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.extension.ApplicationException;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
-import com.github.pagehelper.PageHelper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import com.deepexi.channel.domain.eo.CcStoreType;
+import com.deepexi.channel.service.StoreTypeService;
+import com.deepexi.channel.mapper.StoreTypeMapper;
+import java.util.Arrays;import java.util.List;
+import com.deepexi.util.pageHelper.PageBean;
+import com.github.pagehelper.PageHelper;
+import com.deepexi.util.BeanPowerHelper;
 
 @Service
 public class StoreTypeServiceImpl implements StoreTypeService {
@@ -94,9 +98,7 @@ public class StoreTypeServiceImpl implements StoreTypeService {
     @Override
     public boolean isCodeUnique(StoreTypeDTO dto){
         List<StoreTypeDO> list = storeTypeDAO.list(new QueryWrapper<StoreTypeDO>().lambda()
-                .eq(StoreTypeDO::getStoreTypeCode,dto.getStoreTypeCode())
-                .eq(StoreTypeDO::getTenantId,dto.getTenantId())
-                .eq(StoreTypeDO::getAppId,dto.getAppId()));
+                .eq(StoreTypeDO::getStoreTypeCode,dto.getStoreTypeCode()));
         if(CollectionUtil.isNotEmpty(list)){
             //不为空，还有可能是更新时自身的编码
             if(list.size()==1){

@@ -274,14 +274,6 @@ public class AreaTypeServiceImpl implements AreaTypeService {
 
     public void setCommonColumns(AreaTypeDTO dto){
 
-        dto.setTenantId(appRuntimeEnv.getTenantId());
-
-        dto.setAppId(appRuntimeEnv.getAppId());
-
-        dto.setCreatedTime(new Date());
-
-        dto.setUpdatedTime(new Date());
-
     }
 
     private void updateUnLimitedChildNodesParentIdAndPathInfo(AreaTypeDTO dto){

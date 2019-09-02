@@ -88,7 +88,11 @@ public class AppRuntimeEnv {
     }
 
     public String getTenantId() {
-        return "123456789";//TENANT_ID.get();
+        String tenantIdStr = TENANT_ID.get();
+        if (tenantIdStr == null) {
+            return "123456789";
+        }
+        return tenantIdStr;
     }
 
     public String getToken() {
@@ -112,6 +116,10 @@ public class AppRuntimeEnv {
     }
 
     public String getAppId() {
-        return "123456789";//APP_ID.get();
+        String appIdStr = APP_ID.get();
+        if (appIdStr == null) {
+            return "123456789";
+        }
+        return appIdStr;
     }
 }

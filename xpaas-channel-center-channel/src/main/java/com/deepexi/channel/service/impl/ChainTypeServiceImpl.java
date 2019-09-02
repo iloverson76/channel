@@ -32,9 +32,9 @@ public class ChainTypeServiceImpl implements ChainTypeService {
 
     @Override
     public List<ChainTypeDTO> findPage(ChainTypeQuery query) {
-        if(query.getPage() != null && query.getPage() != -1){
+        if (query.getPage() != null && query.getPage() != -1) {
             PageHelper.startPage(query.getPage(), query.getSize());
-            List<ChainTypeDO> pages =  chainTypeDAO.findList(query);
+            List<ChainTypeDO> pages = chainTypeDAO.findList(query);
             List<ChainTypeDTO> chainTypeDTOS = ObjectCloneUtils.convertList(pages, ChainTypeDTO.class, CloneDirection.OPPOSITE);
             // 得到所有连锁类型id
             Set<Long> idList = chainTypeDTOS.stream().map(ChainTypeDTO::getId).collect(Collectors.toSet());
@@ -61,7 +61,7 @@ public class ChainTypeServiceImpl implements ChainTypeService {
     @Override
     public List<ChainTypeDTO> findAll(ChainTypeQuery query) {
         List<ChainTypeDO> list = chainTypeDAO.findList(query);
-        return ObjectCloneUtils.convertList(list,ChainTypeDTO.class, CloneDirection.OPPOSITE);
+        return ObjectCloneUtils.convertList(list, ChainTypeDTO.class, CloneDirection.OPPOSITE);
     }
 
     @Override
@@ -77,10 +77,10 @@ public class ChainTypeServiceImpl implements ChainTypeService {
     }
 
     @Override
-    public Boolean update(Long id,ChainTypeDTO dto) {
+    public Boolean update(Long id, ChainTypeDTO dto) {
         dto.setId(id);
         //判断编码是否重复
-        if(!isCodeUnique(dto)){
+        if (!isCodeUnique(dto)) {
             throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
         }
         //TODO 判断父级节点是否合法,是否出现环形结构
@@ -92,48 +92,43 @@ public class ChainTypeServiceImpl implements ChainTypeService {
     @Override
     public Long create(ChainTypeDTO dto) {
         //新增校验,编码不能重复
-        if(!isCodeUnique(dto)){
+        if (!isCodeUnique(dto)) {
             throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
         }
         //插入
         ChainTypeDO chainTypeDO = dto.clone(ChainTypeDO.class);
         boolean result = chainTypeDAO.save(chainTypeDO);
-        if(result){
-            return chainTypeDO.getId();
-        }else{
-            return 0L;
-        }
-
+        return chainTypeDO.getId();
     }
 
 
     @Override
     public Boolean delete(List<Long> ids) {
-        if(CollectionUtil.isEmpty(ids)){
+        if (CollectionUtil.isEmpty(ids)) {
             return false;
         }
         return chainTypeDAO.removeByIds(ids);
     }
 
-     /**
-      * @MethodName: haveChilder
-      * @Description: 是否具有儿子节点,并且不在ids中
-      * @Param: [ids]
-      * @Return: java.lang.Boolean
-      * @Author: mumu
-      * @Date: 2019/8/30
+    /**
+     * @MethodName: haveChilder
+     * @Description: 是否具有儿子节点, 并且不在ids中
+     * @Param: [ids]
+     * @Return: java.lang.Boolean
+     * @Author: mumu
+     * @Date: 2019/8/30
      **/
-     @Override
-    public Boolean haveChildren(List<Long> ids){
+    @Override
+    public Boolean haveChildren(List<Long> ids) {
         //获得所有子节点
         List<ChainTypeDO> chainTypeDOS = chainTypeDAO.findParentList(ids);
         //没有子节点
-        if(CollectionUtil.isEmpty(chainTypeDOS)){
+        if (CollectionUtil.isEmpty(chainTypeDOS)) {
             return false;
         }
         //判断子节点是否也被删除，如果子节点不被删除，则拒绝删除
-        for(ChainTypeDO a : chainTypeDOS){
-            if(!ids.contains(a.getId())){
+        for (ChainTypeDO a : chainTypeDOS) {
+            if (!ids.contains(a.getId())) {
                 return true;
             }
         }
@@ -148,27 +143,24 @@ public class ChainTypeServiceImpl implements ChainTypeService {
      * @Return: boolean 编码唯一, true 编码唯一 ， false 编码不唯一
      * @Author: mumu
      * @Date: 2019/8/30
-    **/
+     **/
     @Override
-    public boolean isCodeUnique(ChainTypeDTO dto){
+    public boolean isCodeUnique(ChainTypeDTO dto) {
         List<ChainTypeDO> list = chainTypeDAO.list(new QueryWrapper<ChainTypeDO>().lambda()
-                .eq(ChainTypeDO::getChainTypeCode,dto.getChainTypeCode())
-                .eq(ChainTypeDO::getTenantId,dto.getTenantId())
-                .eq(ChainTypeDO::getAppId,dto.getAppId()));
-        if(CollectionUtil.isNotEmpty(list)){
+                .eq(ChainTypeDO::getChainTypeCode, dto.getChainTypeCode()));
+        if (CollectionUtil.isNotEmpty(list)) {
             //不为空，还有可能是更新时自身的编码
-            if(list.size()==1){
+            if (list.size() == 1) {
                 ChainTypeDO chainTypeDO = list.get(0);
                 //该code是本身，不属于重复
-               if(chainTypeDO.getId().equals(dto.getId())){
-                   return true;
-               }
+                if (chainTypeDO.getId().equals(dto.getId())) {
+                    return true;
+                }
             }
             return false;
         }
         return true;
     }
-
 
 
 }

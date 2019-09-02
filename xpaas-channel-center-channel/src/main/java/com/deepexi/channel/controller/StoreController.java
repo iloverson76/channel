@@ -1,5 +1,7 @@
 package com.deepexi.channel.controller;
 
+import com.deepexi.channel.businness.StoreBusinessService;
+import com.deepexi.channel.domain.store.StoreDTO;
 import com.deepexi.channel.domain.store.StoreQuery;
 import com.deepexi.channel.domain.store.StoreVO;
 import com.deepexi.channel.service.StoreService;
@@ -23,6 +25,8 @@ public class StoreController {
 
     @Autowired
     private StoreService storeService;
+    @Autowired
+    private StoreBusinessService storeBusinessService;
 
     @GetMapping
     @ApiOperation(value = "分页查询", notes = "分页请求")
@@ -50,7 +54,8 @@ public class StoreController {
     @PostMapping
     @ApiOperation(value = "创建门店", notes = "创建门店")
     public Payload create(@RequestBody StoreVO vo) {
-        return new Payload(true);
+        StoreDTO storeDTO = vo.clone(StoreDTO.class);
+        return new Payload(storeBusinessService.create(storeDTO));
     }
 
     @DeleteMapping("/{ids}")

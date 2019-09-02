@@ -76,18 +76,5 @@ public class StoreVO extends BaseEntity {
     @ApiModelProperty(value = "是否启用 0 禁用 1 启用")
     private Boolean enable;
 
-    @ApiModelProperty(value = "门店等级")
-    private StoreTypeVO storeTypeVO;
 
-    @ApiModelProperty(value = "门店类型")
-    private StoreGradeVO storeGradeVO;
-
-    @ApiModelProperty(value = "区域信息")
-    private AreaVO areaVO;
-
-    @ApiModelProperty(value = "连锁信息")
-    private ChainVO chainVO;
-
-    @ApiModelProperty(value = "经销商信息")
-    private List<DistributorVO> distributorVOS;
 }

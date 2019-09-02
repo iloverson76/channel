@@ -94,9 +94,7 @@ public class StoreGradeServiceImpl implements StoreGradeService {
     @Override
     public boolean isCodeUnique(StoreGradeDTO dto){
         List<StoreGradeDO> list = storeGradeDAO.list(new QueryWrapper<StoreGradeDO>().lambda()
-                .eq(StoreGradeDO::getStoreGradeCode,dto.getStoreGradeCode())
-                .eq(StoreGradeDO::getTenantId,dto.getTenantId())
-                .eq(StoreGradeDO::getAppId,dto.getAppId()));
+                .eq(StoreGradeDO::getStoreGradeCode,dto.getStoreGradeCode()));
         if(CollectionUtil.isNotEmpty(list)){
             //不为空，还有可能是更新时自身的编码
             if(list.size()==1){
