@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.deepexi.channel.mapper.DistributorGradeSystemMapper">
-    <resultMap type="com.deepexi.channel.domain.dto.CcDistributorGradeSystemDto" id="CcDistributorGradeSystemDtoResult">
+
+    <resultMap type="com.deepexi.channel.domain.distributor.DistributorGradeSystemDO" id="BaseResult">
         <result property="id" column="id" />
         <result property="gradeSystemName" column="grade_system_name" />
         <result property="gradeSystemCode" column="grade_system_code" />
@@ -16,14 +17,31 @@
         <result property="appId" column="app_id" />
         <result property="tenantId" column="tenant_id" />
     </resultMap>
-    <select id="findList" resultType="com.deepexi.channel.domain.eo.CcDistributorGradeSystem">
+
+    <select id="findPage" parameterType="com.deepexi.channel.domain.distributor.DistributorGradeSystemQuery"
+            resultType="com.deepexi.channel.domain.distributor.DistributorGradeSystemDO">
+
         SELECT * FROM cc_distributor_grade_system WHERE 1=1
+
+        <if test="gradeSystemName!=null">
+            AND gradeSystemName LIKE concat('%',#{gradeSystemName},'%')
+        </if>
+        <if test="gradeSystemCode!=null">
+            AND gradeSystemCode =#{gradeSystemCode}
+        </if>
+        <if test="updateStartTime!=null">
+            AND DATE_FORMAT(created_time,'%Y-%m-%d') <![CDATA[ >= ]]>DATE_FORMAT(#{startTime},'%Y-%m-%d')
+        </if>
+        <if test="endTime!=null">
+            AND DATE_FORMAT(created_time,'%Y-%m-%d') <![CDATA[ <= ]]>DATE_FORMAT(#{endTime},'%Y-%m-%d')
+        </if>
+        <if test="startTime!=null">
+            AND DATE_FORMAT(updated_time,'%Y-%m-%d') <![CDATA[ >= ]]>DATE_FORMAT(#{updateStartTime},'%Y-%m-%d')
+        </if>
+        <if test="updateEndTime!=null">
+            AND DATE_FORMAT(updated_time,'%Y-%m-%d') <![CDATA[ <= ]]>DATE_FORMAT(#{updateEndTime},'%Y-%m-%d')
+        </if>
+        order by updated_time desc
     </select>
 
-    <update id="deleteByIds">
-        UPDATE cc_distributor_grade_system set dr=1 where id in
-        <foreach collection="ids" index="index" item="id" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-    </update>
 </mapper>

@@ -37,4 +37,9 @@ public class AreaTypeDAOImpl extends ServiceImpl<AreaTypeMapper, AreaTypeDO> imp
     public List<AreaTypeDO> listNotLimitedNode(String tenantId, String appId) {
         return baseMapper.listNotLimitedNode(tenantId,appId);
     }
+
+    @Override
+    public List<AreaTypeDO> listChildNodes(String tenantId, String appId,String idPath) {
+        return baseMapper.listChildNodes(tenantId,appId,idPath);
+    }
 }

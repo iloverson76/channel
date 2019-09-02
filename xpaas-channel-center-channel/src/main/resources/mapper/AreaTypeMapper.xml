@@ -133,6 +133,16 @@
         AND a.app_id = #{appId}
     </select>
 
+    <select id="listChildNodes" resultType="com.deepexi.channel.domain.area.AreaTypeDO">
+      select a.* from cc_area_type a where a.dr=0
+        AND a.tenant_id = #{tenantId}
+        AND a.app_id = #{appId}
+        <if test="idPath!=null">
+            AND a.path like "%"#{idPath}"%"
+        </if>
+    </select>
+
+
     <select id="listNotLimitedNode" resultType="com.deepexi.channel.domain.area.AreaTypeDO">
         SELECT
             a.*

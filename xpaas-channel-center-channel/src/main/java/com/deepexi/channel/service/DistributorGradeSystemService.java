@@ -1,5 +1,7 @@
 package com.deepexi.channel.service;
 
+import com.deepexi.channel.domain.distributor.DistributorGradeSystemDTO;
+import com.deepexi.channel.domain.distributor.DistributorGradeSystemQuery;
 import com.deepexi.channel.domain.eo.CcDistributorGradeSystem;
 import com.deepexi.util.pageHelper.PageBean;
 
@@ -11,48 +13,29 @@ import java.util.List;
 public interface DistributorGradeSystemService {
 
     /**
-    * 分页获取列表
-    * @param eo
-    * @param page
-    * @param size
+    * 创建
     * @return
     */
-    PageBean<CcDistributorGradeSystem> findPage(CcDistributorGradeSystem eo, Integer page, Integer size);
-    /**
-    * 获取列表
-    * @return
-    */
-    List<CcDistributorGradeSystem> findAll(CcDistributorGradeSystem eo);
+    long create(DistributorGradeSystemDTO dto);
 
     /**
-      获取详情
-    * @return
-    */
-    CcDistributorGradeSystem detail(Integer pk);
-
-    /**
-     更新eo
-    * @param eo
-    * @return
-    */
-    Boolean update(Integer id, CcDistributorGradeSystem eo);
-
-    /**
-    * 创建eo
-    * @param eo
-    * @return
-    */
-    Boolean create(CcDistributorGradeSystem eo);
-
-    /**
-     * 单个删除
-    * @return
-    */
-    Boolean delete(Integer pk);
+     更新
+     */
+    Boolean update(DistributorGradeSystemDTO dto);
 
     /**
      批量删除
-    * @return
     */
-    Boolean delete(Integer... pk);
+    Boolean delete(List<Long> idList);
+
+    /**
+     获取详情
+     */
+    DistributorGradeSystemDTO detail(Long pk);
+
+    /**
+     * 分页获取列表
+     */
+    List<DistributorGradeSystemDTO> findPage(DistributorGradeSystemQuery query);
+
 }

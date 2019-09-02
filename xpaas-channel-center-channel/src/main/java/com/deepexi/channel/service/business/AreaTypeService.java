@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -22,13 +23,13 @@ public interface AreaTypeService {
 
     boolean updateAreaTypeById(AreaTypeDTO dto);
 
-    boolean deleteAreaTypeByIds(Set<HashMap<Long, Long>> idSet);
+    boolean deleteAreaTypeByIds(Set<Long> ids);
 
     List<AreaTypeDTO> listAreaTypePage(AreaTypeQuery query);
 
     AreaTypeDTO getAreaTypeById(Long id);
 
-    List<AreaTypeDTO> listParentForCreate();
+    List<AreaTypeDTO> listParentNodesForCreate();
 
-    List<AreaTypeDTO> listParentForUpdate(Long id, Long parentId);
+    List<AreaTypeDTO> listParentNodesForUpdate(Long id);
 }

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.deepexi.channel.mapper.DistributorGradeMapper">
-    <resultMap type="com.deepexi.channel.domain.dto.CcDistributorGradeDto" id="CcDistributorGradeDtoResult">
+
+    <resultMap type="com.deepexi.channel.domain.distributor.DistributorGradeDO" id="baseResult">
         <result property="id" column="id" />
         <result property="parentId" column="parent_id" />
         <result property="root" column="root" />
@@ -19,14 +20,31 @@
         <result property="appId" column="app_id" />
         <result property="tenantId" column="tenant_id" />
     </resultMap>
-    <select id="findList" resultType="com.deepexi.channel.domain.eo.CcDistributorGrade">
+
+    <select id="findPage" parameterType="com.deepexi.channel.domain.distributor.DistributorGradeQuery"
+            resultType="com.deepexi.channel.domain.distributor.DistributorGradeDO">
+
         SELECT * FROM cc_distributor_grade WHERE 1=1
+
+        <if test="distributorGradeName!=null">
+            AND distributorGradeName LIKE concat('%',#{distributorGradeName},'%')
+        </if>
+        <if test="distributorGradeCode!=null">
+            AND distributorGradeCode =#{distributorGradeCode}
+        </if>
+        <if test="updateStartTime!=null">
+            AND DATE_FORMAT(created_time,'%Y-%m-%d') <![CDATA[ >= ]]>DATE_FORMAT(#{startTime},'%Y-%m-%d')
+        </if>
+        <if test="endTime!=null">
+            AND DATE_FORMAT(created_time,'%Y-%m-%d') <![CDATA[ <= ]]>DATE_FORMAT(#{endTime},'%Y-%m-%d')
+        </if>
+        <if test="startTime!=null">
+            AND DATE_FORMAT(updated_time,'%Y-%m-%d') <![CDATA[ >= ]]>DATE_FORMAT(#{updateStartTime},'%Y-%m-%d')
+        </if>
+        <if test="updateEndTime!=null">
+            AND DATE_FORMAT(updated_time,'%Y-%m-%d') <![CDATA[ <= ]]>DATE_FORMAT(#{updateEndTime},'%Y-%m-%d')
+        </if>
+        order by updated_time desc
     </select>
 
-    <update id="deleteByIds">
-        UPDATE cc_distributor_grade set dr=1 where id in
-        <foreach collection="ids" index="index" item="id" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-    </update>
 </mapper>

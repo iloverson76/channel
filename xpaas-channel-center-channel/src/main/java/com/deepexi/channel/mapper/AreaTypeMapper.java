@@ -27,4 +27,6 @@ public interface AreaTypeMapper extends BaseMapper<AreaTypeDO> {
     AreaTypeDO getChildNode(@Param("tenantId") String tenantId, @Param("appId") String appId, @Param("id") Long id);
 
     List<AreaTypeDO> listNotLimitedNode(@Param("tenantId") String tenantId, @Param("appId") String appId);
+
+    List<AreaTypeDO> listChildNodes (@Param("tenantId") String tenantId, @Param("appId") String appId,@Param("idPath") String idPath);
 }

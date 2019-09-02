@@ -18,4 +18,6 @@ public interface AreaTypeDAO extends  IService<AreaTypeDO> {
 
     List<AreaTypeDO> listNotLimitedNode(String tenantId, String appId);
 
+    List<AreaTypeDO> listChildNodes(String tenantId, String appId,String idPath);
+
 }

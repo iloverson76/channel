@@ -2,6 +2,7 @@ package com.deepexi.channel.controller;
 
 
 import com.deepexi.channel.domain.area.AreaTypeDTO;
+import com.deepexi.channel.domain.area.AreaTypeDelVO;
 import com.deepexi.channel.domain.area.AreaTypeQuery;
 import com.deepexi.channel.domain.area.AreaTypeVO;
 import com.deepexi.channel.extension.AppRuntimeEnv;
@@ -16,9 +17,8 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -30,7 +30,7 @@ import java.util.Set;
  */
 @RestController
 @RequestMapping("/api/v1/areaType")
-@Api("区域类型管理")
+@Api(description="区域类型管理")
 public class AreaTypeController {
 
     @Autowired
@@ -49,11 +49,24 @@ public class AreaTypeController {
         return new Payload<>(result);
     }
 
-    @DeleteMapping()
-    @ApiOperation(value = "删除区域类型")
-    public Payload<Boolean> deleteAreaTypeByIds(@RequestBody Set<HashMap<Long,Long>> ids) {
+    @DeleteMapping("/{ids:[0-9,]+';'")
+    @ApiOperation(value = "批量删除区域类型")
+    public Payload<Boolean> deleteAreaTypeByIds(@PathVariable(value = "ids") String ids) {//前端的列表每一个id都去拿子节点的话,性能很慢
 
-        Boolean result = areaTypeService.deleteAreaTypeByIds(ids);
+        String[] idsArray=ids.split(";");
+
+        Set<Long> idSet=new HashSet<>();
+
+        Arrays.stream(idsArray).forEach(item->{
+
+           String[] itemArray=item.split(",");
+
+            idSet.add(Long.valueOf(itemArray[0]));
+
+            idSet.add(Long.valueOf(itemArray[1]));
+        });
+
+        Boolean result = areaTypeService.deleteAreaTypeByIds(idSet);
 
         return new Payload<>(result);
     }
@@ -99,18 +112,18 @@ public class AreaTypeController {
     @ApiOperation("查询未受分类限制上级-新增用")
     public Payload<PageBean<AreaTypeVO>> listParentForCreate() {
 
-        List<AreaTypeDTO> dtoList = areaTypeService.listParentForCreate();
+        List<AreaTypeDTO> dtoList = areaTypeService.listParentNodesForCreate();
 
         List<AreaTypeVO> voList = ObjectCloneUtils.convertList(dtoList, AreaTypeVO.class);
 
         return new Payload<>(new PageBean<>(voList));
     }
 
-    @GetMapping("/limitedUpdaTe/{parentId:[0-9,]+}")
+    @GetMapping("/limitedUpdaTe/{id:[0-9,]+}")
     @ApiOperation("查询未受分类限制上级-更新用")
-    public Payload<PageBean<AreaTypeVO>> listParentForUpdate(@PathVariable Long id,@PathVariable Long parentId) {
+    public Payload<PageBean<AreaTypeVO>> listParentForUpdate(@PathVariable Long id) {
 
-        List<AreaTypeDTO> dtoList = areaTypeService.listParentForUpdate(id,parentId);
+        List<AreaTypeDTO> dtoList = areaTypeService.listParentNodesForUpdate(id);
 
         List<AreaTypeVO> voList = ObjectCloneUtils.convertList(dtoList, AreaTypeVO.class);
 
