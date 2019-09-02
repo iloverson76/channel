@@ -79,7 +79,7 @@
         </foreach>
     </select>
     <select id="findParentList" resultType="com.deepexi.channel.domain.chain.ChainDO">
-        SELECT * FROM cc_type WHERE  dr=0
+        SELECT * FROM cc_chain WHERE  dr=0
         <if test="ids != null">
             and parent_id in
             <foreach collection="ids" item="tempId" index="index" open="(" close=")" separator=",">

@@ -17,7 +17,9 @@ import com.deepexi.channel.service.ChainService;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.*;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Api(value = "/连锁管理", description = "连锁管理")
@@ -32,7 +34,7 @@ public class ChainController {
 
     @GetMapping
     @ApiOperation(value = "分页查询", notes = "分页请求")
-    public  Payload findPage(@ApiParam(name = "query", required = true) ChainQuery query) {
+    public  Payload<PageBean<ChainVO>> findPage(@ApiParam(name = "query", required = true) ChainQuery query) {
         List<ChainDTO> chainDTOS = chainBusinessService.findPage(query);
         List<ChainVO> chainVOS = ObjectCloneUtils.convertList(chainDTOS,ChainVO.class, CloneDirection.OPPOSITE);
         return new Payload(new PageBean<>(chainVOS));
@@ -46,7 +48,7 @@ public class ChainController {
 //
     @GetMapping("/{id}")
     @ApiOperation("根据id获取连锁店详情")
-    public Payload detail(@PathVariable(value = "id", required = true) Long id) {
+    public Payload<ChainVO> detail(@PathVariable(value = "id", required = true) Long id) {
         ChainDTO chainDTO = chainBusinessService.getChain(id);
         if(chainDTO == null){
             return new Payload(null);
@@ -58,7 +60,7 @@ public class ChainController {
     @PutMapping("/{id}")
     @Transactional
     @ApiOperation(value = "根据id修改", notes = "根据id修改连锁")
-    public Payload update(@PathVariable(value = "id", required = true) Long id, @RequestBody ChainVO vo) {
+    public Payload<Boolean> update(@PathVariable(value = "id", required = true) Long id, @RequestBody ChainVO vo) {
         if(vo == null){
             return new Payload(false);
         }
@@ -71,7 +73,7 @@ public class ChainController {
 
     @PostMapping
     @ApiOperation(value = "创建连锁", notes = "创建连锁,创建成功返回id")
-    public Payload create(@RequestBody ChainVO chainVO) {
+    public Payload<Boolean> create(@RequestBody ChainVO chainVO) {
         if(chainVO == null){
             return new Payload(false);
         }
@@ -81,10 +83,11 @@ public class ChainController {
         return new Payload(chainBusinessService.insertChain(dto));
     }
 
-    @DeleteMapping("/{ids}")
+    @DeleteMapping("/{id:[a-zA-Z0-9,]+}")
     @Transactional
     @ApiOperation(value = "根据id批量删除连锁", notes = "根据id删除连锁")
-    public Payload delete(@PathVariable(value = "ids", required = true) List<Long> ids) {
-        return new Payload(chainBusinessService.deleteChain(ids));
+    public Payload<Boolean> delete(@PathVariable(value = "id") String id) {
+        List<Long> ids = Arrays.stream(id.split(",")).map(Long::parseLong).collect(Collectors.toList());
+        return new Payload<>(chainBusinessService.deleteChain(ids));
     }
 }

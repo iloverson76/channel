@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Api(value = "/门店等级管理", description = "门店等级管理")
@@ -32,7 +34,7 @@ public class StoreGradeController {
 
     @GetMapping
     @ApiOperation(value = "分页查询", notes = "查询门店等级列表,传-1时获取整个列表")
-    public  Payload findPage(@ApiParam(name = "query", required = true) StoreGradeQuery query) {
+    public  Payload<PageBean<StoreGradeVO>> findPage(@ApiParam(name = "query", required = true) StoreGradeQuery query) {
         List<StoreGradeDTO> storeGradeDTOS = storeGradeService.findPage(query);
         if(CollectionUtil.isEmpty(storeGradeDTOS)){
             return new Payload(null);
@@ -43,7 +45,7 @@ public class StoreGradeController {
 
     @GetMapping("/{id}")
     @ApiOperation(value = "查询门店等级详情", notes = "查询门店等级详情")
-    public Payload detail(@PathVariable(value = "id", required = true) Integer  pk) {
+    public Payload<StoreGradeVO> detail(@PathVariable(value = "id", required = true) Integer  pk) {
         return new Payload(storeGradeService.detail(pk));
 
     }
@@ -52,7 +54,7 @@ public class StoreGradeController {
     @PutMapping("/{id}")
     @Transactional
     @ApiOperation(value = "根据id修改", notes = "根据id修改门店等级")
-    public Payload update(@PathVariable(value = "id", required = true) Long pk, @RequestBody StoreGradeVO vo) {
+    public Payload<Boolean> update(@PathVariable(value = "id", required = true) Long pk, @RequestBody StoreGradeVO vo) {
      vo.setId(pk);
      StoreGradeDTO storeGradeDTO = vo.clone(StoreGradeDTO.class);
      return new Payload(storeGradeService.update(storeGradeDTO));
@@ -60,15 +62,16 @@ public class StoreGradeController {
 
     @PostMapping
     @ApiOperation(value = "创建门店等级", notes = "创建门店等级")
-    public Payload create(@RequestBody StoreGradeVO vo) {
+    public Payload<Long> create(@RequestBody StoreGradeVO vo) {
         StoreGradeDTO storeGradeDTO = vo.clone(StoreGradeDTO.class);
         return new Payload(storeGradeService.create(storeGradeDTO));
     }
 
-    @DeleteMapping("/{ids}")
+    @DeleteMapping("/{id:[a-zA-Z0-9,]+}")
     @Transactional
     @ApiOperation(value = "根据id批量删除门店等级", notes = "根据id批量删除门店等级")
-    public Payload delete(@PathVariable(value = "ids", required = true) List<Long> ids) {
+    public Payload delete(@PathVariable(value = "id", required = true) String id) {
+        List<Long> ids = Arrays.stream(id.split(",")).map(Long::parseLong).collect(Collectors.toList());
         return new Payload(storeGradeBusinessService.deleteGradeType(ids));
     }
 

@@ -38,7 +38,7 @@ public interface StoreTypeService {
     * @param dto
     * @return
     */
-    Boolean create(StoreTypeDTO dto);
+    Long create(StoreTypeDTO dto);
 
     /**
      * 批量删除

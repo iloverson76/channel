@@ -66,16 +66,17 @@ public class StoreTypeServiceImpl implements StoreTypeService {
     }
 
     @Override
-    public Boolean create(StoreTypeDTO dto) {
+    public Long create(StoreTypeDTO dto) {
         if(dto == null){
-            return false;
+            return 0L;
         }
         // 判断编码是否重复
         if(!isCodeUnique(dto)){
             throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
         }
         StoreTypeDO storeTypeDO = dto.clone(StoreTypeDO.class);
-        return storeTypeDAO.save(storeTypeDO);
+        storeTypeDAO.save(storeTypeDO);
+        return dto.getId();
     }
 
     @Override

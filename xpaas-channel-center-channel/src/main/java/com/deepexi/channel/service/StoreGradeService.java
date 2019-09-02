@@ -42,7 +42,7 @@ public interface StoreGradeService {
     * @param dto
     * @return
     */
-    Boolean create(StoreGradeDTO dto);
+    Long create(StoreGradeDTO dto);
 
 //    /**
 //     * 单个删除

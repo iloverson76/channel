@@ -1,5 +1,6 @@
 package com.deepexi.channel.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.deepexi.channel.dao.StoreGradeDAO;
 import com.deepexi.channel.domain.store.*;
 import com.deepexi.util.CollectionUtil;
@@ -52,13 +53,14 @@ public class StoreGradeServiceImpl implements StoreGradeService {
         return storeGradeDAO.updateById(storeGradeDO);
     }
     @Override
-    public Boolean create(StoreGradeDTO dto) {
+    public Long create(StoreGradeDTO dto) {
         if(dto == null){
-            return false;
+            return 0L;
         }
         //TODO 判断编码是否重复
         StoreGradeDO storeGradeDO = dto.clone(StoreGradeDO.class);
-        return storeGradeDAO.save(storeGradeDO);
+        storeGradeDAO.save(storeGradeDO);
+        return storeGradeDO.getId();
     }
 
     @Override
@@ -69,4 +71,32 @@ public class StoreGradeServiceImpl implements StoreGradeService {
         return storeGradeDAO.removeByIds(ids);
     }
 
+
+    /**
+     * @MethodName: isCodeUnique
+     * @Description: 判断门店类型编码是否重复
+     * @Param: [code]
+     * @Return: boolean 编码唯一, true 编码唯一 ， false 编码不唯一
+     * @Author: mumu
+     * @Date: 2019/8/30
+     **/
+//    @Override
+//    public boolean isCodeUnique(StoreTypeDTO dto){
+//        List<StoreTypeDO> list = storeTypeDAO.list(new QueryWrapper<StoreTypeDO>().lambda()
+//                .eq(StoreTypeDO::getStoreTypeCode,dto.getStoreTypeCode())
+//                .eq(StoreTypeDO::getTenantId,dto.getTenantId())
+//                .eq(StoreTypeDO::getAppId,dto.getAppId()));
+//        if(CollectionUtil.isNotEmpty(list)){
+//            //不为空，还有可能是更新时自身的编码
+//            if(list.size()==1){
+//                StoreTypeDO StoreTypeDO = list.get(0);
+//                //该code是本身，不属于重复
+//                if(StoreTypeDO.getId().equals(dto.getId())){
+//                    return true;
+//                }
+//            }
+//            return false;
+//        }
+//        return true;
+//    }
 }

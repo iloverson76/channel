@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Api(value = "/门店类型管理", description = "门店类型管理")
@@ -32,7 +34,7 @@ public class StoreTypeController {
 
     @GetMapping
     @ApiOperation(value = "分页查询", notes = "分页请求,page传-1时获取所有门店类型")
-    public  Payload findPage(@ApiParam(name = "query", required = true) StoreTypeQuery query) {
+    public  Payload<PageBean<StoreTypeVO>> findPage(@ApiParam(name = "query", required = true) StoreTypeQuery query) {
         List<StoreTypeDTO> storeTypeDTOS = storeTypeService.findPage(query);
         if(CollectionUtil.isEmpty(storeTypeDTOS)){
             return new Payload(null);
@@ -48,7 +50,7 @@ public class StoreTypeController {
 //    }
 //
     @GetMapping("/{id}")
-    public Payload detail(@PathVariable(value = "id", required = true) Integer  id) {
+    public Payload<StoreTypeVO> detail(@PathVariable(value = "id", required = true) Integer  id) {
         StoreTypeDTO storeTypeDTO = storeTypeService.detail(id);
         if(storeTypeDTO == null){
             return new Payload();
@@ -67,14 +69,15 @@ public class StoreTypeController {
 
     @PostMapping
     @ApiOperation(value = "创建门店类型", notes = "创建门店类型")
-    public Payload create(@RequestBody StoreTypeVO vo) {
+    public Payload<Long> create(@RequestBody StoreTypeVO vo) {
         return new Payload<>(storeTypeService.create(vo.clone(StoreTypeDTO.class)));
     }
 
-    @DeleteMapping("/{ids}")
+    @DeleteMapping("/{id:[a-zA-Z0-9,]+}")
     @Transactional
     @ApiOperation(value = "根据id批量删除门店类型", notes = "根据id批量删除门店类型")
-    public Payload delete(@PathVariable(value = "ids", required = true) List<Long> ids) {
+    public Payload delete(@PathVariable(value = "id", required = true) String id) {
+        List<Long> ids = Arrays.stream(id.split(",")).map(Long::parseLong).collect(Collectors.toList());
         return new Payload(storeTypeBusinessService.deleteStoreType(ids));
     }
 
