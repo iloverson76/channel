@@ -64,6 +64,8 @@ public enum ResultEnum implements BaseEnumType {
     HAVE_CHILDREN("400","具有子节点，不能删除"),
     HAVE_RELATION("400","已被关联，不能删除"),
     AREA_TYPE_DUPLICATED("400","区域编码不能重复"),
+    GRADE_SYSTEM_CODE_DUPLICATED("400","体系编码不能重复"),
+    GRADE_SYSTEM_NAME_DUPLICATED("400","体系名称不能重复"),
     ;
 
     private String code;

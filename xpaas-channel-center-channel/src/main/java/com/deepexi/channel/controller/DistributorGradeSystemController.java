@@ -20,13 +20,14 @@ import java.util.stream.Collectors;
 
 @Api(description = "经销商体系")
 @RestController
-@RequestMapping("/api/v1/distributorGradeSystem")
+@RequestMapping("/api/v1/distributorSystem")
 public class DistributorGradeSystemController {
 
     @Autowired
     private DistributorGradeSystemService distributorGradeSystemService;
 
     @GetMapping("/{id}")
+    @ApiOperation(value = "根据id查看详情")
     public Payload detail(@PathVariable(value = "id", required = true) long  pk) {
 
         DistributorGradeSystemVO vo=distributorGradeSystemService.detail(pk).clone(DistributorGradeSystemVO.class,CloneDirection.OPPOSITE);
@@ -53,7 +54,7 @@ public class DistributorGradeSystemController {
         return new Payload(distributorGradeSystemService.create(dto));
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id:[0-9,]+}")
     @ApiOperation(value = "根据id批量删除经销商体系")
     public Payload<Boolean> delete(@PathVariable(value = "id") String ids) {
 
