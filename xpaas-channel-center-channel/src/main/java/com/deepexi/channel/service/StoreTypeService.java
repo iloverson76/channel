@@ -1,10 +1,7 @@
 package com.deepexi.channel.service;
 
-import com.deepexi.channel.domain.eo.CcStoreType;
-import com.deepexi.channel.domain.store.StoreTypeDO;
 import com.deepexi.channel.domain.store.StoreTypeDTO;
 import com.deepexi.channel.domain.store.StoreTypeQuery;
-import com.deepexi.util.pageHelper.PageBean;
 
 import java.util.List;
 

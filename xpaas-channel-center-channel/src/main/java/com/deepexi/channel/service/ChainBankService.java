@@ -1,8 +1,6 @@
 package com.deepexi.channel.service;
 
 import com.deepexi.channel.domain.bank.ChainBankDTO;
-import com.deepexi.channel.domain.eo.CcChainBank;
-import com.deepexi.util.pageHelper.PageBean;
 
 import java.util.List;
 

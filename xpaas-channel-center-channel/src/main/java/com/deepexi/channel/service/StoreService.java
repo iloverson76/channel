@@ -2,7 +2,6 @@ package com.deepexi.channel.service;
 
 import com.deepexi.channel.domain.store.StoreDTO;
 import com.deepexi.channel.domain.store.StoreQuery;
-import com.deepexi.util.pageHelper.PageBean;
 
 import java.util.List;
 
@@ -36,7 +35,7 @@ public interface StoreService {
     * @param dto
     * @return
     */
-    Boolean create(StoreDTO dto);
+    Long create(StoreDTO dto);
 
     /**
      批量删除

@@ -3,9 +3,9 @@ package com.deepexi.channel.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.deepexi.channel.domain.chain.ChainDO;
 import com.deepexi.channel.domain.chain.ChainQuery;
-import com.deepexi.channel.domain.eo.CcChain;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 @Mapper

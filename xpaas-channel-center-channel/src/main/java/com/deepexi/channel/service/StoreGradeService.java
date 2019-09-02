@@ -1,9 +1,7 @@
 package com.deepexi.channel.service;
 
-import com.deepexi.channel.domain.eo.CcStoreGrade;
 import com.deepexi.channel.domain.store.StoreGradeDTO;
 import com.deepexi.channel.domain.store.StoreGradeQuery;
-import com.deepexi.util.pageHelper.PageBean;
 
 import java.util.List;
 

@@ -5,21 +5,17 @@ import com.deepexi.channel.dao.ChainDAO;
 import com.deepexi.channel.domain.chain.ChainDO;
 import com.deepexi.channel.domain.chain.ChainDTO;
 import com.deepexi.channel.domain.chain.ChainQuery;
-import com.deepexi.channel.domain.chain.ChainTypeDO;
+import com.deepexi.channel.service.ChainService;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.deepexi.channel.domain.eo.CcChain;
-import com.deepexi.channel.service.ChainService;
-import com.deepexi.channel.mapper.ChainMapper;
-import java.util.Arrays;import java.util.List;
-import com.deepexi.util.pageHelper.PageBean;
-import com.github.pagehelper.PageHelper;
-import com.deepexi.util.BeanPowerHelper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ChainServiceImpl implements ChainService {

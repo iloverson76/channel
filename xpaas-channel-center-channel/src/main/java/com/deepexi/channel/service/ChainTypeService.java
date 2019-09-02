@@ -2,8 +2,6 @@ package com.deepexi.channel.service;
 
 import com.deepexi.channel.domain.chain.ChainTypeDTO;
 import com.deepexi.channel.domain.chain.ChainTypeQuery;
-import com.deepexi.channel.domain.eo.CcChainType;
-import com.deepexi.util.pageHelper.PageBean;
 
 import java.util.List;
 

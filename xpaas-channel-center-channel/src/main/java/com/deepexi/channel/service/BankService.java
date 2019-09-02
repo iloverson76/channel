@@ -1,6 +1,5 @@
 package com.deepexi.channel.service;
 
-import com.deepexi.channel.domain.bank.BankDO;
 import com.deepexi.channel.domain.bank.BankDTO;
 
 import java.util.List;

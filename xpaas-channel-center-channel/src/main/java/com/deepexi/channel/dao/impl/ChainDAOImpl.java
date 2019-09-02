@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.deepexi.channel.dao.ChainDAO;
 import com.deepexi.channel.domain.chain.ChainDO;
 import com.deepexi.channel.domain.chain.ChainQuery;
-import com.deepexi.channel.domain.eo.CcChain;
 import com.deepexi.channel.mapper.ChainMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

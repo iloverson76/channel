@@ -3,20 +3,16 @@ package com.deepexi.channel.service.impl;
 import com.deepexi.channel.dao.ChainBankDAO;
 import com.deepexi.channel.domain.bank.ChainBankDO;
 import com.deepexi.channel.domain.bank.ChainBankDTO;
+import com.deepexi.channel.service.ChainBankService;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.deepexi.channel.domain.eo.CcChainBank;
-import com.deepexi.channel.service.ChainBankService;
-import com.deepexi.channel.mapper.ChainBankMapper;
-import java.util.Arrays;import java.util.List;
-import com.deepexi.util.pageHelper.PageBean;
-import com.github.pagehelper.PageHelper;
-import com.deepexi.util.BeanPowerHelper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ChainBankServiceImpl implements ChainBankService {

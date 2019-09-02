@@ -3,16 +3,16 @@ package com.deepexi.channel.service.impl;
 import com.deepexi.channel.dao.BankDAO;
 import com.deepexi.channel.domain.bank.BankDO;
 import com.deepexi.channel.domain.bank.BankDTO;
+import com.deepexi.channel.service.BankService;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.deepexi.channel.service.BankService;
-import com.deepexi.channel.mapper.BankMapper;
-import java.util.Arrays;import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class BankServiceImpl implements BankService {

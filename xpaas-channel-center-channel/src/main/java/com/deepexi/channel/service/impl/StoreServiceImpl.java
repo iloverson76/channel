@@ -4,16 +4,17 @@ import com.deepexi.channel.dao.StoreDAO;
 import com.deepexi.channel.domain.store.StoreDO;
 import com.deepexi.channel.domain.store.StoreDTO;
 import com.deepexi.channel.domain.store.StoreQuery;
+import com.deepexi.channel.service.StoreService;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.deepexi.channel.service.StoreService;
-import java.util.Arrays;import java.util.List;
-import com.github.pagehelper.PageHelper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class StoreServiceImpl implements StoreService {
@@ -54,13 +55,14 @@ public class StoreServiceImpl implements StoreService {
         return storeDAO.updateById(storeDO);
     }
     @Override
-    public Boolean create(StoreDTO dto) {
+    public Long create(StoreDTO dto) {
         if(dto == null){
-            return false;
+            return 0L;
         }
         //TODO 判断编码是否重复
         StoreDO storeDO = dto.clone(StoreDO.class);
-        return storeDAO.save(storeDO);
+        storeDAO.save(storeDO);
+        return storeDO.getId();
     }
 
     @Override
