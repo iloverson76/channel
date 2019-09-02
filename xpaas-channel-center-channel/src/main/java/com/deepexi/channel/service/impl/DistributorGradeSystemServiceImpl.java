@@ -4,6 +4,7 @@ import com.deepexi.channel.dao.DistributorGradeSystemDAO;
 import com.deepexi.channel.domain.distributor.DistributorGradeSystemDO;
 import com.deepexi.channel.domain.distributor.DistributorGradeSystemDTO;
 import com.deepexi.channel.domain.distributor.DistributorGradeSystemQuery;
+import com.deepexi.channel.extension.AppRuntimeEnv;
 import com.deepexi.channel.service.DistributorGradeSystemService;
 import com.deepexi.util.pageHelper.PageBean;
 import com.deepexi.util.pojo.CloneDirection;
@@ -14,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -23,6 +25,8 @@ public class DistributorGradeSystemServiceImpl implements DistributorGradeSystem
 
     @Autowired
     private DistributorGradeSystemDAO distributorGradeSystemDAO;
+
+    AppRuntimeEnv appRuntimeEnv= AppRuntimeEnv.getInstance();
 
     @Override
     public DistributorGradeSystemDTO detail(Long  pk) {
@@ -36,6 +40,14 @@ public class DistributorGradeSystemServiceImpl implements DistributorGradeSystem
     public long create(DistributorGradeSystemDTO dto) {
 
         DistributorGradeSystemDO eo=dto.clone(DistributorGradeSystemDO.class, CloneDirection.FORWARD);
+
+        dto.setTenantId(appRuntimeEnv.getTenantId());
+
+        dto.setAppId(appRuntimeEnv.getAppId());
+
+        dto.setCreatedTime(new Date());
+
+        dto.setUpdatedTime(new Date());
 
         distributorGradeSystemDAO.save(eo);
 

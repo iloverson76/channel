@@ -17,25 +17,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Api(value = "经销商体系")
+@Api(description = "经销商体系")
 @RestController
 @RequestMapping("/api/v1/distributorGradeSystem")
 public class DistributorGradeSystemController {
 
     @Autowired
     private DistributorGradeSystemService distributorGradeSystemService;
-
-
-    @GetMapping
-    @ApiOperation(value = "分页查询", notes = "分页请求")
-    public  Payload<PageBean<DistributorGradeSystemVO>> findPage(@ApiParam(name = "query", required = true) DistributorGradeSystemQuery query) {
-
-        List<DistributorGradeSystemDTO> dtoList=distributorGradeSystemService.findPage(query);
-
-        List<DistributorGradeSystemVO> voList= ObjectCloneUtils.convertList(dtoList, DistributorGradeSystemVO.class);;
-
-        return new Payload<>(new PageBean<>(voList));
-    }
 
     @GetMapping("/{id}")
     public Payload detail(@PathVariable(value = "id", required = true) long  pk) {
@@ -45,7 +33,6 @@ public class DistributorGradeSystemController {
         return new Payload<>(vo);
 
     }
-
 
     @PutMapping("/{id}")
     @ApiOperation(value = "根据id修改")
@@ -72,6 +59,17 @@ public class DistributorGradeSystemController {
         List<Long> idList= Arrays.stream(ids.split(",")).map(Long::parseLong).collect(Collectors.toList());
 
         return new Payload<>(distributorGradeSystemService.delete(idList));
+    }
+
+    @GetMapping
+    @ApiOperation(value = "分页查询", notes = "分页请求")
+    public  Payload<PageBean<DistributorGradeSystemVO>> findPage(@ApiParam(name = "query", required = true) DistributorGradeSystemQuery query) {
+
+        List<DistributorGradeSystemDTO> dtoList=distributorGradeSystemService.findPage(query);
+
+        List<DistributorGradeSystemVO> voList= ObjectCloneUtils.convertList(dtoList, DistributorGradeSystemVO.class);;
+
+        return new Payload<>(new PageBean<>(voList));
     }
 
 }
