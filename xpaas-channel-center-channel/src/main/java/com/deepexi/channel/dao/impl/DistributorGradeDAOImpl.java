@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.deepexi.channel.dao.DistributorGradeDAO;
 import com.deepexi.channel.domain.distributor.DistributorGradeDO;
 import com.deepexi.channel.domain.distributor.DistributorGradeQuery;
-import com.deepexi.channel.domain.eo.CcDistributorGrade;
 import com.deepexi.channel.mapper.DistributorGradeMapper;
 import org.springframework.stereotype.Repository;
 

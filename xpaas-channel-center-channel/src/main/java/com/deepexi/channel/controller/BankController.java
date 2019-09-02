@@ -1,20 +1,21 @@
 package com.deepexi.channel.controller;
 
-import com.deepexi.channel.domain.bank.BankDO;
 import com.deepexi.channel.domain.bank.BankDTO;
 import com.deepexi.channel.domain.bank.BankVO;
+import com.deepexi.channel.service.BankService;
 import com.deepexi.util.config.Payload;
-//import io.swagger.annotations.Api;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-import com.deepexi.channel.service.BankService;
-import com.deepexi.channel.domain.eo.CcBank;
-import org.springframework.web.bind.annotation.*;
-import io.swagger.annotations.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+
+//import io.swagger.annotations.Api;
 
 
 @Api(value = "银行管理", description = "获取银行列表")

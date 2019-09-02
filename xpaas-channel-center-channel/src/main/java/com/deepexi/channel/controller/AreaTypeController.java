@@ -2,7 +2,6 @@ package com.deepexi.channel.controller;
 
 
 import com.deepexi.channel.domain.area.AreaTypeDTO;
-import com.deepexi.channel.domain.area.AreaTypeDelVO;
 import com.deepexi.channel.domain.area.AreaTypeQuery;
 import com.deepexi.channel.domain.area.AreaTypeVO;
 import com.deepexi.channel.extension.AppRuntimeEnv;
@@ -17,8 +16,10 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * <p>

@@ -2,7 +2,6 @@ package com.deepexi.channel.controller;
 
 import com.deepexi.channel.domain.area.AreaDTO;
 import com.deepexi.channel.domain.area.AreaVO;
-import com.deepexi.channel.domain.eo.CcArea;
 import com.deepexi.channel.service.AreaService;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pojo.CloneDirection;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.awt.geom.Area;
 
 
 @Api(description = "区域管理")

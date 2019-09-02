@@ -1,6 +1,5 @@
 package com.deepexi.channel.dao.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.deepexi.channel.dao.AreaTypeDAO;
 import com.deepexi.channel.domain.area.AreaTypeDO;
@@ -9,7 +8,6 @@ import com.deepexi.channel.mapper.AreaTypeMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author chp
