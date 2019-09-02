@@ -22,12 +22,6 @@
         <if test="id != null">
             and id = #{id}
         </if>
-        <if test="ids != null">
-            and id in
-            <foreach collection="ids" item="tempId" index="index" open="(" close=")" separator=",">
-                #{tempId}
-            </foreach>
-        </if>
         <if test="storeTypeCode!=null and storeTypeCode!=''">
             and store_type_code like concat('%',#{storeTypeCode},'%')
         </if>

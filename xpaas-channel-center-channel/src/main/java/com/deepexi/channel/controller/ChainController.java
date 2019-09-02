@@ -58,7 +58,6 @@ public class ChainController {
 
 
     @PutMapping("/{id}")
-    @Transactional
     @ApiOperation(value = "根据id修改", notes = "根据id修改连锁")
     public Payload<Boolean> update(@PathVariable(value = "id", required = true) Long id, @RequestBody ChainVO vo) {
         if(vo == null){
@@ -84,7 +83,6 @@ public class ChainController {
     }
 
     @DeleteMapping("/{id:[a-zA-Z0-9,]+}")
-    @Transactional
     @ApiOperation(value = "根据id批量删除连锁", notes = "根据id删除连锁")
     public Payload<Boolean> delete(@PathVariable(value = "id") String id) {
         List<Long> ids = Arrays.stream(id.split(",")).map(Long::parseLong).collect(Collectors.toList());

@@ -49,7 +49,6 @@ public class ChainTypeController {
     }
 
     @PutMapping("/{id}")
-    @Transactional
     @ApiOperation(value = "根据id修改", notes = "根据id修改连锁类型")
     public Payload<Boolean> update(@PathVariable(value = "id", required = true) Long id, @RequestBody ChainTypeVO vo) {
         ChainTypeDTO dto = vo.clone(ChainTypeDTO.class, CloneDirection.FORWARD);
@@ -64,12 +63,10 @@ public class ChainTypeController {
     }
 
     @DeleteMapping("/{id:[a-zA-Z0-9,]+}")
-    @Transactional
     @ApiOperation(value = "根据id批量删除连锁类型", notes = "根据id批量删除连锁类型，id用逗号隔开")
     public Payload<Boolean> delete(@PathVariable(value = "id", required = true) String id) {
         List<Long> ids = Arrays.stream(id.split(",")).map(Long::parseLong).collect(Collectors.toList());
         return new Payload(chainTypeBusinessService.deleteChainType(ids));
     }
-
 
 }

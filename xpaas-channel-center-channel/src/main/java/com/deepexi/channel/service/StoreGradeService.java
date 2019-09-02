@@ -55,4 +55,6 @@ public interface StoreGradeService {
     * @return
     */
     Boolean delete(List<Long> ids);
+
+    boolean isCodeUnique(StoreGradeDTO dto);
 }

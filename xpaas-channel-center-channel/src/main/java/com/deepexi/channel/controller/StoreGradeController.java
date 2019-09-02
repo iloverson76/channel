@@ -52,7 +52,6 @@ public class StoreGradeController {
 
 
     @PutMapping("/{id}")
-    @Transactional
     @ApiOperation(value = "根据id修改", notes = "根据id修改门店等级")
     public Payload<Boolean> update(@PathVariable(value = "id", required = true) Long pk, @RequestBody StoreGradeVO vo) {
      vo.setId(pk);
@@ -68,7 +67,6 @@ public class StoreGradeController {
     }
 
     @DeleteMapping("/{id:[a-zA-Z0-9,]+}")
-    @Transactional
     @ApiOperation(value = "根据id批量删除门店等级", notes = "根据id批量删除门店等级")
     public Payload delete(@PathVariable(value = "id", required = true) String id) {
         List<Long> ids = Arrays.stream(id.split(",")).map(Long::parseLong).collect(Collectors.toList());

@@ -60,7 +60,6 @@ public class StoreTypeController {
 
 
     @PutMapping("/{id}")
-    @Transactional
     @ApiOperation(value = "根据id修改", notes = "根据id修改门店类型")
     public Payload update(@PathVariable(value = "id", required = true) Long id, @RequestBody StoreTypeVO vo) {
          vo.setId(id);
@@ -74,7 +73,6 @@ public class StoreTypeController {
     }
 
     @DeleteMapping("/{id:[a-zA-Z0-9,]+}")
-    @Transactional
     @ApiOperation(value = "根据id批量删除门店类型", notes = "根据id批量删除门店类型")
     public Payload delete(@PathVariable(value = "id", required = true) String id) {
         List<Long> ids = Arrays.stream(id.split(",")).map(Long::parseLong).collect(Collectors.toList());
