@@ -25,6 +25,9 @@
         <if test="storeTypeCode!=null and storeTypeCode!=''">
             and store_type_code like concat('%',#{storeTypeCode},'%')
         </if>
+        <if test="storeTypeAccuracyCode!=null and storeTypeAccuracyCode!=''">
+            and store_type_code = #{storeTypeAccuracyCode}
+        </if>
         <if test="storeTypeName!=null and storeTypeName!=''">
             and store_type_name like concat('%',#{storeTypeName},'%')
         </if>

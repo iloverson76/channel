@@ -1,6 +1,5 @@
 package com.deepexi.channel.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.deepexi.channel.dao.StoreGradeDAO;
 import com.deepexi.channel.domain.store.StoreGradeDO;
 import com.deepexi.channel.domain.store.StoreGradeDTO;
@@ -93,8 +92,12 @@ public class StoreGradeServiceImpl implements StoreGradeService {
      **/
     @Override
     public boolean isCodeUnique(StoreGradeDTO dto){
-        List<StoreGradeDO> list = storeGradeDAO.list(new QueryWrapper<StoreGradeDO>().lambda()
-                .eq(StoreGradeDO::getStoreGradeCode,dto.getStoreGradeCode()));
+        StoreGradeQuery storeGradeQuery = StoreGradeQuery.builder()
+                .storeGradeAccuracyCode(dto.getStoreGradeCode())
+                .build();
+        List<StoreGradeDO> list = storeGradeDAO.findList(storeGradeQuery);
+//                list(new QueryWrapper<StoreGradeDO>().lambda()
+//                .eq(StoreGradeDO::getStoreGradeCode,dto.getStoreGradeCode()));
         if(CollectionUtil.isNotEmpty(list)){
             //不为空，还有可能是更新时自身的编码
             if(list.size()==1){

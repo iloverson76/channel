@@ -37,6 +37,9 @@ public class StoreTypeQuery  extends CommQuery {
     @ApiModelProperty(value = "门店类型编码")
     private String storeTypeCode;
 
+    @ApiModelProperty(value = "门店类型编码")
+    private String storeTypeAccuracyCode;
+
     /**
      * 多个id查询
      */

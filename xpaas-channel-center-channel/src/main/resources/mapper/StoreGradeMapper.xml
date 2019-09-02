@@ -25,6 +25,9 @@
         <if test="storeGradeCode!=null and storeGradeCode!=''">
             and store_grade_code like concat('%',#{storeGradeCode},'%')
         </if>
+        <if test="storeGradeAccuracyCode!=null and storeGradeAccuracyCode!=''">
+            and store_grade_code = #{storeGradeAccuracyCode}
+        </if>
         <if test="storeGradeName!=null and storeGradeName!=''">
             and store_grade_name like concat('%',#{storeGradeName},'%')
         </if>

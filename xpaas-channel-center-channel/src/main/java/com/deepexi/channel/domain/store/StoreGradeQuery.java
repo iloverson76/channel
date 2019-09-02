@@ -35,7 +35,12 @@ public class StoreGradeQuery extends CommQuery {
     /**
      * 门店等级编码
      */
-    @ApiModelProperty(value = "门店等级编码")
+    @ApiModelProperty(value = "门店等级编码，模糊查询")
     private String storeGradeCode;
 
+    /**
+     * 门店等级编码
+     */
+    @ApiModelProperty(value = "门店等级编码，准确查询")
+    private String storeGradeAccuracyCode;
 }
