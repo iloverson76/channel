@@ -1,8 +1,6 @@
 package com.deepexi.channel.businness.impl;
 
 import com.deepexi.channel.businness.ChainTypeBusinessService;
-import com.deepexi.channel.domain.chain.ChainQuery;
-import com.deepexi.channel.domain.chain.ChainTypeDTO;
 import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.service.ChainService;
 import com.deepexi.channel.service.ChainTypeService;
