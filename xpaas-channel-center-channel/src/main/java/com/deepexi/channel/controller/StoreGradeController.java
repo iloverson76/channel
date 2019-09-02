@@ -1,5 +1,6 @@
 package com.deepexi.channel.controller;
 
+import com.deepexi.channel.businness.StoreGradeBusinessService;
 import com.deepexi.channel.domain.store.StoreGradeDTO;
 import com.deepexi.channel.domain.store.StoreGradeQuery;
 import com.deepexi.channel.domain.store.StoreGradeVO;
@@ -26,6 +27,8 @@ public class StoreGradeController {
 
     @Autowired
     private StoreGradeService storeGradeService;
+    @Autowired
+    private StoreGradeBusinessService storeGradeBusinessService;
 
     @GetMapping
     @ApiOperation(value = "分页查询", notes = "查询门店等级列表,传-1时获取整个列表")
@@ -64,9 +67,9 @@ public class StoreGradeController {
 
     @DeleteMapping("/{ids}")
     @Transactional
-    @ApiOperation(value = "根据id批量删除CcStoreGrade", notes = "根据id批量删除CcStoreGrade")
+    @ApiOperation(value = "根据id批量删除门店等级", notes = "根据id批量删除门店等级")
     public Payload delete(@PathVariable(value = "ids", required = true) List<Long> ids) {
-        return new Payload(storeGradeService.delete(ids));
+        return new Payload(storeGradeBusinessService.deleteGradeType(ids));
     }
 
 }

@@ -18,7 +18,41 @@
         <result property="tenantId" column="tenant_id" />
     </resultMap>
     <select id="findList" resultType="com.deepexi.channel.domain.store.StoreTypeQuery">
-        SELECT * FROM cc_store_type WHERE 1=1
+        SELECT * FROM cc_store_type WHERE dr=0
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="ids != null">
+            and id in
+            <foreach collection="ids" item="tempId" index="index" open="(" close=")" separator=",">
+                #{tempId}
+            </foreach>
+        </if>
+        <if test="storeTypeCode!=null and storeTypeCode!=''">
+            and store_type_code like concat('%',#{storeTypeCode},'%')
+        </if>
+        <if test="storeTypeName!=null and storeTypeName!=''">
+            and store_type_name like concat('%',#{storeTypeName},'%')
+        </if>
+        <if test="startTime != null">
+            and created_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null">
+            and created_time &lt;= #{endTime}
+        </if>
+        <if test="updateStartTime != null">
+            and updated_time &gt;= #{updateStartTime}
+        </if>
+        <if test="updateEndTime != null">
+            and updated_time &lt;= #{updateEndTime}
+        </if>
+        <if test="tenantId!=null">
+            AND tenant_id = #{tenantId}
+        </if>
+        <if test="appId!=null">
+            AND app_id =#{appId}
+        </if>
+        order by created_time desc
     </select>
 
     <update id="deleteByIds">

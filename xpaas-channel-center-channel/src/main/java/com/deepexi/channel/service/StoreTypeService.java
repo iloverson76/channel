@@ -46,4 +46,11 @@ public interface StoreTypeService {
     */
     Boolean delete(List<Long> ids);
 
+    /**
+     * 判断门店类型是否
+     * @param dto
+     * @return
+     */
+    boolean isCodeUnique(StoreTypeDTO dto);
+
 }

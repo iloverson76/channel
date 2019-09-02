@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import java.util.List;
+
 /**
  * <p>
  * 门店类型表
@@ -35,5 +37,9 @@ public class StoreTypeQuery  extends CommQuery {
     @ApiModelProperty(value = "门店类型编码")
     private String storeTypeCode;
 
-
+    /**
+     * 多个id查询
+     */
+    @ApiModelProperty(value = "多个id查询")
+    private List<Long> ids;
 }

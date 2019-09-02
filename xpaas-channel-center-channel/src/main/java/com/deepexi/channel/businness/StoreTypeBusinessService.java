@@ -5,5 +5,5 @@ import com.deepexi.channel.domain.store.StoreTypeDTO;
 import java.util.List;
 
 public interface StoreTypeBusinessService {
-    Boolean delete(List<Long> ids);
+    Boolean deleteStoreType(List<Long> ids);
 }

@@ -1,5 +1,6 @@
 package com.deepexi.channel.controller;
 
+import com.deepexi.channel.businness.StoreTypeBusinessService;
 import com.deepexi.channel.domain.store.StoreTypeDTO;
 import com.deepexi.channel.domain.store.StoreTypeQuery;
 import com.deepexi.channel.domain.store.StoreTypeVO;
@@ -26,7 +27,8 @@ public class StoreTypeController {
 
     @Autowired
     private StoreTypeService storeTypeService;
-
+    @Autowired
+    private StoreTypeBusinessService storeTypeBusinessService;
 
     @GetMapping
     @ApiOperation(value = "分页查询", notes = "分页请求,page传-1时获取所有门店类型")
@@ -73,7 +75,7 @@ public class StoreTypeController {
     @Transactional
     @ApiOperation(value = "根据id批量删除门店类型", notes = "根据id批量删除门店类型")
     public Payload delete(@PathVariable(value = "ids", required = true) List<Long> ids) {
-        return new Payload(storeTypeService.delete(ids));
+        return new Payload(storeTypeBusinessService.deleteStoreType(ids));
     }
 
 }
