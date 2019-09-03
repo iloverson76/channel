@@ -2,6 +2,7 @@ package com.deepexi.channel.extension;
 
 import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.util.IdGenerator;
+import com.deepexi.util.StringUtil;
 import com.deepexi.util.extension.ApplicationException;
 import org.springframework.stereotype.Component;
 
@@ -89,7 +90,7 @@ public class AppRuntimeEnv {
 
     public String getTenantId() {
         String tenantIdStr = TENANT_ID.get();
-        if (tenantIdStr == null) {
+        if (StringUtil.isEmpty(tenantIdStr)) {
             return "123456789";
         }
         return tenantIdStr;
