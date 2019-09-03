@@ -22,8 +22,13 @@ public class MetaObjectHandlerConfig implements MetaObjectHandler {
         setFieldValByName("createdTime", new Date(), metaObject);
         setFieldValByName("updatedTime", new Date(), metaObject);
         setFieldValByName("tenantId", appRuntimeEnv.getTenantId(), metaObject);
-        setFieldValByName("createdBy", appRuntimeEnv.getUsername(), metaObject);
-        setFieldValByName("updatedBy", appRuntimeEnv.getUsername(), metaObject);
+        if(StringUtil.isEmpty(appRuntimeEnv.getUsername())){
+            setFieldValByName("createdBy", "ANONYMOUS", metaObject);
+            setFieldValByName("updatedBy", "ANONYMOUS", metaObject);
+        }else{
+            setFieldValByName("createdBy", appRuntimeEnv.getUsername(), metaObject);
+            setFieldValByName("updatedBy", appRuntimeEnv.getUsername(), metaObject);
+        }
         setFieldValByName("version", 1, metaObject);
 
         if(StringUtil.isEmpty(appRuntimeEnv.getAppId())){

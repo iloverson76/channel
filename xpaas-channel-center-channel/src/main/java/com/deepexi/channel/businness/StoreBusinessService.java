@@ -7,7 +7,7 @@ public interface StoreBusinessService {
 
     Long create(StoreDetailDTO dto);
 
-    Boolean update(StoreDTO dto);
+    Boolean update(StoreDetailDTO dto);
 
     StoreDTO detail(Integer pk);
 }

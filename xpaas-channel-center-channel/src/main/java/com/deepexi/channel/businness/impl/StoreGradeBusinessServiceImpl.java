@@ -1,6 +1,11 @@
 package com.deepexi.channel.businness.impl;
 
 import com.deepexi.channel.businness.StoreGradeBusinessService;
+import com.deepexi.channel.dao.StoreGradeRelationDAO;
+import com.deepexi.channel.domain.store.StoreDetailDTO;
+import com.deepexi.channel.domain.store.StoreGradeDTO;
+import com.deepexi.channel.domain.store.StoreGradeRelationDO;
+import com.deepexi.channel.domain.store.StoreGradeRelationDTO;
 import com.deepexi.channel.service.StoreGradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,11 +17,19 @@ public class StoreGradeBusinessServiceImpl implements StoreGradeBusinessService 
 
     @Autowired
     StoreGradeService storeGradeService;
+    @Autowired
+    StoreGradeRelationDAO storeGradeRelationDAO;
 
     @Override
     public Boolean deleteGradeType(List<Long> ids) {
-        //TODO 校验是否有门店关联该门店等级
-
         return storeGradeService.delete(ids);
+    }
+
+    @Override
+    public Long saveStoreGradeRelation(StoreDetailDTO dto) {
+        StoreGradeDTO storeGradeDTO = dto.getStoreGradeDTO();
+        StoreGradeRelationDO storeGradeRelationDO = StoreGradeRelationDO.builder().storeGradeId(storeGradeDTO.getId()).storeId(dto.getId()).build();
+        storeGradeRelationDAO.save(storeGradeRelationDO);
+        return storeGradeRelationDO.getId();
     }
 }

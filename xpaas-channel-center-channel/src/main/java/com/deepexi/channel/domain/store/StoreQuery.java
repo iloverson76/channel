@@ -73,6 +73,6 @@ public class StoreQuery  extends CommQuery {
     /**
      * 状态 1 启用 2 禁用
      */
-    @ApiModelProperty(value = "状态 1 启用 2 禁用")
-    private Boolean status;
+    @ApiModelProperty(value = "是否启用 0 禁用 1 启用")
+    private Boolean enable;
 }
