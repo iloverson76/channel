@@ -1,2 +1,0 @@
-# xpaas-promotion-center
-
