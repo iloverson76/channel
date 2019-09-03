@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * <p>
  * 等级体系表
@@ -36,5 +38,11 @@ public class DistributorGradeQuery extends CommQuery {
      */
     @ApiModelProperty("经销商等级编码")
     private String distributorGradeCode;
+
+    @ApiModelProperty(value = "主键列表", example = "123")
+    private List<Long> ids;
+
+    @ApiModelProperty(value = "主键", example = "123")
+    private Long id;
 
 }

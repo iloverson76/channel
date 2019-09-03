@@ -41,7 +41,7 @@ public class DistributorGradeDTO extends BaseEntity {
     private String distributorGradeCode;
 
     /**
-     * 等级体系ID
+     * 所属体系体系ID
      */
     private Long gradeSystemId;
 

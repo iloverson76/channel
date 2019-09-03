@@ -45,26 +45,6 @@ public class DistributorGradeSystemServiceImpl implements DistributorGradeSystem
 
         DistributorGradeSystemDO eo=dto.clone(DistributorGradeSystemDO.class, CloneDirection.FORWARD);
 
-        DistributorGradeSystemQuery query=new DistributorGradeSystemQuery();
-
-        query.setPage(-1);
-
-        List<DistributorGradeSystemDTO> pageDTO= findPage(query);
-
-        pageDTO.forEach(page->{
-
-            if(dto.getGradeSystemCode().equals(page.getGradeSystemCode())){
-
-                throw new ApplicationException(ResultEnum.GRADE_SYSTEM_CODE_DUPLICATED);
-            }
-
-            if(dto.getGradeSystemName().equals(page.getGradeSystemName())){
-
-                throw new ApplicationException(ResultEnum.GRADE_SYSTEM_NAME_DUPLICATED);
-            }
-
-        });
-
         dto.setCreatedTime(new Date());
 
         dto.setUpdatedTime(new Date());
@@ -103,6 +83,28 @@ public class DistributorGradeSystemServiceImpl implements DistributorGradeSystem
         List<DistributorGradeSystemDO> eoList = distributorGradeSystemDAO.findPage(query);
 
         return ObjectCloneUtils.convertList(eoList,DistributorGradeSystemDTO.class,CloneDirection.OPPOSITE);
+    }
+
+    @Override
+    public void validateDuplicatedNameAndCode(DistributorGradeSystemDTO dto){
+
+        DistributorGradeSystemQuery query=new DistributorGradeSystemQuery();
+
+        List<DistributorGradeSystemDTO> pageDTO= findPage(query);
+
+        pageDTO.forEach(page->{
+
+            if(dto.getGradeSystemCode().equals(page.getGradeSystemCode())){
+
+                throw new ApplicationException(ResultEnum.GRADE_SYSTEM_CODE_DUPLICATED);
+            }
+
+            if(dto.getGradeSystemName().equals(page.getGradeSystemName())){
+
+                throw new ApplicationException(ResultEnum.GRADE_SYSTEM_NAME_DUPLICATED);
+            }
+
+        });
     }
 
 }

@@ -40,13 +40,14 @@ public class DistributorGradeDO extends BaseEntity {
     private String distributorGradeName;
 
     /**
-     * 经销商等级编码
+     * 等级编码
      */
+
     private String distributorGradeCode;
 
     /**
-     * 等级体系ID
+     * 所属体系ID
      */
-    private Long gradeSystemId;
+    private String gradeSystemId;
 
 }

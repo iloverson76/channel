@@ -14,8 +14,6 @@
         <result property="createdTime" column="created_time" />
         <result property="updatedBy" column="updated_by" />
         <result property="updatedTime" column="updated_time" />
-        <result property="appId" column="app_id" />
-        <result property="tenantId" column="tenant_id" />
     </resultMap>
     <select id="findList" resultType="com.deepexi.channel.domain.store.StoreGradeDO">
         SELECT * FROM cc_store_grade WHERE dr=0

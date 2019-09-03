@@ -38,4 +38,9 @@ public interface DistributorGradeSystemService {
      */
     List<DistributorGradeSystemDTO> findPage(DistributorGradeSystemQuery query);
 
+    /**
+     * 校验重复编码和名称
+     */
+    void validateDuplicatedNameAndCode(DistributorGradeSystemDTO dto);
+
 }
