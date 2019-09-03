@@ -80,14 +80,13 @@ public class DistributorGradeController {
         return new Payload<>(new PageBean<>(voList));
     }
 
-    @GetMapping("/parent/{systemId}/{parentId}")
+    @GetMapping("/parent/{systemId}")
     @ApiOperation(value = "上级接口-新增用")
-    public  Payload<PageBean<DistributorGradeBusiVO>> findParentNodesForCreat(@PathVariable(value = "systemId", required = true) long  systemId,
-                                                                              @PathVariable(value = "parentId", required = true) long parentId) {
+    public  Payload<PageBean<DistributorGradeVO>> findParentNodesForCreat(@PathVariable(value = "systemId", required = true) long  systemId) {
 
-        List<DistributorGradeBusiDTO> dtoList= distributorGradeBusinessService.findParentNodesForCreat(systemId,parentId);
+        List<DistributorGradeDTO> dtoList= distributorGradeBusinessService.findParentNodesForCreat(systemId);
 
-        List<DistributorGradeBusiVO> voList= ObjectCloneUtils.convertList(dtoList, DistributorGradeBusiVO.class);
+        List<DistributorGradeVO> voList= ObjectCloneUtils.convertList(dtoList, DistributorGradeVO.class);
 
         return new Payload<>(new PageBean<>(voList));
     }

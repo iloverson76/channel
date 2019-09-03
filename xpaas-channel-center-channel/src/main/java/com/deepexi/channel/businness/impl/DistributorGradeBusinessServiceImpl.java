@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -140,22 +141,39 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
     }
 
     @Override
-    public List<DistributorGradeBusiDTO> findParentNodesForCreat(long systemId,long parentId) {
-
-//        Map<Long, DistributorGradeDTO> gradeMap =
-//                gradeList.stream().collect(Collectors.toMap(DistributorGradeDTO::getId,s->s));
+    public List<DistributorGradeDTO> findParentNodesForCreat(long systemId) {
 
         if(0==systemId){
             return null;
         }
 
-        if(0!=parentId){
+        //等级表数据
+        DistributorGradeQuery query=new DistributorGradeQuery();
 
-            List<DistributorGradeDO> eoList= distributorGradeDAO.listParentNodesForCreate(systemId,parentId+"/");
+        List<DistributorGradeDTO> gradeList = distributorGradeService.findPage(query);
 
-            return ObjectCloneUtils.convertList(eoList,DistributorGradeBusiDTO.class,CloneDirection.FORWARD);
+        List<DistributorGradeDTO> resultList=new ArrayList<>();
 
+        List<Long> parentIdList=gradeList.stream().map(DistributorGradeDTO::getParentId).collect(Collectors.toList());
+
+        Map<Long, Long> parentMap =new HashMap<>();
+
+        parentIdList.forEach(pid->{
+            parentMap.put(pid,pid);
+        });
+
+        if(CollectionUtil.isNotEmpty(parentIdList)){
+
+            gradeList.forEach(grade->{
+
+                Long v=parentMap.get(grade.getId());
+
+                if(null==v){
+                    resultList.add(grade);
+                }
+            });
         }
-        return null;
+
+        return resultList;
     }
 }

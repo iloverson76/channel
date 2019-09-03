@@ -24,5 +24,5 @@ public interface DistributorGradeBusinessService {
     /**
      * 可挂载下级的节点
      */
-    List<DistributorGradeBusiDTO> findParentNodesForCreat(long systemId,long parentId);
+    List<DistributorGradeDTO> findParentNodesForCreat(long systemId);
 }
