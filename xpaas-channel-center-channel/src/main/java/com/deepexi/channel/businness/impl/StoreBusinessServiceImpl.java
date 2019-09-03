@@ -40,7 +40,7 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
         Long storeGradeRelationId = storeGradeBusinessService.saveStoreGradeRelation(dto);
 
         //新增门店类型关联
-
+        Long storeTypeRelationId = storeTypeBusinessService.saveStoreTypeRelation(dto);
 
         //新增门店连锁关联
 

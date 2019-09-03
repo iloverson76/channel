@@ -4,9 +4,11 @@ import com.deepexi.channel.businness.StoreTypeBusinessService;
 import com.deepexi.channel.domain.store.StoreTypeDTO;
 import com.deepexi.channel.domain.store.StoreTypeQuery;
 import com.deepexi.channel.domain.store.StoreTypeVO;
+import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.service.StoreTypeService;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.config.Payload;
+import com.deepexi.util.extension.ApplicationException;
 import com.deepexi.util.pageHelper.PageBean;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
@@ -42,12 +44,6 @@ public class StoreTypeController {
         return new Payload<>(new PageBean<>(storeTypeVOS));
     }
 
-//    @GetMapping("/list")
-//    //@ApiOperation(value = "树形查询", notes = "查询全部请求")
-//    public Payload findAll(CcStoreType eo) {
-//        return new Payload(storeTypeService.findAll(eo));
-//    }
-//
     @GetMapping("/{id}")
     public Payload<StoreTypeVO> detail(@PathVariable(value = "id", required = true) Integer  id) {
         StoreTypeDTO storeTypeDTO = storeTypeService.detail(id);
@@ -62,19 +58,30 @@ public class StoreTypeController {
     @ApiOperation(value = "根据id修改", notes = "根据id修改门店类型")
     public Payload update(@PathVariable(value = "id", required = true) Long id, @RequestBody StoreTypeVO vo) {
          vo.setId(id);
-         return new Payload(storeTypeService.update(vo.clone(StoreTypeDTO.class)));
+        StoreTypeDTO dto =vo.clone(StoreTypeDTO.class);
+        // 判断编码是否重复
+        if(!storeTypeService.isCodeUnique(dto)){
+            throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
+        }
+         return new Payload(storeTypeService.update(dto));
     }
 
     @PostMapping
     @ApiOperation(value = "创建门店类型", notes = "创建门店类型")
     public Payload<Long> create(@RequestBody StoreTypeVO vo) {
-        return new Payload<>(storeTypeService.create(vo.clone(StoreTypeDTO.class)));
+        StoreTypeDTO dto =vo.clone(StoreTypeDTO.class);
+        // 判断编码是否重复
+        if(!storeTypeService.isCodeUnique(dto)){
+            throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
+        }
+        return new Payload<>(storeTypeService.create(dto));
     }
 
     @DeleteMapping("/{id:[a-zA-Z0-9,]+}")
     @ApiOperation(value = "根据id批量删除门店类型", notes = "根据id批量删除门店类型")
     public Payload delete(@PathVariable(value = "id", required = true) String id) {
         List<Long> ids = Arrays.stream(id.split(",")).map(Long::parseLong).collect(Collectors.toList());
+        //TODO 校验是否有门店关联该门店类型
         return new Payload(storeTypeBusinessService.deleteStoreType(ids));
     }
 
