@@ -6,6 +6,7 @@
         <result property="id" column="id" />
         <result property="parentId" column="parent_id" />
         <result property="root" column="root" />
+        <result property="path" column="path" />
         <result property="distributorGradeName" column="distributor_grade_name" />
         <result property="distributorGradeCode" column="distributor_grade_code" />
         <result property="gradeSystemId" column="grade_system_id" />
@@ -53,6 +54,12 @@
             AND DATE_FORMAT(updated_time,'%Y-%m-%d') <![CDATA[ <= ]]>DATE_FORMAT(#{updateEndTime},'%Y-%m-%d')
         </if>
         order by updated_time desc
+    </select>
+
+    <select id="listParentNodesForCreate" resultType="com.deepexi.channel.domain.distributor.DistributorGradeDO">
+
+       SELECT * FROM cc_distributor_grade WHERE dr=0 and grade_system_id= #{systemId} and path LIKE concat('%',#{path},'%')
+
     </select>
 
 </mapper>

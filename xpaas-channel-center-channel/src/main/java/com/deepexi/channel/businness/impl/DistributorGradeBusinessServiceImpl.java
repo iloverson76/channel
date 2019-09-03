@@ -1,6 +1,7 @@
 package com.deepexi.channel.businness.impl;
 
 import com.deepexi.channel.businness.DistributorGradeBusinessService;
+import com.deepexi.channel.dao.DistributorGradeDAO;
 import com.deepexi.channel.domain.distributor.*;
 import com.deepexi.channel.service.DistributorGradeService;
 import com.deepexi.channel.service.DistributorGradeSystemService;
@@ -24,6 +25,9 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
     @Autowired
     private DistributorGradeService distributorGradeService;
+
+    @Autowired
+    private DistributorGradeDAO distributorGradeDAO;
 
     @Autowired
     private DistributorGradeSystemService distributorGradeSystemService;
@@ -133,5 +137,25 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
         });
 
         return gradePageList;
+    }
+
+    @Override
+    public List<DistributorGradeBusiDTO> findParentNodesForCreat(long systemId,long parentId) {
+
+//        Map<Long, DistributorGradeDTO> gradeMap =
+//                gradeList.stream().collect(Collectors.toMap(DistributorGradeDTO::getId,s->s));
+
+        if(0==systemId){
+            return null;
+        }
+
+        if(0!=parentId){
+
+            List<DistributorGradeDO> eoList= distributorGradeDAO.listParentNodesForCreate(systemId,parentId+"/");
+
+            return ObjectCloneUtils.convertList(eoList,DistributorGradeBusiDTO.class,CloneDirection.FORWARD);
+
+        }
+        return null;
     }
 }

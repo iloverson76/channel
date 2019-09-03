@@ -13,4 +13,7 @@ public interface DistributorGradeMapper extends BaseMapper<DistributorGradeDO> {
 
     List<DistributorGradeDO> findPage(DistributorGradeQuery query);
 
+    List<DistributorGradeDO> listParentNodesForCreate(@Param("systemId")long systemId,
+                                                      @Param("path") String path);
+
 }

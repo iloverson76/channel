@@ -24,6 +24,12 @@ public class DistributorGradeVO extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
+     * 路径
+     */
+    @ApiModelProperty("上下级路径")
+    private String path;
+
+    /**
      * 父级分类ID
      */
     @ApiModelProperty("父级分类ID")

@@ -33,11 +33,29 @@ public class DistributorGradeServiceImpl implements DistributorGradeService {
             return 0L;
         }
 
-        DistributorGradeDO eo=dto.clone(DistributorGradeDO.class, CloneDirection.FORWARD);
+        DistributorGradeDO newNode=dto.clone(DistributorGradeDO.class, CloneDirection.FORWARD);
 
-        distributorGradeDAO.save(eo);
+        distributorGradeDAO.save(newNode);
 
-        return eo.getId();
+        //路径处理(id)
+        long newId=newNode.getId();
+
+        long parentId=newNode.getParentId();
+
+        if (0==parentId) {
+
+            newNode.setPath(String.valueOf(newId));//首次创建
+
+        } else {
+
+            String parent_path=distributorGradeDAO.getById(parentId).getPath()+"/"+newId;
+
+            newNode.setPath(parent_path);
+        }
+
+        distributorGradeDAO.updateById(newNode);
+
+        return newId;
     }
 
     @Transactional(rollbackFor = Exception.class)
