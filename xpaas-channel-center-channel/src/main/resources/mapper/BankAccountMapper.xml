@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deepexi.channel.mapper.BankAccountMapper">
+    <resultMap type="com.deepexi.channel.domain.bank.BankAccountDO" id="BankAccountDOResult">
+        <result property="id" column="id" />
+        <result property="bankId" column="bank_id" />
+        <result property="bankBranchName" column="bank_branch_name" />
+        <result property="accountNo" column="account_no" />
+        <result property="bankCode" column="bank_code" />
+        <result property="version" column="version" />
+        <result property="remark" column="remark" />
+        <result property="dr" column="dr" />
+        <result property="createdBy" column="created_by" />
+        <result property="createdTime" column="created_time" />
+        <result property="updatedBy" column="updated_by" />
+        <result property="updatedTime" column="updated_time" />
+    </resultMap>
+    <select id="findList" resultType="com.deepexi.channel.domain.bank.BankAccountDO">
+        SELECT * FROM cc_bank_account WHERE dr = 0
+    </select>
+
+    <update id="deleteByIds">
+        UPDATE cc_bank_account set dr=1 where id in
+        <foreach collection="ids" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <select id="getBankAccountByIds" resultType="com.deepexi.channel.domain.bank.BankAccountDO">
+        select * from cc_bank_account where dr = 0
+        <if test="ids != null">
+            and id in
+            <foreach collection="ids" item="tempId" index="index" open="(" close=")" separator=",">
+                #{tempId}
+            </foreach>
+        </if>
+    </select>
+</mapper>

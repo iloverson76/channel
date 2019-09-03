@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deepexi.channel.mapper.ChainTypeMapper">
+    <resultMap type="com.deepexi.channel.domain.chain.ChainTypeDO" id="ChainTypeResult">
+        <result property="id" column="id" />
+        <result property="parentId" column="parent_id" />
+        <result property="limitParent" column="limit_parent" />
+        <result property="chainTypeName" column="chain_type_name" />
+        <result property="chainTypeCode" column="chain_type_code" />
+        <result property="chainTypeNameEn" column="chain_type_name_en" />
+        <result property="description" column="description" />
+        <result property="version" column="version" />
+        <result property="remark" column="remark" />
+        <result property="dr" column="dr" />
+        <result property="createdBy" column="created_by" />
+        <result property="createdTime" column="created_time" />
+        <result property="updatedBy" column="updated_by" />
+        <result property="updatedTime" column="updated_time" />
+    </resultMap>
+    <select id="findList" resultType="com.deepexi.channel.domain.chain.ChainTypeDO">
+        SELECT * FROM cc_chain_type WHERE  dr=0
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="ids != null">
+          and id in
+            <foreach collection="ids" item="tempId" index="index" open="(" close=")" separator=",">
+                #{tempId}
+            </foreach>
+        </if>
+        <if test="chainTypeCode != null and chainTypeCode != ''">
+            and chain_type_code  like concat('%',#{chainTypeCode},'%')
+        </if>
+        <if test="chainTypeName != null and chainTypeName != ''">
+            and chain_type_name like concat('%',#{chainTypeName},'%')
+        </if>
+        <if test="startTime != null">
+            and created_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null">
+            and created_time &lt;= #{endTime}
+        </if>
+        <if test="updateStartTime != null">
+            and updated_time &gt;= #{updateStartTime}
+        </if>
+        <if test="updateEndTime != null">
+            and updated_time &lt;= #{updateEndTime}
+        </if>
+        <if test="tenantId!=null">
+            AND tenant_id = #{tenantId}
+        </if>
+        <if test="appId!=null">
+            AND app_id =#{appId}
+        </if>
+        order by created_time desc
+    </select>
+
+    <update id="deleteByIds">
+        UPDATE cc_chain_type set dr=1 where id in
+        <foreach collection="ids" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <select id="findParentList"  resultType="com.deepexi.channel.domain.chain.ChainTypeDO">
+      SELECT * FROM cc_chain_type WHERE  dr=0
+        <if test="ids != null">
+            and parent_id in
+            <foreach collection="ids" item="tempId" index="index" open="(" close=")" separator=",">
+                #{tempId}
+            </foreach>
+        </if>
+    </select>
+</mapper>
