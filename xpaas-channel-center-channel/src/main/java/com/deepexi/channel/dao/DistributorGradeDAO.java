@@ -10,4 +10,6 @@ public interface DistributorGradeDAO extends  IService<DistributorGradeDO> {
 
 
     List<DistributorGradeDO> findPage(DistributorGradeQuery query);
+
+    List<DistributorGradeDO> listParentNodesForCreate(long systemId,String path);
 }

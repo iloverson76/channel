@@ -25,6 +25,11 @@ public class DistributorGradeDO extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
+     * 路径
+     */
+    private String path;
+
+    /**
      * 父级分类ID
      */
     private Long parentId;
