@@ -10,6 +10,7 @@ public enum ResultEnum implements BaseEnumType {
      * ERROR: getCurrentTenantId error.
      */
     GET_CURRENT_TENANT_ERROR("100004", "ERROR: getCurrentTenantId error."),
+    GET_CURRENT_APP_ERROR("100004", "ERROR: getCurrentAppId error."),
 
     RPC_ERROR("300000", "RPC调用异常!请检查服务是否正常!!!"),
 

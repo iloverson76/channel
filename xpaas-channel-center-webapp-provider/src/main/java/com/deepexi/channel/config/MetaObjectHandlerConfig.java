@@ -2,6 +2,7 @@ package com.deepexi.channel.config;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.deepexi.channel.extension.AppRuntimeEnv;
+import com.deepexi.util.StringUtil;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,6 +25,12 @@ public class MetaObjectHandlerConfig implements MetaObjectHandler {
         setFieldValByName("createdBy", appRuntimeEnv.getUsername(), metaObject);
         setFieldValByName("updatedBy", appRuntimeEnv.getUsername(), metaObject);
         setFieldValByName("version", 1, metaObject);
+
+        if(StringUtil.isEmpty(appRuntimeEnv.getAppId())){
+            setFieldValByName("appId", "123456789", metaObject);
+        } else {
+            setFieldValByName("appId", appRuntimeEnv.getAppId(), metaObject);
+        }
     }
 
     @Override
