@@ -60,7 +60,10 @@ public class StoreController {
     public Payload<Long> create(@RequestBody StoreDetailVO vo) {
         StoreDetailDTO storeDetailDTO = vo.clone(StoreDetailDTO.class);
         StoreGradeDTO storeGradeDTO = vo.getStoreGradeVO().clone(StoreGradeDTO.class);
+        StoreTypeDTO storeTypeDTO = vo.getStoreTypeVO().clone(StoreTypeDTO.class);
+
         storeDetailDTO.setStoreGradeDTO(storeGradeDTO);
+        storeDetailDTO.setStoreTypeDTO(storeTypeDTO);
         //编码是否重复
         if(!storeService.isCodeUnique(storeDetailDTO)){
             throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
