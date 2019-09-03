@@ -1,6 +1,7 @@
 package com.deepexi.channel.businness.impl;
 
 import com.deepexi.channel.businness.StoreBusinessService;
+import com.deepexi.channel.businness.StoreChainBusinessService;
 import com.deepexi.channel.businness.StoreGradeBusinessService;
 import com.deepexi.channel.businness.StoreTypeBusinessService;
 import com.deepexi.channel.domain.store.StoreDTO;
@@ -29,6 +30,8 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
     StoreGradeBusinessService storeGradeBusinessService;
     @Autowired
     StoreTypeBusinessService storeTypeBusinessService;
+    @Autowired
+    StoreChainBusinessService storeChainBusinessService;
 
     @Override
     @Transactional
@@ -36,13 +39,19 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
         //新增门店基本信息
         Long id = storeService.create(dto);
         dto.setId(id);
-        //新增门店等级关联
-        Long storeGradeRelationId = storeGradeBusinessService.saveStoreGradeRelation(dto);
-
         //新增门店类型关联
-        Long storeTypeRelationId = storeTypeBusinessService.saveStoreTypeRelation(dto);
+        if (dto.getStoreTypeDTO() != null) {
+            Long storeTypeRelationId = storeTypeBusinessService.saveStoreTypeRelation(dto);
+        }
+        //新增门店等级关联
+        if (dto.getStoreGradeDTO() != null) {
+            Long storeGradeRelationId = storeGradeBusinessService.saveStoreGradeRelation(dto);
+        }
 
         //新增门店连锁关联
+        if (dto.getChainDTO() != null) {
+            Long storeChainBusinessId = storeChainBusinessService.saveStoreChainRelation(dto);
+        }
 
         //新增门店区域关联
 

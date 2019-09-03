@@ -59,11 +59,15 @@ public class StoreController {
     @ApiOperation(value = "创建门店", notes = "创建门店")
     public Payload<Long> create(@RequestBody StoreDetailVO vo) {
         StoreDetailDTO storeDetailDTO = vo.clone(StoreDetailDTO.class);
-        StoreGradeDTO storeGradeDTO = vo.getStoreGradeVO().clone(StoreGradeDTO.class);
-        StoreTypeDTO storeTypeDTO = vo.getStoreTypeVO().clone(StoreTypeDTO.class);
+        if(vo.getStoreGradeVO() != null){
+            StoreGradeDTO storeGradeDTO = vo.getStoreGradeVO().clone(StoreGradeDTO.class);
+            storeDetailDTO.setStoreGradeDTO(storeGradeDTO);
+        }
+       if(vo.getStoreTypeVO() != null){
+           StoreTypeDTO storeTypeDTO = vo.getStoreTypeVO().clone(StoreTypeDTO.class);
+           storeDetailDTO.setStoreTypeDTO(storeTypeDTO);
+       }
 
-        storeDetailDTO.setStoreGradeDTO(storeGradeDTO);
-        storeDetailDTO.setStoreTypeDTO(storeTypeDTO);
         //编码是否重复
         if(!storeService.isCodeUnique(storeDetailDTO)){
             throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
