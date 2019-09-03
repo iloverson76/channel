@@ -39,12 +39,6 @@ public class ChainVO extends BaseEntity {
     private Long chainTypeId;
 
     /**
-     * 连锁分类名称
-     */
-    @ApiModelProperty(value = "连锁分类名称", example = "渠道")
-    private String chainTypeName;
-
-    /**
      * 连锁名称
      */
     @ApiModelProperty(value = "连锁名称", example = "家乐福")
@@ -73,12 +67,6 @@ public class ChainVO extends BaseEntity {
      */
     @ApiModelProperty(value = "营业执照", example = "www.baidu.com")
     private String businessLicense;
-
-    @ApiModelProperty("银行账号列表")
-    private List<BankAccountVO> bankAccountList;
-
-    @ApiModelProperty(value = "连锁子节点")
-    private List<ChainVO> children;
 
     @ApiModelProperty(value = "层级关系")
     private String path;

@@ -1,6 +1,5 @@
 package com.deepexi.channel.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.deepexi.channel.dao.StoreTypeDAO;
 import com.deepexi.channel.domain.store.StoreTypeDO;
 import com.deepexi.channel.domain.store.StoreTypeDTO;
@@ -93,10 +92,11 @@ public class StoreTypeServiceImpl implements StoreTypeService {
      **/
     @Override
     public boolean isCodeUnique(StoreTypeDTO dto){
-        List<StoreTypeDO> list = storeTypeDAO.list(new QueryWrapper<StoreTypeDO>().lambda()
-                .eq(StoreTypeDO::getStoreTypeCode,dto.getStoreTypeCode())
-                .eq(StoreTypeDO::getTenantId,dto.getTenantId())
-                .eq(StoreTypeDO::getAppId,dto.getAppId()));
+        StoreTypeQuery storeTypeQuery = StoreTypeQuery.builder().storeTypeAccuracyCode(dto.getStoreTypeCode()).build();
+        List<StoreTypeDO> list = storeTypeDAO.findList(storeTypeQuery);
+
+//                .list(new QueryWrapper<StoreTypeDO>().lambda()
+//                .eq(StoreTypeDO::getStoreTypeCode,dto.getStoreTypeCode()));
         if(CollectionUtil.isNotEmpty(list)){
             //不为空，还有可能是更新时自身的编码
             if(list.size()==1){

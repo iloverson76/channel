@@ -20,29 +20,45 @@ public class StoreDTO extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 门店等级名称
-     */
-    private String storeGradeName;
 
     /**
-     * 门店等级编码
+     * 门店名称
      */
-    private String storeGradeCode;
+    private String storeName;
 
     /**
-     * 门店等级英文名称
+     * 门店编码
      */
-    private String storeGradeNameEn;
+    private String storeCode;
 
     /**
-     * 描述
+     * 门店英文名称
      */
-    private String description;
+    private String storeNameEn;
 
+    /**
+     * 客户名称
+     */
+    private String clientName;
+
+    /**
+     * 客户编码 
+     */
+    private String clientCode;
+
+    /**
+     * 门店地址
+     */
+    private String storeAddress;
+
+    /**
+     * 门店图片
+     */
+    private String storePhone;
     /**
      * 是否启用 0 禁用 1 启用
      */
     private Boolean enable;
+
 
 }

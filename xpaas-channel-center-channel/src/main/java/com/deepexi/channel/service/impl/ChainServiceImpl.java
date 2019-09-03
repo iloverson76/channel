@@ -80,9 +80,7 @@ public class ChainServiceImpl implements ChainService {
     @Override
     public boolean isCodeUnique(ChainDTO dto) {
         List<ChainDO> list = chainDAO.list(new QueryWrapper<ChainDO>().lambda()
-                .eq(ChainDO::getChainCode,dto.getChainCode())
-                .eq(ChainDO::getTenantId,dto.getTenantId())
-                .eq(ChainDO::getAppId,dto.getAppId()));
+                .eq(ChainDO::getChainCode,dto.getChainCode()));
         if(CollectionUtil.isNotEmpty(list)){
             //不为空，还有可能是更新时自身的编码
             if(list.size()==1){

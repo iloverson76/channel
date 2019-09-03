@@ -1,17 +1,18 @@
 package com.deepexi.channel.businness;
 
 import com.deepexi.channel.domain.chain.ChainDTO;
+import com.deepexi.channel.domain.chain.ChainDetailDTO;
 import com.deepexi.channel.domain.chain.ChainQuery;
 
 import java.util.List;
 
 public interface ChainBusinessService {
-    Long insertChain(ChainDTO chainDTO);
-    ChainDTO getChain(Long id);
+    Long insertChain(ChainDetailDTO chainDetailDTO);
+    ChainDetailDTO getChain(Long id);
 
     Boolean deleteChain(List<Long> ids);
 
-    Boolean updateChain(ChainDTO clone);
+    Boolean updateChain(ChainDetailDTO dto);
 
-    List<ChainDTO> findPage(ChainQuery query);
+    List<ChainDetailDTO> findPage(ChainQuery query);
 }

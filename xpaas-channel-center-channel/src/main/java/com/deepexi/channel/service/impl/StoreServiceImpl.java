@@ -73,4 +73,22 @@ public class StoreServiceImpl implements StoreService {
         return storeDAO.removeByIds(ids);
     }
 
+    @Override
+    public boolean isCodeUnique(StoreDTO dto) {
+        StoreQuery storeQuery = StoreQuery.builder().storeAccuracyCode(dto.getStoreCode()).build();
+        List<StoreDO> list = storeDAO.findList(storeQuery);
+        if(CollectionUtil.isNotEmpty(list)){
+            //不为空，还有可能是更新时自身的编码
+            if(list.size()==1){
+                StoreDO storeDO = list.get(0);
+                //该code是本身，不属于重复
+                if(storeDO.getId().equals(dto.getId())){
+                    return true;
+                }
+            }
+            return false;
+        }
+        return true;
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.deepexi.channel.service;
 
 import com.deepexi.channel.domain.store.StoreDTO;
+import com.deepexi.channel.domain.store.StoreDetailDTO;
 import com.deepexi.channel.domain.store.StoreQuery;
 
 import java.util.List;
@@ -42,4 +43,6 @@ public interface StoreService {
     * @return
     */
     Boolean delete(List<Long> ids);
+
+    boolean isCodeUnique(StoreDTO dto);
 }

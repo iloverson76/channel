@@ -18,11 +18,38 @@
         <result property="createdTime" column="created_time" />
         <result property="updatedBy" column="updated_by" />
         <result property="updatedTime" column="updated_time" />
-        <result property="appId" column="app_id" />
-        <result property="tenantId" column="tenant_id" />
+        <result property="description" column="description" />
     </resultMap>
     <select id="findList" resultType="com.deepexi.channel.domain.store.StoreDO">
-        SELECT * FROM cc_store WHERE 1=1
+        SELECT * FROM cc_store WHERE dr=0
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="storeCode!=null and storeCode!=''">
+            and store_code like concat('%',#{storeCode},'%')
+        </if>
+        <if test="storeAccuracyCode!=null and storeAccuracyCode!=''">
+            and store_code = #{storeAccuracyCode}
+        </if>
+        <if test="storeName!=null and storeName!=''">
+            and store_name like concat('%',#{storeName},'%')
+        </if>
+        <if test="enable!=null and enable!=''">
+            and enable like concat('%',#{enable},'%')
+        </if>
+        <if test="startTime != null">
+            and created_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null">
+            and created_time &lt;= #{endTime}
+        </if>
+        <if test="updateStartTime != null">
+            and updated_time &gt;= #{updateStartTime}
+        </if>
+        <if test="updateEndTime != null">
+            and updated_time &lt;= #{updateEndTime}
+        </if>
+        order by created_time desc
     </select>
 
 </mapper>

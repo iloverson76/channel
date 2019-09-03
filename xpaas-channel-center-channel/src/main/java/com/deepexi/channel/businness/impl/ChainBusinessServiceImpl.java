@@ -4,13 +4,13 @@ import com.deepexi.channel.businness.ChainBusinessService;
 import com.deepexi.channel.domain.bank.BankAccountDTO;
 import com.deepexi.channel.domain.bank.BankDTO;
 import com.deepexi.channel.domain.bank.ChainBankDTO;
-import com.deepexi.channel.domain.chain.ChainDTO;
-import com.deepexi.channel.domain.chain.ChainQuery;
-import com.deepexi.channel.domain.chain.ChainTypeDTO;
+import com.deepexi.channel.domain.chain.*;
 import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.service.*;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.extension.ApplicationException;
+import com.deepexi.util.pojo.CloneDirection;
+import com.deepexi.util.pojo.ObjectCloneUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,7 +36,7 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
 
     @Override
     @Transactional
-    public Long insertChain(ChainDTO dto) {
+    public Long insertChain(ChainDetailDTO dto) {
         //校验编码是否重复
         if(!chainService.isCodeUnique(dto)){
             throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
@@ -50,15 +50,18 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
     }
 
     @Override
-    public ChainDTO getChain(Long id) {
+    public ChainDetailDTO getChain(Long id) {
         if (id == null || id == 0L) {
             return null;
         }
         //查询分类
-        ChainDTO dto = chainService.detail(id);
-        if(dto == null){
+        ChainDTO chainDTO = chainService.detail(id);
+        if(chainDTO == null){
             return null;
         }
+        //转换成详情类
+        ChainDetailDTO dto = chainDTO.clone(ChainDetailDTO.class, CloneDirection.OPPOSITE);
+
         //查询连锁所属分类, 获取分类信息
         ChainTypeDTO chainTypeDTO = chainTypeService.detail(dto.getChainTypeId());
         if(chainTypeDTO != null){
@@ -107,7 +110,7 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
 
     @Override
     @Transactional
-    public Boolean updateChain(ChainDTO dto) {
+    public Boolean updateChain(ChainDetailDTO dto) {
         //判断编码是否重复
         if(!chainService.isCodeUnique(dto)){
             throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
@@ -122,22 +125,38 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
     }
 
     @Override
-    public List<ChainDTO> findPage(ChainQuery query) {
+    public List<ChainDetailDTO> findPage(ChainQuery query) {
         //获得连锁基本信息
         List<ChainDTO> chainDTOS = chainService.findPage(query);
         if(CollectionUtil.isEmpty(chainDTOS)){
             return null;
         }
+        List<ChainDetailDTO> chainDetailDTOS = ObjectCloneUtils.convertList(chainDTOS,ChainDetailDTO.class, CloneDirection.OPPOSITE);
         //获取连锁上一级信息
         // 得到所有连锁id
-        List<Long> idList = chainDTOS.stream().map(ChainDTO::getId).collect(Collectors.toList());
+        List<Long> idList = chainDetailDTOS.stream().map(ChainDetailDTO::getId).collect(Collectors.toList());
         ChainQuery parentQuery = new ChainQuery();
+        parentQuery.setPage(-1);
         parentQuery.setIds(idList);
         List<ChainDTO> parentChainDTOS = chainService.findPage(parentQuery);
         // id->连锁的map关系
         Map<Long, List<ChainDTO>> parentCollect =
                 parentChainDTOS.stream().collect(Collectors.groupingBy(ChainDTO::getId));
-        chainDTOS.forEach(m -> {
+
+
+        //获取连锁类型信息
+        //得到所有连锁类型信息
+        List<Long> chainTypeIds = chainDetailDTOS.stream().map(ChainDetailDTO::getChainTypeId).collect(Collectors.toList());
+        ChainTypeQuery typeQuery = new ChainTypeQuery();
+        typeQuery.setIds(chainTypeIds);
+        typeQuery.setPage(-1);
+        List<ChainTypeDTO> chainTypeDTOS = chainTypeService.findPage(typeQuery);
+        //chainTypeId->连锁类型的map关系
+        Map<Long, List<ChainTypeDTO>> chainTypeCollect =
+                chainTypeDTOS.stream().collect(Collectors.groupingBy(ChainTypeDTO::getId));
+
+        //拼接父级节点信息、类型信息
+        chainDetailDTOS.forEach(m -> {
             // 根据id对应设置父级名称字段
             List<ChainDTO> dos = parentCollect.get(m.getParentId());
             if (CollectionUtil.isEmpty(dos)) {
@@ -147,8 +166,18 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
                 m.setParentName(chainDTO.getChainName() == null ? "" :
                         chainDTO.getChainName());
             }
+
+            //根据chainTypeId对应设置类型名称字段
+            List<ChainTypeDTO> dos2 =  chainTypeCollect.get(m.getChainTypeId());
+            if(CollectionUtil.isEmpty(dos2)){
+                m.setChainTypeName("");
+            } else {
+                ChainTypeDTO chainTypeDTO = dos2.get(0);
+                m.setChainTypeName(chainTypeDTO.getChainTypeName() == null?"":chainTypeDTO.getChainTypeName());
+            }
         });
-        return chainDTOS;
+
+        return chainDetailDTOS;
     }
 
     /**
@@ -159,7 +188,7 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
      * @Author: mumu
      * @Date: 2019/9/1
     **/
-    private boolean saveChainAccountBrach(ChainDTO dto){
+    private boolean saveChainAccountBrach(ChainDetailDTO dto){
         List<BankAccountDTO> bankAccountDTOS = dto.getBankAccountList();
         if(CollectionUtil.isEmpty(bankAccountDTOS)){
             return true;
@@ -174,8 +203,6 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
                     .chainId(dto.getId())
                     .build();
             //TODO 下面这段代码设置租户id等是否必要，没设置会报不能为空
-            chainBankDTO.setTenantId(dto.getTenantId());
-            chainBankDTO.setAppId(dto.getAppId());
             chainBankDTO.setVersion(dto.getVersion());
             chainBankDTO.setUpdatedBy(dto.getUpdatedBy());
             chainBankDTO.setCreatedBy(dto.getCreatedBy());

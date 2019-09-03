@@ -29,19 +29,9 @@ public class ChainDTO extends BaseEntity {
     private Long parentId;
 
     /**
-     * 父节点名称
-     */
-    private String parentName;
-
-    /**
      * 连锁分类ID
      */
     private Long chainTypeId;
-
-    /**
-     * 连锁分类名称
-     */
-    private String chainTypeName;
 
     /**
      * 连锁名称
@@ -67,10 +57,6 @@ public class ChainDTO extends BaseEntity {
      * 营业执照
      */
     private String businessLicense;
-    /**
-     * 银行账户列表
-     */
-    private List<BankAccountDTO> bankAccountList;
 
     private String path;
 }

@@ -32,8 +32,13 @@ public class StoreQuery  extends CommQuery {
     /**
      * 门店编码
      */
-    @ApiModelProperty(value = "门店编码")
+    @ApiModelProperty(value = "门店编码,用于模糊查询")
     private String storeCode;
+    /**
+     * 门店编码
+     */
+    @ApiModelProperty(value = "门店精准编码，用于准确查询")
+    private String storeAccuracyCode;
 
     /**
      * 门店英文名称

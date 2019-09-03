@@ -5,15 +5,6 @@
         <result property="id" column="id" />
         <result property="storeTypeName" column="store_type_name" />
         <result property="storeTypeCode" column="store_type_code" />
-        <result property="storeTypeNameEn" column="store_type_name_en" />
-        <result property="description" column="description" />
-        <result property="version" column="version" />
-        <result property="remark" column="remark" />
-        <result property="dr" column="dr" />
-        <result property="createdBy" column="created_by" />
-        <result property="createdTime" column="created_time" />
-        <result property="updatedBy" column="updated_by" />
-        <result property="updatedTime" column="updated_time" />
         <result property="appId" column="app_id" />
         <result property="tenantId" column="tenant_id" />
     </resultMap>
@@ -24,6 +15,9 @@
         </if>
         <if test="storeTypeCode!=null and storeTypeCode!=''">
             and store_type_code like concat('%',#{storeTypeCode},'%')
+        </if>
+        <if test="storeTypeAccuracyCode!=null and storeTypeAccuracyCode!=''">
+            and store_type_code = #{storeTypeAccuracyCode}
         </if>
         <if test="storeTypeName!=null and storeTypeName!=''">
             and store_type_name like concat('%',#{storeTypeName},'%')
