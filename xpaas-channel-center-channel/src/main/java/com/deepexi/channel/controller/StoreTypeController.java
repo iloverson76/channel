@@ -45,7 +45,7 @@ public class StoreTypeController {
     }
 
     @GetMapping("/{id}")
-    public Payload<StoreTypeVO> detail(@PathVariable(value = "id", required = true) Integer  id) {
+    public Payload<StoreTypeVO> detail(@PathVariable(value = "id", required = true) Long  id) {
         StoreTypeDTO storeTypeDTO = storeTypeService.detail(id);
         if(storeTypeDTO == null){
             return new Payload();

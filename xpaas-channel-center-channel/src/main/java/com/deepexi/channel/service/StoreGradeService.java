@@ -26,7 +26,7 @@ public interface StoreGradeService {
       获取详情
     * @return
     */
-    StoreGradeDTO detail(Integer pk);
+    StoreGradeDTO detail(Long pk);
 
     /**
      更新eo

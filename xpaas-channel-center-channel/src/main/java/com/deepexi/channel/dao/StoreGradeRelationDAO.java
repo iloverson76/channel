@@ -6,4 +6,5 @@ import com.deepexi.channel.domain.store.StoreGradeDO;
 import com.deepexi.channel.domain.store.StoreGradeRelationDO;
 
 public interface StoreGradeRelationDAO extends IService<StoreGradeRelationDO>{
+    StoreGradeRelationDO getStoreGradeRelationByStoreId(Long pk);
 }
