@@ -45,10 +45,6 @@ public class DistributorGradeSystemServiceImpl implements DistributorGradeSystem
 
         DistributorGradeSystemDO eo=dto.clone(DistributorGradeSystemDO.class, CloneDirection.FORWARD);
 
-        dto.setTenantId(appRuntimeEnv.getTenantId());
-
-        dto.setAppId(appRuntimeEnv.getAppId());
-
         dto.setCreatedTime(new Date());
 
         dto.setUpdatedTime(new Date());

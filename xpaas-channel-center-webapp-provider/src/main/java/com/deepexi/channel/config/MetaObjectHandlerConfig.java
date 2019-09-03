@@ -1,29 +1,42 @@
 package com.deepexi.channel.config;
 
-import java.util.Date;
-
+import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
+import com.deepexi.channel.extension.AppRuntimeEnv;
+import com.deepexi.util.StringUtil;
 import org.apache.ibatis.reflection.MetaObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
+import java.util.Date;
+
 
 @Component
 public class MetaObjectHandlerConfig implements MetaObjectHandler {
 
+    @Autowired
+    private AppRuntimeEnv appRuntimeEnv;
+
     // mybatis-plus公共字段自动填充，https://baomidou.oschina.io/mybatis-plus-doc/#/auto-fill
     @Override
     public void insertFill(MetaObject metaObject) {
-//        System.out.println("插入方法实体填充");
-    	setFieldValByName("createdTime", new Date(), metaObject);
+        setFieldValByName("createdTime", new Date(), metaObject);
         setFieldValByName("updatedTime", new Date(), metaObject);
-        setFieldValByName("createdBy", "", metaObject);
-        setFieldValByName("updatedBy", "", metaObject);
+        setFieldValByName("tenantId", appRuntimeEnv.getTenantId(), metaObject);
+        setFieldValByName("createdBy", appRuntimeEnv.getUsername(), metaObject);
+        setFieldValByName("updatedBy", appRuntimeEnv.getUsername(), metaObject);
+        setFieldValByName("version", 1, metaObject);
+
+        if(StringUtil.isEmpty(appRuntimeEnv.getAppId())){
+            setFieldValByName("appId", "123456789", metaObject);
+        } else {
+            setFieldValByName("appId", appRuntimeEnv.getAppId(), metaObject);
+        }
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
-//        System.out.println("更新方法实体填充");
-    	setFieldValByName("updatedTime", new Date(), metaObject);
-        setFieldValByName("updatedBy", "", metaObject);
+        setFieldValByName("updatedTime", new Date(), metaObject);
+        setFieldValByName("updatedBy", appRuntimeEnv.getUsername(), metaObject);
+
     }
 }

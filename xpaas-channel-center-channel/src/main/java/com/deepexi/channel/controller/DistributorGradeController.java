@@ -35,8 +35,6 @@ public class DistributorGradeController {
 
         DistributorGradeDTO dto=vo.clone(DistributorGradeDTO.class, CloneDirection.FORWARD);
 
-
-
         Long result=distributorGradeService.create(dto);
 
         return new Payload(result);
@@ -44,10 +42,10 @@ public class DistributorGradeController {
 
     @GetMapping("/{id}/{systemId}")
     @ApiOperation(value = "根据id查看详情")
-    public Payload<DistributorGradeBusiVO> detail(@PathVariable(value = "id", required = true) long  pk,
+    public Payload<DistributorGradeBusiVO> detail(@PathVariable(value = "id", required = true) long  gradeId,
                                               @PathVariable(value = "systemId", required = true) long  systemId) {
 
-        DistributorGradeBusiVO vo=distributorGradeBusinessService.detail(pk,systemId).clone(DistributorGradeBusiVO.class,CloneDirection.OPPOSITE);
+        DistributorGradeBusiVO vo=distributorGradeBusinessService.detail(gradeId,systemId).clone(DistributorGradeBusiVO.class,CloneDirection.OPPOSITE);
 
         return new Payload<>(vo);
     }

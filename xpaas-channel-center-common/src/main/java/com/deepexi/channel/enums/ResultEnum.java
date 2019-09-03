@@ -6,6 +6,12 @@ import com.deepexi.util.constant.BaseEnumType;
  * Created by donh on 2019/1/8.
  */
 public enum ResultEnum implements BaseEnumType {
+    /**
+     * ERROR: getCurrentTenantId error.
+     */
+    GET_CURRENT_TENANT_ERROR("100004", "ERROR: getCurrentTenantId error."),
+    GET_CURRENT_APP_ERROR("100004", "ERROR: getCurrentAppId error."),
+
     RPC_ERROR("300000", "RPC调用异常!请检查服务是否正常!!!"),
 
     UNKNOWN_ERROR("500", "系统出异常啦!请联系管理员!!!"),
