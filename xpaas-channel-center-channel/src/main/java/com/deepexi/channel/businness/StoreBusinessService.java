@@ -1,10 +1,11 @@
 package com.deepexi.channel.businness;
 
 import com.deepexi.channel.domain.store.StoreDTO;
+import com.deepexi.channel.domain.store.StoreDetailDTO;
 
 public interface StoreBusinessService {
 
-    Long create(StoreDTO dto);
+    Long create(StoreDetailDTO dto);
 
     Boolean update(StoreDTO dto);
 

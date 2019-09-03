@@ -1,9 +1,7 @@
 package com.deepexi.channel.controller;
 
 import com.deepexi.channel.businness.StoreBusinessService;
-import com.deepexi.channel.domain.store.StoreDTO;
-import com.deepexi.channel.domain.store.StoreQuery;
-import com.deepexi.channel.domain.store.StoreVO;
+import com.deepexi.channel.domain.store.*;
 import com.deepexi.channel.service.StoreService;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pageHelper.PageBean;
@@ -44,7 +42,6 @@ public class StoreController {
     }
 
     @PutMapping("/{id}")
-    @Transactional
     @ApiOperation(value = "根据id修改", notes = "根据id修改CcStore")
     public Payload update(@PathVariable(value = "id", required = true) Long pk, @RequestBody StoreVO vo) {
      vo.setId(pk);
@@ -53,13 +50,12 @@ public class StoreController {
 
     @PostMapping
     @ApiOperation(value = "创建门店", notes = "创建门店")
-    public Payload create(@RequestBody StoreVO vo) {
-        StoreDTO storeDTO = vo.clone(StoreDTO.class);
-        return new Payload(storeBusinessService.create(storeDTO));
+    public Payload<Long> create(@RequestBody StoreDetailVO vo) {
+        StoreDetailDTO storeDetailDTO = vo.clone(StoreDetailDTO.class);
+        return new Payload(storeBusinessService.create(storeDetailDTO));
     }
 
     @DeleteMapping("/{ids}")
-    @Transactional
     @ApiOperation(value = "根据id批量删除门店", notes = "根据id批量删除store")
     public Payload delete(@PathVariable(value = "ids", required = true) List<Long> ids) {
         return new Payload(storeService.delete(ids));
