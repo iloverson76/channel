@@ -61,13 +61,6 @@ public class StoreGradeServiceImpl implements StoreGradeService {
     }
     @Override
     public Long create(StoreGradeDTO dto) {
-        if(dto == null){
-            return 0L;
-        }
-        //判断编码是否重复
-        if(!isCodeUnique(dto)){
-            throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
-        }
         StoreGradeDO storeGradeDO = dto.clone(StoreGradeDO.class);
         storeGradeDAO.save(storeGradeDO);
         return storeGradeDO.getId();

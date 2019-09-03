@@ -1,8 +1,11 @@
 package com.deepexi.channel.businness.impl;
 
 import com.deepexi.channel.businness.StoreBusinessService;
+import com.deepexi.channel.businness.StoreGradeBusinessService;
+import com.deepexi.channel.businness.StoreTypeBusinessService;
 import com.deepexi.channel.domain.store.StoreDTO;
 import com.deepexi.channel.domain.store.StoreDetailDTO;
+import com.deepexi.channel.domain.store.StoreGradeDTO;
 import com.deepexi.channel.domain.store.StoreTypeVO;
 import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.service.StoreGradeService;
@@ -22,18 +25,20 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
     StoreGradeService storeGradeService;
     @Autowired
     StoreTypeService storeTypeService;
+    @Autowired
+    StoreGradeBusinessService storeGradeBusinessService;
+    @Autowired
+    StoreTypeBusinessService storeTypeBusinessService;
 
     @Override
     @Transactional
     public Long create(StoreDetailDTO dto) {
-        //TODO 校验门店插入是否合法
-        if(!storeService.isCodeUnique(dto)){
-            throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
-        }
         //新增门店基本信息
         Long id = storeService.create(dto);
-
+        dto.setId(id);
         //新增门店等级关联
+        Long storeGradeRelationId = storeGradeBusinessService.saveStoreGradeRelation(dto);
+
         //新增门店类型关联
 
 
@@ -47,9 +52,7 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
     }
 
     @Override
-    public Boolean update(StoreDTO dto) {
-        //TODO 校验门店修改是否合法
-
+    public Boolean update(StoreDetailDTO dto) {
         //修改门店基本信息
         Boolean result = storeService.update(dto);
 

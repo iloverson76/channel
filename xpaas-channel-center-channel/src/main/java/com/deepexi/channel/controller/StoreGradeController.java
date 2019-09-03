@@ -4,9 +4,11 @@ import com.deepexi.channel.businness.StoreGradeBusinessService;
 import com.deepexi.channel.domain.store.StoreGradeDTO;
 import com.deepexi.channel.domain.store.StoreGradeQuery;
 import com.deepexi.channel.domain.store.StoreGradeVO;
+import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.service.StoreGradeService;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.config.Payload;
+import com.deepexi.util.extension.ApplicationException;
 import com.deepexi.util.pageHelper.PageBean;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
@@ -33,18 +35,18 @@ public class StoreGradeController {
 
     @GetMapping
     @ApiOperation(value = "分页查询", notes = "查询门店等级列表,传-1时获取整个列表")
-    public  Payload<PageBean<StoreGradeVO>> findPage(@ApiParam(name = "query", required = true) StoreGradeQuery query) {
+    public Payload<PageBean<StoreGradeVO>> findPage(@ApiParam(name = "query", required = true) StoreGradeQuery query) {
         List<StoreGradeDTO> storeGradeDTOS = storeGradeService.findPage(query);
-        if(CollectionUtil.isEmpty(storeGradeDTOS)){
+        if (CollectionUtil.isEmpty(storeGradeDTOS)) {
             return new Payload(null);
         }
-        List<StoreGradeVO> storeGradeVOS = ObjectCloneUtils.convertList(storeGradeDTOS,StoreGradeVO.class, CloneDirection.OPPOSITE);
+        List<StoreGradeVO> storeGradeVOS = ObjectCloneUtils.convertList(storeGradeDTOS, StoreGradeVO.class, CloneDirection.OPPOSITE);
         return new Payload<>(new PageBean<>(storeGradeVOS));
     }
 
     @GetMapping("/{id}")
     @ApiOperation(value = "查询门店等级详情", notes = "查询门店等级详情")
-    public Payload<StoreGradeVO> detail(@PathVariable(value = "id", required = true) Integer  pk) {
+    public Payload<StoreGradeVO> detail(@PathVariable(value = "id", required = true) Integer pk) {
         return new Payload(storeGradeService.detail(pk));
 
     }
@@ -53,15 +55,23 @@ public class StoreGradeController {
     @PutMapping("/{id}")
     @ApiOperation(value = "根据id修改", notes = "根据id修改门店等级")
     public Payload<Boolean> update(@PathVariable(value = "id", required = true) Long pk, @RequestBody StoreGradeVO vo) {
-     vo.setId(pk);
-     StoreGradeDTO storeGradeDTO = vo.clone(StoreGradeDTO.class);
-     return new Payload(storeGradeService.update(storeGradeDTO));
+        vo.setId(pk);
+        StoreGradeDTO storeGradeDTO = vo.clone(StoreGradeDTO.class);
+        //判断编码是否重复
+        if(!storeGradeService.isCodeUnique(storeGradeDTO)){
+            throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
+        }
+        return new Payload(storeGradeService.update(storeGradeDTO));
     }
 
     @PostMapping
     @ApiOperation(value = "创建门店等级", notes = "创建门店等级")
     public Payload<Long> create(@RequestBody StoreGradeVO vo) {
         StoreGradeDTO storeGradeDTO = vo.clone(StoreGradeDTO.class);
+        //判断编码是否重复
+        if(!storeGradeService.isCodeUnique(storeGradeDTO)){
+            throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
+        }
         return new Payload(storeGradeService.create(storeGradeDTO));
     }
 
@@ -69,6 +79,7 @@ public class StoreGradeController {
     @ApiOperation(value = "根据id批量删除门店等级", notes = "根据id批量删除门店等级")
     public Payload delete(@PathVariable(value = "id", required = true) String id) {
         List<Long> ids = Arrays.stream(id.split(",")).map(Long::parseLong).collect(Collectors.toList());
+        //TODO 校验是否有门店关联该门店等级
         return new Payload(storeGradeBusinessService.deleteGradeType(ids));
     }
 

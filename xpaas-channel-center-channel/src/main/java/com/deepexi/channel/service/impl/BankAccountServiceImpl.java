@@ -88,11 +88,7 @@ public class BankAccountServiceImpl implements BankAccountService {
 //
     @Override
     public Boolean delete(List<Long> ids) {
-        int result = bankAccountDAO.deleteBatchIds(ids);
-        if (result > 0) {
-            return true;
-        }
-        return false;
+        return bankAccountDAO.removeByIds(ids);
     }
 
 }
