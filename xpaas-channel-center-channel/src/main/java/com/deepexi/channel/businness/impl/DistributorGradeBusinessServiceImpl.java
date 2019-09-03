@@ -6,6 +6,8 @@ import com.deepexi.channel.service.DistributorGradeService;
 import com.deepexi.channel.service.DistributorGradeSystemService;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.pojo.CloneDirection;
+import com.deepexi.util.pojo.ObjectCloneUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +19,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusinessService {
-
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private DistributorGradeService distributorGradeService;
@@ -30,6 +31,8 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
     @Override
     public DistributorGradeDTO detail(Long gradeId,Long systemId) {
+
+        log.info("查看经销商等级详情");
 
         //等级表
         DistributorGradeDTO gdto=distributorGradeService.detail(gradeId).clone(DistributorGradeDTO.class,CloneDirection.OPPOSITE);
@@ -50,6 +53,8 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
     @Override
     public List<DistributorGradeBusiDTO> findPage(DistributorGradeQuery query) {
 
+        log.info("查找经销商等级列表");
+
         //等级表数据
         List<DistributorGradeDTO> gradeList = distributorGradeService.findPage(query);
 
@@ -65,36 +70,35 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
         List<DistributorGradeDTO> parentGradeList = distributorGradeService.findPage(parentQuery);
 
-        Map<Long, List<DistributorGradeDTO>> parentGradeMap =
-                parentGradeList.stream().collect(Collectors.groupingBy(DistributorGradeDTO::getId));
+        List<DistributorGradeBusiDTO> gradePageList=
+                ObjectCloneUtils.convertList(gradeList,DistributorGradeBusiDTO.class,CloneDirection.FORWARD);
 
-        List<DistributorGradeBusiDTO> gradePageList=new ArrayList<>();
+        if(CollectionUtil.isNotEmpty(parentGradeList)){
 
-        // 根据id设置父级编码和名称
-        gradeList.forEach(m -> {
+            Map<Long, List<DistributorGradeDTO>> parentGradeMap =
+                    parentGradeList.stream().collect(Collectors.groupingBy(DistributorGradeDTO::getId));
 
-            //先复制相同属性
-            DistributorGradeBusiDTO gradePageDTO=m.clone(DistributorGradeBusiDTO.class,CloneDirection.FORWARD);
+            // 根据id设置父级编码和名称
+            gradePageList.forEach(gradePageDTO -> {
 
-            List<DistributorGradeDTO> gradeDTOS = parentGradeMap.get(m.getParentId());
+                List<DistributorGradeDTO> gradeDTOS = parentGradeMap.get(gradePageDTO.getParentId());
 
-            if (CollectionUtil.isEmpty(gradeDTOS)) {
+                if (CollectionUtil.isEmpty(gradeDTOS)) {
 
-                gradePageDTO.setParentGradeCode("");
+                    gradePageDTO.setParentGradeCode("");
 
-                gradePageDTO.setParentGradeName("");
+                    gradePageDTO.setParentGradeName("");
 
-            } else {
+                } else {
 
-                DistributorGradeDTO gdto = gradeDTOS.get(0);//id是主键,只有一条记录
+                    DistributorGradeDTO gdto = gradeDTOS.get(0);//id是主键,只有一条记录
 
-                gradePageDTO.setParentGradeCode(gdto.getDistributorGradeCode() == null ? "" : gdto.getDistributorGradeCode());
+                    gradePageDTO.setParentGradeCode(gdto.getDistributorGradeCode() == null ? "" : gdto.getDistributorGradeCode());
 
-                gradePageDTO.setParentGradeName(gdto.getDistributorGradeName()==null? "": gdto.getDistributorGradeName());
-            }
-
-            gradePageList.add(gradePageDTO);
-        });
+                    gradePageDTO.setParentGradeName(gdto.getDistributorGradeName()==null? "": gdto.getDistributorGradeName());
+                }
+            });
+        }
 
         //体系表数据
         List<Long> systemIdList=gradeList.stream().map(DistributorGradeDTO::getGradeSystemId).

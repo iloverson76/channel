@@ -45,10 +45,6 @@ public class DistributorGradeSystemServiceImpl implements DistributorGradeSystem
 
         DistributorGradeSystemDO eo=dto.clone(DistributorGradeSystemDO.class, CloneDirection.FORWARD);
 
-        dto.setCreatedTime(new Date());
-
-        dto.setUpdatedTime(new Date());
-
         distributorGradeSystemDAO.save(eo);
 
         long id=eo.getId();

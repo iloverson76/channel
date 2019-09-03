@@ -26,6 +26,17 @@ public class DistributorGradeSystemController {
     @Autowired
     private DistributorGradeSystemService distributorGradeSystemService;
 
+    @PostMapping
+    @ApiOperation(value = "创建经销商体系")
+    public Payload<Long> create(@RequestBody DistributorGradeSystemVO vo) {
+
+        DistributorGradeSystemDTO dto=vo.clone(DistributorGradeSystemDTO.class, CloneDirection.FORWARD);
+
+        distributorGradeSystemService.validateDuplicatedNameAndCode(dto);
+
+        return new Payload(distributorGradeSystemService.create(dto));
+    }
+
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id查看详情")
     public Payload detail(@PathVariable(value = "id", required = true) long  pk) {
@@ -43,17 +54,6 @@ public class DistributorGradeSystemController {
         DistributorGradeSystemDTO dto=vo.clone(DistributorGradeSystemDTO.class,CloneDirection.FORWARD);
 
         return new Payload<>(distributorGradeSystemService.update(dto));
-    }
-
-    @PostMapping
-    @ApiOperation(value = "创建经销商体系")
-    public Payload<Long> create(@RequestBody DistributorGradeSystemVO vo) {
-
-        DistributorGradeSystemDTO dto=vo.clone(DistributorGradeSystemDTO.class, CloneDirection.FORWARD);
-
-        distributorGradeSystemService.validateDuplicatedNameAndCode(dto);
-
-        return new Payload(distributorGradeSystemService.create(dto));
     }
 
     @DeleteMapping("/{id:[0-9,]+}")

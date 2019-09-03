@@ -104,7 +104,11 @@ public class AppRuntimeEnv {
     }
 
     public String getUsername() {
-        return USERNAME.get();
+        String userName = USERNAME.get();
+        if (userName == null) {
+            return "chp";
+        }
+        return userName;
     }
 
     public String getRequestId() {
