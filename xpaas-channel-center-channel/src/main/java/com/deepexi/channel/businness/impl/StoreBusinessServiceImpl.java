@@ -4,10 +4,7 @@ import com.deepexi.channel.businness.StoreBusinessService;
 import com.deepexi.channel.businness.StoreChainBusinessService;
 import com.deepexi.channel.businness.StoreGradeBusinessService;
 import com.deepexi.channel.businness.StoreTypeBusinessService;
-import com.deepexi.channel.domain.store.StoreDTO;
-import com.deepexi.channel.domain.store.StoreDetailDTO;
-import com.deepexi.channel.domain.store.StoreGradeDTO;
-import com.deepexi.channel.domain.store.StoreTypeVO;
+import com.deepexi.channel.domain.store.*;
 import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.service.StoreGradeService;
 import com.deepexi.channel.service.StoreService;
@@ -79,13 +76,16 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
     }
 
     @Override
-    public StoreDTO detail(Integer pk) {
-        StoreDTO result = storeService.detail(pk);
-
+    public StoreDetailDTO detail(Long pk) {
+        StoreDTO storeDTO = storeService.detail(pk);
+        StoreDetailDTO result = storeDTO.clone(StoreDetailDTO.class);
         //获取门店等级关联
+        StoreGradeDTO storeGradeDTO = storeGradeBusinessService.getStroeGradeByStoreId(pk);
+        result.setStoreGradeDTO(storeGradeDTO);
 
         //获取门店类型关联
-
+        StoreTypeDTO storeTypeDTO = storeTypeBusinessService.getStoreTypeByStoreId(pk);
+        result.setStoreTypeDTO(storeTypeDTO);
         //查询门店连锁关联
 
         //查询门店区域关联

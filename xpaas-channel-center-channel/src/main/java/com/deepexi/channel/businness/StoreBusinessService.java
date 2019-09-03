@@ -9,5 +9,5 @@ public interface StoreBusinessService {
 
     Boolean update(StoreDetailDTO dto);
 
-    StoreDTO detail(Integer pk);
+    StoreDetailDTO detail(Long pk);
 }

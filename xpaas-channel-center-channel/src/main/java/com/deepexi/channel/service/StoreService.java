@@ -22,7 +22,7 @@ public interface StoreService {
       获取详情
     * @return
     */
-    StoreDTO detail(Integer pk);
+    StoreDTO detail(Long pk);
 
     /**
      更新dto
