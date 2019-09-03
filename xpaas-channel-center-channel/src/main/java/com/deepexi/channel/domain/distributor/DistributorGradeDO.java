@@ -48,6 +48,6 @@ public class DistributorGradeDO extends BaseEntity {
     /**
      * 所属体系ID
      */
-    private String gradeSystemId;
+    private Long gradeSystemId;
 
 }

@@ -50,7 +50,7 @@ public class DistributorGradeController {
         return new Payload<>(vo);
     }
 
-    @PutMapping("/{id:[0-9]}")
+    @PutMapping()
     @Transactional
     @ApiOperation(value = "根据id修改经销商等级")
     public Payload<Boolean> update(@RequestBody DistributorGradeVO vo) {
@@ -75,7 +75,7 @@ public class DistributorGradeController {
 
         List<DistributorGradeBusiDTO> dtoList= distributorGradeBusinessService.findPage(query);
 
-        List<DistributorGradeBusiVO> voList= ObjectCloneUtils.convertList(dtoList, DistributorGradeBusiVO.class);;
+        List<DistributorGradeBusiVO> voList= ObjectCloneUtils.convertList(dtoList, DistributorGradeBusiVO.class);
 
         return new Payload<>(new PageBean<>(voList));
     }
