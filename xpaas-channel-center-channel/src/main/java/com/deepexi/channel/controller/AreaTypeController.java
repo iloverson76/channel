@@ -5,7 +5,7 @@ import com.deepexi.channel.domain.area.AreaTypeDTO;
 import com.deepexi.channel.domain.area.AreaTypeQuery;
 import com.deepexi.channel.domain.area.AreaTypeVO;
 import com.deepexi.channel.extension.AppRuntimeEnv;
-import com.deepexi.channel.service.business.AreaTypeService;
+import com.deepexi.channel.service.AreaTypeService;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pageHelper.PageBean;
 import com.deepexi.util.pojo.CloneDirection;

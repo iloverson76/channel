@@ -1,4 +1,4 @@
-package com.deepexi.channel.service.business;
+package com.deepexi.channel.service;
 
 import com.deepexi.channel.domain.area.AreaTypeDTO;
 import com.deepexi.channel.domain.area.AreaTypeQuery;
@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**

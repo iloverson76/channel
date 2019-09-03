@@ -1,8 +1,7 @@
 package com.deepexi.channel.controller;
 
-import com.deepexi.channel.domain.distributor.DistributorGradeDTO;
-import com.deepexi.channel.domain.distributor.DistributorGradeQuery;
-import com.deepexi.channel.domain.distributor.DistributorGradeVO;
+import com.deepexi.channel.businness.DistributorGradeBusinessService;
+import com.deepexi.channel.domain.distributor.*;
 import com.deepexi.channel.service.DistributorGradeService;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pageHelper.PageBean;
@@ -27,22 +26,28 @@ public class DistributorGradeController {
     @Autowired
     private DistributorGradeService distributorGradeService;
 
+    @Autowired
+    DistributorGradeBusinessService distributorGradeBusinessService;
+
     @PostMapping
     @ApiOperation(value = "创建经销商等级")
     public Payload<Long> create(@RequestBody DistributorGradeVO vo) {
 
         DistributorGradeDTO dto=vo.clone(DistributorGradeDTO.class, CloneDirection.FORWARD);
 
+
+
         Long result=distributorGradeService.create(dto);
 
         return new Payload(result);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/{systemId}")
     @ApiOperation(value = "根据id查看详情")
-    public Payload<DistributorGradeVO> detail(@PathVariable(value = "id", required = true) long  pk) {
+    public Payload<DistributorGradeBusiVO> detail(@PathVariable(value = "id", required = true) long  pk,
+                                              @PathVariable(value = "systemId", required = true) long  systemId) {
 
-        DistributorGradeVO vo=distributorGradeService.detail(pk).clone(DistributorGradeVO.class,CloneDirection.OPPOSITE);
+        DistributorGradeBusiVO vo=distributorGradeBusinessService.detail(pk,systemId).clone(DistributorGradeBusiVO.class,CloneDirection.OPPOSITE);
 
         return new Payload<>(vo);
     }
@@ -68,11 +73,11 @@ public class DistributorGradeController {
 
     @GetMapping
     @ApiOperation(value = "分页查询", notes = "分页请求")
-    public  Payload<PageBean<DistributorGradeVO>> findPage(@ApiParam(name = "query", required = true) DistributorGradeQuery query) {
+    public  Payload<PageBean<DistributorGradeBusiVO>> findPage(@ApiParam(name = "query", required = true) DistributorGradeQuery query) {
 
-        List<DistributorGradeDTO> dtoList=distributorGradeService.findPage(query);
+        List<DistributorGradeBusiDTO> dtoList= distributorGradeBusinessService.findPage(query);
 
-        List<DistributorGradeVO> voList= ObjectCloneUtils.convertList(dtoList, DistributorGradeVO.class);;
+        List<DistributorGradeBusiVO> voList= ObjectCloneUtils.convertList(dtoList, DistributorGradeBusiVO.class);;
 
         return new Payload<>(new PageBean<>(voList));
     }

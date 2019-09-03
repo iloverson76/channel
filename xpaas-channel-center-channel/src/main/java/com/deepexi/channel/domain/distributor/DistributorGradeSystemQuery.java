@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import java.util.List;
+
 /**
  * <p>
  * 等级体系表
@@ -33,4 +35,10 @@ public class DistributorGradeSystemQuery extends CommQuery {
      */
     @ApiModelProperty("等级体系编码")
     private String gradeSystemCode;
+
+    @ApiModelProperty(value = "主键列表", example = "123")
+    private List<Long> ids;
+
+    @ApiModelProperty(value = "主键", example = "123")
+    private Long id;
 }

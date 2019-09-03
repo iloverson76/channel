@@ -8,6 +8,7 @@ import com.deepexi.channel.service.DistributorGradeService;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import com.github.pagehelper.PageHelper;
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class DistributorGradeServiceImpl implements DistributorGradeService {
     public Long create(DistributorGradeDTO dto) {
 
         if(null==dto){
-            return -1L;
+            return 0L;
         }
 
         DistributorGradeDO eo=dto.clone(DistributorGradeDO.class, CloneDirection.FORWARD);
@@ -58,6 +59,10 @@ public class DistributorGradeServiceImpl implements DistributorGradeService {
     @Override
     public Boolean delete(List<Long> ids) {
 
+        if(CollectionUtils.isEmpty(ids)){
+            return false;
+        }
+
         return distributorGradeDAO.removeByIds(ids);
     }
 
@@ -69,6 +74,10 @@ public class DistributorGradeServiceImpl implements DistributorGradeService {
         }
 
         List<DistributorGradeDO> eoList = distributorGradeDAO.findPage(query);
+
+        if(CollectionUtils.isEmpty(eoList)){
+            return null;
+        }
 
         return ObjectCloneUtils.convertList(eoList, DistributorGradeDTO.class, CloneDirection.OPPOSITE);
     }

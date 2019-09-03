@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 @Api(description = "经销商体系")
 @RestController
-@RequestMapping("/api/v1/distributorSystem")
+@RequestMapping("/api/v1/distributorGradeSystem")
 public class DistributorGradeSystemController {
 
     @Autowired
@@ -50,6 +50,8 @@ public class DistributorGradeSystemController {
     public Payload<Long> create(@RequestBody DistributorGradeSystemVO vo) {
 
         DistributorGradeSystemDTO dto=vo.clone(DistributorGradeSystemDTO.class, CloneDirection.FORWARD);
+
+        distributorGradeSystemService.validateDuplicatedNameAndCode(dto);
 
         return new Payload(distributorGradeSystemService.create(dto));
     }

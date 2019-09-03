@@ -9,7 +9,7 @@ import com.deepexi.channel.domain.area.AreaTypeQuery;
 import com.deepexi.channel.enums.LimitedEnum;
 import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.extension.AppRuntimeEnv;
-import com.deepexi.channel.service.business.AreaTypeService;
+import com.deepexi.channel.service.AreaTypeService;
 import com.deepexi.util.extension.ApplicationException;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
@@ -20,7 +20,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -230,18 +233,6 @@ public class AreaTypeServiceImpl implements AreaTypeService {
         unLimitedNodes.removeAll(removeList);
 
         return ObjectCloneUtils.convertList(unLimitedNodes,AreaTypeDTO.class);
-    }
-
-    private AreaTypeDTO getParentNodeById(Long parentId){
-
-        QueryWrapper<AreaTypeDO> wp=getQueryWrapper(parentId);
-
-        AreaTypeDO ado=areaTypeDAO.getOne(wp);
-
-        if(null!=ado){
-            return ado.clone(AreaTypeDTO.class,CloneDirection.OPPOSITE);
-        }
-        return null;
     }
 
     private QueryWrapper<AreaTypeDO> getQueryWrapper(Long id){
