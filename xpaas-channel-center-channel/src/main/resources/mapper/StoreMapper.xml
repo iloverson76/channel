@@ -35,7 +35,7 @@
             and store_name like concat('%',#{storeName},'%')
         </if>
         <if test="enable!=null and enable!=''">
-            and enable like concat('%',#{enable},'%')
+            and enable = #{enable}
         </if>
         <if test="startTime != null">
             and created_time &gt;= #{startTime}

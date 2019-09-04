@@ -5,6 +5,7 @@ import com.deepexi.channel.dao.StoreTypeRelationDAO;
 import com.deepexi.channel.domain.store.StoreDetailDTO;
 import com.deepexi.channel.domain.store.StoreTypeDTO;
 import com.deepexi.channel.domain.store.StoreTypeRelationDO;
+import com.deepexi.channel.domain.store.StoreTypeRelationDTO;
 import com.deepexi.channel.service.StoreTypeRelationService;
 import com.deepexi.channel.service.StoreTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class StoreTypeBusinessServiceImpl implements StoreTypeBusinessService {
     @Autowired
     StoreTypeService storeTypeService;
     @Autowired
-    StoreTypeRelationService storeTypeRelationDAO;
+    StoreTypeRelationService storeTypeRelationService;
 
     @Override
     public Boolean deleteStoreType(List<Long> ids) {
@@ -29,18 +30,17 @@ public class StoreTypeBusinessServiceImpl implements StoreTypeBusinessService {
     @Override
     public Long saveStoreTypeRelation(StoreDetailDTO dto) {
         StoreTypeDTO storeTypeDTO = dto.getStoreTypeDTO();
-        StoreTypeRelationDO storeTypeRelationDO = StoreTypeRelationDO.builder().storeTypeId(storeTypeDTO.getId()).storeId(dto.getId()).build();
-        storeTypeRelationDAO.save(storeTypeRelationDO);
-        return storeTypeRelationDO.getId();
+        StoreTypeRelationDTO storeTypeRelationDTO = StoreTypeRelationDTO.builder().storeTypeId(storeTypeDTO.getId()).storeId(dto.getId()).build();
+        return storeTypeRelationService.save(storeTypeRelationDTO);
     }
 
     @Override
     public StoreTypeDTO getStoreTypeByStoreId(Long pk) {
-        StoreTypeRelationDO storeTypeRelationDO = storeTypeRelationDAO.getStoreTypeRelationByStoreId(pk);
-        if(storeTypeRelationDO == null){
+        StoreTypeRelationDTO storeTypeRelationDTO = storeTypeRelationService.getStoreTypeRelationByStoreId(pk);
+        if(storeTypeRelationDTO == null){
             return null;
         }
-        StoreTypeDTO storeTypeDTO = storeTypeService.detail(storeTypeRelationDO.getStoreTypeId());
+        StoreTypeDTO storeTypeDTO = storeTypeService.detail(storeTypeRelationDTO.getStoreTypeId());
         return storeTypeDTO;
     }
 }
