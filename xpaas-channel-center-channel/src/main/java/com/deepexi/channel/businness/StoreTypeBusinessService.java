@@ -11,4 +11,6 @@ public interface StoreTypeBusinessService {
     Long saveStoreTypeRelation(StoreDetailDTO dto);
 
     StoreTypeDTO getStoreTypeByStoreId(Long pk);
+
+    boolean haveStoreRelation(List<Long> ids);
 }
