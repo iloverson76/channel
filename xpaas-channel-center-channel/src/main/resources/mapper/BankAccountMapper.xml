@@ -28,7 +28,7 @@
 
     <select id="getBankAccountByIds" resultType="com.deepexi.channel.domain.bank.BankAccountDO">
         select * from cc_bank_account where dr = 0
-        <if test="ids != null">
+        <if test="ids != null and ids.size()>0">
             and id in
             <foreach collection="ids" item="tempId" index="index" open="(" close=")" separator=",">
                 #{tempId}

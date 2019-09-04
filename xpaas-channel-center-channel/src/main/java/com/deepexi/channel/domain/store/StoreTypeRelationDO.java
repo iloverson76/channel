@@ -2,7 +2,7 @@ package com.deepexi.channel.domain.store;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.deepexi.channel.domain.BaseEntity;
+import com.deepexi.channel.domain.SuperEntity;
 import io.swagger.annotations.ApiModel;
 import lombok.*;
 
@@ -13,7 +13,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @ApiModel(description = "门店-等级关联表")
-public class StoreTypeRelationDO extends BaseEntity {
+public class StoreTypeRelationDO extends SuperEntity {
     @TableField(value = "`store_id`")
     private Long  storeId;
     @TableField(value = "`store_type_Id`")

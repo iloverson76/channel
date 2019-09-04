@@ -1,12 +1,9 @@
 package com.deepexi.channel.domain.chain;
 
-import com.deepexi.channel.domain.BaseEntity;
-import com.deepexi.channel.domain.bank.BankAccountVO;
+import com.deepexi.channel.domain.SuperEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-
-import java.util.List;
 
 /**
  * <p>
@@ -22,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @ApiModel("连锁")
-public class ChainVO extends BaseEntity {
+public class ChainVO extends SuperEntity {
 
     private static final long serialVersionUID = 1L;
 

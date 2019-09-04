@@ -1,7 +1,7 @@
 package com.deepexi.channel.domain.store;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.deepexi.channel.domain.BaseEntity;
+import com.deepexi.channel.domain.SuperEntity;
 import lombok.*;
 
 @EqualsAndHashCode(callSuper = true)
@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class StoreTypeRelationDTO extends BaseEntity {
+public class StoreTypeRelationDTO extends SuperEntity {
     @TableField(value = "`store_id`")
     private Long  storeId;
     @TableField(value = "`store_type_Id`")

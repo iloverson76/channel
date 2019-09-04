@@ -1,7 +1,7 @@
 package com.deepexi.channel.domain.chain;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.deepexi.channel.domain.BaseEntity;
+import com.deepexi.channel.domain.SuperEntity;
 import io.swagger.annotations.ApiModel;
 import lombok.*;
 
@@ -20,7 +20,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @ApiModel(value="chainType对象", description="区域类型表")
-public class ChainTypeDO extends BaseEntity {
+public class ChainTypeDO extends SuperEntity {
 
     private static final long serialVersionUID = 1L;
 

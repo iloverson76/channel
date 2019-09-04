@@ -2,8 +2,7 @@ package com.deepexi.channel.domain.store;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.deepexi.channel.domain.BaseEntity;
-import io.swagger.annotations.ApiModel;
+import com.deepexi.channel.domain.SuperEntity;
 import lombok.*;
 
 @EqualsAndHashCode(callSuper = true)
@@ -12,7 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class StoreChainDO extends BaseEntity {
+public class StoreChainDO extends SuperEntity {
     // @ApiModelProperty(value = "门店Id")
     @TableField(value = "`store_id`")
     private Integer  storeId;
