@@ -1,14 +1,9 @@
 package com.deepexi.channel.domain.store;
 
-import com.deepexi.channel.domain.BaseEntity;
-import com.deepexi.channel.domain.area.AreaVO;
-import com.deepexi.channel.domain.chain.ChainVO;
-import com.deepexi.channel.domain.distributor.DistributorVO;
+import com.deepexi.channel.domain.SuperEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-
-import java.util.List;
 
 /**
  * <p>
@@ -24,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @ApiModel("门店")
-public class StoreVO extends BaseEntity {
+public class StoreVO extends SuperEntity {
 
     private static final long serialVersionUID = 1L;
 

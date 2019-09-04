@@ -1,6 +1,6 @@
 package com.deepexi.channel.domain.chain;
 
-import com.deepexi.channel.domain.BaseEntity;
+import com.deepexi.channel.domain.SuperEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -19,7 +19,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @ApiModel("连锁类型")
-public class ChainTypeVO extends BaseEntity {
+public class ChainTypeVO extends SuperEntity {
 
     private static final long serialVersionUID = 1L;
 
