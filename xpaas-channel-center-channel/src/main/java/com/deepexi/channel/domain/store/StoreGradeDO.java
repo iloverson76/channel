@@ -1,7 +1,7 @@
 package com.deepexi.channel.domain.store;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.deepexi.channel.domain.BaseEntity;
+import com.deepexi.channel.domain.SuperEntity;
 import io.swagger.annotations.ApiModel;
 import lombok.*;
 
@@ -19,8 +19,8 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ApiModel(value="storeGrade对象", description="门店等级表")
-public class StoreGradeDO extends BaseEntity {
+@ApiModel(value = "storeGrade对象", description = "门店等级表")
+public class StoreGradeDO extends SuperEntity {
 
     private static final long serialVersionUID = 1L;
 
