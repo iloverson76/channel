@@ -1,6 +1,6 @@
 package com.deepexi.channel.domain.area;
 
-import com.deepexi.channel.domain.BaseEntity;
+import com.deepexi.util.pojo.AbstractObject;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -19,9 +19,11 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @ApiModel("区域")
-public class AreaVO extends BaseEntity {
+public class AreaVO extends AbstractObject {
 
     private static final long serialVersionUID = 1L;
+
+    private Long id;
 
     /**
      * 父节点ID

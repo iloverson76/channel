@@ -1,6 +1,9 @@
 package com.deepexi.channel.service.impl;
 
+import com.deepexi.channel.dao.DistributorDAO;
+import com.deepexi.channel.domain.distributor.DistributorDO;
 import com.deepexi.channel.domain.distributor.DistributorDTO;
+import com.deepexi.util.pojo.CloneDirection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
@@ -15,12 +18,27 @@ import com.deepexi.util.BeanPowerHelper;
 
 @Service
 public class DistributorServiceImpl implements DistributorService {
+
+    @Autowired
+    DistributorService distributorService;
+
+    @Autowired
+    DistributorDAO distributorDAO;
+
     @Override
-    public boolean create(DistributorDTO dto) {
+    public long create(DistributorDTO dto) {
 
+        if(null==dto){
+            return 0L;
+        }
 
-        return false;
+        DistributorDO eo=dto.clone(DistributorDO.class, CloneDirection.FORWARD);
+
+        distributorDAO.save(eo);
+
+        return eo.getId();
     }
+
 
 
 }

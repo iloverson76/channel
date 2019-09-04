@@ -12,5 +12,5 @@ import java.util.List;
 public interface DistributorService {
 
 
-    boolean create(DistributorDTO dto);
+    long create(DistributorDTO dto);
 }

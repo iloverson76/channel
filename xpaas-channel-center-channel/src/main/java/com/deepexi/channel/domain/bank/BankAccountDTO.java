@@ -1,6 +1,6 @@
 package com.deepexi.channel.domain.bank;
 
-import com.deepexi.channel.domain.BaseEntity;
+import com.deepexi.channel.domain.SuperEntity;
 import lombok.*;
 
 /**
@@ -16,7 +16,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class BankAccountDTO extends BaseEntity {
+public class BankAccountDTO extends SuperEntity {
 
     private static final long serialVersionUID = 1L;
 

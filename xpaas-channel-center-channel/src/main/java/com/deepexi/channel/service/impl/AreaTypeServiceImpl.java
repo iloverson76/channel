@@ -73,7 +73,7 @@ public class AreaTypeServiceImpl implements AreaTypeService {
 
         if (0==parentId) {
 
-            newNode.setPath(String.valueOf(newId));//首次创建
+            newNode.setPath("/"+String.valueOf(newId));//首次创建
 
         } else {
 
@@ -87,7 +87,7 @@ public class AreaTypeServiceImpl implements AreaTypeService {
 
     @Transactional
     @Override
-    public boolean updateAreaTypeById(AreaTypeDTO dto) {//新的dto的数据--
+    public boolean updateAreaTypeById(AreaTypeDTO dto) {//新的dto的数据
 
         UpdateWrapper<AreaTypeDO> wrapper = new UpdateWrapper<>();
 
@@ -274,7 +274,7 @@ public class AreaTypeServiceImpl implements AreaTypeService {
 
         List<AreaTypeDO> childNodes=areaTypeDAO.listChildNodes(appRuntimeEnv.getTenantId(),appRuntimeEnv.getAppId(),parentId+"/");
 
-        if(null!=childNodes){
+        if(CollectionUtils.isNotEmpty(childNodes)){
 
             childNodes.forEach(ado->{
 

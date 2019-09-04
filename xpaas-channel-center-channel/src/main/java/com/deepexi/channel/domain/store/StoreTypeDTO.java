@@ -1,6 +1,6 @@
 package com.deepexi.channel.domain.store;
 
-import com.deepexi.channel.domain.BaseEntity;
+import com.deepexi.channel.domain.SuperEntity;
 import lombok.*;
 
 /**
@@ -16,7 +16,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class StoreTypeDTO extends BaseEntity {
+public class StoreTypeDTO extends SuperEntity {
 
     private static final long serialVersionUID = 1L;
 

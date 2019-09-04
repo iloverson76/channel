@@ -99,4 +99,12 @@ public class ChainController {
             return new Payload<>(false);
         }
     }
+
+    @PostMapping("/tree")
+    @ApiOperation(value = "根据id批量删除连锁", notes = "根据id删除连锁")
+    public Payload<Boolean> saveTree(@RequestBody ChainTreeVO vo){
+
+        return new Payload<>(true);
+    }
+
 }

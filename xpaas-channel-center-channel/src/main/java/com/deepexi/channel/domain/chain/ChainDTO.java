@@ -1,10 +1,7 @@
 package com.deepexi.channel.domain.chain;
 
-import com.deepexi.channel.domain.BaseEntity;
-import com.deepexi.channel.domain.bank.BankAccountDTO;
+import com.deepexi.channel.domain.SuperEntity;
 import lombok.*;
-
-import java.util.List;
 
 /**
  * <p>
@@ -19,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ChainDTO extends BaseEntity {
+public class ChainDTO extends SuperEntity {
 
     private static final long serialVersionUID = 1L;
 

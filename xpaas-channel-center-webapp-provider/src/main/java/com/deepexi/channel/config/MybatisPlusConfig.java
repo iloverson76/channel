@@ -34,8 +34,6 @@ import java.util.List;
 public class MybatisPlusConfig {
 
     private static final String SYSTEM_TENANT_ID = "tenantId";
-    private static final String SYSTEM_APP_ID = "appId";
-
 
     private static final List<String> IGNORE_TENANT_TABLES = Lists.newArrayList("tc_tenant");
 
@@ -49,7 +47,6 @@ public class MybatisPlusConfig {
 
         PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
         TenantSqlParser tenantSqlParser = new TenantSqlParserConfig();
-        TenantSqlParser tenantSqlParser1 = new TenantSqlParserConfig();
 
         // SQL解析处理拦截：增加租户处理回调。
         tenantSqlParser.setTenantHandler(new TenantHandler() {
@@ -79,35 +76,7 @@ public class MybatisPlusConfig {
                 return IGNORE_TENANT_TABLES.stream().anyMatch(e -> e.equalsIgnoreCase(tableName));
             }
         });
-        //appid
-        tenantSqlParser1.setTenantHandler(new TenantHandler() {
-
-            @Override
-            public Expression getTenantId() {
-                String appId = appRuntimeEnv.getAppId();
-                if (null == appId) {
-                    throw new ApplicationException(ResultEnum.GET_CURRENT_APP_ERROR);
-                }
-                return new StringValue(appId);
-            }
-
-            @Override
-            public String getTenantIdColumn() {
-                log.info("\n是否将租户字段转换成为驼峰格式：{}", flag);
-                if (Boolean.parseBoolean(flag)) {
-                    return CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, SYSTEM_APP_ID);
-                } else {
-                    return SYSTEM_APP_ID;
-                }
-            }
-
-            @Override
-            public boolean doTableFilter(String tableName) {
-                // 忽略掉一些表：如租户表（tc_tenant）本身不需要执行这样的处理。
-                return IGNORE_TENANT_TABLES.stream().anyMatch(e -> e.equalsIgnoreCase(tableName));
-            }
-        });
-        paginationInterceptor.setSqlParserList(Lists.newArrayList(tenantSqlParser,tenantSqlParser1));
+        paginationInterceptor.setSqlParserList(Lists.newArrayList(tenantSqlParser));
         // 增加sql过滤
         // addSqlFilter(paginationInterceptor);
         return paginationInterceptor;

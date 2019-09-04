@@ -1,9 +1,6 @@
 package com.deepexi.channel.domain.distributor;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.deepexi.channel.domain.BaseEntity;
+import com.deepexi.util.pojo.AbstractObject;
 import io.swagger.annotations.ApiModel;
 import lombok.*;
 
@@ -21,9 +18,11 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @ApiModel(value="DistributorArea对象", description="经销商-银行账号关联表")
-public class DistributorBankAccountRelationDTO extends BaseEntity {
+public class DistributorBankAccountRelationDTO extends AbstractObject {
 
     private static final long serialVersionUID = 1L;
+
+    private Long id;
 
     /**
      * 经销商ID
