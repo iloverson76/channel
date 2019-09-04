@@ -3,10 +3,8 @@ package com.deepexi.channel.dao.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.deepexi.channel.dao.StoreGradeRelationDAO;
-import com.deepexi.channel.domain.store.StoreGradeDO;
-import com.deepexi.channel.domain.store.StoreGradeQuery;
 import com.deepexi.channel.domain.store.StoreGradeRelationDO;
-import com.deepexi.channel.mapper.StoreGradeMapper;
+import com.deepexi.channel.domain.store.StoreGradeRelationQuery;
 import com.deepexi.channel.mapper.StoreGradeRelationMapper;
 import com.deepexi.util.CollectionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +16,11 @@ import java.util.List;
 public class StoreGradeRelationDAOImpl extends ServiceImpl<StoreGradeRelationMapper, StoreGradeRelationDO> implements StoreGradeRelationDAO {
     @Autowired
     StoreGradeRelationMapper storeGradeRelationMapper;
+
+    @Override
+    public List<StoreGradeRelationDO> findAll(StoreGradeRelationQuery query) {
+        return storeGradeRelationMapper.findAll(query);
+    }
 
     @Override
     public StoreGradeRelationDO getStoreGradeRelationByStoreId(Long storeId) {

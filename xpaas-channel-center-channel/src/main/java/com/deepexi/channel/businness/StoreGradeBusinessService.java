@@ -11,4 +11,6 @@ public interface StoreGradeBusinessService {
     Long saveStoreGradeRelation(StoreDetailDTO dto);
 
     StoreGradeDTO getStroeGradeByStoreId(Long pk);
+
+    boolean haveStoreRelation(List<Long> ids);
 }

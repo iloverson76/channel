@@ -1,9 +1,14 @@
 package com.deepexi.channel.service;
 
-import com.deepexi.channel.domain.store.StoreTypeRelationDO;
+import com.deepexi.channel.domain.store.StoreTypeRelationDTO;
+import com.deepexi.channel.domain.store.StoreTypeRelationQuery;
+
+import java.util.List;
 
 public interface StoreTypeRelationService {
-    Long save(StoreTypeRelationDO storeTypeRelationDO);
+    Long save(StoreTypeRelationDTO storeTypeRelationDTO);
 
-    StoreTypeRelationDO getStoreTypeRelationByStoreId(Long pk);
+    StoreTypeRelationDTO getStoreTypeRelationByStoreId(Long pk);
+
+    List<StoreTypeRelationDTO> findAll(StoreTypeRelationQuery storeGradeRelationQuery);
 }

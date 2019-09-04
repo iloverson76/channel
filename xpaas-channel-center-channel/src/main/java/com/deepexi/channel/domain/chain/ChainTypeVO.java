@@ -39,7 +39,7 @@ public class ChainTypeVO extends SuperEntity {
      * 是否限制上级 0 不限制 1 限制
      */
     @ApiModelProperty("是否限制上级 0 不限制 1 限制")
-    private Boolean limitParent;
+    private Integer limitParent;
 
     /**
      * 连锁分类名称

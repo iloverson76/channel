@@ -19,7 +19,7 @@
         <result property="updatedBy" column="updated_by" />
         <result property="updatedTime" column="updated_time" />
     </resultMap>
-    <select id="findList" resultType="com.deepexi.channel.domain.chain.ChainQuery">
+    <select id="findList" resultType="com.deepexi.channel.domain.chain.ChainDO">
         SELECT * FROM cc_chain WHERE dr=0
         <if test="id != null">
             and id = #{id}
