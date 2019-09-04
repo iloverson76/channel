@@ -93,6 +93,10 @@ public class ChainController {
     @ApiOperation(value = "根据id批量删除连锁", notes = "根据id删除连锁")
     public Payload<Boolean> delete(@PathVariable(value = "id") String id) {
         List<Long> ids = Arrays.stream(id.split(",")).map(Long::parseLong).collect(Collectors.toList());
-        return new Payload<>(chainBusinessService.deleteChain(ids));
+        if(chainBusinessService.deleteVerification(ids)){
+            return new Payload<>(chainBusinessService.deleteChain(ids));
+        }else{
+            return new Payload<>(false);
+        }
     }
 }

@@ -12,6 +12,9 @@ public interface ChainBusinessService {
 
     Boolean deleteChain(List<Long> ids);
 
+    Boolean deleteVerification(List<Long> ids);
+
+
     Boolean updateChain(ChainDetailDTO dto);
 
     List<ChainDetailDTO> findPage(ChainQuery query);

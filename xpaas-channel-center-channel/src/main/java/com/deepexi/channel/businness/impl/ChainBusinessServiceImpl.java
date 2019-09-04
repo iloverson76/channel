@@ -94,20 +94,23 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
 
     @Override
     public Boolean deleteChain(List<Long> ids) {
-        //判断连锁删除是否合法,是否具有子节点
-        if(chainService.haveChildren(ids)){
-            throw new ApplicationException(ResultEnum.HAVE_CHILDREN);
-        }
-        //TODO 删除的连锁是否被其他门店所关联
-
         //删除合法
         return chainService.delete(ids);
     }
 
     @Override
+    public Boolean deleteVerification(List<Long> ids) {
+        //判断连锁删除是否合法,是否具有子节点
+        if(chainService.haveChildren(ids)){
+            throw new ApplicationException(ResultEnum.HAVE_CHILDREN);
+        }
+        //TODO 删除的连锁是否被其他门店所关联
+        return true;
+    }
+
+    @Override
     @Transactional
     public Boolean updateChain(ChainDetailDTO dto) {
-        //TODO 更新银行账户信息
         //删除旧的关联账户
         chainBankService.deleteByChainId(dto.getId());
         //新增所有账号
@@ -192,13 +195,6 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
                     .bankAccountId(bankAccount.getId())
                     .chainId(dto.getId())
                     .build();
-            //TODO 下面这段代码设置租户id等是否必要，没设置会报不能为空
-            chainBankDTO.setVersion(dto.getVersion());
-            chainBankDTO.setUpdatedBy(dto.getUpdatedBy());
-            chainBankDTO.setCreatedBy(dto.getCreatedBy());
-            chainBankDTO.setCreatedTime(dto.getCreatedTime());
-            chainBankDTO.setUpdatedTime(dto.getUpdatedTime());
-
             chainBankDTOS.add(chainBankDTO);
         }
         boolean insertChainBankResult = chainBankService.saveBatch(chainBankDTOS);
