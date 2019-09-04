@@ -22,15 +22,15 @@ public class ChainTypeDAOImpl extends ServiceImpl<ChainTypeMapper, ChainTypeDO> 
         return chainTypeMapper.findList(query);
     }
 
-    @Override
-    public List<ChainTypeDO> selectListByIds(Set<Long> idList) {
-        return chainTypeMapper.selectList(new QueryWrapper<ChainTypeDO>().lambda().in(ChainTypeDO::getId, idList));
-    }
+//    @Override
+//    public List<ChainTypeDO> selectListByIds(Set<Long> idList) {
+//        return chainTypeMapper.selectList(new QueryWrapper<ChainTypeDO>().lambda().in(ChainTypeDO::getId, idList));
+//    }
 
-    @Override
-    public List<ChainTypeDO> findParentList(List<Long> ids) {
-        return chainTypeMapper.findParentList(ids);
-    }
+//    @Override
+//    public List<ChainTypeDO> findParentList(List<Long> ids) {
+//        return chainTypeMapper.findParentList(ids);
+//    }
 
 //
 //    @Override

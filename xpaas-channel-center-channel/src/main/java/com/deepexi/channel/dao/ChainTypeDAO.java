@@ -10,9 +10,9 @@ import java.util.Set;
 public interface ChainTypeDAO extends IService<ChainTypeDO> {
     List<ChainTypeDO> findList(ChainTypeQuery query);
 
-    List<ChainTypeDO> selectListByIds(Set<Long> idList);
+//    List<ChainTypeDO> selectListByIds(Set<Long> idList);
 
-    List<ChainTypeDO> findParentList(List<Long> ids);
+//    List<ChainTypeDO> findParentList(List<Long> ids);
 
 //    List<ChainTypeDO> listChainTypePage(ChainTypeQuery query);
 //

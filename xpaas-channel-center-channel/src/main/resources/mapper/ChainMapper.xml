@@ -37,7 +37,13 @@
             and chain_name like concat('%',#{chainName},'%')
         </if>
         <if test="chainTypeId != null and chainTypeId != ''">
-            and chain_type_id like concat('%',#{chainTypeId},'%')
+            and chain_type_id = #{chainTypeId}
+        </if>
+        <if test="chainTypeIdList != null">
+            and chain_type_id in
+            <foreach collection="chainTypeIdList" item="tempId" index="index" open="(" close=")" separator=",">
+                #{tempId}
+            </foreach>
         </if>
         <if test="path != null and path != ''">
             and path like concat('%',#{path},'%')

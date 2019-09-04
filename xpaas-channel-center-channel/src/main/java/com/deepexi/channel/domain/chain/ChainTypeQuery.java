@@ -4,6 +4,7 @@ import com.deepexi.channel.domain.CommQuery;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,6 +19,7 @@ import java.util.List;
  * @since 2019-08-26
  */
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @ApiModel("连锁类型")
