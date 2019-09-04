@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-
 @Component
 public class MetaObjectHandlerConfig implements MetaObjectHandler {
 
@@ -21,7 +20,11 @@ public class MetaObjectHandlerConfig implements MetaObjectHandler {
     public void insertFill(MetaObject metaObject) {
         setFieldValByName("createdTime", new Date(), metaObject);
         setFieldValByName("updatedTime", new Date(), metaObject);
-        setFieldValByName("tenantId", appRuntimeEnv.getTenantId(), metaObject);
+        if (StringUtil.isEmpty(appRuntimeEnv.getTenantId())){
+            setFieldValByName("tenantId", "123456789", metaObject);
+        }else{
+            setFieldValByName("tenantId", appRuntimeEnv.getTenantId(), metaObject);
+        }
         if(StringUtil.isEmpty(appRuntimeEnv.getUsername())){
             setFieldValByName("createdBy", "ANONYMOUS", metaObject);
             setFieldValByName("updatedBy", "ANONYMOUS", metaObject);
@@ -45,3 +48,4 @@ public class MetaObjectHandlerConfig implements MetaObjectHandler {
 
     }
 }
+
