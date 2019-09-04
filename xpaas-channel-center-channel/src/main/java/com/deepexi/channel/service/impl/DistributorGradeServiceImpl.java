@@ -4,7 +4,9 @@ import com.deepexi.channel.dao.DistributorGradeDAO;
 import com.deepexi.channel.domain.distributor.DistributorGradeDO;
 import com.deepexi.channel.domain.distributor.DistributorGradeDTO;
 import com.deepexi.channel.domain.distributor.DistributorGradeQuery;
+import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.service.DistributorGradeService;
+import com.deepexi.util.extension.ApplicationException;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import com.github.pagehelper.PageHelper;
@@ -98,5 +100,16 @@ public class DistributorGradeServiceImpl implements DistributorGradeService {
         }
 
         return ObjectCloneUtils.convertList(eoList, DistributorGradeDTO.class, CloneDirection.OPPOSITE);
+    }
+
+    @Override
+    public boolean validateGradeCode(String garedCode) {
+
+        int count= distributorGradeDAO.getByCode(garedCode);
+        if(count>0){
+            throw new ApplicationException(ResultEnum.GRADE_NAME_DUPLICATED);
+
+        }
+        return Boolean.TRUE;
     }
 }
