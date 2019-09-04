@@ -3,7 +3,7 @@ package com.deepexi.channel.domain.distributor;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.deepexi.channel.domain.BaseEntity;
+import com.deepexi.channel.domain.SuperEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -23,7 +23,7 @@ import lombok.*;
 @Builder
 @TableName("cc_distributor_back_account_relation")
 @ApiModel(value="DistributorArea对象", description="经销商-银行账号关联表")
-public class DistributorBankAccountRelationDO extends BaseEntity {
+public class DistributorBankAccountRelationDO extends SuperEntity {
 
     private static final long serialVersionUID = 1L;
 

@@ -46,9 +46,11 @@ public class DistributorGradeSystemController {
         return new Payload<>(vo);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id:[0-9,]+}")
     @ApiOperation(value = "根据id修改")
-    public Payload<Boolean> update(@RequestBody DistributorGradeSystemVO vo) {
+    public Payload<Boolean> update(@PathVariable(value = "id")long pk,@RequestBody DistributorGradeSystemVO vo) {
+
+        vo.setId(pk);
 
         DistributorGradeSystemDTO dto=vo.clone(DistributorGradeSystemDTO.class,CloneDirection.FORWARD);
 

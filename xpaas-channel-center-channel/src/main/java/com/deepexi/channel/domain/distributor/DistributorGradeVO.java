@@ -1,6 +1,6 @@
 package com.deepexi.channel.domain.distributor;
 
-import com.deepexi.channel.domain.BaseEntity;
+import com.deepexi.util.pojo.AbstractObject;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -19,9 +19,11 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @ApiModel("经销商等级")
-public class DistributorGradeVO extends BaseEntity {
+public class DistributorGradeVO extends AbstractObject {
 
     private static final long serialVersionUID = 1L;
+
+    private Long id;
 
     /**
      * 路径

@@ -1,7 +1,7 @@
 package com.deepexi.channel.domain.distributor;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.deepexi.channel.domain.BaseEntity;
+import com.deepexi.channel.domain.SuperEntity;
+import com.deepexi.util.pojo.AbstractObject;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -20,9 +20,11 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @ApiModel(value="DistributorArea对象", description="经销商-区域关联表")
-public class DistributorAreaRelationDTO extends BaseEntity {
+public class DistributorAreaRelationDTO extends AbstractObject {
 
     private static final long serialVersionUID = 1L;
+
+    private Long id;
 
     /**
      * 经销商ID

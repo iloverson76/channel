@@ -24,6 +24,8 @@ public class DistributorGradeBusiVO extends DistributorGradeVO {
 
     private static final long serialVersionUID = 1L;
 
+    private Long id;
+
     /**
      * 上级经销商等级编码
      */

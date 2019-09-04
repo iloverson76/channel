@@ -1,7 +1,7 @@
 package com.deepexi.channel.domain.distributor;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.deepexi.channel.domain.BaseEntity;
+import com.deepexi.channel.domain.SuperEntity;
 import io.swagger.annotations.ApiModel;
 import lombok.*;
 
@@ -20,7 +20,7 @@ import lombok.*;
 @Builder
 @TableName("cc_distributor_grade")
 @ApiModel(value="DistributorGrade对象", description="经销商等级表")
-public class DistributorGradeDO extends BaseEntity {
+public class DistributorGradeDO extends SuperEntity {
 
     private static final long serialVersionUID = 1L;
 

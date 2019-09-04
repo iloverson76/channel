@@ -1,11 +1,8 @@
 package com.deepexi.channel.domain.area;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.deepexi.channel.domain.BaseEntity;
+import com.deepexi.channel.domain.SuperEntity;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 /**
@@ -23,18 +20,9 @@ import lombok.*;
 @Builder
 @TableName("cc_area")
 @ApiModel(value="Area对象", description="区域表")
-public class AreaDO extends BaseEntity {
+public class AreaDO extends SuperEntity {
 
     private static final long serialVersionUID = 1L;
-
-    @TableField(value = "`app_id`", fill = FieldFill.INSERT)
-    @ApiModelProperty("应用ID")
-    private String appId;
-
-
-    @TableField(value = "`tenant_Id`", fill = FieldFill.INSERT)
-    @ApiModelProperty("租户ID")
-    private String tenantId;
 
     /**
      * 父节点ID

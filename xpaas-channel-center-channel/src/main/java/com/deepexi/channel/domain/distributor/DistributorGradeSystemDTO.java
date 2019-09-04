@@ -1,6 +1,6 @@
 package com.deepexi.channel.domain.distributor;
 
-import com.deepexi.channel.domain.BaseEntity;
+import com.deepexi.util.pojo.AbstractObject;
 import lombok.*;
 
 /**
@@ -16,9 +16,11 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class DistributorGradeSystemDTO extends BaseEntity {
+public class DistributorGradeSystemDTO extends AbstractObject {
 
     private static final long serialVersionUID = 1L;
+
+    private Long id;
 
     /**
      * 等级体系名称
