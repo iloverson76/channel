@@ -1,7 +1,7 @@
 package com.deepexi.channel.domain.distributor;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.deepexi.channel.domain.BaseEntity;
+import com.deepexi.channel.domain.SuperEntity;
 import lombok.*;
 
 /**
@@ -18,7 +18,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @TableName("cc_distributor_grade_system")
-public class DistributorGradeSystemDO extends BaseEntity {
+public class DistributorGradeSystemDO extends SuperEntity {
 
     private static final long serialVersionUID = 1L;
 

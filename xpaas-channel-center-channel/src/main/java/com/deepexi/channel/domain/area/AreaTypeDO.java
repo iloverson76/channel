@@ -1,12 +1,14 @@
 package com.deepexi.channel.domain.area;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.deepexi.channel.domain.BaseEntity;
+import com.deepexi.channel.domain.SuperEntity;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
 
 /**
  * <p>
@@ -22,7 +24,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @TableName("cc_area_type")
 @ApiModel(value="AreaType对象", description="区域类型表")
-public class AreaTypeDO extends BaseEntity {
+public class AreaTypeDO extends SuperEntity {
 
     private static final long serialVersionUID = 1L;
 

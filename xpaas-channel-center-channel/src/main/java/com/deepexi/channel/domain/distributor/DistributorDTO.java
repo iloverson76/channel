@@ -1,11 +1,13 @@
 package com.deepexi.channel.domain.distributor;
 
-import com.deepexi.channel.domain.BaseEntity;
+import com.deepexi.channel.domain.SuperEntity;
 import com.deepexi.channel.domain.bank.BankAccountDTO;
+import com.deepexi.util.pojo.AbstractObject;
 import io.swagger.annotations.ApiModel;
 import lombok.*;
 import lombok.experimental.Accessors;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,9 +25,11 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @ApiModel(value="Distributor对象", description="经销商实体表")
-public class DistributorDTO extends BaseEntity {
+public class DistributorDTO extends AbstractObject {
 
     private static final long serialVersionUID = 1L;
+
+    private Long id;
 
     /**
      * 经销商类型 1 厂商 2 经销商
@@ -96,6 +100,30 @@ public class DistributorDTO extends BaseEntity {
      * 银行账号
      */
     private List<BankAccountDTO> bankAccounts;
+
+    /**
+     * 描述
+     */
+    private String description;
+    /**
+     * 创建人
+     */
+    private String createdBy;
+
+    /**
+     * 创建时间
+     */
+    private Date createdTime;
+
+    /**
+     * 更新人
+     */
+    private String updatedBy;
+
+    /**
+     * 更新时间
+     */
+    private Date updatedTime;
 
 
 

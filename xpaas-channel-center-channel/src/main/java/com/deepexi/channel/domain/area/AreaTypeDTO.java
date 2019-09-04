@@ -1,7 +1,10 @@
 package com.deepexi.channel.domain.area;
 
-import com.deepexi.channel.domain.BaseEntity;
+import com.deepexi.channel.domain.SuperEntity;
+import com.deepexi.util.pojo.AbstractObject;
 import lombok.*;
+
+import java.util.Date;
 
 /**
  * <p>
@@ -16,9 +19,11 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AreaTypeDTO extends BaseEntity {
+public class AreaTypeDTO extends AbstractObject {
 
     private static final long serialVersionUID = 1L;
+
+    private Long id;
 
     /**
      * 父级分类ID
@@ -64,5 +69,24 @@ public class AreaTypeDTO extends BaseEntity {
      * 描述
      */
     private String description;
+    /**
+     * 创建人
+     */
+    private String createdBy;
+
+    /**
+     * 创建时间
+     */
+    private Date createdTime;
+
+    /**
+     * 更新人
+     */
+    private String updatedBy;
+
+    /**
+     * 更新时间
+     */
+    private Date updatedTime;
 
 }

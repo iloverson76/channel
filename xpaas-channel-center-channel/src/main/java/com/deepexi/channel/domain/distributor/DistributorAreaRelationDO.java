@@ -3,9 +3,11 @@ package com.deepexi.channel.domain.distributor;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.deepexi.channel.domain.BaseEntity;
+import com.deepexi.channel.domain.SuperEntity;
 import io.swagger.annotations.ApiModel;
 import lombok.*;
+
+import java.util.Date;
 
 /**
  * <p>
@@ -22,7 +24,7 @@ import lombok.*;
 @Builder
 @TableName("cc_distributor_area_relation")
 @ApiModel(value="DistributorArea对象", description="经销商-区域关联表")
-public class DistributorAreaRelationDO extends BaseEntity {
+public class DistributorAreaRelationDO extends SuperEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -37,5 +39,29 @@ public class DistributorAreaRelationDO extends BaseEntity {
      */
     @TableField(value = "`area_id`", fill = FieldFill.INSERT)
     private Long areaId;
+
+    /**
+     * 描述
+     */
+    private String description;
+    /**
+     * 创建人
+     */
+    private String createdBy;
+
+    /**
+     * 创建时间
+     */
+    private Date createdTime;
+
+    /**
+     * 更新人
+     */
+    private String updatedBy;
+
+    /**
+     * 更新时间
+     */
+    private Date updatedTime;
 
 }

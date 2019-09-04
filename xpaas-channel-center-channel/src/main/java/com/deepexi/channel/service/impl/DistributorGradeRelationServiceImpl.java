@@ -1,5 +1,9 @@
 package com.deepexi.channel.service.impl;
 
+import com.deepexi.channel.dao.DistributorGradeRelationDAO;
+import com.deepexi.channel.domain.distributor.DistributorGradeRelationDO;
+import com.deepexi.channel.domain.distributor.DistributorGradeRelationDTO;
+import com.deepexi.util.pojo.CloneDirection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
@@ -15,5 +19,20 @@ import com.deepexi.util.BeanPowerHelper;
 @Service
 public class DistributorGradeRelationServiceImpl implements DistributorGradeRelationService {
 
+    @Autowired
+    DistributorGradeRelationDAO distributorGradeRelationDAO;
 
+    @Override
+    public long create(DistributorGradeRelationDTO dto) {
+
+        if(null==dto){
+            return 0L;
+        }
+
+        DistributorGradeRelationDO eo=dto.clone(DistributorGradeRelationDO.class, CloneDirection.FORWARD);
+
+        distributorGradeRelationDAO.save(eo);
+
+        return eo.getId();
+    }
 }
