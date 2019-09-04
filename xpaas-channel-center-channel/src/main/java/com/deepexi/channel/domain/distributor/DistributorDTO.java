@@ -4,6 +4,7 @@ import com.deepexi.channel.domain.SuperEntity;
 import com.deepexi.channel.domain.bank.BankAccountDTO;
 import com.deepexi.util.pojo.AbstractObject;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -30,6 +31,16 @@ public class DistributorDTO extends AbstractObject {
     private static final long serialVersionUID = 1L;
 
     private Long id;
+
+    private List<Long> gradeIds;
+
+    private List<Long> bankAccountIds;
+
+    /**
+     * 是否指定上级
+     */
+    @ApiModelProperty("是否指定上级 0 否 1 是")
+    private int limitedParent;
 
     /**
      * 经销商类型 1 厂商 2 经销商
