@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -200,5 +201,38 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         boolean insertChainBankResult = chainBankService.saveBatch(chainBankDTOS);
         return insertChainBankResult;
     }
+
+    public List<ChainDTO> recursionTree(ChainTreeDTO dto){
+        //批量更新所有节点,根据id更新parent_id和path，返回所有孙子儿子节点
+        List<ChainDTO> saveChainDTOS =  new LinkedList<>();
+        //遍历更新儿子节点
+        List<ChainTreeDTO>  childrenList = dto.getChildren();
+        if(CollectionUtil.isEmpty(childrenList)){
+            return saveChainDTOS;
+        }
+        childrenList.forEach(c ->{
+            c.setParentId(dto.getId());
+            c.setPath(dto.getPath()+"/"+c.getId());
+            saveChainDTOS.add(c);
+            //递归，把儿子的所有节点的parent_id和path都更新
+            saveChainDTOS.addAll(recursionTree(c));
+        });
+        return saveChainDTOS;
+    }
+
+    public boolean saveTree(List<ChainTreeDTO> dtos){
+        //全部节点列表，用于批量更新
+        List<ChainDTO> chainDTOS = new LinkedList<>();
+        dtos.forEach(dto ->{
+            dto.setPath("/"+dto.getId());
+
+        });
+
+
+
+        //传入根节点列表
+        return true;
+    }
+
 
 }
