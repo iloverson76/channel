@@ -26,9 +26,11 @@ public class DistributorGradeSystemController {
     @Autowired
     private DistributorGradeSystemService distributorGradeSystemService;
 
-    @PostMapping
+    @PostMapping("/{id:[0-9,]+}")
     @ApiOperation(value = "创建经销商体系")
-    public Payload<Long> create(@RequestBody DistributorGradeSystemVO vo) {
+    public Payload<Long> create(@PathVariable(value = "id") Long id,@RequestBody DistributorGradeSystemVO vo) {
+
+        vo.setId(id);
 
         DistributorGradeSystemDTO dto=vo.clone(DistributorGradeSystemDTO.class, CloneDirection.FORWARD);
 

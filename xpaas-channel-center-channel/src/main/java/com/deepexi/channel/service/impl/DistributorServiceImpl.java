@@ -1,5 +1,6 @@
 package com.deepexi.channel.service.impl;
 
+import com.deepexi.channel.domain.distributor.DistributorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
@@ -14,7 +15,14 @@ import com.deepexi.util.BeanPowerHelper;
 
 @Service
 public class DistributorServiceImpl implements DistributorService {
+    @Override
+    public boolean create(DistributorDTO dto) {
+        return false;
+    }
 
+
+    // @Autowired
+  //  DistributorDAO distributoDAO;
 
 
 }

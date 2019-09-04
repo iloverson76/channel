@@ -20,6 +20,16 @@ public abstract class BaseEntity extends AbstractObject {
     @ApiModelProperty(value = "主键", example = "123")
     private Long id;
 
+
+    @TableField(value = "`app_id`", fill = FieldFill.INSERT)
+    @ApiModelProperty("应用ID")
+    private String appId;
+
+
+    @TableField(value = "`tenant_Id`", fill = FieldFill.INSERT)
+    @ApiModelProperty("租户ID")
+    private String tenantId;
+
     @TableLogic
     @TableField(value = "`dr`")
     @ApiModelProperty(value = "是否已删除", example = "0")
@@ -32,6 +42,7 @@ public abstract class BaseEntity extends AbstractObject {
     @TableField(value = "`created_by`", fill = FieldFill.INSERT)
     @ApiModelProperty(value = "创建人", example = "mumu")
     private String createdBy;
+
 
     @TableField(value = "`updated_time`", fill = FieldFill.UPDATE)
     @ApiModelProperty("更新时间")

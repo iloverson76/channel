@@ -1,5 +1,6 @@
 package com.deepexi.channel.dao.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.deepexi.channel.dao.DistributorGradeDAO;
 import com.deepexi.channel.domain.distributor.DistributorGradeDO;
@@ -8,6 +9,8 @@ import com.deepexi.channel.mapper.DistributorGradeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.sql.SQLException;
+import java.sql.Wrapper;
 import java.util.List;
 
 /**
@@ -28,5 +31,15 @@ public class DistributorGradeDAOImpl extends ServiceImpl<DistributorGradeMapper,
     @Override
     public List<DistributorGradeDO> listParentNodesForCreate(long systemId,String path) {
         return distributorGradeMapper.listParentNodesForCreate(systemId,path);
+    }
+
+    @Override
+    public int getByCode(String garedCode) {
+
+        QueryWrapper<DistributorGradeDO> wp=new QueryWrapper() ;
+
+        wp.eq("distributor_grade_code",garedCode);
+
+        return distributorGradeMapper.selectCount(wp);
     }
 }

@@ -35,4 +35,6 @@ public interface DistributorGradeService {
      * 分页获取列表
      */
     List<DistributorGradeDTO> findPage(DistributorGradeQuery query);
+
+    boolean validateGradeCode(String garedCode);
 }

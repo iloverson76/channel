@@ -2,6 +2,9 @@ package com.deepexi.channel.controller;
 
 import com.deepexi.channel.domain.area.AreaDTO;
 import com.deepexi.channel.domain.area.AreaVO;
+import com.deepexi.channel.domain.distributor.DistributorDTO;
+import com.deepexi.channel.domain.distributor.DistributorGradeVO;
+import com.deepexi.channel.domain.distributor.DistributorVO;
 import com.deepexi.channel.service.AreaService;
 import com.deepexi.channel.service.DistributorService;
 import com.deepexi.util.config.Payload;
@@ -23,15 +26,13 @@ public class DistributorController {
     @Autowired
     private DistributorService distributorService;
 
-    /*@PostMapping
-    @ApiOperation(value = "创建经销商等级")
-    public Payload<Long> create(@RequestBody DistributorVO vo) {
+    @PostMapping
+    @ApiOperation(value = "创建经销商")
+    public Payload<Boolean> create(@RequestBody DistributorVO vo) {
 
-        DistributorGradeDTO dto=vo.clone(DistributorGradeDTO.class, CloneDirection.FORWARD);
+        DistributorDTO dto=vo.clone(DistributorDTO.class, CloneDirection.FORWARD);
 
-        Long result=distributorGradeService.create(dto);
-
-        return new Payload(result);
-    }*/
+        return new Payload(distributorService.create(dto));
+    }
 
 }
