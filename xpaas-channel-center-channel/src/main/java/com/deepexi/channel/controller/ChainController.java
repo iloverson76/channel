@@ -3,8 +3,10 @@ package com.deepexi.channel.controller;
 import com.deepexi.channel.businness.ChainBusinessService;
 import com.deepexi.channel.domain.bank.BankAccountDTO;
 import com.deepexi.channel.domain.chain.*;
+import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.service.ChainService;
 import com.deepexi.util.config.Payload;
+import com.deepexi.util.extension.ApplicationException;
 import com.deepexi.util.pageHelper.PageBean;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
@@ -62,6 +64,10 @@ public class ChainController {
         }
         vo.setId(id);
         ChainDetailDTO dto = vo.clone(ChainDetailDTO.class);
+        //判断编码是否重复
+        if(!chainService.isCodeUnique(dto)){
+            throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
+        }
         List<BankAccountDTO> bankAccountList = ObjectCloneUtils.convertList(vo.getBankAccountList(), BankAccountDTO.class);
         dto.setBankAccountList(bankAccountList);
          return new Payload(chainBusinessService.updateChain(dto));
@@ -74,6 +80,10 @@ public class ChainController {
             return new Payload(false);
         }
         ChainDetailDTO dto = chainDetailVO.clone(ChainDetailDTO.class);
+        //校验编码是否重复
+        if(!chainService.isCodeUnique(dto)){
+            throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
+        }
         List<BankAccountDTO> bankAccountList = ObjectCloneUtils.convertList(chainDetailVO.getBankAccountList(), BankAccountDTO.class);
         dto.setBankAccountList(bankAccountList);
         return new Payload(chainBusinessService.insertChain(dto));

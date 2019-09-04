@@ -37,10 +37,6 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
     @Override
     @Transactional
     public Long insertChain(ChainDetailDTO dto) {
-        //校验编码是否重复
-        if(!chainService.isCodeUnique(dto)){
-            throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
-        }
         //新增连锁基本信息
         Long result = chainService.create(dto);
         dto.setId(result);
@@ -111,10 +107,6 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
     @Override
     @Transactional
     public Boolean updateChain(ChainDetailDTO dto) {
-        //判断编码是否重复
-        if(!chainService.isCodeUnique(dto)){
-            throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
-        }
         //TODO 更新银行账户信息
         //删除旧的关联账户
         chainBankService.deleteByChainId(dto.getId());
@@ -142,8 +134,6 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         // id->连锁的map关系
         Map<Long, List<ChainDTO>> parentCollect =
                 parentChainDTOS.stream().collect(Collectors.groupingBy(ChainDTO::getId));
-
-
         //获取连锁类型信息
         //得到所有连锁类型信息
         List<Long> chainTypeIds = chainDetailDTOS.stream().map(ChainDetailDTO::getChainTypeId).collect(Collectors.toList());
