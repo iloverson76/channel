@@ -168,7 +168,7 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
                 Long v=parentMap.get(grade.getId());
 
-                if(null==v){
+                if(null==v&&grade.getGradeSystemId()==systemId){//按体系查
                     resultList.add(grade);
                 }
             });

@@ -3,6 +3,7 @@ package com.deepexi.channel.domain.distributor;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.deepexi.channel.domain.SuperEntity;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,6 +26,12 @@ import lombok.NoArgsConstructor;
 public class DistributorDO extends SuperEntity {
 
     private static final long serialVersionUID = 1L;
+
+    /**
+     * 是否指定上级
+     */
+    @ApiModelProperty("是否指定上级 0 否 1 是")
+    private Integer limitedParent;
 
     /**
      * 经销商类型 1 厂商 2 经销商
