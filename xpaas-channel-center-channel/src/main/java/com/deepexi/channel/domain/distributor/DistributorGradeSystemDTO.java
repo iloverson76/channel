@@ -4,6 +4,7 @@ import com.deepexi.util.pojo.AbstractObject;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -23,6 +24,11 @@ public class DistributorGradeSystemDTO extends AbstractObject {
     private static final long serialVersionUID = 1L;
 
     private Long id;
+
+    /**
+     * 挂载的等级
+     */
+    private List<DistributorGradeDTO> grades;
 
     /**
      * 等级体系名称

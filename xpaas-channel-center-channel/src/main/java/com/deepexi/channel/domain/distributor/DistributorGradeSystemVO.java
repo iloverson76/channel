@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -26,6 +27,11 @@ public class DistributorGradeSystemVO extends AbstractObject {
     private static final long serialVersionUID = 1L;
 
     private Long id;
+
+    /**
+     * 挂载的等级
+     */
+    private List<DistributorGradeVO> grades;
 
     /**
      * 等级体系名称

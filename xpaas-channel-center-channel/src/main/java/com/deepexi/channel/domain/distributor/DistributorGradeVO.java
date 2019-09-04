@@ -28,6 +28,12 @@ public class DistributorGradeVO extends AbstractObject {
     private Long id;
 
     /**
+     * 所属体系
+     */
+    @ApiModelProperty("所属体系")
+    private DistributorGradeSystemVO system;
+
+    /**
      * 路径
      */
     @ApiModelProperty("上下级路径")
