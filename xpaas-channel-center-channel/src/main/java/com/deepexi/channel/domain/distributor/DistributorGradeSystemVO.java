@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import java.util.Date;
+
 /**
  * <p>
  * 等级体系表
@@ -37,5 +39,30 @@ public class DistributorGradeSystemVO extends AbstractObject {
     @ApiModelProperty("等级体系编码")
     private String gradeSystemCode;
 
+
+
+    /**
+     * 描述
+     */
+    private String description;
+    /**
+     * 创建人
+     */
+    private String createdBy;
+
+    /**
+     * 创建时间
+     */
+    private Date createdTime;
+
+    /**
+     * 更新人
+     */
+    private String updatedBy;
+
+    /**
+     * 更新时间
+     */
+    private Date updatedTime;
 
 }
