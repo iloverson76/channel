@@ -81,7 +81,10 @@ public class StoreTypeController {
     @ApiOperation(value = "根据id批量删除门店类型", notes = "根据id批量删除门店类型")
     public Payload delete(@PathVariable(value = "id", required = true) String id) {
         List<Long> ids = Arrays.stream(id.split(",")).map(Long::parseLong).collect(Collectors.toList());
-        //TODO 校验是否有门店关联该门店类型
+        // 校验是否有门店关联该门店类型
+        if(storeTypeBusinessService.haveStoreRelation(ids)) {
+            throw new ApplicationException(ResultEnum.HAVE_RELATION);
+        }
         return new Payload(storeTypeBusinessService.deleteStoreType(ids));
     }
 

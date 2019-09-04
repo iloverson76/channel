@@ -79,7 +79,10 @@ public class StoreGradeController {
     @ApiOperation(value = "根据id批量删除门店等级", notes = "根据id批量删除门店等级")
     public Payload delete(@PathVariable(value = "id", required = true) String id) {
         List<Long> ids = Arrays.stream(id.split(",")).map(Long::parseLong).collect(Collectors.toList());
-        //TODO 校验是否有门店关联该门店等级
+        //校验是否有门店关联该门店等级
+        if(storeGradeBusinessService.haveStoreRelation(ids)){
+            throw new ApplicationException(ResultEnum.HAVE_RELATION);
+        }
         return new Payload(storeGradeBusinessService.deleteGradeType(ids));
     }
 

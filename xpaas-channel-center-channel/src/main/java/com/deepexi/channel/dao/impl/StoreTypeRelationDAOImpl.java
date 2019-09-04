@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.deepexi.channel.dao.StoreTypeRelationDAO;
 import com.deepexi.channel.domain.store.StoreTypeRelationDO;
+import com.deepexi.channel.domain.store.StoreTypeRelationQuery;
 import com.deepexi.channel.mapper.StoreTypeRelationMapper;
 import com.deepexi.util.CollectionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,5 +25,10 @@ public class StoreTypeRelationDAOImpl extends ServiceImpl<StoreTypeRelationMappe
             return null;
         }
         return storeTypeRelationDOS.get(0);
+    }
+
+    @Override
+    public List<StoreTypeRelationDO> findAll(StoreTypeRelationQuery query) {
+        return storeTypeRelationMapper.findAll(query);
     }
 }

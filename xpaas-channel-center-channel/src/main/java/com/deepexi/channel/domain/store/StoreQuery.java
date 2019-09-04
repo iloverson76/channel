@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import java.util.List;
+
 /**
  * <p>
  * 门店信息表
@@ -75,4 +77,5 @@ public class StoreQuery  extends CommQuery {
      */
     @ApiModelProperty(value = "是否启用 0 禁用 1 启用")
     private Boolean enable;
+
 }

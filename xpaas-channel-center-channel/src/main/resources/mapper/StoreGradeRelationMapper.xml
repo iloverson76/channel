@@ -16,4 +16,24 @@
         <result property="appId" column="app_id" />
         <result property="tenantId" column="tenant_id" />
     </resultMap>
+    <select id="findAll" resultType="com.deepexi.channel.domain.store.StoreGradeRelationDO">
+        select * from cc_store_grade_relation where dr = 0
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="storeGradeId != null">
+            and store_grade_Id = #{storeGradeId}
+        </if>
+        <if test="storeId != null">
+            and store_id = #{storeId}
+        </if>
+        <if test="storeGradeIds != null and storeGradeIds.size() > 0">
+            and store_grade_Id
+            in
+            <foreach collection="storeGradeIds" item="tempId" index="index" open="(" close=")" separator=",">
+                #{tempId}
+            </foreach>
+        </if>
+
+    </select>
 </mapper>

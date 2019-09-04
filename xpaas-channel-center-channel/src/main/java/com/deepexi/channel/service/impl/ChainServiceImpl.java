@@ -58,6 +58,9 @@ public class ChainServiceImpl implements ChainService {
 //
     @Override
     public Long create(ChainDTO dto) {
+        if(dto == null){
+            return 0L;
+        }
         ChainDO chainDO = dto.clone(ChainDO.class);
         //新增连锁基本信息
         boolean result = chainDAO.save(chainDO);

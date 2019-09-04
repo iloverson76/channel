@@ -16,4 +16,24 @@
         <result property="appId" column="app_id" />
         <result property="tenantId" column="tenant_id" />
     </resultMap>
+    <select id="findAll" resultType="com.deepexi.channel.domain.store.StoreTypeRelationDO">
+        select * from cc_store_type_relation where dr = 0
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="storeTypeId != null">
+            and store_type_Id = #{storeTypeId}
+        </if>
+        <if test="storeId != null">
+            and store_id = #{storeId}
+        </if>
+        <if test="storeTypeIds != null and storeTypeIds.size() > 0">
+            and store_type_Id
+            in
+            <foreach collection="storeTypeIds" item="tempId" index="index" open="(" close=")" separator=",">
+                #{tempId}
+            </foreach>
+        </if>
+
+    </select>
 </mapper>
