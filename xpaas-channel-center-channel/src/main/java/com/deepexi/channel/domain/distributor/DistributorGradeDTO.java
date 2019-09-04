@@ -26,6 +26,11 @@ public class DistributorGradeDTO extends AbstractObject {
     private Long id;
 
     /**
+     * 所属体系
+     */
+    private DistributorGradeSystemDTO system;
+
+    /**
      * 路径
      */
     private String path;

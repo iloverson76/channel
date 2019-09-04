@@ -50,7 +50,7 @@ public class AreaTypeController {
         return new Payload<>(result);
     }
 
-    @DeleteMapping("/{ids:[0-9,]+';'")
+    @DeleteMapping("/{ids}")
     @ApiOperation(value = "批量删除区域类型")
     public Payload<Boolean> deleteAreaTypeByIds(@PathVariable(value = "ids") String ids) {//前端的列表每一个id都去拿子节点的话,性能很慢
 

@@ -31,7 +31,13 @@ public class DistributorDO extends SuperEntity {
      * 是否指定上级
      */
     @ApiModelProperty("是否指定上级 0 否 1 是")
-    private Integer limitedParent;
+    private int limitedParent;
+
+    /**
+     * 上级经销商ID
+     */
+    @ApiModelProperty("上级经销商ID")
+    private int parent_id;
 
     /**
      * 经销商类型 1 厂商 2 经销商

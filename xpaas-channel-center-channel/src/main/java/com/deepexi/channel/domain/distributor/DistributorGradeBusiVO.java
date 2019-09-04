@@ -42,6 +42,6 @@ public class DistributorGradeBusiVO extends DistributorGradeVO {
      * 所属体系
      */
     @ApiModelProperty("所属体系")
-    private DistributorGradeSystemDTO system;
+    private DistributorGradeSystemVO system;
 
 }

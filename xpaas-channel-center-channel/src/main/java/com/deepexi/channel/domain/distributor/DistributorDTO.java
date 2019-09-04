@@ -1,7 +1,9 @@
 package com.deepexi.channel.domain.distributor;
 
-import com.deepexi.channel.domain.SuperEntity;
+import com.deepexi.channel.domain.area.AreaDTO;
+import com.deepexi.channel.domain.area.AreaVO;
 import com.deepexi.channel.domain.bank.BankAccountDTO;
+import com.deepexi.channel.domain.bank.BankAccountVO;
 import com.deepexi.util.pojo.AbstractObject;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -32,15 +34,26 @@ public class DistributorDTO extends AbstractObject {
 
     private Long id;
 
-    private List<Long> gradeIds;
+    @ApiModelProperty("等级列表")
+    private List<DistributorGradeDTO> grades;
 
-    private List<Long> bankAccountIds;
+    @ApiModelProperty("银行账号列表")
+    private List<BankAccountDTO> bankAccounts;
+
+    @ApiModelProperty("所在区域")
+    private AreaDTO area;
 
     /**
      * 是否指定上级
      */
     @ApiModelProperty("是否指定上级 0 否 1 是")
     private int limitedParent;
+
+    /**
+     * 上级经销商ID
+     */
+    @ApiModelProperty("上级经销商ID")
+    private int parent_id;
 
     /**
      * 经销商类型 1 厂商 2 经销商
@@ -103,16 +116,6 @@ public class DistributorDTO extends AbstractObject {
     private String address;
 
     /**
-     * 等级
-     */
-    private List<DistributorGradeDTO> grades;
-
-    /**
-     * 银行账号
-     */
-    private List<BankAccountDTO> bankAccounts;
-
-    /**
      * 描述
      */
     private String description;
@@ -135,8 +138,4 @@ public class DistributorDTO extends AbstractObject {
      * 更新时间
      */
     private Date updatedTime;
-
-
-
-
 }
