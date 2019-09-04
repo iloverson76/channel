@@ -3,35 +3,37 @@ package com.deepexi.channel.domain.distributor;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.deepexi.channel.domain.BaseEntity;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 /**
  * <p>
- * 经销商等级表
+ * 区域表
  * </p>
  *
- * @author chp
- * @since 2019-08-26
+ * @author jobob
+ * @since 2019-08-23
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ApiModel(value="DistributorGrade对象", description="经销商体系和等级关联表")
-public class DistributorSystemGradeRelationDTO extends BaseEntity {
+@ApiModel(value="DistributorArea对象", description="经销商-区域关联表")
+public class DistributorAreaRelationDTO extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 体系ID
+     * 经销商ID
      */
-    private Long distributorSystemId;
+    @ApiModelProperty("经销商ID")
+    private Long distributortId;
 
     /**
-     * 等级ID
+     * 区域ID
      */
-    private Long distributorGradeId;
-
+    @ApiModelProperty("区域ID")
+    private Long areaId;
 
 }

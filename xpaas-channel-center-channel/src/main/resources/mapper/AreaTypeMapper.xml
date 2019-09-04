@@ -136,7 +136,7 @@
         AND a.tenant_id = #{tenantId}
         AND a.app_id = #{appId}
         <if test="idPath!=null">
-            AND a.path like "%"#{idPath}"%"
+            AND a.path like #{idPath}"%"
         </if>
     </select>
 

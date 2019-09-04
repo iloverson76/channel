@@ -1,9 +1,12 @@
 package com.deepexi.channel.domain.distributor;
 
 import com.deepexi.channel.domain.BaseEntity;
+import com.deepexi.channel.domain.bank.BankAccountDTO;
 import io.swagger.annotations.ApiModel;
 import lombok.*;
 import lombok.experimental.Accessors;
+
+import java.util.List;
 
 /**
  * <p>
@@ -75,13 +78,26 @@ public class DistributorDTO extends BaseEntity {
     private String qualification;
 
     /**
+     * 状态 0 禁用 1 启用
+     */
+    private Integer enable ;
+
+    /**
      * 地址
      */
     private String address;
 
     /**
-     * 状态 0 禁用 1 启用
+     * 等级
      */
-    private Integer enable ;
+    private List<DistributorGradeDTO> grades;
+
+    /**
+     * 银行账号
+     */
+    private List<BankAccountDTO> bankAccounts;
+
+
+
 
 }
