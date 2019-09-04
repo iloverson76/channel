@@ -6,6 +6,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import java.util.Date;
+
 /**
  * <p>
  * 区域表
@@ -37,5 +39,29 @@ public class DistributorAreaRelationVO extends AbstractObject {
      */
     @ApiModelProperty("区域ID")
     private Long areaId;
+
+    /**
+     * 描述
+     */
+    private String description;
+    /**
+     * 创建人
+     */
+    private String createdBy;
+
+    /**
+     * 创建时间
+     */
+    private Date createdTime;
+
+    /**
+     * 更新人
+     */
+    private String updatedBy;
+
+    /**
+     * 更新时间
+     */
+    private Date updatedTime;
 
 }

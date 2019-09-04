@@ -3,6 +3,8 @@ package com.deepexi.channel.domain.area;
 import com.deepexi.util.pojo.AbstractObject;
 import lombok.*;
 
+import java.util.Date;
+
 /**
  * <p>
  * 区域表
@@ -51,5 +53,25 @@ public class AreaDTO extends AbstractObject {
      * 描述
      */
     private String description;
+
+    /**
+     * 创建人
+     */
+    private String createdBy;
+
+    /**
+     * 创建时间
+     */
+    private Date createdTime;
+
+    /**
+     * 更新人
+     */
+    private String updatedBy;
+
+    /**
+     * 更新时间
+     */
+    private Date updatedTime;
 
 }
