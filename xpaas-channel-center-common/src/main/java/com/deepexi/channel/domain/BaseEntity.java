@@ -21,14 +21,14 @@ public abstract class BaseEntity extends AbstractObject {
     private Long id;
 
 
-    @TableField(value = "`app_id`", fill = FieldFill.INSERT)
-    @ApiModelProperty("应用ID")
-    private String appId;
+//    @TableField(value = "`app_id`", fill = FieldFill.INSERT)
+//    @ApiModelProperty("应用ID")
+//    private String appId;
 
 
-    @TableField(value = "`tenant_Id`", fill = FieldFill.INSERT)
-    @ApiModelProperty("租户ID")
-    private String tenantId;
+//    @TableField(value = "`tenant_Id`", fill = FieldFill.INSERT)
+//    @ApiModelProperty("租户ID")
+//    private String tenantId;
 
     @TableLogic
     @TableField(value = "`dr`")

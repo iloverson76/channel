@@ -17,12 +17,10 @@ import com.deepexi.util.BeanPowerHelper;
 public class DistributorServiceImpl implements DistributorService {
     @Override
     public boolean create(DistributorDTO dto) {
+
+
         return false;
     }
-
-
-    // @Autowired
-  //  DistributorDAO distributoDAO;
 
 
 }

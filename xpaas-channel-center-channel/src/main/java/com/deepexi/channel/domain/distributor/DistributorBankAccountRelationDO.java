@@ -1,4 +1,4 @@
-package com.deepexi.channel.domain.area;
+package com.deepexi.channel.domain.distributor;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -21,9 +21,9 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@TableName("cc_area")
-@ApiModel(value="Area对象", description="区域表")
-public class AreaDO extends BaseEntity {
+@TableName("cc_distributor_back_account_relation")
+@ApiModel(value="DistributorArea对象", description="经销商-银行账号关联表")
+public class DistributorBankAccountRelationDO extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -31,39 +31,20 @@ public class AreaDO extends BaseEntity {
     @ApiModelProperty("应用ID")
     private String appId;
 
-
     @TableField(value = "`tenant_Id`", fill = FieldFill.INSERT)
     @ApiModelProperty("租户ID")
     private String tenantId;
 
     /**
-     * 父节点ID
+     * 经销商ID
      */
-    private Integer parentId;
+    @TableField(value = "`distributort_id`", fill = FieldFill.INSERT)
+    private Long distributortId;
 
     /**
-     * 区域分类ID
+     * 银行账号ID
      */
-    private Integer areaTypeId;
-
-    /**
-     * 区域名称
-     */
-    private String areaName;
-
-    /**
-     * 区域编码
-     */
-    private String areaCode;
-
-    /**
-     * 区域英文名称
-     */
-    private String areaNameEn;
-
-    /**
-     * 描述
-     */
-    private String description;
+    @TableField(value = "`bank_account_id`", fill = FieldFill.INSERT)
+    private Long bankAccountId;
 
 }
