@@ -5,6 +5,7 @@ import com.deepexi.channel.dao.StoreTypeRelationDAO;
 import com.deepexi.channel.domain.store.StoreDetailDTO;
 import com.deepexi.channel.domain.store.StoreTypeDTO;
 import com.deepexi.channel.domain.store.StoreTypeRelationDO;
+import com.deepexi.channel.service.StoreTypeRelationService;
 import com.deepexi.channel.service.StoreTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class StoreTypeBusinessServiceImpl implements StoreTypeBusinessService {
     @Autowired
     StoreTypeService storeTypeService;
     @Autowired
-    StoreTypeRelationDAO storeTypeRelationDAO;
+    StoreTypeRelationService storeTypeRelationDAO;
 
     @Override
     public Boolean deleteStoreType(List<Long> ids) {
@@ -31,5 +32,15 @@ public class StoreTypeBusinessServiceImpl implements StoreTypeBusinessService {
         StoreTypeRelationDO storeTypeRelationDO = StoreTypeRelationDO.builder().storeTypeId(storeTypeDTO.getId()).storeId(dto.getId()).build();
         storeTypeRelationDAO.save(storeTypeRelationDO);
         return storeTypeRelationDO.getId();
+    }
+
+    @Override
+    public StoreTypeDTO getStoreTypeByStoreId(Long pk) {
+        StoreTypeRelationDO storeTypeRelationDO = storeTypeRelationDAO.getStoreTypeRelationByStoreId(pk);
+        if(storeTypeRelationDO == null){
+            return null;
+        }
+        StoreTypeDTO storeTypeDTO = storeTypeService.detail(storeTypeRelationDO.getStoreTypeId());
+        return storeTypeDTO;
     }
 }

@@ -39,7 +39,7 @@ public class StoreGradeServiceImpl implements StoreGradeService {
     }
 
     @Override
-    public StoreGradeDTO detail(Integer  pk) {
+    public StoreGradeDTO detail(Long  pk) {
         StoreGradeDO storeGradeDO = storeGradeDAO.getById(pk);
         if(storeGradeDO == null ){
             return null;

@@ -37,7 +37,7 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public StoreDTO detail(Integer  pk) {
+    public StoreDTO detail(Long pk) {
         StoreDO storeDO = storeDAO.getById(pk);
         if(storeDO == null ){
             return null;

@@ -46,7 +46,7 @@ public class StoreGradeController {
 
     @GetMapping("/{id}")
     @ApiOperation(value = "查询门店等级详情", notes = "查询门店等级详情")
-    public Payload<StoreGradeVO> detail(@PathVariable(value = "id", required = true) Integer pk) {
+    public Payload<StoreGradeVO> detail(@PathVariable(value = "id", required = true) Long pk) {
         return new Payload(storeGradeService.detail(pk));
 
     }

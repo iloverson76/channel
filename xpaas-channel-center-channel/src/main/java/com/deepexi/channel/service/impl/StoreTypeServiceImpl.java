@@ -39,7 +39,7 @@ public class StoreTypeServiceImpl implements StoreTypeService {
     }
 
     @Override
-    public StoreTypeDTO detail(Integer  pk) {
+    public StoreTypeDTO detail(Long pk) {
         StoreTypeDO storeTypeDO = storeTypeDAO.getById(pk);
         if(storeTypeDO == null){
             return null;
@@ -51,10 +51,6 @@ public class StoreTypeServiceImpl implements StoreTypeService {
     public Boolean update(StoreTypeDTO dto) {
         if(dto == null){
             return false;
-        }
-        //判断编码是否重复
-        if(!isCodeUnique(dto)){
-            throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
         }
         StoreTypeDO storeTypeDO = dto.clone(StoreTypeDO.class);
         return storeTypeDAO.updateById(storeTypeDO);
@@ -87,9 +83,6 @@ public class StoreTypeServiceImpl implements StoreTypeService {
     public boolean isCodeUnique(StoreTypeDTO dto){
         StoreTypeQuery storeTypeQuery = StoreTypeQuery.builder().storeTypeAccuracyCode(dto.getStoreTypeCode()).build();
         List<StoreTypeDO> list = storeTypeDAO.findList(storeTypeQuery);
-
-//                .list(new QueryWrapper<StoreTypeDO>().lambda()
-//                .eq(StoreTypeDO::getStoreTypeCode,dto.getStoreTypeCode()));
         if(CollectionUtil.isNotEmpty(list)){
             //不为空，还有可能是更新时自身的编码
             if(list.size()==1){

@@ -39,8 +39,8 @@ public class StoreController {
 
     @GetMapping("/{id}")
     @ApiOperation("根据id获取门店详情")
-    public Payload detail(@PathVariable(value = "id", required = true) Integer  pk) {
-        return new Payload(storeService.detail(pk));
+    public Payload<StoreDetailVO> detail(@PathVariable(value = "id", required = true) Long  pk) {
+        return new Payload(storeBusinessService.detail(pk));
     }
 
     @PutMapping("/{id}")

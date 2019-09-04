@@ -21,7 +21,7 @@ public interface StoreTypeService {
       获取详情
     * @return
     */
-    StoreTypeDTO detail(Integer pk);
+    StoreTypeDTO detail(Long pk);
 
     /**
      更新eo

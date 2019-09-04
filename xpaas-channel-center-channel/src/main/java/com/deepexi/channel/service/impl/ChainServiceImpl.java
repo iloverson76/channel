@@ -45,6 +45,9 @@ public class ChainServiceImpl implements ChainService {
     @Override
     public ChainDTO detail(Long id) {
         ChainDO chainDO = chainDAO.getById(id);
+        if(chainDO == null){
+            return null;
+        }
         return chainDO.clone(ChainDTO.class,CloneDirection.OPPOSITE);
     }
 
