@@ -57,4 +57,7 @@ public class ChainQuery extends CommQuery {
     @ApiModelProperty(value = "连锁层级路径，前端不用理")
     private String path;
 
+    @ApiModelProperty(value = "连锁类型id列表，前端不用理")
+    private List<Long> chainTypeIdList;
+
 }

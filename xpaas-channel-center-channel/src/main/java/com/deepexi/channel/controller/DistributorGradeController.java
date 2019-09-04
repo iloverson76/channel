@@ -33,6 +33,8 @@ public class DistributorGradeController {
     @ApiOperation(value = "创建经销商等级")
     public Payload<Long> create(@RequestBody DistributorGradeVO vo) {
 
+        distributorGradeService.validateGradeCode(vo.getDistributorGradeCode());
+
         DistributorGradeDTO dto=vo.clone(DistributorGradeDTO.class, CloneDirection.FORWARD);
 
         Long result=distributorGradeService.create(dto);
@@ -50,10 +52,12 @@ public class DistributorGradeController {
         return new Payload<>(vo);
     }
 
-    @PutMapping()
+    @PutMapping("/{id:[0-9,]+}")
     @Transactional
     @ApiOperation(value = "根据id修改经销商等级")
-    public Payload<Boolean> update(@RequestBody DistributorGradeVO vo) {
+    public Payload<Boolean> update(@PathVariable(value = "id") Long id,@RequestBody DistributorGradeVO vo) {
+
+        vo.setId(id);
 
         DistributorGradeDTO dto= vo.clone(DistributorGradeDTO.class,CloneDirection.FORWARD);
 

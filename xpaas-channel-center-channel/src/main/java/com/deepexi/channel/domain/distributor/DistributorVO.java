@@ -1,10 +1,13 @@
 package com.deepexi.channel.domain.distributor;
 
 import com.deepexi.channel.domain.BaseEntity;
+import com.deepexi.channel.domain.bank.BankAccountVO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.Accessors;
+
+import java.util.List;
 
 /**
  * <p>
@@ -82,7 +85,7 @@ public class DistributorVO extends BaseEntity {
     /**
      * 资格证明
      */
-    @ApiModelProperty("")
+    @ApiModelProperty("资格证明")
     private String qualification;
 
     /**
@@ -96,5 +99,14 @@ public class DistributorVO extends BaseEntity {
      */
     @ApiModelProperty("状态 0 禁用 1 启用")
     private Integer enable ;
+
+    /**
+     * 等级
+     */
+    @ApiModelProperty("等级列表")
+    private List<DistributorGradeDTO> grades;
+
+    @ApiModelProperty("银行账号列表")
+    private List<BankAccountVO> bankAccountList;
 
 }

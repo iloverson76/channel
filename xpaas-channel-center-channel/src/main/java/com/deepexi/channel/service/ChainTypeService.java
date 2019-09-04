@@ -35,7 +35,7 @@ public interface ChainTypeService {
     * @param dto
     * @return
     */
-    Boolean update(Long id, ChainTypeDTO dto);
+    Boolean update(ChainTypeDTO dto);
 
     /**
     * 创建eo

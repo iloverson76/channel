@@ -37,11 +37,6 @@ public class ChainServiceImpl implements ChainService {
         return ObjectCloneUtils.convertList(chainDOS, ChainDTO.class, CloneDirection.OPPOSITE);
     }
 
-//    @Override
-//    public List<CcChain> findAll(CcChain eo) {
-//        List<CcChain> list = chainMapper.findList(eo);
-//        return list;
-//    }
     @Override
     public ChainDTO detail(Long id) {
         ChainDO chainDO = chainDAO.getById(id);
@@ -115,15 +110,5 @@ public class ChainServiceImpl implements ChainService {
         //父节点跟子节点一同删除, 允许删除
         return false;
     }
-//
-//    @Override
-//    public Boolean delete(Integer  pk) {
-//        int result = chainMapper.deleteBatchIds(Arrays.asList(pk));
-//        if (result > 0) {
-//            return true;
-//        }
-//        return false;
-//    }
-//
 
 }

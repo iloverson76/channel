@@ -26,7 +26,7 @@ public class DistributorGradeSystemController {
     @Autowired
     private DistributorGradeSystemService distributorGradeSystemService;
 
-    @PostMapping
+    @PostMapping()
     @ApiOperation(value = "创建经销商体系")
     public Payload<Long> create(@RequestBody DistributorGradeSystemVO vo) {
 
@@ -44,7 +44,6 @@ public class DistributorGradeSystemController {
         DistributorGradeSystemVO vo=distributorGradeSystemService.detail(pk).clone(DistributorGradeSystemVO.class,CloneDirection.OPPOSITE);
 
         return new Payload<>(vo);
-
     }
 
     @PutMapping("/{id}")

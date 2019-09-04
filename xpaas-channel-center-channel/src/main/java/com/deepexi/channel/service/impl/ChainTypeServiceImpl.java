@@ -32,30 +32,12 @@ public class ChainTypeServiceImpl implements ChainTypeService {
 
     @Override
     public List<ChainTypeDTO> findPage(ChainTypeQuery query) {
-        if (query.getPage() != null && query.getPage() != -1) {
+        if (query.getPage() != null && query.getPage() != -1){
             PageHelper.startPage(query.getPage(), query.getSize());
-            List<ChainTypeDO> pages = chainTypeDAO.findList(query);
-            List<ChainTypeDTO> chainTypeDTOS = ObjectCloneUtils.convertList(pages, ChainTypeDTO.class, CloneDirection.OPPOSITE);
-            // 得到所有连锁类型id
-            Set<Long> idList = chainTypeDTOS.stream().map(ChainTypeDTO::getId).collect(Collectors.toSet());
-            List<ChainTypeDO> parentChainTypeDOS = chainTypeDAO.selectListByIds(idList);
-            // id->连锁类型的map关系
-            Map<Long, List<ChainTypeDO>> parentCollect =
-                    parentChainTypeDOS.stream().collect(Collectors.groupingBy(ChainTypeDO::getId));
-            chainTypeDTOS.forEach(m -> {
-                // 根据id对应设置attachmentPath字段
-                List<ChainTypeDO> dos = parentCollect.get(m.getParentId());
-                if (CollectionUtil.isEmpty(dos)) {
-                    m.setParentName("");
-                } else {
-                    ChainTypeDO chainTypeDO = dos.get(0);
-                    m.setParentName(chainTypeDO.getChainTypeName() == null ? "" :
-                            chainTypeDO.getChainTypeName());
-                }
-            });
-            return chainTypeDTOS;
         }
-        return findAll(query);
+        List<ChainTypeDO> chainTypeDOS = chainTypeDAO.findList(query);
+        List<ChainTypeDTO> chainTypeDTOS = ObjectCloneUtils.convertList(chainTypeDOS, ChainTypeDTO.class, CloneDirection.OPPOSITE);
+        return chainTypeDTOS;
     }
 
     @Override
@@ -77,24 +59,13 @@ public class ChainTypeServiceImpl implements ChainTypeService {
     }
 
     @Override
-    public Boolean update(Long id, ChainTypeDTO dto) {
-        dto.setId(id);
-        //判断编码是否重复
-        if (!isCodeUnique(dto)) {
-            throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
-        }
-        //TODO 判断父级节点是否合法,是否出现环形结构
-
+    public Boolean update(ChainTypeDTO dto) {
         boolean result = chainTypeDAO.updateById(dto.clone(ChainTypeDO.class));
         return result;
     }
 
     @Override
     public Long create(ChainTypeDTO dto) {
-        //新增校验,编码不能重复
-        if (!isCodeUnique(dto)) {
-            throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
-        }
         //插入
         ChainTypeDO chainTypeDO = dto.clone(ChainTypeDO.class);
         boolean result = chainTypeDAO.save(chainTypeDO);
@@ -121,7 +92,8 @@ public class ChainTypeServiceImpl implements ChainTypeService {
     @Override
     public Boolean haveChildren(List<Long> ids) {
         //获得所有子节点
-        List<ChainTypeDO> chainTypeDOS = chainTypeDAO.findParentList(ids);
+        ChainTypeQuery query = ChainTypeQuery.builder().ids(ids).build();
+        List<ChainTypeDO> chainTypeDOS = chainTypeDAO.findList(query);
         //没有子节点
         if (CollectionUtil.isEmpty(chainTypeDOS)) {
             return false;
