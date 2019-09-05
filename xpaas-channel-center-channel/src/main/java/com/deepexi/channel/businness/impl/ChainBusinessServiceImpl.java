@@ -202,6 +202,14 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         return insertChainBankResult;
     }
 
+    /**
+     * @MethodName: recursionTree
+     * @Description: 递归更新所有儿子节点的path以及parentId，返回所有需要的dto列表
+     * @Param: [dto]
+     * @Return: java.util.List<com.deepexi.channel.domain.chain.ChainDTO>
+     * @Author: mumu
+     * @Date: 2019/9/5
+    **/
     public List<ChainDTO> recursionTree(ChainTreeDTO dto){
         //批量更新所有节点,根据id更新parent_id和path，返回所有孙子儿子节点
         List<ChainDTO> saveChainDTOS =  new LinkedList<>();
@@ -215,23 +223,56 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
             c.setPath(dto.getPath()+"/"+c.getId());
             saveChainDTOS.add(c);
             //递归，把儿子的所有节点的parent_id和path都更新
-            saveChainDTOS.addAll(recursionTree(c));
+            saveChainDTOS.addAll(this.recursionTree(c));
         });
         return saveChainDTOS;
     }
 
-    public boolean saveTree(List<ChainTreeDTO> dtos){
+    /**
+     * @MethodName: saveTree
+     * @Description: 批量更新整棵树的节点
+     * @Param: [dtos]
+     * @Return: boolean
+     * @Author: mumu
+     * @Date: 2019/9/5
+    **/
+    @Override
+    @Transactional
+    public Boolean saveTree(List<ChainTreeDTO> dtos){
+        //TODO 将所有的parentId设置为0，path设置为""
+
+
         //全部节点列表，用于批量更新
         List<ChainDTO> chainDTOS = new LinkedList<>();
+
+        //遍历每一个根节点，获取需要更新的全部节点
         dtos.forEach(dto ->{
             dto.setPath("/"+dto.getId());
-
+            //根节点parentId都是0
+            dto.setParentId(0L);
+            //根节点加入更新列表
+            chainDTOS.add(dto);
+            //根节点的所有子节点加入更新列表
+            chainDTOS.addAll(this.recursionTree(dto));
         });
 
+        //批量更新所有节点的parentId与path
+//        return chainService.updateBatch(chainDTOS);
 
-
-        //传入根节点列表
         return true;
+    }
+
+    @Override
+    public List<ChainTreeDTO> getTree() {
+        List<ChainTreeDTO> chainTreeDTOS = new LinkedList<>();
+        List<ChainDTO> chainDTOS = chainService.getChainTreeNode();
+
+        chainDTOS.forEach(c ->{
+
+
+
+        });
+        return null;
     }
 
 

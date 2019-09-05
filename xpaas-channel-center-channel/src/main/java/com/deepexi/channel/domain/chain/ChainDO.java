@@ -60,4 +60,6 @@ public class ChainDO extends SuperEntity {
     private String businessLicense;
 
     private String path;
+
+    private String other;
 }

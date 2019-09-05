@@ -67,4 +67,7 @@ public class ChainVO extends SuperEntity {
 
     @ApiModelProperty(value = "层级关系")
     private String path;
+
+    @ApiModelProperty(value = "其他")
+    private String other;
 }

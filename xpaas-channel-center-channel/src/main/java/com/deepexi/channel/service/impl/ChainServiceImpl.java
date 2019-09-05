@@ -114,4 +114,23 @@ public class ChainServiceImpl implements ChainService {
         return false;
     }
 
+    @Override
+    public boolean updateBatch(List<ChainDTO> chainDTOS) {
+        if(CollectionUtil.isEmpty(chainDTOS)){
+            return false;
+        }
+        List<ChainDO> chainDOS = ObjectCloneUtils.convertList(chainDTOS, ChainDO.class);
+        return chainDAO.updateBatch(chainDOS);
+    }
+
+    @Override
+    public List<ChainDTO> getChainTreeNode() {
+        List<ChainDO> chainDOS = chainDAO.getChainTreeNode();
+        if(CollectionUtil.isEmpty(chainDOS)){
+            return null;
+        }
+        List<ChainDTO> chainDTOS = ObjectCloneUtils.convertList(chainDOS, ChainDTO.class, CloneDirection.OPPOSITE);
+        return chainDTOS;
+    }
+
 }

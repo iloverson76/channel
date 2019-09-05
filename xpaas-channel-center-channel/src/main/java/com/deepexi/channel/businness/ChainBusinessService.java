@@ -3,6 +3,7 @@ package com.deepexi.channel.businness;
 import com.deepexi.channel.domain.chain.ChainDTO;
 import com.deepexi.channel.domain.chain.ChainDetailDTO;
 import com.deepexi.channel.domain.chain.ChainQuery;
+import com.deepexi.channel.domain.chain.ChainTreeDTO;
 
 import java.util.List;
 
@@ -18,4 +19,8 @@ public interface ChainBusinessService {
     Boolean updateChain(ChainDetailDTO dto);
 
     List<ChainDetailDTO> findPage(ChainQuery query);
+
+    Boolean saveTree(List<ChainTreeDTO> dtos);
+
+    List<ChainTreeDTO> getTree();
 }

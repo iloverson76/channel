@@ -3,6 +3,7 @@ package com.deepexi.channel.dao.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.deepexi.channel.dao.ChainDAO;
 import com.deepexi.channel.domain.chain.ChainDO;
+import com.deepexi.channel.domain.chain.ChainDTO;
 import com.deepexi.channel.domain.chain.ChainQuery;
 import com.deepexi.channel.mapper.ChainMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +30,15 @@ public class ChainDAOImpl extends ServiceImpl<ChainMapper, ChainDO> implements C
     @Override
     public List<ChainDO> findParentList(List<Long> ids) {
         return chainMapper.findParentList(ids);
+    }
+
+    @Override
+    public boolean updateBatch(List<ChainDO> chainDOS) {
+        return chainMapper.updateBatch(chainDOS) > 0 ? true : false;
+    }
+
+    @Override
+    public List<ChainDO> getChainTreeNode() {
+        return chainMapper.getChainTreeNode();
     }
 }

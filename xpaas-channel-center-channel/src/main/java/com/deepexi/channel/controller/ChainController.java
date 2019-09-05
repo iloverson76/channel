@@ -5,6 +5,7 @@ import com.deepexi.channel.domain.bank.BankAccountDTO;
 import com.deepexi.channel.domain.chain.*;
 import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.service.ChainService;
+import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.extension.ApplicationException;
 import com.deepexi.util.pageHelper.PageBean;
@@ -101,10 +102,25 @@ public class ChainController {
     }
 
     @PostMapping("/tree")
-    @ApiOperation(value = "根据id批量删除连锁", notes = "根据id删除连锁")
-    public Payload<Boolean> saveTree(@RequestBody ChainTreeVO vo){
+    @ApiOperation(value = "保存连锁树", notes = "保存连锁树")
+    public Payload<Boolean> saveTree(@RequestBody List<ChainTreeVO> vos){
+        if(CollectionUtil.isEmpty(vos)){
+            return new Payload<>(false);
+        }
+        List<ChainTreeDTO> chainTreeDTOS = ObjectCloneUtils.convertList(vos, ChainTreeDTO.class, CloneDirection.OPPOSITE);
 
-        return new Payload<>(true);
+        return new Payload<>(chainBusinessService.saveTree(chainTreeDTOS));
     }
 
+    @GetMapping("/tree")
+    @ApiOperation(value = "huo")
+    public Payload<List<ChainTreeVO>> getTree(){
+        List<ChainTreeDTO> chainTreeDtos = chainBusinessService.getTree();
+        if(CollectionUtil.isEmpty(chainTreeDtos)){
+            return new Payload<>(null);
+        }else{
+            List<ChainTreeVO> chainTreeVOS = ObjectCloneUtils.convertList(chainTreeDtos, ChainTreeVO.class, CloneDirection.OPPOSITE);
+            return new Payload<>(chainTreeVOS);
+        }
+    }
 }
