@@ -29,7 +29,7 @@ public class DistributorBankAccountRelationDTO extends AbstractObject {
     /**
      * 经销商ID
      */
-    private Long distributortId;
+    private Long distributorId;
 
     /**
      * 银行账号ID

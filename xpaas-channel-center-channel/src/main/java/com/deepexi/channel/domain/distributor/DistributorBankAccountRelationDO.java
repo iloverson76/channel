@@ -21,30 +21,20 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@TableName("cc_distributor_back_account_relation")
+@TableName("cc_distributor_bank_account_relation")
 @ApiModel(value="DistributorArea对象", description="经销商-银行账号关联表")
 public class DistributorBankAccountRelationDO extends SuperEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @TableField(value = "`app_id`", fill = FieldFill.INSERT)
-    @ApiModelProperty("应用ID")
-    private String appId;
-
-    @TableField(value = "`tenant_Id`", fill = FieldFill.INSERT)
-    @ApiModelProperty("租户ID")
-    private String tenantId;
-
     /**
      * 经销商ID
      */
-    @TableField(value = "`distributort_id`", fill = FieldFill.INSERT)
-    private Long distributortId;
+    private Long distributorId;
 
     /**
      * 银行账号ID
      */
-    @TableField(value = "`bank_account_id`", fill = FieldFill.INSERT)
     private Long bankAccountId;
 
 }

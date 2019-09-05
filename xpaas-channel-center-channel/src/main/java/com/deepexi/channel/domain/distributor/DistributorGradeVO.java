@@ -48,7 +48,7 @@ public class DistributorGradeVO extends AbstractObject {
     /**
      * 是否根节点 0 是 1 否
      */
-    @ApiModelProperty("是否根节点 0 是 1 否")
+    @ApiModelProperty("是否根节点 0 否 1 是")
     private Boolean root;
 
     /**

@@ -28,6 +28,12 @@ public class DistributorDO extends SuperEntity {
     private static final long serialVersionUID = 1L;
 
     /**
+     * 所属等级
+     */
+    @ApiModelProperty("所属等级")
+    private long gradeId;
+
+    /**
      * 是否指定上级
      */
     @ApiModelProperty("是否指定上级 0 否 1 是")
