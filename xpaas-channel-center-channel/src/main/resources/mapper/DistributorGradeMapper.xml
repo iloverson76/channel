@@ -30,9 +30,9 @@
         </if>
         <if test="ids != null">
           and id in
-        <foreach collection="ids" item="tempId" index="index" open="(" close=")" separator=",">
-            #{tempId}
-        </foreach>
+            <foreach collection="ids" item="tempId" index="index" open="(" close=")" separator=",">
+                #{tempId}
+            </foreach>
         </if>
 
         <if test="distributorGradeName!=null">

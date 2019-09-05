@@ -15,4 +15,13 @@ public interface DistributorGradeRelationService {
 
     boolean createBatch(List<DistributorGradeRelationDTO> dtoList);
 
+    int deleteByDistributorId(long distributorId);
+
+    int deleteBatchByDistributorIds(List<Long> distributorIdList);
+
+    DistributorGradeRelationDTO findOne(long distributorId,long gradeId);
+
+    List<DistributorGradeRelationDTO> findAllByDistributorIds(long distributorId);
+
+    boolean updateBatchByDistributorId (List<DistributorGradeRelationDTO> dtoList);
 }
