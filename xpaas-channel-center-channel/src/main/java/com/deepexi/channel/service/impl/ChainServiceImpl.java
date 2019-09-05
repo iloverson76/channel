@@ -77,10 +77,10 @@ public class ChainServiceImpl implements ChainService {
         return chainDAO.removeByIds(ids);
     }
 
-    @Override
-    public Integer getChainCountByTypeIds(List<Long> typeIds) {
-        return chainDAO.getChainCountByTypeIds(typeIds);
-    }
+//    @Override
+//    public Integer getChainCountByTypeIds(List<Long> typeIds) {
+//        return chainDAO.getChainCountByTypeIds(typeIds);
+//    }
 
     @Override
     public boolean isCodeUnique(ChainDTO dto) {

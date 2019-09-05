@@ -44,8 +44,10 @@ public class ChainTypeBusinessServiceImpl implements ChainTypeBusinessService {
             throw new ApplicationException(ResultEnum.HAVE_CHILDREN);
         }
         //判断是否有被连锁引用
-        Integer count = chainService.getChainCountByTypeIds(ids);
-        if(count > 0){
+        ChainQuery chainQuery = ChainQuery.builder().chainTypeIdList(ids).build();
+        List<ChainDTO> list = chainService.findPage(chainQuery);
+
+        if(CollectionUtil.isNotEmpty(list)){
             throw new ApplicationException(ResultEnum.HAVE_RELATION);
         }
         return chainTypeService.delete(ids);

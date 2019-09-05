@@ -16,12 +16,7 @@ public interface ChainService {
     * @return
     */
     List<ChainDTO> findPage(ChainQuery query);
-//    /**
-//    * 获取列表
-//    * @return
-//    */
-//    List<CcChain> findAll(CcChain eo);
-//
+
     /**
       获取详情
     * @return
@@ -42,19 +37,13 @@ public interface ChainService {
     */
     Long create(ChainDTO dto);
 //
-//    /**
-//     * 单个删除
-//    * @return
-//    */
-//    Boolean delete(Integer pk);
-//
     /**
      批量删除
     * @return
     */
     Boolean delete(List<Long> ids);
 
-    Integer getChainCountByTypeIds(List<Long> ids);
+//    Integer getChainCountByTypeIds(List<Long> ids);
 
     boolean isCodeUnique(ChainDTO dto);
 
