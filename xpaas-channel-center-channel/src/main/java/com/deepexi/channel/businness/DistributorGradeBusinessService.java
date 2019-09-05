@@ -19,7 +19,7 @@ public interface DistributorGradeBusinessService {
     /**
      * 分页获取列表
      */
-    List<DistributorGradeBusiDTO> findPage(DistributorGradeQuery query);
+    List<DistributorGradeDTO> findPage(DistributorGradeQuery query);
 
     /**
      * 可挂载下级的节点

@@ -10,10 +10,12 @@ import com.deepexi.util.pojo.ObjectCloneUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -75,11 +77,24 @@ public class DistributorGradeController {
 
     @GetMapping
     @ApiOperation(value = "分页查询", notes = "分页请求")
-    public  Payload<PageBean<DistributorGradeBusiVO>> findPage(@ApiParam(name = "query", required = true) DistributorGradeQuery query) {
+    public  Payload<PageBean<DistributorGradeVO>> findPage(@ApiParam(name = "query", required = true) DistributorGradeQuery query) {
 
-        List<DistributorGradeBusiDTO> dtoList= distributorGradeBusinessService.findPage(query);
+        List<DistributorGradeDTO> dtoList= distributorGradeBusinessService.findPage(query);
 
-        List<DistributorGradeBusiVO> voList= ObjectCloneUtils.convertList(dtoList, DistributorGradeBusiVO.class);
+        List<DistributorGradeVO> voList=new ArrayList<>();
+
+        dtoList.forEach(dto->{
+
+            DistributorGradeSystemVO systemVO=dto.getSystem().clone(DistributorGradeSystemVO.class,CloneDirection.OPPOSITE);
+
+            DistributorGradeVO vo= new DistributorGradeVO();
+
+            BeanUtils.copyProperties(dto,vo);
+
+            vo.setSystem(systemVO);
+
+            voList.add(vo);
+        });
 
         return new Payload<>(new PageBean<>(voList));
     }

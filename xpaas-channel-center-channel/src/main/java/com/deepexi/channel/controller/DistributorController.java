@@ -5,10 +5,7 @@ import com.deepexi.channel.domain.area.AreaDTO;
 import com.deepexi.channel.domain.area.AreaVO;
 import com.deepexi.channel.domain.bank.BankAccountDTO;
 import com.deepexi.channel.domain.bank.BankAccountVO;
-import com.deepexi.channel.domain.distributor.DistributorDTO;
-import com.deepexi.channel.domain.distributor.DistributorGradeDTO;
-import com.deepexi.channel.domain.distributor.DistributorGradeVO;
-import com.deepexi.channel.domain.distributor.DistributorVO;
+import com.deepexi.channel.domain.distributor.*;
 import com.deepexi.channel.service.AreaService;
 import com.deepexi.channel.service.DistributorService;
 import com.deepexi.util.config.Payload;
@@ -37,12 +34,17 @@ public class DistributorController {
     @ApiOperation(value = "创建经销商")
     public Payload<Boolean> create(@RequestBody DistributorVO vo) {
 
+        List<DistributorGradeDTO> grades=
+                ObjectCloneUtils.convertList(vo.getGrades(), DistributorGradeDTO.class,CloneDirection.FORWARD);
+
         List<BankAccountDTO> bankAccounts=
                 ObjectCloneUtils.convertList(vo.getBankAccounts(), BankAccountDTO.class,CloneDirection.FORWARD);
 
         DistributorDTO dto= new DistributorDTO();
 
         BeanUtils.copyProperties(vo,dto);
+
+        dto.setGrades(grades);
 
         dto.setBankAccounts(bankAccounts);
 

@@ -35,7 +35,7 @@ public class DistributorDTO extends AbstractObject {
     private Long id;
 
     @ApiModelProperty("所属等级")
-    private DistributorGradeDTO grade;
+    private List<DistributorGradeDTO> grades;
 
     @ApiModelProperty("所属等级ID")
     private List<Long> gradeIds;

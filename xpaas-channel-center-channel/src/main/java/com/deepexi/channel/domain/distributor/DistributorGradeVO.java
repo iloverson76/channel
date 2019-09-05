@@ -34,6 +34,17 @@ public class DistributorGradeVO extends AbstractObject {
     private DistributorGradeSystemVO system;
 
     /**
+     * 上级经销商等级编码
+     */
+    private String parentGradeCode;
+
+    /**
+     * 上级经销商等级名称
+     */
+
+    private String parentGradeName;
+
+    /**
      * 路径
      */
     @ApiModelProperty("上下级路径")

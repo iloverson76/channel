@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -96,7 +97,7 @@ public class DistributorGradeServiceImpl implements DistributorGradeService {
         List<DistributorGradeDO> eoList = distributorGradeDAO.findPage(query);
 
         if(CollectionUtils.isEmpty(eoList)){
-            return null;
+            new ArrayList<DistributorGradeDTO>();
         }
 
         return ObjectCloneUtils.convertList(eoList, DistributorGradeDTO.class, CloneDirection.OPPOSITE);

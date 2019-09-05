@@ -56,7 +56,7 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
     }
 
     @Override
-    public List<DistributorGradeBusiDTO> findPage(DistributorGradeQuery query) {
+    public List<DistributorGradeDTO> findPage(DistributorGradeQuery query) {
 
         log.info("查找经销商等级列表");
 
@@ -75,8 +75,8 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
         List<DistributorGradeDTO> parentGradeList = distributorGradeService.findPage(parentQuery);
 
-        List<DistributorGradeBusiDTO> gradePageList=
-                ObjectCloneUtils.convertList(gradeList,DistributorGradeBusiDTO.class,CloneDirection.FORWARD);
+        List<DistributorGradeDTO> gradePageList=
+                ObjectCloneUtils.convertList(gradeList,DistributorGradeDTO.class,CloneDirection.FORWARD);
 
         if(CollectionUtil.isNotEmpty(parentGradeList)){
 
