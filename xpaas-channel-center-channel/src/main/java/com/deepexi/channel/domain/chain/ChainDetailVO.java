@@ -19,12 +19,6 @@ public class ChainDetailVO extends ChainVO {
     private List<BankAccountVO> bankAccountList;
 
     /**
-     * 连锁分类名称
-     */
-    @ApiModelProperty(value = "连锁分类名称", example = "渠道")
-    private String chainTypeName;
-
-    /**
      * 父节点名称
      */
     @ApiModelProperty(value = "连锁父级名称")

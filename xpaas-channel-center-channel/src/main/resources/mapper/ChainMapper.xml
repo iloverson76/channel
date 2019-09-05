@@ -114,4 +114,11 @@
         </foreach>
     </update>
 
+    <select id="getChainTreeNode" resultType="com.deepexi.channel.domain.chain.ChainDO">
+        SELECT * FROM cc_chain WHERE path RLIKE "^/([0-9])*$|^/([0-9])*/([0-9])*$|^/([0-9])*/([0-9])*/([0-9])*$"
+    </select>
+
+    <update id="resetTree" >
+      update cc_chain set path='', parent_id = 0 where app_id = #{appId} and tenant_id = #{tenantId}
+    </update>
 </mapper>

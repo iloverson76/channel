@@ -19,4 +19,6 @@ public interface ChainDAO extends IService<ChainDO> {
     boolean updateBatch(List<ChainDO> chainDOS);
 
     List<ChainDO> getChainTreeNode();
+
+    Integer resetTree(ChainDO chainDO);
 }

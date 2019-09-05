@@ -70,4 +70,10 @@ public class ChainVO extends SuperEntity {
 
     @ApiModelProperty(value = "其他")
     private String other;
+
+    /**
+     * 连锁分类名称
+     */
+    @ApiModelProperty(value = "连锁分类名称", example = "渠道")
+    private String chainTypeName;
 }

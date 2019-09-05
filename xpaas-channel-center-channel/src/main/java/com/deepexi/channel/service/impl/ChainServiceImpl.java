@@ -5,6 +5,7 @@ import com.deepexi.channel.dao.ChainDAO;
 import com.deepexi.channel.domain.chain.ChainDO;
 import com.deepexi.channel.domain.chain.ChainDTO;
 import com.deepexi.channel.domain.chain.ChainQuery;
+import com.deepexi.channel.extension.AppRuntimeEnv;
 import com.deepexi.channel.service.ChainService;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.pojo.CloneDirection;
@@ -21,6 +22,9 @@ import java.util.List;
 public class ChainServiceImpl implements ChainService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Autowired
+    AppRuntimeEnv appRuntimeEnv;
 
     @Autowired
     private ChainDAO chainDAO;
@@ -131,6 +135,14 @@ public class ChainServiceImpl implements ChainService {
         }
         List<ChainDTO> chainDTOS = ObjectCloneUtils.convertList(chainDOS, ChainDTO.class, CloneDirection.OPPOSITE);
         return chainDTOS;
+    }
+
+    @Override
+    public Boolean resetTree() {
+        ChainDTO dto = new ChainDTO();
+        dto.setAppId(appRuntimeEnv.getAppId());
+        dto.setTenantId(appRuntimeEnv.getTenantId());
+        return chainDAO.resetTree(dto.clone(ChainDO.class)) > 0 ? true:false;
     }
 
 }

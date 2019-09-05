@@ -60,7 +60,22 @@ public interface ChainService {
 
     boolean haveChildren(List<Long> ids);
 
+    /**
+     * 批量更新path，
+     * @param chainDTOS
+     * @return
+     */
     boolean updateBatch(List<ChainDTO> chainDTOS);
 
+    /**
+     * 获取整棵树的节点
+     * @return
+     */
     List<ChainDTO> getChainTreeNode();
+
+    /**
+     * 重置所有path和parentId
+     * @return
+     */
+    Boolean resetTree();
 }
