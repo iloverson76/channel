@@ -1,6 +1,7 @@
 package com.deepexi.channel.controller;
 
 import com.deepexi.channel.businness.DistributorGradeBusinessService;
+import com.deepexi.channel.domain.bank.BankAccountDTO;
 import com.deepexi.channel.domain.distributor.*;
 import com.deepexi.channel.service.DistributorGradeService;
 import com.deepexi.util.config.Payload;
