@@ -2,6 +2,7 @@ package com.deepexi.channel.domain.distributor;
 
 import com.deepexi.channel.domain.area.AreaDTO;
 import com.deepexi.channel.domain.area.AreaVO;
+import com.deepexi.channel.domain.bank.BankAccountDTO;
 import com.deepexi.channel.domain.bank.BankAccountVO;
 import com.deepexi.util.pojo.AbstractObject;
 import io.swagger.annotations.ApiModel;
@@ -33,14 +34,23 @@ public class DistributorVO extends AbstractObject {
 
     private Long id;
 
-    @ApiModelProperty("等级列表")
-    private List<DistributorGradeVO> grades;
+    @ApiModelProperty("所属等级列表")
+    private List<DistributorGradeDTO> grades;
+
+    @ApiModelProperty("所属等级ID")
+    private List<Long> gradeIds;
 
     @ApiModelProperty("银行账号列表")
-    private List<BankAccountVO> bankAccounts;
+    private List<BankAccountDTO> bankAccounts;
+
+    @ApiModelProperty("银行账号ID")
+    private List<Long> bankAccountIds;
 
     @ApiModelProperty("所在区域")
-    private AreaVO area;
+    private AreaDTO area;
+
+    @ApiModelProperty("所在区域ID")
+    private long AreaId;
 
     /**
      * 是否指定上级
@@ -129,6 +139,7 @@ public class DistributorVO extends AbstractObject {
     /**
      * 描述
      */
+    @ApiModelProperty("描述")
     private String description;
     /**
      * 创建人

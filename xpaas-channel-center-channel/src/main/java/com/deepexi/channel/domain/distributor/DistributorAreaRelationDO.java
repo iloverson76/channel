@@ -31,8 +31,7 @@ public class DistributorAreaRelationDO extends SuperEntity {
     /**
      * 经销商ID
      */
-    @TableField(value = "`distributort_id`", fill = FieldFill.INSERT)
-    private Long distributortId;
+    private Long distributorId;
 
     /**
      * 区域ID

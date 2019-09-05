@@ -5,8 +5,12 @@ import com.deepexi.channel.domain.distributor.DistributorBankAccountRelationDO;
 import com.deepexi.channel.domain.distributor.DistributorBankAccountRelationDTO;
 import com.deepexi.channel.service.DistributorBankAccountRelationService;
 import com.deepexi.util.pojo.CloneDirection;
+import com.deepexi.util.pojo.ObjectCloneUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class DistributorBankAccountRelationServiceImpl implements DistributorBankAccountRelationService {
@@ -15,16 +19,24 @@ public class DistributorBankAccountRelationServiceImpl implements DistributorBan
     DistributorBankAccountRelationDAO distributorBankAccountRelationDAO;
 
     @Override
-    public long create(DistributorBankAccountRelationDTO dto) {
+    public boolean create(List<DistributorBankAccountRelationDTO> dtoList) {
 
-        if(null==dto){
-            return 0L;
+        if(CollectionUtils.isEmpty(dtoList)){
+            return false;
         }
 
-        DistributorBankAccountRelationDO eo=dto.clone(DistributorBankAccountRelationDO.class, CloneDirection.FORWARD);
+        List<DistributorBankAccountRelationDO> eoList=
+        ObjectCloneUtils.convertList(dtoList,DistributorBankAccountRelationDO.class,CloneDirection.FORWARD);
 
-        distributorBankAccountRelationDAO.save(eo);
+        distributorBankAccountRelationDAO.saveBatch(eoList);
 
-        return eo.getId();
+        return Boolean.TRUE;
     }
+
+    @Override
+    public boolean delete(List<Long> idList) {
+        return false;
+    }
+
+
 }

@@ -76,4 +76,5 @@ public class SuperEntity extends AbstractObject {
     private Date updatedTime;
 
 
+
 }

@@ -29,13 +29,11 @@ public class DistributorGradeRelationDO extends SuperEntity {
     /**
      * 经销商ID
      */
-    @TableField(value = "`distributort_id`", fill = FieldFill.INSERT)
     private Long distributortId;
 
     /**
      * 区域ID
      */
-    @TableField(value = "`distributor_grade_id`", fill = FieldFill.INSERT)
     private Long distributorGradeId;
 
 }
