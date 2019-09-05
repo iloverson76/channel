@@ -1,7 +1,6 @@
 package com.deepexi.channel.businness;
 
 import com.deepexi.channel.domain.distributor.DistributorGradeDTO;
-import com.deepexi.channel.domain.distributor.DistributorGradeBusiDTO;
 import com.deepexi.channel.domain.distributor.DistributorGradeQuery;
 
 import java.util.List;
@@ -19,7 +18,7 @@ public interface DistributorGradeBusinessService {
     /**
      * 分页获取列表
      */
-    List<DistributorGradeBusiDTO> findPage(DistributorGradeQuery query);
+    List<DistributorGradeDTO> findPage(DistributorGradeQuery query);
 
     /**
      * 可挂载下级的节点

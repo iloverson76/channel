@@ -9,8 +9,6 @@ import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,7 +54,7 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
     }
 
     @Override
-    public List<DistributorGradeBusiDTO> findPage(DistributorGradeQuery query) {
+    public List<DistributorGradeDTO> findPage(DistributorGradeQuery query) {
 
         log.info("查找经销商等级列表");
 
@@ -75,8 +73,8 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
         List<DistributorGradeDTO> parentGradeList = distributorGradeService.findPage(parentQuery);
 
-        List<DistributorGradeBusiDTO> gradePageList=
-                ObjectCloneUtils.convertList(gradeList,DistributorGradeBusiDTO.class,CloneDirection.FORWARD);
+        List<DistributorGradeDTO> gradePageList=
+                ObjectCloneUtils.convertList(gradeList,DistributorGradeDTO.class,CloneDirection.FORWARD);
 
         if(CollectionUtil.isNotEmpty(parentGradeList)){
 
@@ -84,23 +82,23 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
                     parentGradeList.stream().collect(Collectors.groupingBy(DistributorGradeDTO::getId));
 
             // 根据id设置父级编码和名称
-            gradePageList.forEach(gradePageDTO -> {
+            gradePageList.forEach(page -> {
 
-                List<DistributorGradeDTO> gradeDTOS = parentGradeMap.get(gradePageDTO.getParentId());
+                List<DistributorGradeDTO> gradeDTOS = parentGradeMap.get(page.getParentId());
 
                 if (CollectionUtil.isEmpty(gradeDTOS)) {
 
-                    gradePageDTO.setParentGradeCode("");
+                    page.setParentGradeCode("");
 
-                    gradePageDTO.setParentGradeName("");
+                    page.setParentGradeName("");
 
                 } else {
 
                     DistributorGradeDTO gdto = gradeDTOS.get(0);//id是主键,只有一条记录
 
-                    gradePageDTO.setParentGradeCode(gdto.getDistributorGradeCode() == null ? "" : gdto.getDistributorGradeCode());
+                    page.setParentGradeCode(gdto.getDistributorGradeCode() == null ? "" : gdto.getDistributorGradeCode());
 
-                    gradePageDTO.setParentGradeName(gdto.getDistributorGradeName()==null? "": gdto.getDistributorGradeName());
+                    page.setParentGradeName(gdto.getDistributorGradeName()==null? "": gdto.getDistributorGradeName());
                 }
             });
         }
