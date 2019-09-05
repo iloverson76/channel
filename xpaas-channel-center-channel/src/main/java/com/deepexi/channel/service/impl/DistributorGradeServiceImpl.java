@@ -77,6 +77,10 @@ public class DistributorGradeServiceImpl implements DistributorGradeService {
 
         DistributorGradeDTO dto=distributorGradeDAO.getById(pk).clone(DistributorGradeDTO.class,CloneDirection.OPPOSITE);
 
+        if(null==dto){
+            return null;
+        }
+
         return dto;
     }
 

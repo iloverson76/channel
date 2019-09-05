@@ -5,6 +5,7 @@ import com.deepexi.channel.domain.distributor.*;
 import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.extension.AppRuntimeEnv;
 import com.deepexi.channel.service.DistributorGradeSystemService;
+import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.extension.ApplicationException;
 import com.deepexi.util.pageHelper.PageBean;
 import com.deepexi.util.pojo.CloneDirection;
@@ -77,6 +78,10 @@ public class DistributorGradeSystemServiceImpl implements DistributorGradeSystem
         }
 
         List<DistributorGradeSystemDO> eoList = distributorGradeSystemDAO.findPage(query);
+
+        if(CollectionUtil.isEmpty(eoList)){
+            return null;
+        }
 
         return ObjectCloneUtils.convertList(eoList,DistributorGradeSystemDTO.class,CloneDirection.OPPOSITE);
     }

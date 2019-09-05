@@ -3,20 +3,14 @@ package com.deepexi.channel.service.impl;
 import com.deepexi.channel.dao.DistributorGradeRelationDAO;
 import com.deepexi.channel.domain.distributor.DistributorGradeRelationDO;
 import com.deepexi.channel.domain.distributor.DistributorGradeRelationDTO;
+import com.deepexi.channel.service.DistributorGradeRelationService;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import com.deepexi.channel.domain.eo.CcDistributorGradeRelation;
-import com.deepexi.channel.service.DistributorGradeRelationService;
-import com.deepexi.channel.mapper.DistributorGradeRelationMapper;
-import java.util.Arrays;import java.util.List;
-import com.deepexi.util.pageHelper.PageBean;
-import com.github.pagehelper.PageHelper;
-import com.deepexi.util.BeanPowerHelper;
+
+import java.util.List;
 
 @Service
 public class DistributorGradeRelationServiceImpl implements DistributorGradeRelationService {
@@ -47,5 +41,70 @@ public class DistributorGradeRelationServiceImpl implements DistributorGradeRela
 
         return distributorGradeRelationDAO.saveBatch(ObjectCloneUtils.
                 convertList(dtoList,DistributorGradeRelationDO.class,CloneDirection.FORWARD));
+    }
+
+    @Override
+    public int deleteByDistributorId(long distributorId) {
+
+        if(distributorId<=0){
+            return 0;
+        }
+
+        return distributorGradeRelationDAO.deleteByDistributorId( distributorId);
+    }
+
+    @Override
+    public int deleteBatchByDistributorIds(List<Long> distributorIdList) {
+
+        if(CollectionUtils.isEmpty(distributorIdList)){
+            return 0;
+        }
+
+        return distributorGradeRelationDAO.deleteBatchByDistributorIds(distributorIdList);
+    }
+
+    @Override
+    public DistributorGradeRelationDTO findOne(long distributorId, long gradeId) {
+
+        if(distributorId<=0||gradeId<=0){
+            return null;
+        }
+
+        DistributorGradeRelationDO eo=distributorGradeRelationDAO.findOne(distributorId, gradeId);
+
+        if(null==eo){
+            return null;
+        }
+
+        return eo.clone(DistributorGradeRelationDTO.class,CloneDirection.OPPOSITE);
+    }
+
+    @Override
+    public List<DistributorGradeRelationDTO> findAllByDistributorIds(long distributorId) {
+
+        if(distributorId<=0){
+            return null;
+        }
+
+        List<DistributorGradeRelationDO> eoList=distributorGradeRelationDAO.findAllByDistributorIds(distributorId);
+
+        if(CollectionUtils.isEmpty(eoList)){
+            return null;
+        }
+
+        return ObjectCloneUtils.convertList(eoList,DistributorGradeRelationDTO.class,CloneDirection.OPPOSITE);
+    }
+
+    @Override
+    public boolean updateBatchByDistributorId(List<DistributorGradeRelationDTO> dtoList) {
+
+        if(CollectionUtils.isEmpty(dtoList)){
+            return false;
+        }
+
+        List<DistributorGradeRelationDO> eoList= ObjectCloneUtils.convertList(dtoList,DistributorGradeRelationDO.class,
+                CloneDirection.FORWARD);
+
+        return distributorGradeRelationDAO.updateBatchById(eoList);
     }
 }

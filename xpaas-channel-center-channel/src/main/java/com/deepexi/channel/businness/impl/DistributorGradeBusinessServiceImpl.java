@@ -31,7 +31,6 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
     @Autowired
     private DistributorGradeSystemService distributorGradeSystemService;
 
-
     @Override
     public DistributorGradeDTO detail(Long gradeId,Long systemId) {
 
@@ -68,51 +67,52 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
     @Override
     public List<DistributorGradeDTO> findPage(DistributorGradeQuery query) {
 
-        log.info("查找经销商等级列表");
+        log.info("经销商等级列表分页查询");
 
         //等级表数据
         List<DistributorGradeDTO> gradeList = distributorGradeService.findPage(query);
 
-        if(null==gradeList){
+        if(CollectionUtil.isEmpty(gradeList)){
             return null;
         }
 
+        //父级信息
         List<Long> parentIdList=gradeList.stream().map(DistributorGradeDTO::getParentId).collect(Collectors.toList());
 
-        DistributorGradeQuery parentQuery=new DistributorGradeQuery();
+        if(CollectionUtil.isNotEmpty(parentIdList)){
 
-        parentQuery.setIds(parentIdList);
+            DistributorGradeQuery parentQuery=new DistributorGradeQuery();
 
-        List<DistributorGradeDTO> parentGradeList = distributorGradeService.findPage(parentQuery);
+            parentQuery.setIds(parentIdList);
 
-        List<DistributorGradeDTO> gradePageList=
-                ObjectCloneUtils.convertList(gradeList,DistributorGradeDTO.class,CloneDirection.FORWARD);
+            List<DistributorGradeDTO> parentGradeList = distributorGradeService.findPage(parentQuery);
 
-        if(CollectionUtil.isNotEmpty(parentGradeList)){
+            if(CollectionUtil.isNotEmpty(parentGradeList)){
 
-            Map<Long, List<DistributorGradeDTO>> parentGradeMap =
-                    parentGradeList.stream().collect(Collectors.groupingBy(DistributorGradeDTO::getId));
+                Map<Long, List<DistributorGradeDTO>> parentGradeMap =
+                        parentGradeList.stream().collect(Collectors.groupingBy(DistributorGradeDTO::getId));
 
-            // 根据id设置父级编码和名称
-            gradePageList.forEach(page -> {
+                // 根据id设置父级编码和名称
+                gradeList.forEach(grade -> {
 
-                List<DistributorGradeDTO> gradeDTOS = parentGradeMap.get(page.getParentId());
+                    List<DistributorGradeDTO> gradeDTOS = parentGradeMap.get(grade.getParentId());
 
-                if (CollectionUtil.isEmpty(gradeDTOS)) {
+                    if (CollectionUtil.isEmpty(gradeDTOS)) {
 
-                    page.setParentGradeCode("");
+                        grade.setParentGradeCode("");
 
-                    page.setParentGradeName("");
+                        grade.setParentGradeName("");
 
-                } else {
+                    } else {
 
-                    DistributorGradeDTO gdto = gradeDTOS.get(0);//id是主键,只有一条记录
+                        DistributorGradeDTO gdto = gradeDTOS.get(0);//id是主键,只有一条记录
 
-                    page.setParentGradeCode(gdto.getDistributorGradeCode() == null ? "" : gdto.getDistributorGradeCode());
+                        grade.setParentGradeCode(gdto.getDistributorGradeCode() == null ? "" : gdto.getDistributorGradeCode());
 
-                    page.setParentGradeName(gdto.getDistributorGradeName()==null? "": gdto.getDistributorGradeName());
-                }
-            });
+                        grade.setParentGradeName(gdto.getDistributorGradeName()==null? "": gdto.getDistributorGradeName());
+                    }
+                });
+            }
         }
 
         //体系表数据
@@ -129,9 +129,9 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
                 systemList.stream().collect(Collectors.groupingBy(DistributorGradeSystemDTO::getId));
 
-        gradePageList.forEach(page -> {
+        gradeList.forEach(grade -> {
 
-            long systemId=page.getGradeSystemId();
+            long systemId=grade.getGradeSystemId();
 
             if(0!=systemId){
 
@@ -142,12 +142,12 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
                     DistributorGradeSystemDTO sdto=systemDTOS.get(0);
 
-                    page.setSystem(sdto);
+                    grade.setSystem(sdto);
                 }
             }
         });
 
-        return gradePageList;
+        return gradeList;
     }
 
     @Override
