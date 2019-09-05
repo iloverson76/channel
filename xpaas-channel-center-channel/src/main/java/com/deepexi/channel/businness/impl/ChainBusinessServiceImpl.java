@@ -277,9 +277,7 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         Map<Long,ChainTreeDTO> chainTreeMap = chainTreeDTOS.stream().collect(Collectors.toMap(ChainTreeDTO::getId,c->c));
 
         //查询得到所有连锁类型名称
-        List<Long> chainTypeIds = chainDTOS.stream().map(ChainDTO::getChainTypeId).collect(Collectors.toList());
-        ChainTypeQuery query = ChainTypeQuery.builder().ids(chainTypeIds).build();
-        List<ChainTypeDTO> chainTypeDTOS = chainTypeService.findPage(query);
+        List<ChainTypeDTO> chainTypeDTOS = this.getChainTypeListByChainDTOS(chainDTOS);
         Map<Long,ChainTypeDTO> chainTypeDTOMap = chainTypeDTOS.stream().collect(Collectors.toMap(ChainTypeDTO::getId,c->c));
 
         //for循环拼接类型名称以及儿子节点
@@ -297,4 +295,35 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         });
         return result;
     }
+
+    /**
+     * @MethodName: getChildren
+     * @Description: 根据id获取所有儿子节点
+     * @Param: [id]
+     * @Return: java.util.List<com.deepexi.channel.domain.chain.ChainTreeDTO>
+     * @Author: mumu
+     * @Date: 2019/9/5
+    **/
+    @Override
+    public List<ChainTreeDTO> getChildren(Long id) {
+        ChainQuery query = ChainQuery.builder().parentId(id).build();
+        List<ChainDTO> chainDTOS = chainService.findPage(query);
+        List<ChainTreeDTO> chainTreeDTOS = ObjectCloneUtils.convertList(chainDTOS, ChainTreeDTO.class);
+        //查询连锁类型列表
+        List<ChainTypeDTO> chainTypeDTOS = this.getChainTypeListByChainDTOS(chainDTOS);
+        Map<Long,ChainTypeDTO> chainTypeDTOMap = chainTypeDTOS.stream().collect(Collectors.toMap(ChainTypeDTO::getId,c->c));
+        //拼接连锁类型到列表中
+        chainTreeDTOS.forEach(c->{
+           c.setChainTypeName(chainTypeDTOMap.get(c.getChainTypeName())==null?"":chainTypeDTOMap.get(c.getChainTypeId()).getChainTypeName());
+        });
+        return chainTreeDTOS;
+    }
+
+    public List<ChainTypeDTO> getChainTypeListByChainDTOS(List<ChainDTO> chainDTOS){
+        List<Long> chainTypeIds = chainDTOS.stream().map(ChainDTO::getChainTypeId).collect(Collectors.toList());
+        ChainTypeQuery query = ChainTypeQuery.builder().ids(chainTypeIds).build();
+        List<ChainTypeDTO> chainTypeDTOS = chainTypeService.findPage(query);
+        return chainTypeDTOS;
+    }
+
 }

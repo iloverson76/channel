@@ -40,6 +40,9 @@
         <if test="chainTypeId != null and chainTypeId != ''">
             and chain_type_id = #{chainTypeId}
         </if>
+        <if test="parentId != null and parentId != ''">
+            and parent_id = #{parentId}
+        </if>
         <if test="chainTypeIdList != null">
             and chain_type_id in
             <foreach collection="chainTypeIdList" item="tempId" index="index" open="(" close=")" separator=",">
@@ -93,7 +96,7 @@
             </foreach>
         </if>
     </select>
-    <!--批量更新path parentId-->
+    <!--批量更新path parentId,不能更新其他字段！！！-->
     <update id="updateBatch" parameterType="java.util.List">
         UPDATE cc_chain
         <trim prefix="set" suffixOverrides=",">

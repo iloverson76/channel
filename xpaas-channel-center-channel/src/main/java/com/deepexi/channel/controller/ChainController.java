@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -122,4 +123,16 @@ public class ChainController {
             return new Payload<>(chainTreeVOS);
         }
     }
+
+    @GetMapping("/tree/{id}")
+    @ApiOperation(value="根据id获取下级节点")
+    public Payload<List<ChainTreeVO>> getChildren(@PathVariable(value = "id", required = true) Long id){
+        List<ChainTreeDTO> chainTreeDTOS = chainBusinessService.getChildren(id);
+        if(CollectionUtil.isEmpty(chainTreeDTOS)){
+            return new Payload<>(null);
+        }
+        List<ChainTreeVO> chainTreeVOS = ObjectCloneUtils.convertList(chainTreeDTOS, ChainTreeVO.class);
+        return new Payload<>(chainTreeVOS);
+    }
+
 }
