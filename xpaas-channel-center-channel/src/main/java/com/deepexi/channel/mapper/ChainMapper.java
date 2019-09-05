@@ -2,6 +2,7 @@ package com.deepexi.channel.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.deepexi.channel.domain.chain.ChainDO;
+import com.deepexi.channel.domain.chain.ChainDTO;
 import com.deepexi.channel.domain.chain.ChainQuery;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -18,4 +19,8 @@ public interface ChainMapper extends BaseMapper<ChainDO> {
     Integer getChainCountByTypeIds(@Param("typeIds")List<Long> typeIds);
 
     List<ChainDO> findParentList(@Param("ids") List<Long> ids);
+
+    Integer updateBatch(@Param("list")List<ChainDO> list);
+
+    List<ChainDO> getChainTreeNode();
 }
