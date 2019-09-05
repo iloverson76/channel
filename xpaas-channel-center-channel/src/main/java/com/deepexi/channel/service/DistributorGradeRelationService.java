@@ -13,4 +13,6 @@ public interface DistributorGradeRelationService {
 
     long create(DistributorGradeRelationDTO dto);
 
+    boolean createBatch(List<DistributorGradeRelationDTO> dtoList);
+
 }

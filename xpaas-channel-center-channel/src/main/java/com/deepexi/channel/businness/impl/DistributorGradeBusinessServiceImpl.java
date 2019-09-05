@@ -40,19 +40,31 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
         log.info("查看经销商等级详情");
 
         //等级表
-        DistributorGradeDTO gdto=distributorGradeService.detail(gradeId).clone(DistributorGradeDTO.class,CloneDirection.OPPOSITE);
+        DistributorGradeDTO gdto=distributorGradeService.getById(gradeId);
 
-        DistributorGradeBusiDTO busiDTO=gdto.clone(DistributorGradeBusiDTO.class,CloneDirection.FORWARD);
+        long parentId=gdto.getParentId();
+
+        if(0!=parentId){
+
+            DistributorGradeDTO pdto= distributorGradeService.getById(parentId);
+
+            if(null!=pdto){
+
+                gdto.setParentGradeCode(pdto.getDistributorGradeCode());
+
+                gdto.setParentGradeName(pdto.getDistributorGradeName());
+            }
+        }
 
         if(0!=systemId){
 
             //体系表
             DistributorGradeSystemDTO sdto=distributorGradeSystemService.detail(systemId);
 
-            busiDTO.setSystem(sdto);
+            gdto.setSystem(sdto);
         }
 
-        return busiDTO;
+        return gdto;
     }
 
     @Override

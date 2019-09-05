@@ -7,9 +7,12 @@ import com.deepexi.channel.domain.distributor.DistributorAreaRelationDO;
 import com.deepexi.channel.domain.distributor.DistributorAreaRelationDTO;
 import com.deepexi.channel.service.DistributorAreaRelationService;
 import com.deepexi.util.pojo.CloneDirection;
+import com.deepexi.util.pojo.ObjectCloneUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class DistributorAreaRelationServiceImpl implements DistributorAreaRelationService {
@@ -30,5 +33,12 @@ public class DistributorAreaRelationServiceImpl implements DistributorAreaRelati
         distributorAreaRelationDAO.save(ado);
 
         return ado.getId();
+    }
+
+    @Override
+    public boolean createBatch(List<DistributorAreaRelationDTO> dtoList) {
+
+        return distributorAreaRelationDAO.saveBatch(ObjectCloneUtils.
+                convertList(dtoList,DistributorAreaRelationDO.class,CloneDirection.FORWARD));
     }
 }

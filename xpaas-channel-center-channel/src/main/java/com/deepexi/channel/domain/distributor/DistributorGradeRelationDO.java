@@ -29,7 +29,7 @@ public class DistributorGradeRelationDO extends SuperEntity {
     /**
      * 经销商ID
      */
-    private Long distributortId;
+    private Long distributorId;
 
     /**
      * 区域ID
