@@ -23,4 +23,6 @@ public interface ChainBusinessService {
     Boolean saveTree(List<ChainTreeDTO> dtos);
 
     List<ChainTreeDTO> getTree();
+
+    List<ChainTreeDTO> getChildren(Long id);
 }

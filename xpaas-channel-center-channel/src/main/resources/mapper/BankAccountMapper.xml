@@ -17,6 +17,18 @@
     </resultMap>
     <select id="findList" resultType="com.deepexi.channel.domain.bank.BankAccountDO">
         SELECT * FROM cc_bank_account WHERE dr = 0
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="bankId != null">
+            and bank_id = #{bankId}
+        </if>
+        <if test="ids != null and ids.size()>0">
+            and id in
+            <foreach collection="ids" item="tempId" index="index" open="(" close=")" separator=",">
+                #{tempId}
+            </foreach>
+        </if>
     </select>
 
     <update id="deleteByIds">

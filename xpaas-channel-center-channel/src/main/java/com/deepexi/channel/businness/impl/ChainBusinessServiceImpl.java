@@ -2,6 +2,7 @@ package com.deepexi.channel.businness.impl;
 
 import com.deepexi.channel.businness.ChainBusinessService;
 import com.deepexi.channel.domain.bank.BankAccountDTO;
+import com.deepexi.channel.domain.bank.BankAccountQuery;
 import com.deepexi.channel.domain.bank.BankDTO;
 import com.deepexi.channel.domain.bank.ChainBankDTO;
 import com.deepexi.channel.domain.chain.*;
@@ -15,10 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
@@ -73,7 +72,9 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         }
         //查询所有账户详细信息
         List<Long> bankAccountIds = chainBankDTOS.stream().map(ChainBankDTO::getBankAccountId).collect(Collectors.toList());
-        List<BankAccountDTO> bankAccountDTOS = bankAccountService.getBankAccountByIds(bankAccountIds);
+
+        BankAccountQuery bankAccountQuery = BankAccountQuery.builder().ids(bankAccountIds).build();
+        List<BankAccountDTO> bankAccountDTOS = bankAccountService.findList(bankAccountQuery);
 
         //查询所有账户所属银行
         List<Long> bankIds = bankAccountDTOS.stream().map(BankAccountDTO::getBankId).collect(Collectors.toList());
@@ -239,8 +240,8 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
     @Override
     @Transactional
     public Boolean saveTree(List<ChainTreeDTO> dtos){
-        //TODO 将所有的parentId设置为0，path设置为""
-
+        // 将所有的parentId设置为0，path设置为""
+        Boolean reset = chainService.resetTree();
 
         //全部节点列表，用于批量更新
         List<ChainDTO> chainDTOS = new LinkedList<>();
@@ -257,23 +258,75 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         });
 
         //批量更新所有节点的parentId与path
-//        return chainService.updateBatch(chainDTOS);
-
-        return true;
+        return chainService.updateBatch(chainDTOS);
     }
 
+    /**
+     * @MethodName: getTree
+     * @Description: 获取整个连锁树形结构
+     * @Param: []
+     * @Return: java.util.List<com.deepexi.channel.domain.chain.ChainTreeDTO>
+     * @Author: mumu
+     * @Date: 2019/9/5
+    **/
     @Override
     public List<ChainTreeDTO> getTree() {
-        List<ChainTreeDTO> chainTreeDTOS = new LinkedList<>();
+        //树形结构结果，可能有多个树（多个根节点）
+        List<ChainTreeDTO> result  = new LinkedList<>();
+
+        //获取所有树的节点，根据path获取三级
         List<ChainDTO> chainDTOS = chainService.getChainTreeNode();
+        List<ChainTreeDTO> chainTreeDTOS = ObjectCloneUtils.convertList(chainDTOS, ChainTreeDTO.class);
+        Map<Long,ChainTreeDTO> chainTreeMap = chainTreeDTOS.stream().collect(Collectors.toMap(ChainTreeDTO::getId,c->c));
 
-        chainDTOS.forEach(c ->{
+        //查询得到所有连锁类型名称
+        List<ChainTypeDTO> chainTypeDTOS = this.getChainTypeListByChainDTOS(chainDTOS);
+        Map<Long,ChainTypeDTO> chainTypeDTOMap = chainTypeDTOS.stream().collect(Collectors.toMap(ChainTypeDTO::getId,c->c));
 
-
-
+        //for循环拼接类型名称以及儿子节点
+        chainTreeDTOS.forEach(c ->{
+            c.setChainTypeName(chainTypeDTOMap.get(c.getChainTypeId()) == null ? "" : chainTypeDTOMap.get(c.getChainTypeId()).getChainTypeName());
+            if(c.getParentId() == 0L ){
+                result.add(c);
+            }else{
+                ChainTreeDTO parentDTO = chainTreeMap.get(c.getParentId());
+                if(parentDTO.getChildren() == null){
+                    parentDTO.setChildren(new LinkedList<>());
+                }
+                parentDTO.getChildren().add(c);
+            }
         });
-        return null;
+        return result;
     }
 
+    /**
+     * @MethodName: getChildren
+     * @Description: 根据id获取所有儿子节点
+     * @Param: [id]
+     * @Return: java.util.List<com.deepexi.channel.domain.chain.ChainTreeDTO>
+     * @Author: mumu
+     * @Date: 2019/9/5
+    **/
+    @Override
+    public List<ChainTreeDTO> getChildren(Long id) {
+        ChainQuery query = ChainQuery.builder().parentId(id).build();
+        List<ChainDTO> chainDTOS = chainService.findPage(query);
+        List<ChainTreeDTO> chainTreeDTOS = ObjectCloneUtils.convertList(chainDTOS, ChainTreeDTO.class);
+        //查询连锁类型列表
+        List<ChainTypeDTO> chainTypeDTOS = this.getChainTypeListByChainDTOS(chainDTOS);
+        Map<Long,ChainTypeDTO> chainTypeDTOMap = chainTypeDTOS.stream().collect(Collectors.toMap(ChainTypeDTO::getId,c->c));
+        //拼接连锁类型到列表中
+        chainTreeDTOS.forEach(c->{
+           c.setChainTypeName(chainTypeDTOMap.get(c.getChainTypeName())==null?"":chainTypeDTOMap.get(c.getChainTypeId()).getChainTypeName());
+        });
+        return chainTreeDTOS;
+    }
+
+    public List<ChainTypeDTO> getChainTypeListByChainDTOS(List<ChainDTO> chainDTOS){
+        List<Long> chainTypeIds = chainDTOS.stream().map(ChainDTO::getChainTypeId).collect(Collectors.toList());
+        ChainTypeQuery query = ChainTypeQuery.builder().ids(chainTypeIds).build();
+        List<ChainTypeDTO> chainTypeDTOS = chainTypeService.findPage(query);
+        return chainTypeDTOS;
+    }
 
 }

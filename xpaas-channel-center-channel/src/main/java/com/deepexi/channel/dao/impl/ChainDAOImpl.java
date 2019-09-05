@@ -41,4 +41,9 @@ public class ChainDAOImpl extends ServiceImpl<ChainMapper, ChainDO> implements C
     public List<ChainDO> getChainTreeNode() {
         return chainMapper.getChainTreeNode();
     }
+
+    @Override
+    public Integer resetTree(ChainDO chainDO) {
+        return chainMapper.resetTree(chainDO);
+    }
 }

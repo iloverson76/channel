@@ -23,4 +23,6 @@ public interface ChainMapper extends BaseMapper<ChainDO> {
     Integer updateBatch(@Param("list")List<ChainDO> list);
 
     List<ChainDO> getChainTreeNode();
+
+    Integer resetTree(ChainDO chainDO);
 }
