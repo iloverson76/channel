@@ -4,6 +4,8 @@ import com.deepexi.channel.dao.DistributorGradeRelationDAO;
 import com.deepexi.channel.domain.distributor.DistributorGradeRelationDO;
 import com.deepexi.channel.domain.distributor.DistributorGradeRelationDTO;
 import com.deepexi.util.pojo.CloneDirection;
+import com.deepexi.util.pojo.ObjectCloneUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
@@ -34,5 +36,16 @@ public class DistributorGradeRelationServiceImpl implements DistributorGradeRela
         distributorGradeRelationDAO.save(eo);
 
         return eo.getId();
+    }
+
+    @Override
+    public boolean createBatch(List<DistributorGradeRelationDTO> dtoList) {
+
+        if(CollectionUtils.isEmpty(dtoList)){
+            return false;
+        }
+
+        return distributorGradeRelationDAO.saveBatch(ObjectCloneUtils.
+                convertList(dtoList,DistributorGradeRelationDO.class,CloneDirection.FORWARD));
     }
 }

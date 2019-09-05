@@ -69,7 +69,11 @@ public class DistributorGradeServiceImpl implements DistributorGradeService {
     }
 
     @Override
-    public DistributorGradeDTO detail(Long pk) {
+    public DistributorGradeDTO getById(Long pk) {
+
+        if(0==pk){
+            return null;
+        }
 
         DistributorGradeDTO dto=distributorGradeDAO.getById(pk).clone(DistributorGradeDTO.class,CloneDirection.OPPOSITE);
 

@@ -3,9 +3,11 @@ package com.deepexi.channel.service.impl;
 import com.deepexi.channel.dao.BankAccountDAO;
 import com.deepexi.channel.domain.bank.BankAccountDO;
 import com.deepexi.channel.domain.bank.BankAccountDTO;
+import com.deepexi.channel.domain.bank.BankAccountQuery;
 import com.deepexi.channel.service.BankAccountService;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
+import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +33,25 @@ public class BankAccountServiceImpl implements BankAccountService {
     }
 
     @Override
-    public List<BankAccountDTO> getBankAccountByIds(List<Long> bankAccountIds) {
-        List<BankAccountDO> bankAccountDOS = bankAccountDAO.getBankAccountByIds(bankAccountIds);
+    public List<BankAccountDTO> findList(BankAccountQuery query) {
+        if(query.getPage()!=null && query.getPage()!=-1){
+            PageHelper.startPage(query.getPage(), query.getSize());
+        }
+        List<BankAccountDO> bankAccountDOS = bankAccountDAO.findList(query);
         if(bankAccountDOS == null){
             return null;
         }
-        return ObjectCloneUtils.convertList(bankAccountDOS, BankAccountDTO.class, CloneDirection.OPPOSITE);
+        return ObjectCloneUtils.convertList(bankAccountDOS, BankAccountDTO.class);
     }
+
+//    @Override
+//    public List<BankAccountDTO> getBankAccountByIds(List<Long> bankAccountIds) {
+//        List<BankAccountDO> bankAccountDOS = bankAccountDAO.getBankAccountByIds(bankAccountIds);
+//        if(bankAccountDOS == null){
+//            return null;
+//        }
+//        return ObjectCloneUtils.convertList(bankAccountDOS, BankAccountDTO.class, CloneDirection.OPPOSITE);
+//    }
 //
 //    @Override
 //    public PageBean<CcBankAccount> findPage(CcBankAccount eo, Integer page, Integer size) {

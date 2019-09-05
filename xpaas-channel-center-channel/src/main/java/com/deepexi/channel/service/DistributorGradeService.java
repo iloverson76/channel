@@ -17,9 +17,9 @@ public interface DistributorGradeService {
      */
     Long create(DistributorGradeDTO dto);
     /**
-      获取详情
+     *根据ID获取
     */
-    DistributorGradeDTO detail(Long pk);
+    DistributorGradeDTO getById(Long pk);
 
     /**
      更新经销商等级

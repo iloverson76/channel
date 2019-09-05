@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,7 +26,7 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
     private DistributorService distributorService;
 
     @Autowired
-    DistributorGradeRelationDAO distributorGradeRelationDAO;
+    DistributorGradeRelationService distributorGradeRelationService;
 
     @Autowired
     DistributorAreaRelationService distributorAreaRelationService;
@@ -33,6 +34,7 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
     @Autowired
     private DistributorBankAccountRelationService distributorBankAccountRelationService;
 
+    @Transient
     @Override
     public long create(DistributorDTO distributor) {
 
@@ -44,22 +46,32 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
         String updatedBy=distributor.getUpdatedBy();
         Date updatedTime=distributor.getUpdatedTime();
 
-        //经销商-等级关联表信息保存
-        List<DistributorGradeDTO> gradeList= distributor.getGrades();
+        //等级信息保存
+        List<Long> gradeList= distributor.getGradeIds();
 
-        List<DistributorGradeRelationDO> dgrList=new ArrayList<>();
+        List<DistributorGradeRelationDTO> dgrList=new ArrayList<>();
 
-        gradeList.forEach(grade->{
+        gradeList.forEach(gid->{
 
-            DistributorGradeRelationDO dgr=new DistributorGradeRelationDO();
+            DistributorGradeRelationDTO dgr=new DistributorGradeRelationDTO();
 
-            dgr.setDistributorGradeId(grade.getId());
+            dgr.setDistributorId(distId);
+
+            dgr.setDistributorGradeId(gid);
+
+            dgr.setCreatedBy(createdBy);
+
+            dgr.setCreatedTime(createdTime);
+
+            dgr.setUpdatedBy(updatedBy);
+
+            dgr.setUpdatedTime(updatedTime);
+
+            dgrList.add(dgr);
 
         });
 
-
-        distributorGradeRelationDAO.saveBatch(dgrList);
-
+        distributorGradeRelationService.createBatch(dgrList);
 
         //区域信息保存
         long areaId=distributor.getAreaId();
