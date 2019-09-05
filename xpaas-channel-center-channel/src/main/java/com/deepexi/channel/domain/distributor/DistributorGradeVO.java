@@ -49,7 +49,7 @@ public class DistributorGradeVO extends AbstractObject {
      * 是否根节点 0 是 1 否
      */
     @ApiModelProperty("是否根节点 0 否 1 是")
-    private Boolean root;
+    private int root;
 
     /**
      * 经销商等级名称
@@ -72,6 +72,7 @@ public class DistributorGradeVO extends AbstractObject {
     /**
      * 描述
      */
+    @ApiModelProperty("描述")
     private String description;
     /**
      * 创建人

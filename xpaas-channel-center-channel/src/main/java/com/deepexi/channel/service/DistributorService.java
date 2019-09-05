@@ -13,4 +13,6 @@ public interface DistributorService {
 
 
     long create(DistributorDTO dto);
+
+    boolean delete(DistributorDTO dto);
 }

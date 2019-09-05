@@ -18,12 +18,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Api(description = "经销商管理")
@@ -48,6 +47,15 @@ public class DistributorController {
         dto.setBankAccounts(bankAccounts);
 
         return new Payload(distributorBusinessService.create(dto));
+    }
+
+    @DeleteMapping("/{id:[0-9,]+}")
+    @ApiOperation(value = "根据id批量删除经销商")
+    public Payload<Boolean> delete(@PathVariable(value = "id") String ids) {
+
+        List<Long> idList= Arrays.stream(ids.split(",")).map(Long::parseLong).collect(Collectors.toList());
+
+        return new Payload<>(distributorBusinessService.delete(idList));
     }
 
 }

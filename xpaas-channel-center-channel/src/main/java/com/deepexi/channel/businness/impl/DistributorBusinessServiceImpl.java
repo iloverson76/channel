@@ -81,5 +81,13 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
         return distId;
     }
 
+    @Override
+    public boolean delete(List<Long> idList) {
+
+        
+
+        return Boolean.TRUE;
+    }
+
 
 }

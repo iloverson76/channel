@@ -43,7 +43,7 @@ public class DistributorGradeDTO extends AbstractObject {
     /**
      * 是否根节点 0 是 1 否
      */
-    private Boolean root;
+    private int root;
 
     /**
      * 经销商等级名称

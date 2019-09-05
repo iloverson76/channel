@@ -39,6 +39,13 @@ public class DistributorServiceImpl implements DistributorService {
         return eo.getId();
     }
 
+    @Override
+    public boolean delete(DistributorDTO dto) {
+
+
+
+        return false;
+    }
 
 
 }

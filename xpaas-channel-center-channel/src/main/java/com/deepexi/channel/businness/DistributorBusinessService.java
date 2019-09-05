@@ -14,4 +14,5 @@ public interface DistributorBusinessService {
 
    long create(DistributorDTO dto);
 
+   boolean delete(List<Long> idList);
 }
