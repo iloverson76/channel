@@ -37,7 +37,7 @@ public class DistributorGradeDO extends SuperEntity {
     /**
      * 是否根节点 0 是 1 否
      */
-    private Boolean root;
+    private int root;
 
     /**
      * 经销商等级名称
@@ -54,5 +54,10 @@ public class DistributorGradeDO extends SuperEntity {
      * 所属体系ID
      */
     private Long gradeSystemId;
+
+    /**
+     * 描述
+     */
+    private String description;
 
 }
