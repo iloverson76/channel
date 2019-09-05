@@ -1,17 +1,20 @@
 package com.deepexi.channel.businness.impl;
 
 import com.deepexi.channel.businness.DistributorBusinessService;
-import com.deepexi.channel.domain.distributor.DistributorAreaRelationDTO;
-import com.deepexi.channel.domain.distributor.DistributorBankAccountRelationDTO;
-import com.deepexi.channel.domain.distributor.DistributorDTO;
+import com.deepexi.channel.dao.DistributorGradeRelationDAO;
+import com.deepexi.channel.domain.distributor.*;
 import com.deepexi.channel.service.DistributorAreaRelationService;
 import com.deepexi.channel.service.DistributorBankAccountRelationService;
+import com.deepexi.channel.service.DistributorGradeRelationService;
 import com.deepexi.channel.service.DistributorService;
+import com.deepexi.util.pojo.CloneDirection;
+import com.deepexi.util.pojo.ObjectCloneUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -20,6 +23,9 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
     @Autowired
     private DistributorService distributorService;
+
+    @Autowired
+    DistributorGradeRelationDAO distributorGradeRelationDAO;
 
     @Autowired
     DistributorAreaRelationService distributorAreaRelationService;
@@ -33,6 +39,28 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
         //经销商信息保存
         long distId=distributorService.create(distributor);
 
+        String createdBy=distributor.getCreatedBy();
+        Date createdTime=distributor.getCreatedTime();
+        String updatedBy=distributor.getUpdatedBy();
+        Date updatedTime=distributor.getUpdatedTime();
+
+        //经销商-等级关联表信息保存
+        List<DistributorGradeDTO> gradeList= distributor.getGrades();
+
+        List<DistributorGradeRelationDO> dgrList=new ArrayList<>();
+
+        gradeList.forEach(grade->{
+
+            DistributorGradeRelationDO dgr=new DistributorGradeRelationDO();
+
+            dgr.setDistributorGradeId(grade.getId());
+
+        });
+
+
+        distributorGradeRelationDAO.saveBatch(dgrList);
+
+
         //区域信息保存
         long areaId=distributor.getAreaId();
 
@@ -42,13 +70,13 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
         adto.setDistributorId(distId);
 
-        adto.setCreatedBy(distributor.getCreatedBy());
+        adto.setCreatedBy(createdBy);
 
-        adto.setCreatedTime(distributor.getCreatedTime());
+        adto.setCreatedTime(createdTime);
 
-        adto.setUpdatedBy(distributor.getUpdatedBy());
+        adto.setUpdatedBy(updatedBy);
 
-        adto.setUpdatedTime(distributor.getUpdatedTime());
+        adto.setUpdatedTime(updatedTime);
 
         distributorAreaRelationService.create(adto);
 
@@ -65,13 +93,13 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
             bar.setDistributorId(distId);
 
-            bar.setCreatedBy(distributor.getCreatedBy());
+            bar.setCreatedBy(createdBy);
 
-            bar.setCreatedTime(distributor.getCreatedTime());
+            bar.setCreatedTime(createdTime);
 
-            bar.setUpdatedBy(distributor.getUpdatedBy());
+            bar.setUpdatedBy(updatedBy);
 
-            bar.setUpdatedTime(distributor.getUpdatedTime());
+            bar.setUpdatedTime(updatedTime);
 
             barList.add(bar);
         });
