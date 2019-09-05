@@ -12,6 +12,6 @@ import java.util.List;
  */
 public interface DistributorBusinessService {
 
-   int create(DistributorDTO dto);
+   long create(DistributorDTO dto);
 
 }

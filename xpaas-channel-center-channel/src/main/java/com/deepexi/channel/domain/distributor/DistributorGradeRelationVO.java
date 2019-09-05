@@ -31,7 +31,7 @@ public class DistributorGradeRelationVO extends AbstractObject {
      * 经销商ID
      */
     @ApiModelProperty("经销商ID")
-    private Long distributortId;
+    private Long distributorId;
 
     /**
      * 等级ID

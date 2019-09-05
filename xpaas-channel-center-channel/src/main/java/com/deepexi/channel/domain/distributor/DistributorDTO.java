@@ -34,14 +34,17 @@ public class DistributorDTO extends AbstractObject {
 
     private Long id;
 
-    @ApiModelProperty("等级列表")
-    private List<DistributorGradeDTO> grades;
+    @ApiModelProperty("所属等级")
+    private DistributorGradeDTO grade;
+    private long gradeId;
 
     @ApiModelProperty("银行账号列表")
     private List<BankAccountDTO> bankAccounts;
+    private List<Long> bankAccountIds;
 
     @ApiModelProperty("所在区域")
     private AreaDTO area;
+    private long AreaId;
 
     /**
      * 是否指定上级
