@@ -44,10 +44,10 @@ public class DistributorGradeController {
 
     @GetMapping("/{id}/{systemId}")
     @ApiOperation(value = "根据id查看详情")
-    public Payload<DistributorGradeBusiVO> detail(@PathVariable(value = "id", required = true) long  gradeId,
+    public Payload<DistributorGradeVO> detail(@PathVariable(value = "id", required = true) long  gradeId,
                                               @PathVariable(value = "systemId", required = true) long  systemId) {
 
-        DistributorGradeBusiVO vo=distributorGradeBusinessService.detail(gradeId,systemId).clone(DistributorGradeBusiVO.class,CloneDirection.OPPOSITE);
+        DistributorGradeVO vo=distributorGradeBusinessService.detail(gradeId,systemId).clone(DistributorGradeVO.class,CloneDirection.OPPOSITE);
 
         return new Payload<>(vo);
     }

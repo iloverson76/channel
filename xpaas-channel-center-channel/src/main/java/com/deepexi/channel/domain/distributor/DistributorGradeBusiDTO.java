@@ -28,7 +28,6 @@ public class DistributorGradeBusiDTO extends DistributorGradeDTO {
     /**
      * 上级经销商等级编码
      */
-
     private String parentGradeCode;
 
     /**

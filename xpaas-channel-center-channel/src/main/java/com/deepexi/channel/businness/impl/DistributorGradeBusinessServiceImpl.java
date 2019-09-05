@@ -52,7 +52,7 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
             busiDTO.setSystem(sdto);
         }
 
-        return gdto;
+        return busiDTO;
     }
 
     @Override

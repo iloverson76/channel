@@ -59,4 +59,8 @@ public interface ChainService {
     boolean isCodeUnique(ChainDTO dto);
 
     boolean haveChildren(List<Long> ids);
+
+    boolean updateBatch(List<ChainDTO> chainDTOS);
+
+    List<ChainDTO> getChainTreeNode();
 }
