@@ -25,6 +25,7 @@ public class DistributorGradeDTO extends AbstractObject {
 
     private Long id;
 
+
     /**
      * 所属体系
      */
