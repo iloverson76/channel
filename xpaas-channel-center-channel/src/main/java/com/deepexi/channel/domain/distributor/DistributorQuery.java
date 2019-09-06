@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * <p>
  * 等级体系表
@@ -42,6 +44,8 @@ public class DistributorQuery extends CommQuery {
      */
     @ApiModelProperty("状态: 0 禁用 1 启用")
     private Integer enable ;
+
+    private List<Long> ids;
 
 
 }

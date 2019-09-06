@@ -1,9 +1,10 @@
 package com.deepexi.channel.service.impl;
 
 import com.deepexi.channel.dao.DistributorDAO;
-import com.deepexi.channel.domain.distributor.DistributorDO;
-import com.deepexi.channel.domain.distributor.DistributorDTO;
+import com.deepexi.channel.domain.distributor.*;
+import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.pojo.CloneDirection;
+import com.deepexi.util.pojo.ObjectCloneUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
@@ -45,6 +46,22 @@ public class DistributorServiceImpl implements DistributorService {
 
 
         return false;
+    }
+
+    @Override
+    public List<DistributorDTO> findPage(DistributorQuery query) {
+
+        if (query.getPage() != null && query.getPage() != -1) {
+            PageHelper.startPage(query.getPage(), query.getSize());
+        }
+
+        List<DistributorDO> eoList = distributorDAO.findPage(query);
+
+        if(CollectionUtil.isEmpty(eoList)){
+            return null;
+        }
+
+        return ObjectCloneUtils.convertList(eoList, DistributorDTO.class,CloneDirection.OPPOSITE);
     }
 
 

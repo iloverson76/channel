@@ -1,9 +1,6 @@
 package com.deepexi.channel.businness;
 
-import com.deepexi.channel.domain.distributor.DistributorDTO;
-import com.deepexi.channel.domain.distributor.DistributorGradeBusiDTO;
-import com.deepexi.channel.domain.distributor.DistributorGradeDTO;
-import com.deepexi.channel.domain.distributor.DistributorGradeQuery;
+import com.deepexi.channel.domain.distributor.*;
 
 import java.util.List;
 
@@ -15,4 +12,8 @@ public interface DistributorBusinessService {
    long create(DistributorDTO dto);
 
    boolean delete(List<Long> idList);
+
+    List<DistributorDTO> findPage(DistributorQuery query);
+
+    boolean update(DistributorDTO clone);
 }

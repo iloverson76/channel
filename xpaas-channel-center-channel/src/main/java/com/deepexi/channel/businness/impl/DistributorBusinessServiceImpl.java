@@ -124,9 +124,56 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
     @Override
     public boolean delete(List<Long> idList) {
 
-        
+        //经销商信息
+
+        //等级信息
+
+        //经销商-等级中间表
+
+        //等级表
+
+
+        //银行信息
+
+        //经销商-银行中间表
+
+        //等级表
+
+
 
         return Boolean.TRUE;
+    }
+
+    @Override
+    public List<DistributorDTO> findPage(DistributorQuery query) {
+
+    //经销商信息
+        List<DistributorDTO> butorList=distributorService.findPage(query);
+
+    //等级信息
+
+        //经销商-等级中间表
+
+
+
+        //等级表
+
+
+    //银行信息
+
+        //经销商-银行中间表
+
+        //等级表
+
+
+
+        return null;
+    }
+
+    @Override
+    public boolean update(DistributorDTO clone) {
+
+        return true;
     }
 
 
