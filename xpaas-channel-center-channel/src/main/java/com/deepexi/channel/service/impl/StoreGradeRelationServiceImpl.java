@@ -47,4 +47,9 @@ public class StoreGradeRelationServiceImpl implements StoreGradeRelationService 
         }
         return storeGradeRelationDO.clone(StoreGradeRelationDTO.class, CloneDirection.OPPOSITE);
     }
+
+    @Override
+    public Boolean removeByStoreId(Long storeId) {
+        return storeGradeRelationDAO.removeByStoreId(storeId);
+    }
 }

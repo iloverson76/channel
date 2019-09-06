@@ -11,8 +11,8 @@ import lombok.*;
 @Builder
 public class StoreChainDTO extends SuperEntity {
     @TableField(value = "`store_id`")
-    private Integer  storeId;
+    private Long  storeId;
     @TableField(value = "`chain_id`")
-    private Integer  chainId;
+    private Long  chainId;
 
 }

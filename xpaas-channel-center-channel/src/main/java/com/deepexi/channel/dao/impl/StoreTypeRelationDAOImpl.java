@@ -31,4 +31,11 @@ public class StoreTypeRelationDAOImpl extends ServiceImpl<StoreTypeRelationMappe
     public List<StoreTypeRelationDO> findAll(StoreTypeRelationQuery query) {
         return storeTypeRelationMapper.findAll(query);
     }
+
+    @Override
+    public Boolean removeByStoreId(Long storeId) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("store_id",storeId);
+        return this.remove(queryWrapper);
+    }
 }

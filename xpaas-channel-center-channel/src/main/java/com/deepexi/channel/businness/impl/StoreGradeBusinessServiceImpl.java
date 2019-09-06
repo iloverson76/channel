@@ -64,4 +64,12 @@ public class StoreGradeBusinessServiceImpl implements StoreGradeBusinessService 
             return true;
         }
     }
+
+    @Override
+    public Long updateStoreGradeRelation(StoreDetailDTO dto) {
+        //删除门店关系
+        Boolean result = storeGradeRelationService.removeByStoreId(dto.getId());
+        //新增门店关系
+       return this.saveStoreGradeRelation(dto);
+    }
 }

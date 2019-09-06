@@ -50,7 +50,6 @@ public class StoreServiceImpl implements StoreService {
         if(dto == null){
             return false;
         }
-        //TODO 判断编码是否重复
         StoreDO storeDO = dto.clone(StoreDO.class);
         return storeDAO.updateById(storeDO);
     }
@@ -59,7 +58,6 @@ public class StoreServiceImpl implements StoreService {
         if(dto == null){
             return 0L;
         }
-        //TODO 判断编码是否重复
         StoreDO storeDO = dto.clone(StoreDO.class);
         storeDAO.save(storeDO);
         return storeDO.getId();

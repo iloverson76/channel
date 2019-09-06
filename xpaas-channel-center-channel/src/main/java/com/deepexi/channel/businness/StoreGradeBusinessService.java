@@ -13,4 +13,14 @@ public interface StoreGradeBusinessService {
     StoreGradeDTO getStroeGradeByStoreId(Long pk);
 
     boolean haveStoreRelation(List<Long> ids);
+
+    /**
+     * @MethodName: updateStoreGradeRelation
+     * @Description: 返回更新完的id
+     * @Param: [dto]
+     * @Return: java.lang.Long
+     * @Author: mumu
+     * @Date: 2019/9/6
+    **/
+    Long updateStoreGradeRelation(StoreDetailDTO dto);
 }

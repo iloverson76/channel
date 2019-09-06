@@ -31,4 +31,11 @@ public class StoreGradeRelationDAOImpl extends ServiceImpl<StoreGradeRelationMap
         }
         return storeGradeRelationDOS.get(0);
     }
+
+    @Override
+    public Boolean removeByStoreId(Long storeId) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("store_id",storeId);
+        return this.remove(queryWrapper);
+    }
 }

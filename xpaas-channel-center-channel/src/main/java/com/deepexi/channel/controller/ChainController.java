@@ -125,7 +125,7 @@ public class ChainController {
     }
 
     @GetMapping("/tree/{id}")
-    @ApiOperation(value="根据id获取下级节点")
+    @ApiOperation(value="根据id获取下级节点",notes = "传0时代表查询所有根节点，其他id则查询子节点")
     public Payload<List<ChainTreeVO>> getChildren(@PathVariable(value = "id", required = true) Long id){
         List<ChainTreeDTO> chainTreeDTOS = chainBusinessService.getChildren(id);
         if(CollectionUtil.isEmpty(chainTreeDTOS)){
