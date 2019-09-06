@@ -1,7 +1,6 @@
 package com.deepexi.channel.businness;
 
 import com.deepexi.channel.domain.distributor.DistributorGradeDTO;
-import com.deepexi.channel.domain.distributor.DistributorGradeBusiDTO;
 import com.deepexi.channel.domain.distributor.DistributorGradeQuery;
 
 import java.util.List;

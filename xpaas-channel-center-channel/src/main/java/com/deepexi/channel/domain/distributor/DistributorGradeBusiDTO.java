@@ -26,17 +26,6 @@ public class DistributorGradeBusiDTO extends DistributorGradeDTO {
     private Long id;
 
     /**
-     * 上级经销商等级编码
-     */
-    private String parentGradeCode;
-
-    /**
-     * 上级经销商等级名称
-     */
-
-    private String parentGradeName;
-
-    /**
      * 所属体系
      */
     private DistributorGradeSystemDTO system;
