@@ -66,6 +66,11 @@ public class DistributorDTO extends AbstractObject {
     private Integer distributorType;
 
     /**
+     * 经销商编码
+     */
+    private String distributorCode;
+
+    /**
      * 经销商名称
      */
     private String distributorName;

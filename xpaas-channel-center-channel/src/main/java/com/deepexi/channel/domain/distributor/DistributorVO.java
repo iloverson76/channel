@@ -35,13 +35,13 @@ public class DistributorVO extends AbstractObject {
     private Long id;
 
     @ApiModelProperty("所属等级列表")
-    private List<DistributorGradeDTO> grades;
+    private List<DistributorGradeVO> grades;
 
     @ApiModelProperty("所属等级ID")
     private List<Long> gradeIds;
 
     @ApiModelProperty("银行账号列表")
-    private List<BankAccountDTO> bankAccounts;
+    private List<BankAccountVO> bankAccounts;
 
     @ApiModelProperty("银行账号ID")
     private List<Long> bankAccountIds;
@@ -69,6 +69,11 @@ public class DistributorVO extends AbstractObject {
      */
     @ApiModelProperty("经销商类型 1经销商 2 厂商")
     private Integer distributorType;
+
+    /**
+     * 经销商编码
+     */
+    private String distributorCode;
 
     /**
      * 经销商名称
