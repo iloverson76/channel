@@ -38,5 +38,18 @@ public class DistributorBankAccountRelationServiceImpl implements DistributorBan
         return false;
     }
 
+    @Override
+    public List<DistributorBankAccountRelationDTO> findAllByDistributorIds(List<Long> bankAccountIds) {
+
+        if(CollectionUtils.isEmpty(bankAccountIds)){
+            return null;
+
+        }
+
+        distributorBankAccountRelationDAO.findAllByDistributorIds(bankAccountIds);
+
+        return null;
+    }
+
 
 }
