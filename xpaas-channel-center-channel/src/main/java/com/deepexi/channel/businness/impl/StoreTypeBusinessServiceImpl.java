@@ -60,4 +60,12 @@ public class StoreTypeBusinessServiceImpl implements StoreTypeBusinessService {
             return true;
         }
     }
+
+    @Override
+    public Long updateStoreTypeRelation(StoreDetailDTO dto) {
+        //根据storeId删除门店类型关联
+        Boolean result = storeTypeRelationService.removeByStoreId(dto.getId());
+        //新增泯殿类型关联
+        return this.saveStoreTypeRelation(dto);
+    }
 }

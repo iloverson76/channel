@@ -1,12 +1,17 @@
 package com.deepexi.channel.controller;
 
 import com.deepexi.channel.businness.StoreBusinessService;
+import com.deepexi.channel.domain.chain.ChainDTO;
+import com.deepexi.channel.domain.chain.ChainVO;
 import com.deepexi.channel.domain.store.*;
 import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.service.StoreService;
+import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.extension.ApplicationException;
 import com.deepexi.util.pageHelper.PageBean;
+import com.deepexi.util.pojo.CloneDirection;
+import com.deepexi.util.pojo.ObjectCloneUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -31,13 +36,33 @@ public class StoreController {
     @GetMapping
     @ApiOperation(value = "分页查询", notes = "分页请求")
     public Payload<PageBean<StoreVO>> findPage(@ApiParam(name = "query", required = true) StoreQuery query) {
-        return new Payload(new PageBean<>(storeService.findPage(query)));
+        List<StoreDTO> storeDTOs = storeService.findPage(query);
+        if(CollectionUtil.isEmpty(storeDTOs)){
+            return null;
+        }
+        return new Payload(new PageBean<>(ObjectCloneUtils.convertList(storeDTOs, StoreVO.class)));
     }
 
     @GetMapping("/{id}")
     @ApiOperation("根据id获取门店详情")
     public Payload<StoreDetailVO> detail(@PathVariable(value = "id", required = true) Long  pk) {
-        return new Payload(storeBusinessService.detail(pk));
+        StoreDetailDTO storeDetailDTO = storeBusinessService.detail(pk);
+        if(storeDetailDTO == null){
+            return new Payload<>();
+        }
+        StoreDetailVO storeDetailVO = storeDetailDTO.clone(StoreDetailVO.class, CloneDirection.OPPOSITE);
+        if(storeDetailDTO.getStoreGradeDTO() != null){
+            storeDetailVO.setStoreGradeVO(storeDetailDTO.getStoreGradeDTO().clone(StoreGradeVO.class));
+        }
+        if(storeDetailDTO.getStoreTypeDTO() != null){
+            storeDetailVO.setStoreTypeVO(storeDetailDTO.getStoreTypeDTO().clone(StoreTypeVO.class));
+        }
+        if(storeDetailDTO.getChainDTO() != null){
+            storeDetailVO.setChainVO(storeDetailDTO.getChainDTO().clone(ChainVO.class));
+        }
+
+
+        return new Payload(storeDetailVO);
     }
 
     @PutMapping("/{id}")
@@ -55,7 +80,7 @@ public class StoreController {
     @PostMapping
     @ApiOperation(value = "创建门店", notes = "创建门店")
     public Payload<Long> create(@RequestBody StoreDetailVO vo) {
-        StoreDetailDTO storeDetailDTO = vo.clone(StoreDetailDTO.class);
+        StoreDetailDTO storeDetailDTO = vo.clone(StoreDetailDTO.class, CloneDirection.OPPOSITE);
         if(vo.getStoreGradeVO() != null){
             StoreGradeDTO storeGradeDTO = vo.getStoreGradeVO().clone(StoreGradeDTO.class);
             storeDetailDTO.setStoreGradeDTO(storeGradeDTO);
@@ -64,7 +89,10 @@ public class StoreController {
            StoreTypeDTO storeTypeDTO = vo.getStoreTypeVO().clone(StoreTypeDTO.class);
            storeDetailDTO.setStoreTypeDTO(storeTypeDTO);
        }
-
+        if(vo.getChainVO() != null){
+            ChainDTO chainDTO = vo.getChainVO().clone(ChainDTO.class);
+            storeDetailDTO.setChainDTO(chainDTO);
+        }
         //编码是否重复
         if(!storeService.isCodeUnique(storeDetailDTO)){
             throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);

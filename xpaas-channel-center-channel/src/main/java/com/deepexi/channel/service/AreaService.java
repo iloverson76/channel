@@ -2,9 +2,6 @@ package com.deepexi.channel.service;
 
 import com.deepexi.channel.domain.area.AreaDTO;
 import com.deepexi.channel.domain.area.AreaQuery;
-import com.deepexi.channel.domain.area.AreaTypeQuery;
-import com.deepexi.channel.domain.eo.CcArea;
-import com.deepexi.util.pageHelper.PageBean;
 
 import java.util.List;
 
@@ -19,4 +16,9 @@ public interface AreaService {
 
     List<AreaDTO> findPage(AreaQuery query);
 
+    AreaDTO getAreaById(Long pk);
+
+    boolean deleteBatch(List<Long> ids);
+
+    boolean deleteById(Long id);
 }

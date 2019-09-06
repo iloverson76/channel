@@ -4,13 +4,12 @@ import com.deepexi.channel.businness.StoreBusinessService;
 import com.deepexi.channel.businness.StoreChainBusinessService;
 import com.deepexi.channel.businness.StoreGradeBusinessService;
 import com.deepexi.channel.businness.StoreTypeBusinessService;
+import com.deepexi.channel.domain.chain.ChainDTO;
 import com.deepexi.channel.domain.store.*;
-import com.deepexi.channel.enums.ResultEnum;
+import com.deepexi.channel.service.StoreChainService;
 import com.deepexi.channel.service.StoreGradeService;
 import com.deepexi.channel.service.StoreService;
 import com.deepexi.channel.service.StoreTypeService;
-import com.deepexi.util.extension.ApplicationException;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +28,8 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
     StoreTypeBusinessService storeTypeBusinessService;
     @Autowired
     StoreChainBusinessService storeChainBusinessService;
+    @Autowired
+    StoreChainService storeChainService;
 
     @Override
     @Transactional
@@ -44,12 +45,10 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
         if (dto.getStoreGradeDTO() != null) {
             Long storeGradeRelationId = storeGradeBusinessService.saveStoreGradeRelation(dto);
         }
-
         //新增门店连锁关联
         if (dto.getChainDTO() != null) {
             Long storeChainBusinessId = storeChainBusinessService.saveStoreChainRelation(dto);
         }
-
         //新增门店区域关联
 
         //新增门店经销商关联
@@ -61,12 +60,13 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
     public Boolean update(StoreDetailDTO dto) {
         //修改门店基本信息
         Boolean result = storeService.update(dto);
-
         //修改门店等级关联
+        Long storeGradeUpdateResult = storeGradeBusinessService.updateStoreGradeRelation(dto);
         //修改门店类型关联
-
-
+        Long storeTypeUpdateResult = storeTypeBusinessService.updateStoreTypeRelation(dto);
         //修改门店连锁关联
+        Long storeChainUpdateResult = storeChainBusinessService.updateStoreChainRelation(dto);
+
         //修改门店区域关联
 
         //修改门店经销商关联
@@ -86,8 +86,10 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
         //获取门店类型关联
         StoreTypeDTO storeTypeDTO = storeTypeBusinessService.getStoreTypeByStoreId(pk);
         result.setStoreTypeDTO(storeTypeDTO);
-        //查询门店连锁关联
 
+        //查询门店连锁关联
+        ChainDTO chainDTO = storeChainBusinessService.getStoreChainByStoreId(pk);
+        result.setChainDTO(chainDTO);
         //查询门店区域关联
 
         //查询门店经销商关联

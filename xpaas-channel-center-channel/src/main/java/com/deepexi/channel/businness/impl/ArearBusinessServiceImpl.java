@@ -72,4 +72,22 @@ public class ArearBusinessServiceImpl implements AreaBusinessService {
         }
         return areaDTOList;
     }
+
+    @Override
+    public AreaDTO detail(Long pk, Long areaTypeId) {
+
+        AreaDTO areaDTO=areaService.getAreaById(pk);
+
+        if(null==areaDTO){
+            return null;
+        }
+
+        AreaTypeDTO typeDTO=areaTypeService.getAreaTypeById(areaTypeId);
+
+        if(null!=typeDTO){
+            areaDTO.setAreaType(typeDTO);
+        }
+
+        return areaDTO;
+    }
 }

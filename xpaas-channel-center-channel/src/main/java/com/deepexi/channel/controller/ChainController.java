@@ -103,7 +103,7 @@ public class ChainController {
     }
 
     @PostMapping("/tree")
-    @ApiOperation(value = "保存连锁树", notes = "保存连锁树")
+    @ApiOperation(value = "保存连锁树", notes = "保存连锁树,整颗树一起保存，关键是id与children里的id")
     public Payload<Boolean> saveTree(@RequestBody List<ChainTreeVO> vos){
         if(CollectionUtil.isEmpty(vos)){
             return new Payload<>(false);
@@ -113,7 +113,7 @@ public class ChainController {
     }
 
     @GetMapping("/tree")
-    @ApiOperation(value = "获取连锁树结构,默认展示三级")
+    @ApiOperation(value = "获取连锁树结构,默认展示三级",notes = "前端无需传参数")
     public Payload<List<ChainTreeVO>> getTree(){
         List<ChainTreeDTO> chainTreeDtos = chainBusinessService.getTree();
         if(CollectionUtil.isEmpty(chainTreeDtos)){
@@ -125,7 +125,7 @@ public class ChainController {
     }
 
     @GetMapping("/tree/{id}")
-    @ApiOperation(value="根据id获取下级节点")
+    @ApiOperation(value="根据id获取下级节点",notes = "传0时代表查询所有根节点，其他id则查询子节点")
     public Payload<List<ChainTreeVO>> getChildren(@PathVariable(value = "id", required = true) Long id){
         List<ChainTreeDTO> chainTreeDTOS = chainBusinessService.getChildren(id);
         if(CollectionUtil.isEmpty(chainTreeDTOS)){
