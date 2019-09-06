@@ -14,4 +14,6 @@ public interface AreaBusinessService {
    long create(AreaDTO dto);
 
    List<AreaDTO> findPage(AreaQuery query);
+
+    AreaDTO detail(Long pk, Long areaTypeId);
 }

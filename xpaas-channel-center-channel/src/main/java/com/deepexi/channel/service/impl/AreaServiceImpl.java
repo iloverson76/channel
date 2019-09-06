@@ -59,8 +59,55 @@ public class AreaServiceImpl implements AreaService{
     }
 
     @Override
+    public AreaDTO getAreaById(Long pk) {
+
+        if(pk<=0){
+            return null;
+        }
+
+        AreaDO eo=areaDAO.getById(pk);
+
+        if(null==eo){
+            return null;
+        }
+
+        return eo.clone(AreaDTO.class,CloneDirection.OPPOSITE);
+    }
+
+    @Override
     public boolean update(AreaDTO dto) {
-        return false;
+
+        if(null==dto){
+            return false;
+        }
+
+        areaDAO.updateById(dto.clone(AreaDO.class,CloneDirection.FORWARD));
+
+        return true;
+    }
+
+    @Override
+    public boolean deleteById(Long id) {
+
+        if(id<=0){
+            return false;
+        }
+
+        areaDAO.removeById(id);
+
+        return true;
+    }
+
+    @Override
+    public boolean deleteBatch(List<Long> ids) {
+
+        if(CollectionUtils.isEmpty(ids)){
+            return false;
+        }
+
+        areaDAO.removeByIds(ids);
+
+        return true;
     }
 
     @Override
@@ -78,4 +125,5 @@ public class AreaServiceImpl implements AreaService{
 
         return ObjectCloneUtils.convertList(areaList, AreaDTO.class, CloneDirection.OPPOSITE);
     }
+
 }
