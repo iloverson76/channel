@@ -14,9 +14,9 @@ import lombok.*;
 public class StoreChainDO extends SuperEntity {
     // @ApiModelProperty(value = "门店Id")
     @TableField(value = "`store_id`")
-    private Integer  storeId;
+    private Long  storeId;
     // @ApiModelProperty(value = "连锁ID")
     @TableField(value = "`chain_id`")
-    private Integer  chainId;
+    private Long  chainId;
 
 }

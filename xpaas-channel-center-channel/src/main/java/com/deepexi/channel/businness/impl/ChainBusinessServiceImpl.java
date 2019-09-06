@@ -301,7 +301,7 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
 
     /**
      * @MethodName: getChildren
-     * @Description: 根据id获取所有儿子节点
+     * @Description: 根据id获取所有儿子节点, 传0表示查询所有根节点
      * @Param: [id]
      * @Return: java.util.List<com.deepexi.channel.domain.chain.ChainTreeDTO>
      * @Author: mumu
@@ -309,8 +309,17 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
     **/
     @Override
     public List<ChainTreeDTO> getChildren(Long id) {
-        ChainQuery query = ChainQuery.builder().parentId(id).build();
+        ChainQuery query = new ChainQuery();
+        query.setPage(-1);
+        query.setParentId(id);
+        //如果id为0，查询所有根节点, 根节点path不为空, 非根节点为空
+        if(id == 0L){
+            query.setPath("/");
+        }
         List<ChainDTO> chainDTOS = chainService.findPage(query);
+        if(CollectionUtil.isEmpty(chainDTOS)){
+            return null;
+        }
         List<ChainTreeDTO> chainTreeDTOS = ObjectCloneUtils.convertList(chainDTOS, ChainTreeDTO.class);
         //查询连锁类型列表
         List<ChainTypeDTO> chainTypeDTOS = this.getChainTypeListByChainDTOS(chainDTOS);

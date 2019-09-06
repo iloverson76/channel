@@ -9,4 +9,6 @@ import java.util.List;
 public interface StoreGradeRelationDAO extends IService<StoreGradeRelationDO>{
     List<StoreGradeRelationDO> findAll(StoreGradeRelationQuery query);
     StoreGradeRelationDO getStoreGradeRelationByStoreId(Long pk);
+
+    Boolean removeByStoreId(Long storeId);
 }

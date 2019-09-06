@@ -47,4 +47,9 @@ public class StoreTypeRelationServiceImpl implements StoreTypeRelationService {
         }
         return ObjectCloneUtils.convertList(storeTypeRelationDOS, StoreTypeRelationDTO.class, CloneDirection.OPPOSITE);
     }
+
+    @Override
+    public Boolean removeByStoreId(Long storeId) {
+        return storeTypeRelationDAO.removeByStoreId(storeId);
+    }
 }
