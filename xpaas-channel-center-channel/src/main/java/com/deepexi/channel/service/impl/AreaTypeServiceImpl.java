@@ -241,6 +241,22 @@ public class AreaTypeServiceImpl implements AreaTypeService {
         return areaTypeDAO.listAreaTypeByIds(areaTyeIdList);
     }
 
+    @Override
+    public List<AreaTypeDTO> listLinkedAreas(long pk) {
+
+        if(pk<0){
+            return null;
+        }
+
+        List<AreaTypeDO> eoList=areaTypeDAO.listLinkedAreas(pk);
+
+        if(CollectionUtils.isEmpty(eoList)){
+            return null;
+        }
+
+        return ObjectCloneUtils.convertList(eoList,AreaTypeDTO.class,CloneDirection.OPPOSITE);
+    }
+
     private QueryWrapper<AreaTypeDO> getQueryWrapper(Long id){
 
         QueryWrapper<AreaTypeDO> wp=new QueryWrapper<>();

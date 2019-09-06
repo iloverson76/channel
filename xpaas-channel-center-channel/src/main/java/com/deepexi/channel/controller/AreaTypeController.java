@@ -1,9 +1,8 @@
 package com.deepexi.channel.controller;
 
 
-import com.deepexi.channel.domain.area.AreaTypeDTO;
-import com.deepexi.channel.domain.area.AreaTypeQuery;
-import com.deepexi.channel.domain.area.AreaTypeVO;
+import com.deepexi.channel.businness.AreaTypeBusinessService;
+import com.deepexi.channel.domain.area.*;
 import com.deepexi.channel.extension.AppRuntimeEnv;
 import com.deepexi.channel.service.AreaTypeService;
 import com.deepexi.util.config.Payload;
@@ -13,13 +12,11 @@ import com.deepexi.util.pojo.ObjectCloneUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * <p>
@@ -36,6 +33,9 @@ public class AreaTypeController {
 
     @Autowired
     AreaTypeService areaTypeService;
+
+    @Autowired
+    AreaTypeBusinessService areaTypeBusinessService;
 
     AppRuntimeEnv appRuntimeEnv = AppRuntimeEnv.getInstance();
 
@@ -130,4 +130,29 @@ public class AreaTypeController {
 
         return new Payload<>(new PageBean<>(voList));
     }
+
+    @GetMapping("/typeArea/{id:[0-9,]+}")
+    @ApiOperation("层级元素列表")
+    public Payload<PageBean<AreaVO>> listTypeAreas(@PathVariable Long id) {
+
+        List<AreaDTO> dtoList = areaTypeBusinessService.listLinkedAreas(id);
+
+        List<AreaVO> voList=new ArrayList<>();
+
+        dtoList.forEach(dto->{
+
+            AreaTypeVO areaTypeVO=dto.getAreaType().clone(AreaTypeVO.class,CloneDirection.OPPOSITE);
+
+            AreaVO vo= new AreaVO();
+
+            BeanUtils.copyProperties(dto,vo);
+
+            vo.setAreaType(areaTypeVO);
+
+            voList.add(vo);
+        });
+
+        return new Payload<>(new PageBean<>(voList));
+    }
+
 }

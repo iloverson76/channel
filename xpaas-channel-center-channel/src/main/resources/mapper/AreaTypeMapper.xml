@@ -168,7 +168,7 @@
         AND b.limit_parent=1
         )
     </select>
-    <select id="listAreaTypeByIds" resultType="com.deepexi.channel.domain.area.AreaTypeDTO">
+    <select id="listAreaTypeByIds" resultType="com.deepexi.channel.domain.area.AreaTypeDO">
 
         select * from cc_area_type where 1=1
 
@@ -177,6 +177,15 @@
             <foreach collection="ids" item="tempId" index="index" open="(" close=")" separator=",">
                 #{tempId}
             </foreach>
+        </if>
+    </select>
+
+    <select id="listLinkedAreas" resultType="com.deepexi.channel.domain.area.AreaTypeDO">
+
+        select * from cc_area_type where dr=0
+
+        <if test="id!= 0">
+            and id =#{id}
         </if>
     </select>
 

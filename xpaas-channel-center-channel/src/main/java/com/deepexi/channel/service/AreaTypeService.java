@@ -2,9 +2,7 @@ package com.deepexi.channel.service;
 
 import com.deepexi.channel.domain.area.AreaTypeDTO;
 import com.deepexi.channel.domain.area.AreaTypeQuery;
-import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -33,4 +31,6 @@ public interface AreaTypeService {
     List<AreaTypeDTO> listParentNodesForUpdate(Long id);
 
     List<AreaTypeDTO> listAreaTypeByIds(List<Long> areaTyeIdList);
+
+    List<AreaTypeDTO> listLinkedAreas(long pk);
 }
