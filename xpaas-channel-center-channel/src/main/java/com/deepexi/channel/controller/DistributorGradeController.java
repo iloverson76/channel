@@ -11,6 +11,7 @@ import com.deepexi.util.pojo.ObjectCloneUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -84,18 +85,21 @@ public class DistributorGradeController {
 
         List<DistributorGradeVO> voList=new ArrayList<>();
 
-        dtoList.forEach(dto->{
+        if(CollectionUtils.isNotEmpty(dtoList)){
 
-            DistributorGradeSystemVO systemVO=dto.getSystem().clone(DistributorGradeSystemVO.class,CloneDirection.OPPOSITE);
+            dtoList.forEach(dto->{
 
-            DistributorGradeVO vo= new DistributorGradeVO();
+                DistributorGradeSystemVO systemVO=dto.getSystem().clone(DistributorGradeSystemVO.class,CloneDirection.OPPOSITE);
 
-            BeanUtils.copyProperties(dto,vo);
+                DistributorGradeVO vo= new DistributorGradeVO();
 
-            vo.setSystem(systemVO);
+                BeanUtils.copyProperties(dto,vo);
 
-            voList.add(vo);
-        });
+                vo.setSystem(systemVO);
+
+                voList.add(vo);
+            });
+        }
 
         return new Payload<>(new PageBean<>(voList));
     }

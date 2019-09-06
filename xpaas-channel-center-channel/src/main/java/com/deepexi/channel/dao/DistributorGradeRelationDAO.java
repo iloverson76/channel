@@ -19,7 +19,7 @@ public interface DistributorGradeRelationDAO extends  IService<DistributorGradeR
 
     boolean updateBatchById(List<DistributorGradeRelationDO> eoList);
 
-    List<DistributorGradeRelationDO> findAllByDistributorIds(long distributorId);
+    List<DistributorGradeRelationDO> findAllByDistributorIds(List<Long> distributorIds);
 
     DistributorGradeRelationDO findOne(long distributorId, long gradeId);
 }
