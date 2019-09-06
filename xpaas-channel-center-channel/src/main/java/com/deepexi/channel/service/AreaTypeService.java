@@ -31,4 +31,6 @@ public interface AreaTypeService {
     List<AreaTypeDTO> listParentNodesForCreate();
 
     List<AreaTypeDTO> listParentNodesForUpdate(Long id);
+
+    List<AreaTypeDTO> listAreaTypeByIds(List<Long> areaTyeIdList);
 }

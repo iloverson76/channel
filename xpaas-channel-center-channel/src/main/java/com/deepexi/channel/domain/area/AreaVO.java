@@ -27,11 +27,19 @@ public class AreaVO extends AbstractObject {
 
     private Long id;
 
+    private AreaTypeVO areaType;
+
     /**
      * 父节点ID
      */
     @ApiModelProperty(value = "父节点ID")
     private Integer parentId;
+
+    /**
+     * 路径
+     */
+    @ApiModelProperty(value = "路径")
+    private String path;
 
     /**
      * 区域分类ID

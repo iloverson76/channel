@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import java.util.List;
+
 /**
  * <p>
  * 区域查询
@@ -23,6 +25,8 @@ public class AreaQuery extends CommQuery {
 
     private static final long serialVersionUID = 1L;
 
+    private List<Long> ids;
+
     /**
      * 区域名称
      */
@@ -34,4 +38,10 @@ public class AreaQuery extends CommQuery {
      */
     @ApiModelProperty("区域编码")
     private String areaCode;
+
+    /**
+     * 区域分类ID
+     */
+    @ApiModelProperty("区域分类ID")
+    private Long areaTypeId;
 }

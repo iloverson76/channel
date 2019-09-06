@@ -6,6 +6,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.List;
+
 /**
  * <p>
  * 区域类型查询
@@ -20,6 +22,8 @@ import lombok.EqualsAndHashCode;
 public class AreaTypeQuery extends CommQuery {
 
     private static final long serialVersionUID = 1L;
+
+    private List<Long> ids;
 
     /**
      * 区域分类名称

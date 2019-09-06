@@ -24,15 +24,22 @@ public class AreaDTO extends AbstractObject {
 
     private Long id;
 
+    private AreaTypeDTO areaType;
+
     /**
      * 父节点ID
      */
     private Integer parentId;
 
     /**
+     * 路径
+     */
+    private String path;
+
+    /**
      * 区域分类ID
      */
-    private Integer areaTypeId;
+    private Long areaTypeId;
 
     /**
      * 区域名称
