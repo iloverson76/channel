@@ -1,10 +1,8 @@
 package com.deepexi.channel.controller;
 
 import com.deepexi.channel.businness.AreaBusinessService;
-import com.deepexi.channel.domain.area.AreaDTO;
-import com.deepexi.channel.domain.area.AreaQuery;
-import com.deepexi.channel.domain.area.AreaTypeVO;
-import com.deepexi.channel.domain.area.AreaVO;
+import com.deepexi.channel.domain.area.*;
+import com.deepexi.channel.service.AreaService;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pageHelper.PageBean;
 import com.deepexi.util.pojo.CloneDirection;
@@ -16,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Api(description = "区域管理")
@@ -27,50 +27,8 @@ public class AreaController {
     @Autowired
     private AreaBusinessService areaBusinessService;
 
-/*
-    @GetMapping
-    //@ApiOperation(value = "分页查询", notes = "分页请求")
-    public  Payload findPage(CcArea eo,
-                             @RequestParam(value = "page", defaultValue = "0") Integer page,
-                             @RequestParam(value = "size", defaultValue = "10") Integer size) {
-        return new Payload(areaService.findPage(eo, page, size));
-    }
-
-    @GetMapping("/list")
-    //@ApiOperation(value = "树形查询", notes = "查询全部请求")
-    public Payload findAll(CcArea eo) {
-        return new Payload(areaService.findAll(eo));
-    }
-
-    @GetMapping("/{id}")
-    public Payload detail(@PathVariable(value = "id", required = true) Integer  pk) {
-        return new Payload(areaService.detail(pk));
-    }
-
-
-    @PutMapping("/{id}")
-    @Transactional
-//@ApiOperation(value = "根据id修改", notes = "根据id修改CcArea")
-    public Payload update(@PathVariable(value = "id", required = true) Integer  pk, @RequestBody CcArea eo) {
-     eo.setId(pk);
-     return new Payload(areaService.update(pk, eo));
-    }
-*/
-/*
-    @DeleteMapping("/{id}")
-    @Transactional
-//@ApiOperation(value = "根据id删除CcArea", notes = "根据id删除CcArea")
-    public Payload delete(@PathVariable(value = "id", required = true) Integer  pk) {
-        return new Payload(areaService.delete(pk));
-    }
-
-    @DeleteMapping
-    @Transactional
-    //@ApiOperation(value = "根据id批量删除CcArea", notes = "根据id批量删除CcArea")
-    public Payload delete(@RequestParam(required = true) Integer [] ids) {
-        return new Payload(areaService.delete(ids));
-    }
-*/
+    @Autowired
+    private AreaService areaService;
 
     @PostMapping
     @ApiOperation(value = "创建区域")
@@ -79,6 +37,44 @@ public class AreaController {
         Long result= areaBusinessService.create(vo.clone(AreaDTO.class, CloneDirection.FORWARD));
 
         return new Payload<>(result);
+    }
+
+    @GetMapping("/{id}/{areaTypeId}")
+    @ApiOperation(value="根据id和分类id查看区域详情")
+    public Payload<AreaVO> detail(@PathVariable(value = "id", required = true) Long  id,
+                                   @PathVariable(value = "areaTypeId", required = true)Long areaTypeId) {
+
+        AreaDTO dto=areaBusinessService.detail(id,areaTypeId);
+
+        AreaTypeVO type=dto.getAreaType().clone(AreaTypeVO.class,CloneDirection.OPPOSITE);
+
+        AreaVO vo=new AreaVO();
+
+        BeanUtils.copyProperties(dto,vo);
+
+        vo.setAreaType(type);
+
+        return new Payload<>(vo);
+    }
+
+    @PutMapping("/{id}")
+    @ApiOperation(value = "根据id修改")
+    public Payload<Boolean> update(@PathVariable(value = "id", required = true) Long  pk, @RequestBody AreaVO vo) {
+
+        vo.setId(pk);
+
+        areaService.update(vo.clone(AreaDTO.class,CloneDirection.FORWARD));
+
+        return new Payload<>(Boolean.TRUE);
+    }
+
+    @DeleteMapping("/{ids:[0-9,]+}")
+    @ApiOperation(value = "根据id批量删除")
+    public Payload delete(@PathVariable(value = "ids") String ids) {
+
+        List<Long> idList= Arrays.stream(ids.split(",")).map(Long::parseLong).collect(Collectors.toList());
+
+        return new Payload(areaService.deleteBatch(idList));
     }
 
     @GetMapping()
