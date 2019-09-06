@@ -3,6 +3,7 @@ package com.deepexi.channel.dao.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.deepexi.channel.dao.AreaTypeDAO;
 import com.deepexi.channel.domain.area.AreaTypeDO;
+import com.deepexi.channel.domain.area.AreaTypeDTO;
 import com.deepexi.channel.domain.area.AreaTypeQuery;
 import com.deepexi.channel.mapper.AreaTypeMapper;
 import org.springframework.stereotype.Repository;
@@ -18,6 +19,7 @@ public class AreaTypeDAOImpl extends ServiceImpl<AreaTypeMapper, AreaTypeDO> imp
 
     @Override
     public List<AreaTypeDO> listAreaTypePage(AreaTypeQuery query) {
+
         return baseMapper.listAreaTypePage(query);
     }
 
@@ -39,5 +41,11 @@ public class AreaTypeDAOImpl extends ServiceImpl<AreaTypeMapper, AreaTypeDO> imp
     @Override
     public List<AreaTypeDO> listChildNodes(String tenantId, String appId,String idPath) {
         return baseMapper.listChildNodes(tenantId,appId,idPath);
+    }
+
+    @Override
+    public List<AreaTypeDTO> listAreaTypeByIds(List<Long> areaTyeIdList) {
+
+        return baseMapper.listAreaTypeByIds(areaTyeIdList);
     }
 }

@@ -235,6 +235,12 @@ public class AreaTypeServiceImpl implements AreaTypeService {
         return ObjectCloneUtils.convertList(unLimitedNodes,AreaTypeDTO.class);
     }
 
+    @Override
+    public List<AreaTypeDTO> listAreaTypeByIds(List<Long> areaTyeIdList) {
+
+        return areaTypeDAO.listAreaTypeByIds(areaTyeIdList);
+    }
+
     private QueryWrapper<AreaTypeDO> getQueryWrapper(Long id){
 
         QueryWrapper<AreaTypeDO> wp=new QueryWrapper<>();

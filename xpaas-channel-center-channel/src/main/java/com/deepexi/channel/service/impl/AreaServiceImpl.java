@@ -1,21 +1,17 @@
 package com.deepexi.channel.service.impl;
 
 import com.deepexi.channel.dao.AreaDAO;
-import com.deepexi.channel.domain.area.AreaDO;
-import com.deepexi.channel.domain.area.AreaDTO;
+import com.deepexi.channel.domain.area.*;
+import com.deepexi.channel.service.AreaService;
 import com.deepexi.util.pojo.CloneDirection;
+import com.deepexi.util.pojo.ObjectCloneUtils;
+import com.github.pagehelper.PageHelper;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import com.deepexi.channel.domain.eo.CcArea;
-import com.deepexi.channel.service.AreaService;
-import com.deepexi.channel.mapper.AreaMapper;
-import java.util.Arrays;import java.util.List;
-import com.deepexi.util.pageHelper.PageBean;
-import com.github.pagehelper.PageHelper;
-import com.deepexi.util.BeanPowerHelper;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class AreaServiceImpl implements AreaService{
@@ -27,10 +23,59 @@ public class AreaServiceImpl implements AreaService{
     @Override
     public Long create(AreaDTO dto) {
 
-        AreaDO ado=dto.clone(AreaDO.class, CloneDirection.FORWARD);
+        if(null==dto){
+            return 0L;
+        }
+        AreaDO newNode=dto.clone(AreaDO.class,CloneDirection.FORWARD);
 
-        areaDAO.save(ado);
+        //save后,ado是插入数据库后返回的新数据,包括id,ado克隆要拆成两步写
+        areaDAO.save(newNode);
 
-        return ado.getId();
+        long newId=newNode.getId();
+
+
+/* 修改的时候再处理上级和路径
+
+
+        //设置处理(id路径)
+
+        long parentId=newNode.getParentId();
+
+        if (0==parentId) {
+
+            newNode.setPath("/"+String.valueOf(newId));//首次创建
+
+        } else {
+
+            String parent_path=areaDAO.getById(parentId).getPath()+"/"+newId;
+
+            newNode.setPath(parent_path);
+        }
+
+        areaDAO.updateById(newNode);
+     */
+
+        return newId;
+    }
+
+    @Override
+    public boolean update(AreaDTO dto) {
+        return false;
+    }
+
+    @Override
+    public List<AreaDTO> findPage(AreaQuery query) {
+
+        if (query.getPage() != null && query.getPage() != -1) {
+            PageHelper.startPage(query.getPage(), query.getSize());
+        }
+
+        List<AreaDO> areaList = areaDAO.listAreaPage(query);
+
+        if(CollectionUtils.isEmpty(areaList)){
+            return null;
+        }
+
+        return ObjectCloneUtils.convertList(areaList, AreaDTO.class, CloneDirection.OPPOSITE);
     }
 }
