@@ -3,8 +3,12 @@ package com.deepexi.channel.dao.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.deepexi.channel.dao.AreaTypeDAO;
 import com.deepexi.channel.domain.area.AreaTypeDO;
+import com.deepexi.channel.domain.area.AreaTypeDTO;
 import com.deepexi.channel.domain.area.AreaTypeQuery;
 import com.deepexi.channel.mapper.AreaTypeMapper;
+import com.deepexi.util.pojo.CloneDirection;
+import com.deepexi.util.pojo.ObjectCloneUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,6 +22,7 @@ public class AreaTypeDAOImpl extends ServiceImpl<AreaTypeMapper, AreaTypeDO> imp
 
     @Override
     public List<AreaTypeDO> listAreaTypePage(AreaTypeQuery query) {
+
         return baseMapper.listAreaTypePage(query);
     }
 
@@ -39,5 +44,19 @@ public class AreaTypeDAOImpl extends ServiceImpl<AreaTypeMapper, AreaTypeDO> imp
     @Override
     public List<AreaTypeDO> listChildNodes(String tenantId, String appId,String idPath) {
         return baseMapper.listChildNodes(tenantId,appId,idPath);
+    }
+
+    @Override
+    public List<AreaTypeDTO> listAreaTypeByIds(List<Long> areaTyeIdList) {
+
+        List<AreaTypeDO> eoList= baseMapper.listAreaTypeByIds(areaTyeIdList);
+
+        return ObjectCloneUtils.convertList(eoList,AreaTypeDTO.class, CloneDirection.OPPOSITE);
+    }
+
+    @Override
+    public List<AreaTypeDO> listLinkedAreas(long pk) {
+
+        return baseMapper.listLinkedAreas(pk);
     }
 }

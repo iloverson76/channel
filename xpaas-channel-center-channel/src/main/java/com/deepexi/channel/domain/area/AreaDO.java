@@ -30,9 +30,14 @@ public class AreaDO extends SuperEntity {
     private Integer parentId;
 
     /**
+     * 路径
+     */
+    private String path;
+
+    /**
      * 区域分类ID
      */
-    private Integer areaTypeId;
+    private Long areaTypeId;
 
     /**
      * 区域名称

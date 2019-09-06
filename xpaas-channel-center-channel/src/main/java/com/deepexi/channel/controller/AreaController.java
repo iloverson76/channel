@@ -1,17 +1,21 @@
 package com.deepexi.channel.controller;
 
-import com.deepexi.channel.domain.area.*;
-import com.deepexi.channel.service.AreaService;
+import com.deepexi.channel.businness.AreaBusinessService;
+import com.deepexi.channel.domain.area.AreaDTO;
+import com.deepexi.channel.domain.area.AreaQuery;
+import com.deepexi.channel.domain.area.AreaTypeVO;
+import com.deepexi.channel.domain.area.AreaVO;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pageHelper.PageBean;
 import com.deepexi.util.pojo.CloneDirection;
-import com.deepexi.util.pojo.ObjectCloneUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,7 +25,7 @@ import java.util.List;
 public class AreaController {
 
     @Autowired
-    private AreaService areaService;
+    private AreaBusinessService areaBusinessService;
 
 /*
     @GetMapping
@@ -72,19 +76,32 @@ public class AreaController {
     @ApiOperation(value = "创建区域")
     public Payload<Long> create(@RequestBody AreaVO vo) {
 
-        Long result= areaService.create(vo.clone(AreaDTO.class, CloneDirection.FORWARD));
+        Long result= areaBusinessService.create(vo.clone(AreaDTO.class, CloneDirection.FORWARD));
 
         return new Payload<>(result);
     }
 
-    /*@GetMapping()
-    @ApiOperation("查询区域类型列表")
+    @GetMapping()
+    @ApiOperation("查询区域列表-分页查询")
     public Payload<PageBean<AreaVO>> listAreaPage(@ApiParam(name = "query", required = true) AreaQuery query) {
 
-        List<AreaDTO> dtoList = areaService.listAreaPage(query);
+        List<AreaDTO> dtoList = areaBusinessService.findPage(query);
 
-        List<AreaVO> voList = ObjectCloneUtils.convertList(dtoList, AreaVO.class);
+        List<AreaVO> voList=new ArrayList<>();
+
+        dtoList.forEach(dto->{
+
+            AreaTypeVO areaTypeVO=dto.getAreaType().clone(AreaTypeVO.class,CloneDirection.OPPOSITE);
+
+            AreaVO vo= new AreaVO();
+
+            BeanUtils.copyProperties(dto,vo);
+
+            vo.setAreaType(areaTypeVO);
+
+            voList.add(vo);
+        });
 
         return new Payload<>(new PageBean<>(voList));
-    }*/
+    }
 }

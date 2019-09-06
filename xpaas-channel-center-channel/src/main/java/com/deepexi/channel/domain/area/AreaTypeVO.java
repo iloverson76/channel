@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -27,6 +28,12 @@ public class AreaTypeVO extends AbstractObject {
     private static final long serialVersionUID = 1L;
 
     private Long id;
+
+    /**
+     * 挂载的区域
+     */
+    @ApiModelProperty("挂载的区域")
+    private List<AreaDO> areas;
 
     /**
      * 父级类型ID

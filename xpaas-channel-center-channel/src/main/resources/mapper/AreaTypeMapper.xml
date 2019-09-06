@@ -66,6 +66,12 @@
         ) e
         WHERE
         1 = 1
+        <if test="ids != null">
+            and id in
+            <foreach collection="ids" item="tempId" index="index" open="(" close=")" separator=",">
+                #{tempId}
+            </foreach>
+        </if>
         <if test="areaTypeName!=null">
             AND area_type_name LIKE concat('%',#{areaTypeName},'%')
         </if>
@@ -161,6 +167,26 @@
         AND b.parent_id!=0
         AND b.limit_parent=1
         )
+    </select>
+    <select id="listAreaTypeByIds" resultType="com.deepexi.channel.domain.area.AreaTypeDO">
+
+        select * from cc_area_type where 1=1
+
+        <if test="ids != null">
+            and id in
+            <foreach collection="ids" item="tempId" index="index" open="(" close=")" separator=",">
+                #{tempId}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="listLinkedAreas" resultType="com.deepexi.channel.domain.area.AreaTypeDO">
+
+        select * from cc_area_type where dr=0
+
+        <if test="id!= 0">
+            and id =#{id}
+        </if>
     </select>
 
 </mapper>
