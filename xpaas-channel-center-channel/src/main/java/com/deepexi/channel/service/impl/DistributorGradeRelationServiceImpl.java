@@ -80,13 +80,13 @@ public class DistributorGradeRelationServiceImpl implements DistributorGradeRela
     }
 
     @Override
-    public List<DistributorGradeRelationDTO> findAllByDistributorIds(long distributorId) {
+    public List<DistributorGradeRelationDTO> findAllByDistributorIds(List<Long> distributorIds) {
 
-        if(distributorId<=0){
+        if(CollectionUtils.isEmpty(distributorIds)){
             return null;
         }
 
-        List<DistributorGradeRelationDO> eoList=distributorGradeRelationDAO.findAllByDistributorIds(distributorId);
+        List<DistributorGradeRelationDO> eoList=distributorGradeRelationDAO.findAllByDistributorIds(distributorIds);
 
         if(CollectionUtils.isEmpty(eoList)){
             return null;

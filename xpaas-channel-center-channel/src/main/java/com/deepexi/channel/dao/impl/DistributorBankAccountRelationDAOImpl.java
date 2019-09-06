@@ -52,13 +52,9 @@ public class DistributorBankAccountRelationDAOImpl extends ServiceImpl<Distribut
     }
 
     @Override
-    public List<DistributorBankAccountRelationDO> findAllByDistributorIds(long distributorId) {
+    public List<DistributorBankAccountRelationDO> findAllByDistributorIds(List<Long> distributorIds) {
 
-        QueryWrapper<DistributorBankAccountRelationDO> wp=new QueryWrapper<>();
-
-        wp.eq("distributor_id",distributorId);
-
-        return baseMapper.selectList(wp);
+        return baseMapper.selectBatchIds(distributorIds);
     }
 
     @Override

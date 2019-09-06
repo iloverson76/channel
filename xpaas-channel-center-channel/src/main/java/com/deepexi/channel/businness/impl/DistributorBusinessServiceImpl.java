@@ -1,12 +1,11 @@
 package com.deepexi.channel.businness.impl;
 
 import com.deepexi.channel.businness.DistributorBusinessService;
+import com.deepexi.channel.businness.DistributorGradeBusinessService;
 import com.deepexi.channel.dao.DistributorGradeRelationDAO;
+import com.deepexi.channel.domain.bank.BankAccountQuery;
 import com.deepexi.channel.domain.distributor.*;
-import com.deepexi.channel.service.DistributorAreaRelationService;
-import com.deepexi.channel.service.DistributorBankAccountRelationService;
-import com.deepexi.channel.service.DistributorGradeRelationService;
-import com.deepexi.channel.service.DistributorService;
+import com.deepexi.channel.service.*;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.beans.Transient;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -29,10 +29,16 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
     DistributorGradeRelationService distributorGradeRelationService;
 
     @Autowired
+    DistributorGradeService distributorGradeService;
+
+    @Autowired
     DistributorAreaRelationService distributorAreaRelationService;
 
     @Autowired
     private DistributorBankAccountRelationService distributorBankAccountRelationService;
+
+    @Autowired
+    private BankAccountService bankAccountService;
 
     @Transient
     @Override
@@ -147,24 +153,51 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
     @Override
     public List<DistributorDTO> findPage(DistributorQuery query) {
 
-    //经销商信息
+        //经销商信息
         List<DistributorDTO> butorList=distributorService.findPage(query);
 
-    //等级信息
+        List<Long> butorIdList=new ArrayList<>();
+
+        butorList.forEach(butor->{
+
+            butorIdList.add(butor.getId());
+        });
 
         //经销商-等级中间表
+        List<DistributorGradeRelationDTO> dgrs=
+                distributorGradeRelationService.findAllByDistributorIds(butorIdList);
 
+        List<Long> gradeIds=new ArrayList<>();
+        dgrs.forEach(dgr->{
+            gradeIds.add(dgr.getDistributorGradeId());
+        });
 
+        //等级信息
+        DistributorGradeQuery gradeQuery=new DistributorGradeQuery();
+        gradeQuery.setIds(gradeIds);
 
-        //等级表
+        List<DistributorGradeDTO> grades=distributorGradeService.findPage(gradeQuery);
 
+        //加入等级信息
+        butorList.forEach(butor->{
+           // butor.setGrades()
+        });
 
-    //银行信息
 
         //经销商-银行中间表
+        List<Long> bankAccountIds=new ArrayList<>();
+        List<DistributorBankAccountRelationDTO> dars= distributorBankAccountRelationService.
+                findAllByDistributorIds(butorIdList);
+        dars.forEach(dar->{
+            bankAccountIds.add(dar.getBankAccountId());
+        });
+        //银行信息
+        BankAccountQuery bankAccountQuery=new BankAccountQuery();
+        bankAccountQuery.setIds(bankAccountIds);
+        bankAccountService.findList(bankAccountQuery);
 
-        //等级表
 
+        //加入银行信息
 
 
         return null;

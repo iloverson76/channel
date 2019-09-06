@@ -16,7 +16,7 @@ public interface DistributorBankAccountRelationDAO extends  IService<Distributor
 
     boolean updateBatchById(List<DistributorBankAccountRelationDO> eoList);
 
-    List<DistributorBankAccountRelationDO> findAllByDistributorIds(long distributorId);
+    List<DistributorBankAccountRelationDO> findAllByDistributorIds(List<Long> distributorIds);
 
     DistributorBankAccountRelationDO findOne(long distributorId, long BankAccountId);
     

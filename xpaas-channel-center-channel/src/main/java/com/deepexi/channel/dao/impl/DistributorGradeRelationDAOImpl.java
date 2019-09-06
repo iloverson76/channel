@@ -57,13 +57,9 @@ public class DistributorGradeRelationDAOImpl extends ServiceImpl<DistributorGrad
     }
 
     @Override
-    public List<DistributorGradeRelationDO> findAllByDistributorIds(long distributorId) {
+    public List<DistributorGradeRelationDO> findAllByDistributorIds(List<Long> distributorIds) {
 
-        QueryWrapper<DistributorGradeRelationDO> wp=new QueryWrapper<>();
-
-        wp.eq("distributor_id",distributorId);
-
-        return baseMapper.selectList(wp);
+        return baseMapper.selectBatchIds(distributorIds);
     }
 
     @Override
