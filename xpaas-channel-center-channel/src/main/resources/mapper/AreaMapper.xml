@@ -37,7 +37,7 @@
         SELECT * from cc_area
 
         WHERE
-        1 = 1
+        dr=0
         <if test="ids != null">
             and id in
             <foreach collection="ids" item="tempId" index="index" open="(" close=")" separator=",">
