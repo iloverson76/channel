@@ -59,16 +59,17 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
                 typeList.stream().collect(Collectors.groupingBy(AreaTypeDTO::getId));
 
          //过滤
-        List<AreaDTO> filterAreaDTOList=new ArrayList<>();
         if(pk>0){
+            List<AreaDTO> filterAreaDTOList=new ArrayList<>();
             areaDTOList.forEach(orig->{
                 if(pk==orig.getAreaTypeId()){
                     filterAreaDTOList.add(orig);
                 }
             });
+            areaDTOList=filterAreaDTOList;
         }
 
-        filterAreaDTOList.forEach(filter->{
+        areaDTOList.forEach(filter->{
 
             long typeId=filter.getAreaTypeId();
 
@@ -80,6 +81,6 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
             }
         });
 
-        return filterAreaDTOList;
+        return areaDTOList;
     }
 }

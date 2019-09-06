@@ -184,7 +184,7 @@
 
         select * from cc_area_type where dr=0
 
-        <if test="id= 0">
+        <if test="id!= 0">
             and id =#{id}
         </if>
     </select>
