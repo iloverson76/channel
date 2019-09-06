@@ -1,11 +1,12 @@
 package com.deepexi.channel.businness.impl;
 
-import com.deepexi.channel.businness.StoreBusinessService;
-import com.deepexi.channel.businness.StoreChainBusinessService;
-import com.deepexi.channel.businness.StoreGradeBusinessService;
-import com.deepexi.channel.businness.StoreTypeBusinessService;
+import com.deepexi.channel.businness.*;
+import com.deepexi.channel.domain.area.AreaDTO;
 import com.deepexi.channel.domain.chain.ChainDTO;
-import com.deepexi.channel.domain.store.*;
+import com.deepexi.channel.domain.store.StoreDTO;
+import com.deepexi.channel.domain.store.StoreDetailDTO;
+import com.deepexi.channel.domain.store.StoreGradeDTO;
+import com.deepexi.channel.domain.store.StoreTypeDTO;
 import com.deepexi.channel.service.StoreChainService;
 import com.deepexi.channel.service.StoreGradeService;
 import com.deepexi.channel.service.StoreService;
@@ -30,6 +31,8 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
     StoreChainBusinessService storeChainBusinessService;
     @Autowired
     StoreChainService storeChainService;
+    @Autowired
+    StoreAreaBusinessService storeAreaBusinessService;
 
     @Override
     @Transactional
@@ -47,9 +50,12 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
         }
         //新增门店连锁关联
         if (dto.getChainDTO() != null) {
-            Long storeChainBusinessId = storeChainBusinessService.saveStoreChainRelation(dto);
+            Long storeChainRelationId = storeChainBusinessService.saveStoreChainRelation(dto);
         }
         //新增门店区域关联
+        if(dto.getAreaDTO() != null){
+            Long storeAreaRelationId = storeAreaBusinessService.saveStoreAreaRelation(dto);
+        }
 
         //新增门店经销商关联
 
@@ -57,6 +63,7 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
     }
 
     @Override
+    @Transactional
     public Boolean update(StoreDetailDTO dto) {
         //修改门店基本信息
         Boolean result = storeService.update(dto);
@@ -68,7 +75,7 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
         Long storeChainUpdateResult = storeChainBusinessService.updateStoreChainRelation(dto);
 
         //修改门店区域关联
-
+        Long storeAreaUpdateResult = storeAreaBusinessService.updateStoreAreaRelation(dto);
         //修改门店经销商关联
 
 
@@ -91,6 +98,8 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
         ChainDTO chainDTO = storeChainBusinessService.getStoreChainByStoreId(pk);
         result.setChainDTO(chainDTO);
         //查询门店区域关联
+        AreaDTO areaDTO = storeAreaBusinessService.getStoreAreaByStoreId(pk);
+        result.setAreaDTO(areaDTO);
 
         //查询门店经销商关联
 

@@ -1,6 +1,8 @@
 package com.deepexi.channel.controller;
 
 import com.deepexi.channel.businness.StoreBusinessService;
+import com.deepexi.channel.domain.area.AreaDTO;
+import com.deepexi.channel.domain.area.AreaVO;
 import com.deepexi.channel.domain.chain.ChainDTO;
 import com.deepexi.channel.domain.chain.ChainVO;
 import com.deepexi.channel.domain.store.*;
@@ -37,7 +39,7 @@ public class StoreController {
     @ApiOperation(value = "分页查询", notes = "分页请求")
     public Payload<PageBean<StoreVO>> findPage(@ApiParam(name = "query", required = true) StoreQuery query) {
         List<StoreDTO> storeDTOs = storeService.findPage(query);
-        if(CollectionUtil.isEmpty(storeDTOs)){
+        if (CollectionUtil.isEmpty(storeDTOs)) {
             return null;
         }
         return new Payload(new PageBean<>(ObjectCloneUtils.convertList(storeDTOs, StoreVO.class)));
@@ -45,20 +47,27 @@ public class StoreController {
 
     @GetMapping("/{id}")
     @ApiOperation("根据id获取门店详情")
-    public Payload<StoreDetailVO> detail(@PathVariable(value = "id", required = true) Long  pk) {
+    public Payload<StoreDetailVO> detail(@PathVariable(value = "id", required = true) Long pk) {
         StoreDetailDTO storeDetailDTO = storeBusinessService.detail(pk);
-        if(storeDetailDTO == null){
+        if (storeDetailDTO == null) {
             return new Payload<>();
         }
         StoreDetailVO storeDetailVO = storeDetailDTO.clone(StoreDetailVO.class, CloneDirection.OPPOSITE);
-        if(storeDetailDTO.getStoreGradeDTO() != null){
+        //设置门店等级详情
+        if (storeDetailDTO.getStoreGradeDTO() != null) {
             storeDetailVO.setStoreGradeVO(storeDetailDTO.getStoreGradeDTO().clone(StoreGradeVO.class));
         }
-        if(storeDetailDTO.getStoreTypeDTO() != null){
+        //设置门店类型详情
+        if (storeDetailDTO.getStoreTypeDTO() != null) {
             storeDetailVO.setStoreTypeVO(storeDetailDTO.getStoreTypeDTO().clone(StoreTypeVO.class));
         }
-        if(storeDetailDTO.getChainDTO() != null){
+        //设置连锁
+        if (storeDetailDTO.getChainDTO() != null) {
             storeDetailVO.setChainVO(storeDetailDTO.getChainDTO().clone(ChainVO.class));
+        }
+        //设置区域
+        if (storeDetailDTO.getAreaDTO() != null) {
+            storeDetailVO.setAreaVO(storeDetailDTO.getAreaDTO().clone(AreaVO.class));
         }
 
 
@@ -70,8 +79,24 @@ public class StoreController {
     public Payload<Boolean> update(@PathVariable(value = "id", required = true) Long pk, @RequestBody StoreDetailVO vo) {
         vo.setId(pk);
         StoreDetailDTO storeDetailDTO = vo.clone(StoreDetailDTO.class);
+        if (vo.getStoreGradeVO() != null) {
+            StoreGradeDTO storeGradeDTO = vo.getStoreGradeVO().clone(StoreGradeDTO.class);
+            storeDetailDTO.setStoreGradeDTO(storeGradeDTO);
+        }
+        if (vo.getStoreTypeVO() != null) {
+            StoreTypeDTO storeTypeDTO = vo.getStoreTypeVO().clone(StoreTypeDTO.class);
+            storeDetailDTO.setStoreTypeDTO(storeTypeDTO);
+        }
+        if (vo.getChainVO() != null) {
+            ChainDTO chainDTO = vo.getChainVO().clone(ChainDTO.class);
+            storeDetailDTO.setChainDTO(chainDTO);
+        }
+        if (vo.getAreaVO() != null) {
+            AreaDTO areaDTO = vo.getAreaVO().clone(AreaDTO.class);
+            storeDetailDTO.setAreaDTO(areaDTO);
+        }
         //编码是否重复
-        if(!storeService.isCodeUnique(storeDetailDTO)){
+        if (!storeService.isCodeUnique(storeDetailDTO)) {
             throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
         }
         return new Payload(storeBusinessService.update(storeDetailDTO));
@@ -81,20 +106,25 @@ public class StoreController {
     @ApiOperation(value = "创建门店", notes = "创建门店")
     public Payload<Long> create(@RequestBody StoreDetailVO vo) {
         StoreDetailDTO storeDetailDTO = vo.clone(StoreDetailDTO.class, CloneDirection.OPPOSITE);
-        if(vo.getStoreGradeVO() != null){
+        if (vo.getStoreGradeVO() != null) {
             StoreGradeDTO storeGradeDTO = vo.getStoreGradeVO().clone(StoreGradeDTO.class);
             storeDetailDTO.setStoreGradeDTO(storeGradeDTO);
         }
-       if(vo.getStoreTypeVO() != null){
-           StoreTypeDTO storeTypeDTO = vo.getStoreTypeVO().clone(StoreTypeDTO.class);
-           storeDetailDTO.setStoreTypeDTO(storeTypeDTO);
-       }
-        if(vo.getChainVO() != null){
+        if (vo.getStoreTypeVO() != null) {
+            StoreTypeDTO storeTypeDTO = vo.getStoreTypeVO().clone(StoreTypeDTO.class);
+            storeDetailDTO.setStoreTypeDTO(storeTypeDTO);
+        }
+        if (vo.getChainVO() != null) {
             ChainDTO chainDTO = vo.getChainVO().clone(ChainDTO.class);
             storeDetailDTO.setChainDTO(chainDTO);
         }
+        if (vo.getAreaVO() != null) {
+            AreaDTO areaDTO = vo.getAreaVO().clone(AreaDTO.class);
+            storeDetailDTO.setAreaDTO(areaDTO);
+        }
+
         //编码是否重复
-        if(!storeService.isCodeUnique(storeDetailDTO)){
+        if (!storeService.isCodeUnique(storeDetailDTO)) {
             throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
         }
         return new Payload(storeBusinessService.create(storeDetailDTO));
