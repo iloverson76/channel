@@ -83,7 +83,7 @@ public class DistributorGradeSystemController {
     @ApiOperation(value = "根据体系查询所有的等级")
     public  Payload<PageBean<DistributorGradeSystemVO>> listLinkedGrades(@PathVariable(value = "id")long pk){
 
-        List<DistributorGradeSystemDTO> dtoList=distributorGradeSystemService.findAllGrades(pk);
+        List<DistributorGradeSystemDTO> dtoList=null;//distributorGradeSystemService.findAllGrades(pk);
 
         List<DistributorGradeSystemVO> voList=new ArrayList<>();
 
