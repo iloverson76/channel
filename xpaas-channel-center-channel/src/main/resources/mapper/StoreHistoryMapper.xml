@@ -54,4 +54,7 @@
         order by created_time desc
     </select>
 
+    <select id="getStoreHistoryCountByStoreId" resultType="java.lang.Integer">
+      select count(*) from cc_store_history where dr = 0 and store_id = #{storeId}
+    </select>
 </mapper>

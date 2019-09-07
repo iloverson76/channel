@@ -1,19 +1,17 @@
 package com.deepexi.channel.businness.impl;
 
+import cn.hutool.core.date.DatePattern;
+import cn.hutool.core.date.DateTime;
 import com.deepexi.channel.businness.*;
 import com.deepexi.channel.domain.area.AreaDTO;
 import com.deepexi.channel.domain.chain.ChainDTO;
-import com.deepexi.channel.domain.store.StoreDTO;
-import com.deepexi.channel.domain.store.StoreDetailDTO;
-import com.deepexi.channel.domain.store.StoreGradeDTO;
-import com.deepexi.channel.domain.store.StoreTypeDTO;
-import com.deepexi.channel.service.StoreChainService;
-import com.deepexi.channel.service.StoreGradeService;
-import com.deepexi.channel.service.StoreService;
-import com.deepexi.channel.service.StoreTypeService;
+import com.deepexi.channel.domain.store.*;
+import com.deepexi.channel.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class StoreBusinessServiceImpl implements StoreBusinessService {
@@ -33,6 +31,8 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
     StoreChainService storeChainService;
     @Autowired
     StoreAreaBusinessService storeAreaBusinessService;
+    @Autowired
+    StoreHistoryService storeHistoryService;
 
     @Override
     @Transactional
@@ -65,6 +65,17 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
     @Override
     @Transactional
     public Boolean update(StoreDetailDTO dto) {
+        //查询旧的数据，并保存门店历史信息
+        StoreDTO storeDTO = storeService.detail(dto.getId());
+        if(storeDTO == null){
+            return false;
+        }
+        StoreHistoryDTO storeHistoryDTO = storeDTO.clone(StoreHistoryDTO.class);
+        storeHistoryDTO.setStoreId(dto.getId());
+        //设置版本号
+        storeHistoryDTO.setVersionNumber(this.generateHistoryVersionNumber(storeDTO));
+        Long saveHistoryId = storeHistoryService.create(storeHistoryDTO);
+
         //修改门店基本信息
         Boolean result = storeService.update(dto);
         //修改门店等级关联
@@ -102,10 +113,30 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
         result.setAreaDTO(areaDTO);
 
         //查询门店经销商关联
+        
 
 
+        //查询门店修改历史
+        StoreHistoryQuery query = StoreHistoryQuery.builder().storeId(pk).build();
+        List<StoreHistoryDTO> storeHistoryDTOS = storeHistoryService.findPage(query);
+        result.setStoreHistoryDTOS(storeHistoryDTOS);
         return result;
     }
 
+
+    /**
+     * @MethodName: generateHistoryVersionNumber
+     * @Description: 根据门店id生成历史版本号
+     * @Param: [storeId]
+     * @Return: java.lang.String
+     * @Author: mumu
+     * @Date: 2019/9/7
+    **/
+    private String generateHistoryVersionNumber(StoreDTO storeDTO){
+        Integer count = storeHistoryService.getStoreHistoryCountByStoreId(storeDTO.getId());
+        DateTime dateTime = new DateTime(storeDTO.getUpdatedTime());
+        String code = dateTime.toString(DatePattern.PURE_DATE_PATTERN)+"-"+count;
+        return code;
+    }
 
 }
