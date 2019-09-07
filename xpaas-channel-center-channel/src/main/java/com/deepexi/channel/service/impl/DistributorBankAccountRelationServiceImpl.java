@@ -10,6 +10,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -34,8 +35,9 @@ public class DistributorBankAccountRelationServiceImpl implements DistributorBan
     }
 
     @Override
-    public boolean delete(List<Long> idList) {
-        return false;
+    public int deleteBatchByDistributorIds(List<Long> idList) {
+
+        return distributorBankAccountRelationDAO.deleteBatchByDistributorIds(idList);
     }
 
     @Override
@@ -48,7 +50,7 @@ public class DistributorBankAccountRelationServiceImpl implements DistributorBan
 
         distributorBankAccountRelationDAO.findAllByDistributorIds(bankAccountIds);
 
-        return null;
+        return Collections.emptyList();
     }
 
 

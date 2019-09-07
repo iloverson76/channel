@@ -41,4 +41,10 @@ public class DistributorAreaRelationServiceImpl implements DistributorAreaRelati
         return distributorAreaRelationDAO.saveBatch(ObjectCloneUtils.
                 convertList(dtoList,DistributorAreaRelationDO.class,CloneDirection.FORWARD));
     }
+
+    @Override
+    public int deleteBatchByDistributorIds(List<Long> distributorIdList) {
+
+        return distributorAreaRelationDAO.deleteBatchByDistributorIds(distributorIdList);
+    }
 }

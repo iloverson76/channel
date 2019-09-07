@@ -15,7 +15,9 @@ public interface DistributorService {
 
     long create(DistributorDTO dto);
 
-    boolean delete(DistributorDTO dto);
+    boolean deleteBatch(List<Long> idList);
 
     List<DistributorDTO> findPage(DistributorQuery query);
+
+    boolean update(DistributorDTO dto);
 }

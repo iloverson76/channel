@@ -23,5 +23,7 @@ public interface DistributorGradeRelationService {
 
     List<DistributorGradeRelationDTO> findAllByDistributorIds(List<Long> distributorIds);
 
-    boolean updateBatchByDistributorId (List<DistributorGradeRelationDTO> dtoList);
+    boolean updateBatchById (List<DistributorGradeRelationDTO> dtoList);
+
+    boolean updateBatchByDistributorId(List<DistributorGradeRelationDTO> dtoList);
 }

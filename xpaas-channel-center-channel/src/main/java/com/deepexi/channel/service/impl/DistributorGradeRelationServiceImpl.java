@@ -1,9 +1,11 @@
 package com.deepexi.channel.service.impl;
 
 import com.deepexi.channel.dao.DistributorGradeRelationDAO;
+import com.deepexi.channel.domain.distributor.DistributorDTO;
 import com.deepexi.channel.domain.distributor.DistributorGradeRelationDO;
 import com.deepexi.channel.domain.distributor.DistributorGradeRelationDTO;
 import com.deepexi.channel.service.DistributorGradeRelationService;
+import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import org.apache.commons.collections.CollectionUtils;
@@ -93,6 +95,17 @@ public class DistributorGradeRelationServiceImpl implements DistributorGradeRela
         }
 
         return ObjectCloneUtils.convertList(eoList,DistributorGradeRelationDTO.class,CloneDirection.OPPOSITE);
+    }
+
+    @Override
+    public boolean updateBatchById(List<DistributorGradeRelationDTO> dtoList) {
+
+        if(CollectionUtils.isEmpty(dtoList)){
+            return false;
+        }
+
+        return distributorGradeRelationDAO.updateBatchById(ObjectCloneUtils.convertList(dtoList,
+                DistributorGradeRelationDO.class,CloneDirection.FORWARD));
     }
 
     @Override
