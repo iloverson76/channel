@@ -37,7 +37,7 @@ public class DistributorDO extends SuperEntity {
      * 上级经销商ID
      */
     @ApiModelProperty("上级经销商ID")
-    private int parent_id;
+    private Long parent_id;
 
     /**
      * 经销商类型 1 厂商 2 经销商

@@ -67,4 +67,6 @@ public interface ChainService {
      * @return
      */
     Boolean resetTree();
+
+    Boolean addTreeNode(ChainDTO chainDTO);
 }

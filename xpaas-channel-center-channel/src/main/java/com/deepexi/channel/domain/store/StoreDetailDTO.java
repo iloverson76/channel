@@ -21,4 +21,6 @@ public class StoreDetailDTO extends StoreDTO {
     private ChainDTO chainDTO;
 
     private List<DistributorDTO> distributorDTOS;
+
+    private List<StoreHistoryDTO> storeHistoryDTOS;
 }
