@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -80,7 +81,7 @@ public class DistributorGradeSystemServiceImpl implements DistributorGradeSystem
         List<DistributorGradeSystemDO> eoList = distributorGradeSystemDAO.findPage(query);
 
         if(CollectionUtil.isEmpty(eoList)){
-            return null;
+            return Collections.emptyList();
         }
 
         return ObjectCloneUtils.convertList(eoList,DistributorGradeSystemDTO.class,CloneDirection.OPPOSITE);

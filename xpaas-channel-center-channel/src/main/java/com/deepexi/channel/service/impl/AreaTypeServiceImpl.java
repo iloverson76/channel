@@ -20,10 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * <p>
@@ -124,7 +121,7 @@ public class AreaTypeServiceImpl implements AreaTypeService {
         AreaTypeDO ado=areaTypeDAO.getOne(getQueryWrapper(id));
 
         if (null==ado) {
-            return null;
+            return new AreaTypeDTO();
         }
 
         AreaTypeDTO node = ado.clone(AreaTypeDTO.class,CloneDirection.OPPOSITE);
@@ -176,7 +173,7 @@ public class AreaTypeServiceImpl implements AreaTypeService {
 
             return dtoList;
         }
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
@@ -188,7 +185,7 @@ public class AreaTypeServiceImpl implements AreaTypeService {
         List<AreaTypeDO> unLimitedNodes=areaTypeDAO.listNotLimitedNode(appRuntimeEnv.getTenantId(),appRuntimeEnv.getAppId());
 
         if(CollectionUtils.isEmpty(unLimitedNodes)){
-            return null;
+            return Collections.emptyList();
         }
         //如果自己原来的上级被限制了,也要选上
         AreaTypeDTO node=getAreaTypeById(id);
@@ -245,13 +242,13 @@ public class AreaTypeServiceImpl implements AreaTypeService {
     public List<AreaTypeDTO> listLinkedAreas(long pk) {
 
         if(pk<0){
-            return null;
+            return Collections.emptyList();
         }
 
         List<AreaTypeDO> eoList=areaTypeDAO.listLinkedAreas(pk);
 
         if(CollectionUtils.isEmpty(eoList)){
-            return null;
+            return Collections.emptyList();
         }
 
         return ObjectCloneUtils.convertList(eoList,AreaTypeDTO.class,CloneDirection.OPPOSITE);
