@@ -12,4 +12,6 @@ public interface DistributorAreaRelationService {
 
     boolean createBatch(List<DistributorAreaRelationDTO> dtoList);
 
+    int deleteBatchByDistributorIds(List<Long> distributorIdList);
+
 }

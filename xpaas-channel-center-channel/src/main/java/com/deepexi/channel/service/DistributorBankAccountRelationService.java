@@ -12,7 +12,7 @@ public interface DistributorBankAccountRelationService {
 
     boolean create(List<DistributorBankAccountRelationDTO> dtoList);
 
-    boolean delete(List<Long> idList);
+    int deleteBatchByDistributorIds(List<Long> idList);
 
     List<DistributorBankAccountRelationDTO> findAllByDistributorIds(List<Long> bankAccountIds);
 

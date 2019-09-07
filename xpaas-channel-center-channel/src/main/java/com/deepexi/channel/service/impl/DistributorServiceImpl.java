@@ -41,11 +41,11 @@ public class DistributorServiceImpl implements DistributorService {
     }
 
     @Override
-    public boolean delete(DistributorDTO dto) {
+    public boolean deleteBatch(List<Long> idList) {
 
+        distributorDAO.removeByIds(idList);
 
-
-        return false;
+        return Boolean.TRUE;
     }
 
     @Override
@@ -62,6 +62,16 @@ public class DistributorServiceImpl implements DistributorService {
         }
 
         return ObjectCloneUtils.convertList(eoList, DistributorDTO.class,CloneDirection.OPPOSITE);
+    }
+
+    @Override
+    public boolean update(DistributorDTO dto) {
+
+        if(dto==null){
+            return false;
+        }
+
+        return distributorDAO.updateById(dto.clone(DistributorDO.class,CloneDirection.FORWARD));
     }
 
 

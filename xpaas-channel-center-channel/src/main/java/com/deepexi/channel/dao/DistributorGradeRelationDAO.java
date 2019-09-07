@@ -19,6 +19,8 @@ public interface DistributorGradeRelationDAO extends  IService<DistributorGradeR
 
     boolean updateBatchById(List<DistributorGradeRelationDO> eoList);
 
+    boolean updateBatchByDistributorIds(List<DistributorGradeRelationDO> eoList);
+
     List<DistributorGradeRelationDO> findAllByDistributorIds(List<Long> distributorIds);
 
     DistributorGradeRelationDO findOne(long distributorId, long gradeId);
