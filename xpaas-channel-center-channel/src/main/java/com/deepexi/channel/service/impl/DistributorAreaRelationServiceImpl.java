@@ -47,4 +47,9 @@ public class DistributorAreaRelationServiceImpl implements DistributorAreaRelati
 
         return distributorAreaRelationDAO.deleteBatchByDistributorIds(distributorIdList);
     }
+
+    @Override
+    public List<DistributorAreaRelationDTO> findAllByDistributorIds(List<Long> butorIds) {
+        return null;
+    }
 }

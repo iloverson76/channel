@@ -1,8 +1,7 @@
 package com.deepexi.channel.controller;
 
-import com.deepexi.channel.domain.distributor.DistributorGradeSystemDTO;
-import com.deepexi.channel.domain.distributor.DistributorGradeSystemQuery;
-import com.deepexi.channel.domain.distributor.DistributorGradeSystemVO;
+import com.deepexi.channel.domain.bank.BankAccountVO;
+import com.deepexi.channel.domain.distributor.*;
 import com.deepexi.channel.service.DistributorGradeSystemService;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pageHelper.PageBean;
@@ -11,9 +10,12 @@ import com.deepexi.util.pojo.ObjectCloneUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -73,6 +75,30 @@ public class DistributorGradeSystemController {
         List<DistributorGradeSystemDTO> dtoList=distributorGradeSystemService.findPage(query);
 
         List<DistributorGradeSystemVO> voList= ObjectCloneUtils.convertList(dtoList, DistributorGradeSystemVO.class);;
+
+        return new Payload<>(new PageBean<>(voList));
+    }
+
+    @GetMapping("/grades/{id}")
+    @ApiOperation(value = "根据体系查询所有的等级")
+    public  Payload<PageBean<DistributorGradeSystemVO>> listLinkedGrades(@PathVariable(value = "id")long pk){
+
+        List<DistributorGradeSystemDTO> dtoList=distributorGradeSystemService.findAllGrades(pk);
+
+        List<DistributorGradeSystemVO> voList=new ArrayList<>();
+
+        dtoList.forEach(dto->{
+
+            List<DistributorGradeVO> gradeDTOList=ObjectCloneUtils.convertList(dto.getGrades(),DistributorGradeVO.class,CloneDirection.OPPOSITE);
+
+            DistributorGradeSystemVO vo= new DistributorGradeSystemVO();
+
+            BeanUtils.copyProperties(dto,vo);
+
+            vo.setGrades(gradeDTOList);
+
+            voList.add(vo);
+        });
 
         return new Payload<>(new PageBean<>(voList));
     }

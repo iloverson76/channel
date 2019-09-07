@@ -236,5 +236,27 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
         return bankAccountService.findList(query);
     }
 
+//    @Override
+//    public List<AreaDTO> getAreaInfo(Long distributorId){//要把上级的信息全部查出来--未完善
+//
+//        List<Long> butorIds=new ArrayList<>(1);
+//
+//        butorIds.add(distributorId);
+//
+//        List<DistributorAreaRelationDTO> barDTOS = distributorAreaRelationService.findAllByDistributorIds(butorIds);
+//
+//        List<Long> accountIdList=new ArrayList<>();
+//
+//        barDTOS.forEach(bar->{
+//
+//            accountIdList.add(bar.getBankAccountId());
+//        });
+//
+//        BankAccountQuery query=new BankAccountQuery();
+//
+//        return bankAccountService.findList(query);
+//
+//    }
+
 
 }

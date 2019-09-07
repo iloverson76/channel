@@ -148,7 +148,7 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
     }
 
     @Override
-    public List<DistributorGradeDTO> findParentNodesForCreat(long systemId) {
+    public List<DistributorGradeDTO> findParentNodesForCreat(long systemId) {//
 
         if(0==systemId){
             return Collections.emptyList();
@@ -182,5 +182,10 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
         }
 
         return resultList;
+    }
+
+    @Override
+    public List<DistributorGradeSystemDTO> findAllGradesBySystem(long pk) {
+        return null;
     }
 }
