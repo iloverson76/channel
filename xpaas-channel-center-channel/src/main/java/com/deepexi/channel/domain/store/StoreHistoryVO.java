@@ -1,10 +1,8 @@
 package com.deepexi.channel.domain.store;
 
-import com.deepexi.channel.domain.SuperEntity;
 import com.deepexi.util.pojo.AbstractObject;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiOperation;
 import lombok.*;
 
 import java.util.Date;
@@ -23,7 +21,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @ApiModel("门店")
-public class StoreVO extends AbstractObject {
+public class StoreHistoryVO extends AbstractObject {
 
     private static final long serialVersionUID = 1L;
 
@@ -40,6 +38,16 @@ public class StoreVO extends AbstractObject {
     @ApiModelProperty(value = "更新人")
     private String updatedBy;
 
+    /**
+     * 原门店id
+     */
+    @ApiModelProperty(value = "原门店id")
+    private Long storeId;
+    /**
+     * 修改历史版本号
+     */
+    @ApiModelProperty(value = "修改历史版本号")
+    private Long versionNumber;
     /**
      * 门店名称
      */

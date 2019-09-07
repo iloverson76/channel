@@ -1,31 +1,26 @@
 package com.deepexi.channel.domain.store;
 
-import com.deepexi.channel.domain.SuperEntity;
 import com.deepexi.util.pojo.AbstractObject;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import lombok.experimental.Accessors;
 
 import java.util.Date;
 
 /**
- * <p>
- * 门店等级表
- * </p>
- *
  * @author mumu
- * @since 2019-08-26
+ * @version 1.0
+ * @date 2019/9/6 20:36
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ApiModel("门店等级")
-public class StoreGradeVO extends AbstractObject {
-
-    private static final long serialVersionUID = 1L;
-
+@ApiModel(value="门店关联经销商")
+public class StoreDistributorVO extends AbstractObject {
     @ApiModelProperty(value = "id")
     private Long id;
     @ApiModelProperty(value = "备注")
@@ -38,29 +33,4 @@ public class StoreGradeVO extends AbstractObject {
     private Date updatedTime;
     @ApiModelProperty(value = "更新人")
     private String updatedBy;
-
-    /**
-     * 门店等级名称
-     */
-    @ApiModelProperty(value = "门店等级名称")
-    private String storeGradeName;
-
-    /**
-     * 门店等级编码
-     */
-    @ApiModelProperty(value = "门店等级编码")
-    private String storeGradeCode;
-
-    /**
-     * 门店等级英文名称
-     */
-    @ApiModelProperty(value = "门店等级英文名称")
-    private String storeGradeNameEn;
-
-    /**
-     * 描述
-     */
-    @ApiModelProperty(value = "描述")
-    private String description;
-
 }
