@@ -157,26 +157,35 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
         long distributorId=dto.getId();
 
-        List<DistributorGradeDTO> gradeDTOS = dto.getGrades();
+        List<Long> gradeIds = dto.getGradeIds();
 
-        if(CollectionUtils.isNotEmpty(gradeDTOS)){
+        if(CollectionUtils.isNotEmpty(gradeIds)){
 
             distributorGradeRelationService.deleteByDistributorId(distributorId);
 
-          //  distributorGradeRelationService.createBatch();
+            List<DistributorGradeRelationDTO> dtoList=new ArrayList<>();
+            gradeIds.forEach(gradeId->{
+
+                DistributorGradeRelationDTO gradeRelationDTO = new DistributorGradeRelationDTO();
+
+                gradeRelationDTO.setDistributorId(distributorId);
+
+                gradeRelationDTO.setDistributorGradeId(gradeId);
+            });
+           distributorGradeRelationService.createBatch(dtoList);
         }
 
         AreaDTO areaDTO = dto.getArea();
 
-        if(CollectionUtils.isNotEmpty(gradeDTOS)){
-
-        }
-
-        List<BankAccountDTO> bankAccountDTOS = dto.getBankAccounts();
-
-        if(CollectionUtils.isNotEmpty(gradeDTOS)){
-
-        }
+//        if(CollectionUtils.isNotEmpty()){
+//
+//        }
+//
+//        List<BankAccountDTO> bankAccountDTOS = dto.getBankAccounts();
+//
+//        if(CollectionUtils.isNotEmpty()){
+//
+//        }
 
         distributorService.update(dto);
 
