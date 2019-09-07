@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.beans.Transient;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -37,13 +38,13 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
     public List<AreaDTO> listLinkedAreas(long pk) {//pk=0选全部
 
         if(pk<0){
-            return null;
+            return Collections.emptyList();
         }
 
         List<AreaTypeDTO> typeList=areaTypeService.listLinkedAreas(pk);
 
         if(CollectionUtils.isEmpty(typeList)){
-            return null;
+            return Collections.emptyList();
         }
 
         //区域信息(全部选回来再过滤)
@@ -52,7 +53,7 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
         List<AreaDTO> areaDTOList=areaService.findPage(areaQuery);
 
         if(CollectionUtils.isEmpty(areaDTOList)){
-            return null;
+            return Collections.emptyList();
         }
 
         Map<Long, List<AreaTypeDTO>> typeListMap =

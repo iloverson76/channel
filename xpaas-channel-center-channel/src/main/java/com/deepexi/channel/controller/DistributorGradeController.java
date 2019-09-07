@@ -1,8 +1,10 @@
 package com.deepexi.channel.controller;
 
 import com.deepexi.channel.businness.DistributorGradeBusinessService;
-import com.deepexi.channel.domain.bank.BankAccountDTO;
-import com.deepexi.channel.domain.distributor.*;
+import com.deepexi.channel.domain.distributor.DistributorGradeDTO;
+import com.deepexi.channel.domain.distributor.DistributorGradeQuery;
+import com.deepexi.channel.domain.distributor.DistributorGradeSystemVO;
+import com.deepexi.channel.domain.distributor.DistributorGradeVO;
 import com.deepexi.channel.service.DistributorGradeService;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pageHelper.PageBean;
@@ -78,7 +80,7 @@ public class DistributorGradeController {
     }
 
     @GetMapping
-    @ApiOperation(value = "分页查询", notes = "分页请求")
+    @ApiOperation(value = "分页查询")
     public  Payload<PageBean<DistributorGradeVO>> findPage(@ApiParam(name = "query", required = true) DistributorGradeQuery query) {
 
         List<DistributorGradeDTO> dtoList= distributorGradeBusinessService.findPage(query);

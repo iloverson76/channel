@@ -12,10 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -73,7 +70,7 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
         List<DistributorGradeDTO> gradeList = distributorGradeService.findPage(query);
 
         if(CollectionUtil.isEmpty(gradeList)){
-            return null;
+            return Collections.emptyList();
         }
 
         //父级信息
@@ -154,7 +151,7 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
     public List<DistributorGradeDTO> findParentNodesForCreat(long systemId) {
 
         if(0==systemId){
-            return null;
+            return Collections.emptyList();
         }
 
         //等级表数据

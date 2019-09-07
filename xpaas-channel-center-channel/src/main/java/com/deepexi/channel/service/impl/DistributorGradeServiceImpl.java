@@ -72,13 +72,13 @@ public class DistributorGradeServiceImpl implements DistributorGradeService {
     public DistributorGradeDTO getById(Long pk) {
 
         if(0==pk){
-            return null;
+            return new DistributorGradeDTO();
         }
 
         DistributorGradeDTO dto=distributorGradeDAO.getById(pk).clone(DistributorGradeDTO.class,CloneDirection.OPPOSITE);
 
         if(null==dto){
-            return null;
+            return new DistributorGradeDTO();
         }
 
         return dto;

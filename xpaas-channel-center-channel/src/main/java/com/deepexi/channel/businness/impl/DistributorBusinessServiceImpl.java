@@ -3,20 +3,23 @@ package com.deepexi.channel.businness.impl;
 import com.deepexi.channel.businness.DistributorBusinessService;
 import com.deepexi.channel.businness.DistributorGradeBusinessService;
 import com.deepexi.channel.dao.DistributorGradeRelationDAO;
+import com.deepexi.channel.domain.area.AreaDTO;
+import com.deepexi.channel.domain.bank.BankAccountDTO;
 import com.deepexi.channel.domain.bank.BankAccountQuery;
 import com.deepexi.channel.domain.distributor.*;
 import com.deepexi.channel.service.*;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.beans.Transient;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @Slf4j
@@ -39,6 +42,7 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
     @Autowired
     private BankAccountService bankAccountService;
+
 
     @Transient
     @Override
@@ -128,24 +132,16 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
     }
 
     @Override
-    public boolean delete(List<Long> idList) {
-
-        //经销商信息
-
-        //等级信息
-
-        //经销商-等级中间表
-
-        //等级表
+    public boolean delete(List<Long> butorIdList) {
 
 
-        //银行信息
+        distributorService.deleteBatch(butorIdList);
 
-        //经销商-银行中间表
+        distributorGradeRelationService.deleteBatchByDistributorIds(butorIdList);
 
-        //等级表
+        distributorAreaRelationService.deleteBatchByDistributorIds(butorIdList);
 
-
+        distributorBankAccountRelationService.deleteBatchByDistributorIds(butorIdList);
 
         return Boolean.TRUE;
     }
@@ -153,60 +149,91 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
     @Override
     public List<DistributorDTO> findPage(DistributorQuery query) {
 
-        //经销商信息
-        List<DistributorDTO> butorList=distributorService.findPage(query);
-
-        List<Long> butorIdList=new ArrayList<>();
-
-        butorList.forEach(butor->{
-
-            butorIdList.add(butor.getId());
-        });
-
-        //经销商-等级中间表
-        List<DistributorGradeRelationDTO> dgrs=
-                distributorGradeRelationService.findAllByDistributorIds(butorIdList);
-
-        List<Long> gradeIds=new ArrayList<>();
-        dgrs.forEach(dgr->{
-            gradeIds.add(dgr.getDistributorGradeId());
-        });
-
-        //等级信息
-        DistributorGradeQuery gradeQuery=new DistributorGradeQuery();
-        gradeQuery.setIds(gradeIds);
-
-        List<DistributorGradeDTO> grades=distributorGradeService.findPage(gradeQuery);
-
-        //加入等级信息
-        butorList.forEach(butor->{
-           // butor.setGrades()
-        });
-
-
-        //经销商-银行中间表
-        List<Long> bankAccountIds=new ArrayList<>();
-        List<DistributorBankAccountRelationDTO> dars= distributorBankAccountRelationService.
-                findAllByDistributorIds(butorIdList);
-        dars.forEach(dar->{
-            bankAccountIds.add(dar.getBankAccountId());
-        });
-        //银行信息
-        BankAccountQuery bankAccountQuery=new BankAccountQuery();
-        bankAccountQuery.setIds(bankAccountIds);
-        bankAccountService.findList(bankAccountQuery);
-
-
-        //加入银行信息
-
-
-        return null;
+       return distributorService.findPage(query);
     }
 
     @Override
-    public boolean update(DistributorDTO clone) {
+    public boolean update(DistributorDTO dto) {
+
+        long distributorId=dto.getId();
+
+        List<Long> gradeIds = dto.getGradeIds();
+
+        if(CollectionUtils.isNotEmpty(gradeIds)){
+
+            distributorGradeRelationService.deleteByDistributorId(distributorId);
+
+            List<DistributorGradeRelationDTO> dtoList=new ArrayList<>();
+            gradeIds.forEach(gradeId->{
+
+                DistributorGradeRelationDTO gradeRelationDTO = new DistributorGradeRelationDTO();
+
+                gradeRelationDTO.setDistributorId(distributorId);
+
+                gradeRelationDTO.setDistributorGradeId(gradeId);
+            });
+           distributorGradeRelationService.createBatch(dtoList);
+        }
+
+        AreaDTO areaDTO = dto.getArea();
+
+//        if(CollectionUtils.isNotEmpty()){
+//
+//        }
+//
+//        List<BankAccountDTO> bankAccountDTOS = dto.getBankAccounts();
+//
+//        if(CollectionUtils.isNotEmpty()){
+//
+//        }
+
+        distributorService.update(dto);
 
         return true;
+    }
+
+    @Override
+    public List<DistributorGradeDTO> getGradeInfo(Long distributorId){
+
+        List<Long> butorIds=new ArrayList<>(1);
+
+        butorIds.add(distributorId);
+
+        List<DistributorGradeRelationDTO> dgrDTOS=
+        distributorGradeRelationService.findAllByDistributorIds(butorIds);
+
+        List<Long> gradeIdList=new ArrayList<>();
+
+        dgrDTOS.forEach(dgr->{
+
+            gradeIdList.add(dgr.getDistributorGradeId());
+
+        });
+
+        DistributorGradeQuery query=new DistributorGradeQuery();
+
+        return distributorGradeService.findPage(query);
+    }
+
+    @Override
+    public List<BankAccountDTO> getBankAccountInfo(Long distributorId){
+
+        List<Long> butorIds=new ArrayList<>(1);
+
+        butorIds.add(distributorId);
+
+        List<DistributorBankAccountRelationDTO> barDTOS = distributorBankAccountRelationService.findAllByDistributorIds(butorIds);
+
+        List<Long> accountIdList=new ArrayList<>();
+
+        barDTOS.forEach(bar->{
+
+            accountIdList.add(bar.getBankAccountId());
+        });
+
+        BankAccountQuery query=new BankAccountQuery();
+
+        return bankAccountService.findList(query);
     }
 
 

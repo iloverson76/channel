@@ -5,10 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.deepexi.channel.dao.DistributorGradeDAO;
 import com.deepexi.channel.dao.DistributorGradeRelationDAO;
-import com.deepexi.channel.domain.distributor.DistributorGradeDO;
-import com.deepexi.channel.domain.distributor.DistributorGradeQuery;
-import com.deepexi.channel.domain.distributor.DistributorGradeRelationDO;
-import com.deepexi.channel.domain.distributor.DistributorGradeRelationDTO;
+import com.deepexi.channel.domain.distributor.*;
 import com.deepexi.channel.mapper.DistributorGradeMapper;
 import com.deepexi.channel.mapper.DistributorGradeRelationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,9 +54,18 @@ public class DistributorGradeRelationDAOImpl extends ServiceImpl<DistributorGrad
     }
 
     @Override
+    public boolean updateBatchByDistributorIds(List<DistributorGradeRelationDO> eoList) {
+        return false;
+    }
+
+    @Override
     public List<DistributorGradeRelationDO> findAllByDistributorIds(List<Long> distributorIds) {
 
-        return baseMapper.selectBatchIds(distributorIds);
+        QueryWrapper<DistributorGradeRelationDO> wp=new QueryWrapper<>();
+
+        wp.in("distributor_id",distributorIds);
+
+        return baseMapper.selectList(wp);
     }
 
     @Override

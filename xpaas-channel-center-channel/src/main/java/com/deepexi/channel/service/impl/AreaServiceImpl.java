@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -62,13 +63,13 @@ public class AreaServiceImpl implements AreaService{
     public AreaDTO getAreaById(Long pk) {
 
         if(pk<=0){
-            return null;
+            return  new AreaDTO();
         }
 
         AreaDO eo=areaDAO.getById(pk);
 
         if(null==eo){
-            return null;
+            return new AreaDTO();
         }
 
         return eo.clone(AreaDTO.class,CloneDirection.OPPOSITE);
@@ -120,7 +121,7 @@ public class AreaServiceImpl implements AreaService{
         List<AreaDO> areaList = areaDAO.listAreaPage(query);
 
         if(CollectionUtils.isEmpty(areaList)){
-            return null;
+            return Collections.emptyList();
         }
 
         return ObjectCloneUtils.convertList(areaList, AreaDTO.class, CloneDirection.OPPOSITE);
