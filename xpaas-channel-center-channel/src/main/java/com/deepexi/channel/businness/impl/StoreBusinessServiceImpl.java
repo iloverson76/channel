@@ -33,6 +33,9 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
     StoreAreaBusinessService storeAreaBusinessService;
     @Autowired
     StoreHistoryService storeHistoryService;
+    @Autowired
+    StoreDistributorBusinessService storeDistributorBusinessService;
+
 
     @Override
     @Transactional
@@ -72,6 +75,7 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
         }
         StoreHistoryDTO storeHistoryDTO = storeDTO.clone(StoreHistoryDTO.class);
         storeHistoryDTO.setStoreId(dto.getId());
+        Long saveStoreHistory = storeHistoryService.create(storeHistoryDTO);
         //设置版本号
         storeHistoryDTO.setVersionNumber(this.generateHistoryVersionNumber(storeDTO));
         Long saveHistoryId = storeHistoryService.create(storeHistoryDTO);
@@ -84,11 +88,9 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
         Long storeTypeUpdateResult = storeTypeBusinessService.updateStoreTypeRelation(dto);
         //修改门店连锁关联
         Long storeChainUpdateResult = storeChainBusinessService.updateStoreChainRelation(dto);
-
         //修改门店区域关联
         Long storeAreaUpdateResult = storeAreaBusinessService.updateStoreAreaRelation(dto);
         //修改门店经销商关联
-
 
         return result;
     }
@@ -111,10 +113,8 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
         //查询门店区域关联
         AreaDTO areaDTO = storeAreaBusinessService.getStoreAreaByStoreId(pk);
         result.setAreaDTO(areaDTO);
-
         //查询门店经销商关联
-        
-
+//        List<StoreDistributorDTO> storeDistributorRelationDTOS = storeDistributorBusinessService.getStoreDistributorByStoreId(pk);
 
         //查询门店修改历史
         StoreHistoryQuery query = StoreHistoryQuery.builder().storeId(pk).build();
@@ -122,7 +122,6 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
         result.setStoreHistoryDTOS(storeHistoryDTOS);
         return result;
     }
-
 
     /**
      * @MethodName: generateHistoryVersionNumber

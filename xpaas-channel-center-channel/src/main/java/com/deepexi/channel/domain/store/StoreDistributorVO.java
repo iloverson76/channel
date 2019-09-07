@@ -33,4 +33,27 @@ public class StoreDistributorVO extends AbstractObject {
     private Date updatedTime;
     @ApiModelProperty(value = "更新人")
     private String updatedBy;
+
+    @ApiModelProperty("经销商id")
+    private Long distributorId;
+    /**
+     * 经销商编码
+     */
+    @ApiModelProperty("经销商code")
+    private String distributorCode;
+    @ApiModelProperty("经销商中文名称")
+    private String distributorName;
+    @ApiModelProperty("上级经销商ID")
+    private Long parentId;
+    @ApiModelProperty("上级经销商名称")
+    private String parentName;
+    @ApiModelProperty("上级经销商code")
+    private String parentCode;
+
+    @ApiModelProperty("经销商等级体系id")
+    private Long distributorSystemGradeId;
+    @ApiModelProperty("经销商等级体系编码")
+    private String distributorGradeSystemCode;
+    @ApiModelProperty("进销商等级体系名称")
+    private String distributorGradeSystemName;
 }
