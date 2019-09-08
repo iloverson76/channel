@@ -61,7 +61,7 @@ public class DistributorVO extends AbstractObject {
      * 上级经销商ID
      */
     @ApiModelProperty("上级经销商ID")
-    private Long parent_id;
+    private Long parentId;
 
     /**
      * 经销商类型 1 厂商 2 经销商

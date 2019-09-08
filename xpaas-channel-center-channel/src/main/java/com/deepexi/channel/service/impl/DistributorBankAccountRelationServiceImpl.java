@@ -20,7 +20,7 @@ public class DistributorBankAccountRelationServiceImpl implements DistributorBan
     DistributorBankAccountRelationDAO distributorBankAccountRelationDAO;
 
     @Override
-    public boolean create(List<DistributorBankAccountRelationDTO> dtoList) {
+    public boolean batchCreate(List<DistributorBankAccountRelationDTO> dtoList) {
 
         if(CollectionUtils.isEmpty(dtoList)){
             return false;

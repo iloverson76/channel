@@ -26,4 +26,6 @@ public interface DistributorBusinessService {
     List<BankAccountDTO> getBankAccountInfo(Long distributorId);
 
     DistributorDTO detail(Long id);
+
+    List<DistributorDTO> listParentDistributorsByGrade(Long gradeId);
 }

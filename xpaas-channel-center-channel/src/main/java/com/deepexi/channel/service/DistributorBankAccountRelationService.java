@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface DistributorBankAccountRelationService {
 
-    boolean create(List<DistributorBankAccountRelationDTO> dtoList);
+    boolean batchCreate(List<DistributorBankAccountRelationDTO> dtoList);
 
     int deleteBatchByDistributorIds(List<Long> idList);
 

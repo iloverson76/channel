@@ -18,6 +18,7 @@ import com.deepexi.util.pojo.ObjectCloneUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -131,6 +132,24 @@ public class DistributorController {
 
         return new Payload<>(new PageBean<>(typeList));
     }
+
+    @GetMapping("/parent/{gradeId}")
+    @ApiOperation("按等级查询上级经销商")
+    public Payload<PageBean<DistributorVO>> listParentDistributorsByGrade(
+            @PathVariable(name = "gradeId", required = true) long gradeId) {
+
+        List<DistributorDTO> dtoList=
+        distributorBusinessService.listParentDistributorsByGrade(gradeId);
+
+        List<DistributorVO> voList=new ArrayList<>(dtoList.size());
+
+        if(CollectionUtils.isNotEmpty(dtoList)){
+            voList= ObjectCloneUtils.convertList(dtoList,DistributorVO.class,CloneDirection.OPPOSITE);
+        }
+
+        return new Payload<>(new PageBean<>(voList));
+    }
+
 }
 
 
