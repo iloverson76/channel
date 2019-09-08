@@ -234,6 +234,16 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
         distributor.setBankAccounts(bankAccounts);
 
+        List<Map<String, String>> list = DistributorTypeEnum.getTypeList();
+
+        for (Map<String, String> map : list) {
+
+            if (distributor.getDistributorType() == Integer.valueOf(map.get("code"))) {
+
+                distributor.setDistributorTypeDesc(map.get("msg"));
+            }
+        }
+
         return distributor;
     }
 
