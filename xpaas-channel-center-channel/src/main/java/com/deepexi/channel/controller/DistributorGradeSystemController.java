@@ -79,28 +79,4 @@ public class DistributorGradeSystemController {
         return new Payload<>(new PageBean<>(voList));
     }
 
-    @GetMapping("/grades/{id}")
-    @ApiOperation(value = "根据体系查询所有的等级")
-    public  Payload<PageBean<DistributorGradeSystemVO>> listLinkedGrades(@PathVariable(value = "id")long pk){
-
-        List<DistributorGradeSystemDTO> dtoList=null;//distributorGradeSystemService.findAllGrades(pk);
-
-        List<DistributorGradeSystemVO> voList=new ArrayList<>();
-
-        dtoList.forEach(dto->{
-
-            List<DistributorGradeVO> gradeDTOList=ObjectCloneUtils.convertList(dto.getGrades(),DistributorGradeVO.class,CloneDirection.OPPOSITE);
-
-            DistributorGradeSystemVO vo= new DistributorGradeSystemVO();
-
-            BeanUtils.copyProperties(dto,vo);
-
-            vo.setGrades(gradeDTOList);
-
-            voList.add(vo);
-        });
-
-        return new Payload<>(new PageBean<>(voList));
-    }
-
 }

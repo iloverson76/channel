@@ -23,9 +23,6 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
     private DistributorGradeService distributorGradeService;
 
     @Autowired
-    private DistributorGradeDAO distributorGradeDAO;
-
-    @Autowired
     private DistributorGradeSystemService distributorGradeSystemService;
 
     @Override
@@ -185,7 +182,24 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
     }
 
     @Override
-    public List<DistributorGradeSystemDTO> findAllGradesBySystem(long pk) {
-        return null;
+    public List<DistributorGradeDTO> findAllGradesBySystem(long systemId) {
+
+        DistributorGradeSystemDTO systemDTO = distributorGradeSystemService.detail(systemId);
+
+        List<DistributorGradeDTO> pageList = distributorGradeService.findPage(new DistributorGradeQuery());
+
+        List<DistributorGradeDTO> gradeList=new ArrayList<>();
+
+        pageList.forEach(page->{
+
+            if(page.getGradeSystemId()==systemId){
+
+                page.setSystem(systemDTO);
+
+                gradeList.add(page);
+            }
+        });
+
+        return gradeList;
     }
 }

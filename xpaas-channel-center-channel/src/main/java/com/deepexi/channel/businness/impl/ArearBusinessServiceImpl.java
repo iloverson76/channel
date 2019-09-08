@@ -80,7 +80,7 @@ public class ArearBusinessServiceImpl implements AreaBusinessService {
         AreaDTO areaDTO=areaService.getAreaById(pk);
 
         if(null==areaDTO){
-            return null;
+            return new AreaDTO();
         }
 
         AreaTypeDTO typeDTO=areaTypeService.getAreaTypeById(areaTypeId);

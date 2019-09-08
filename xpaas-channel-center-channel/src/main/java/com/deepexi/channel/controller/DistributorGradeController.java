@@ -117,4 +117,29 @@ public class DistributorGradeController {
         return new Payload<>(new PageBean<>(voList));
     }
 
+    @GetMapping("/system/{systemId}")
+    @ApiOperation(value = "根据体系查询所有的等级")
+    public  Payload<PageBean<DistributorGradeVO>> listLinkedGrades(@PathVariable(value = "systemId")long systemId){
+
+        List<DistributorGradeDTO> dtoList=distributorGradeBusinessService.findAllGradesBySystem(systemId);
+
+        List<DistributorGradeVO> voList=new ArrayList<>();
+
+        dtoList.forEach(dto->{
+
+            DistributorGradeSystemVO systemVO=dto.getSystem().clone(DistributorGradeSystemVO.class,CloneDirection.FORWARD);
+
+            DistributorGradeVO vo= new DistributorGradeVO();
+
+            BeanUtils.copyProperties(dto,vo);
+
+            vo.setSystem(systemVO);
+
+            voList.add(vo);
+        });
+
+        return new Payload<>(new PageBean<>(voList));
+    }
+
+
 }

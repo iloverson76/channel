@@ -66,20 +66,36 @@ public class DistributorController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "根据id和分类id查看区域详情")
+    @ApiOperation(value = "根据id查看经销商详情")
     public Payload<DistributorVO> detail(@PathVariable(value = "id", required = true) Long id) {
 
-        DistributorVO vo = new DistributorVO();//distributorBusinessService.detail(id);
+        DistributorDTO dto = distributorBusinessService.detail(id);
 
-        /*
-        AreaTypeVO type=dto.getAreaType().clone(AreaTypeVO.class,CloneDirection.OPPOSITE);
+        AreaDTO areaDTO=dto.getArea();
 
-        AreaVO vo=new AreaVO();
+        List<DistributorGradeDTO> gradeDTOS=dto.getGrades();
+
+        List<BankAccountDTO> bankAccountDTOS=dto.getBankAccounts();
+
+        AreaVO areaVO=areaDTO.clone(AreaVO.class,CloneDirection.OPPOSITE);
+
+        List<DistributorGradeVO> gradeList=
+        ObjectCloneUtils.convertList(gradeDTOS,DistributorGradeVO.class,CloneDirection.OPPOSITE);
+
+        List<BankAccountVO> bankAccountList=
+        ObjectCloneUtils.convertList(bankAccountDTOS,BankAccountVO.class,CloneDirection.OPPOSITE);
+
+        DistributorVO vo=new DistributorVO();
 
         BeanUtils.copyProperties(dto,vo);
 
-        vo.setAreaType(type);
-*/
+        vo.setArea(areaVO);
+
+        vo.setGrades(gradeList);
+
+        vo.setBankAccounts(bankAccountList);
+
+
         return new Payload<>(vo);
     }
 
@@ -100,53 +116,10 @@ public class DistributorController {
 
         List<DistributorDTO> dtoList = distributorBusinessService.findPage(query);
 
-        List<DistributorVO> voList = new ArrayList<>();
-
-        dtoList.forEach(dto -> {
-
-            List<DistributorGradeVO> gradeDTOList = ObjectCloneUtils.convertList(dto.getGrades(), DistributorGradeVO.class, CloneDirection.OPPOSITE);
-
-            List<BankAccountVO> bankAccountDTOList = ObjectCloneUtils.convertList(dto.getBankAccounts(), BankAccountVO.class, CloneDirection.OPPOSITE);
-            ;
-
-            DistributorVO vo = new DistributorVO();
-
-            BeanUtils.copyProperties(dto, vo);
-
-            vo.setGrades(gradeDTOList);
-
-            vo.setBankAccounts(bankAccountDTOList);
-
-            voList.add(vo);
-        });
+        List<DistributorVO> voList = ObjectCloneUtils.convertList(dtoList,DistributorVO.class,CloneDirection.FORWARD);
 
         return new Payload<>(new PageBean<>(voList));
     }
-
-    //等级信息查询
-    @GetMapping("/grade/{id}")
-    @ApiOperation("经销商详情-等级信息查询")
-    public Payload<PageBean<DistributorGradeVO>> listGradeInfo(@ApiParam(name = "id", required = true) long id) {
-
-        return new Payload<>(new PageBean<>(new ArrayList<DistributorGradeVO>()));
-    }
-
-    //银行信息查询
-    @GetMapping("/bankAccount/{id}")
-    @ApiOperation("经销商详情-分页查询")
-    public Payload<PageBean<BankAccountVO>> listBankAccountInfo(@ApiParam(name = "id", required = true) long id) {
-
-        return new Payload<>(new PageBean<>(new ArrayList<BankAccountVO>()));
-    }
-
-    //区域信息查询
-    @GetMapping("/area/{id}")
-    @ApiOperation("经销商详情-分页查询")
-    public Payload<PageBean<AreaVO>> listBankAreaInfo(@ApiParam(name = "id", required = true) long id) {
-
-        return new Payload<>(new PageBean<>(new ArrayList<AreaVO>()));
-    }
-
 }
 
 

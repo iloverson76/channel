@@ -41,10 +41,6 @@ public class DistributorAreaRelationVO extends AbstractObject {
     private Long areaId;
 
     /**
-     * 描述
-     */
-    private String description;
-    /**
      * 创建人
      */
     private String createdBy;

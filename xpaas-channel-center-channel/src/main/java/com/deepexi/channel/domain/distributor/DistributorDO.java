@@ -4,10 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.deepexi.channel.domain.SuperEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /**
  * <p>
@@ -17,6 +14,7 @@ import lombok.NoArgsConstructor;
  * @author chp
  * @since 2019-08-26
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

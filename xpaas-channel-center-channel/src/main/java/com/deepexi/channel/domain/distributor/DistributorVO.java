@@ -23,7 +23,6 @@ import java.util.List;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -47,7 +46,7 @@ public class DistributorVO extends AbstractObject {
     private List<Long> bankAccountIds;
 
     @ApiModelProperty("所在区域")
-    private AreaDTO area;
+    private AreaVO area;
 
     @ApiModelProperty("所在区域ID")
     private long AreaId;

@@ -2,9 +2,11 @@ package com.deepexi.channel.service.impl;
 
 import com.deepexi.channel.dao.DistributorDAO;
 import com.deepexi.channel.domain.distributor.*;
+import com.deepexi.channel.service.DistributorGradeService;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
+import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
@@ -72,6 +74,18 @@ public class DistributorServiceImpl implements DistributorService {
         }
 
         return distributorDAO.updateById(dto.clone(DistributorDO.class,CloneDirection.FORWARD));
+    }
+
+    @Override
+    public DistributorDTO getById(Long id) {
+
+        DistributorDO eo=distributorDAO.getById(id);
+
+        if(null==eo){
+            return new DistributorDTO();
+        }
+
+        return eo.clone(DistributorDTO.class, CloneDirection.OPPOSITE);
     }
 
 
