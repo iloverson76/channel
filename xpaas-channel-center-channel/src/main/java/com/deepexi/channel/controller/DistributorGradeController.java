@@ -129,13 +129,17 @@ public class DistributorGradeController {
 
             DistributorGradeSystemVO systemVO=dto.getSystem().clone(DistributorGradeSystemVO.class,CloneDirection.FORWARD);
 
-            DistributorGradeVO vo= new DistributorGradeVO();
+            if(systemVO!=null){
+                DistributorGradeVO vo= new DistributorGradeVO();
 
-            BeanUtils.copyProperties(dto,vo);
+                BeanUtils.copyProperties(dto,vo);
 
-            vo.setSystem(systemVO);
+                vo.setSystem(systemVO);
 
-            voList.add(vo);
+                voList.add(vo);
+            }else {
+                voList.add(dto.clone(DistributorGradeVO.class,CloneDirection.OPPOSITE));
+            }
         });
 
         return new Payload<>(new PageBean<>(voList));
