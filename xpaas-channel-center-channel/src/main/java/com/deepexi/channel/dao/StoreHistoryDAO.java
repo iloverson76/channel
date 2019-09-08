@@ -8,5 +8,7 @@ import java.util.List;
 
 public interface StoreHistoryDAO extends IService<StoreHistoryDO> {
     List<StoreHistoryDO> findList(StoreHistoryQuery query);
+
+    Integer getStoreHistoryCountByStoreId(Long storeId);
 //    Page<StoreTypeDO> listStoreTypePage(StoreTypeQuery query);
 }

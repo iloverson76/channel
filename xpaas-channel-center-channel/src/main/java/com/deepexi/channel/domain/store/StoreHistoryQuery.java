@@ -31,7 +31,7 @@ public class StoreHistoryQuery extends CommQuery {
      * 修改历史版本号
      */
     @ApiModelProperty(value = "修改历史版本号")
-    private Long versionNumber;
+    private String versionNumber;
     /**
      * 门店名称
      */

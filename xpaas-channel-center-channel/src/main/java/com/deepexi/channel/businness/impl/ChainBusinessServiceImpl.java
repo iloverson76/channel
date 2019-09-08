@@ -97,6 +97,7 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
     @Override
     public Boolean deleteChain(List<Long> ids) {
         //删除合法
+
         return chainService.delete(ids);
     }
 

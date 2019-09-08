@@ -43,4 +43,5 @@ public interface StoreHistoryService {
     */
     Boolean delete(List<Long> ids);
 
+    Integer getStoreHistoryCountByStoreId(Long storeId);
 }

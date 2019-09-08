@@ -69,7 +69,10 @@ public class StoreController {
         if (storeDetailDTO.getAreaDTO() != null) {
             storeDetailVO.setAreaVO(storeDetailDTO.getAreaDTO().clone(AreaVO.class));
         }
-
+        //设置修改历史
+        if(CollectionUtil.isNotEmpty(storeDetailDTO.getStoreHistoryDTOS())){
+            storeDetailVO.setStoreHistoryVOS(ObjectCloneUtils.convertList(storeDetailDTO.getStoreHistoryDTOS(),StoreHistoryVO.class,CloneDirection.OPPOSITE ));
+        }
 
         return new Payload(storeDetailVO);
     }

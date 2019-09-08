@@ -135,4 +135,11 @@ public class ChainController {
         return new Payload<>(chainTreeVOS);
     }
 
+    @PostMapping("/tree/node/{id}")
+    @ApiOperation(value="树形结构增量新增节点接口",notes = "")
+    public Payload<Boolean> addTreeNode(@PathVariable(value = "id", required = true) Long id, ChainVO vo){
+        if(vo==null){return new Payload<>(false);}
+        ChainDTO chainDTO = vo.clone(ChainDTO.class);
+        return new Payload<Boolean>(chainService.addTreeNode(chainDTO));
+    }
 }

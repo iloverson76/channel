@@ -19,4 +19,9 @@ public class StoreHistoryDAOImpl extends ServiceImpl<StoreHistoryMapper, StoreHi
     public List<StoreHistoryDO> findList(StoreHistoryQuery query) {
         return storeHistoryMapper.findList(query);
     }
+
+    @Override
+    public Integer getStoreHistoryCountByStoreId(Long storeId) {
+        return storeHistoryMapper.getStoreHistoryCountByStoreId(storeId);
+    }
 }

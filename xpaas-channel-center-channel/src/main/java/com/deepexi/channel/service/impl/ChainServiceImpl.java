@@ -145,4 +145,9 @@ public class ChainServiceImpl implements ChainService {
         return chainDAO.resetTree(dto.clone(ChainDO.class)) > 0 ? true:false;
     }
 
+    @Override
+    public Boolean addTreeNode(ChainDTO chainDTO) {
+        return null;
+    }
+
 }

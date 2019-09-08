@@ -76,7 +76,7 @@ public class StoreServiceImpl implements StoreService {
         StoreQuery storeQuery = StoreQuery.builder().storeAccuracyCode(dto.getStoreCode()).build();
         List<StoreDO> list = storeDAO.findList(storeQuery);
         if(CollectionUtil.isNotEmpty(list)){
-            //不为空，还有可能是更新时自身的编码
+            //不为空，还有可能是更新时自身的编码 ，当然，前端不能调皮新增时传id过来
             if(list.size()==1){
                 StoreDO storeDO = list.get(0);
                 //该code是本身，不属于重复

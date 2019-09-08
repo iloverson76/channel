@@ -71,4 +71,9 @@ public class StoreHistoryServiceImpl implements StoreHistoryService {
         return storeHistoryDAO.removeByIds(ids);
     }
 
+    @Override
+    public Integer getStoreHistoryCountByStoreId(Long storeId) {
+        return storeHistoryDAO.getStoreHistoryCountByStoreId(storeId);
+    }
+
 }
