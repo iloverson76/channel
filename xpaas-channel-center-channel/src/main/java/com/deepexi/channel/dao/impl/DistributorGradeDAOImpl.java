@@ -42,4 +42,14 @@ public class DistributorGradeDAOImpl extends ServiceImpl<DistributorGradeMapper,
 
         return distributorGradeMapper.selectCount(wp);
     }
+
+    @Override
+    public List<DistributorGradeDO> findAllBySystem(Long systemId) {
+
+        QueryWrapper<DistributorGradeDO> wp=new QueryWrapper() ;
+
+        wp.eq("grade_system_id",systemId);
+
+        return distributorGradeMapper.selectList(wp);
+    }
 }

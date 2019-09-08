@@ -8,6 +8,7 @@ import com.deepexi.channel.domain.area.AreaQuery;
 import com.deepexi.channel.domain.bank.BankAccountDTO;
 import com.deepexi.channel.domain.bank.BankAccountQuery;
 import com.deepexi.channel.domain.distributor.*;
+import com.deepexi.channel.enums.DistributorTypeEnum;
 import com.deepexi.channel.service.*;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
@@ -153,7 +154,27 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
     @Override
     public List<DistributorDTO> findPage(DistributorQuery query) {
 
-       return distributorService.findPage(query);
+        List<DistributorDTO> dtoList=distributorService.findPage(query);
+
+        if(CollectionUtils.isEmpty(dtoList)){
+            return Collections.emptyList();
+        }
+
+        List<Map<String, String>> list = DistributorTypeEnum.getTypeList();
+
+        dtoList.forEach(dto->{
+
+            for (Map<String, String> map : list) {
+
+                if (dto.getDistributorType() == Integer.valueOf(map.get("code"))) {
+
+                    dto.setDistributorTypeDesc(map.get("msg"));
+                }
+            }
+
+        });
+
+       return dtoList;
     }
 
     @Override
@@ -222,6 +243,10 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
         DistributorAreaRelationDTO bar = distributorAreaRelationService.findOneByDistributorId(distributorId);
 
+        if(null==bar){
+            return new AreaDTO();
+        }
+
         return areaService.getAreaById(bar.getAreaId());
 
     }
@@ -238,10 +263,12 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
         List<Long> gradeIdList=new ArrayList<>();
 
+        if(CollectionUtils.isEmpty(dgrDTOS)){
+            return Collections.emptyList();
+        }
+
         dgrDTOS.forEach(dgr->{
-
             gradeIdList.add(dgr.getDistributorGradeId());
-
         });
 
         DistributorGradeQuery query=new DistributorGradeQuery();
@@ -262,6 +289,10 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
         List<Long> accountIdList=new ArrayList<>();
 
+        if(CollectionUtils.isEmpty(barDTOS)){
+            return Collections.emptyList();
+        }
+
         barDTOS.forEach(bar->{
 
             accountIdList.add(bar.getBankAccountId());
@@ -273,6 +304,5 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
         return bankAccountService.findList(query);
     }
-
 
 }

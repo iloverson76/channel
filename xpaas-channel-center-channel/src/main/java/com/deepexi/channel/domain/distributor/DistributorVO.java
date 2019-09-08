@@ -70,8 +70,15 @@ public class DistributorVO extends AbstractObject {
     private Integer distributorType;
 
     /**
+     * 经销商类型中文描述
+     */
+    @ApiModelProperty("经销商类型中文描述")
+    private String distributorTypeDesc;
+
+    /**
      * 经销商编码
      */
+    @ApiModelProperty("经销商编码")
     private String distributorCode;
 
     /**

@@ -91,7 +91,7 @@ public class AppRuntimeEnv {
     public String getTenantId() {
         String tenantIdStr = TENANT_ID.get();
         if (StringUtil.isEmpty(tenantIdStr)) {
-            return "123456789";
+            return "7396bd010d7e39b3dc4c8ac69ca630be";
         }
         return tenantIdStr;
     }
@@ -123,7 +123,7 @@ public class AppRuntimeEnv {
     public String getAppId() {
         String appIdStr = APP_ID.get();
         if (appIdStr == null) {
-            return "123456789";
+            return "104";
         }
         return appIdStr;
     }

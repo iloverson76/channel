@@ -17,4 +17,8 @@ public interface DistributorSystemBusinessService {
      */
     List<DistributorGradeSystemDTO> findPage(DistributorGradeSystemQuery query);
 
+    /**
+     * 获取详情
+     */
+    DistributorGradeSystemDTO detail(Long pk);
 }

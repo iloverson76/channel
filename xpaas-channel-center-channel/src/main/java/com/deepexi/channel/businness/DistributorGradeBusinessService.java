@@ -14,7 +14,7 @@ public interface DistributorGradeBusinessService {
     /**
       获取详情
     */
-    DistributorGradeDTO detail(Long gradeId,Long systemId);
+    DistributorGradeDTO detail(Long gradeId);
 
     /**
      * 分页获取列表

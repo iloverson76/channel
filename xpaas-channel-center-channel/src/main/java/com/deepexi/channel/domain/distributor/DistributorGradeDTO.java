@@ -32,6 +32,11 @@ public class DistributorGradeDTO extends AbstractObject {
     private DistributorGradeSystemDTO system;
 
     /**
+     * 直接父级
+     */
+    private DistributorGradeDTO parent;
+
+    /**
      * 上级经销商等级编码
      */
     private String parentGradeCode;

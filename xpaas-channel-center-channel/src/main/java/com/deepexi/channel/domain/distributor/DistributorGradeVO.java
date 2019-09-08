@@ -34,6 +34,11 @@ public class DistributorGradeVO extends AbstractObject {
     private DistributorGradeSystemVO system;
 
     /**
+     * 直接上级
+     */
+    private DistributorGradeVO parent;
+
+    /**
      * 上级经销商等级编码
      */
     private String parentGradeCode;
