@@ -54,7 +54,7 @@ public class StoreDistributorBusinessServiceImpl implements StoreDistributorBusi
         Map<Long, DistributorDTO> distributorDTOMap = distributorDTOS.stream().collect(Collectors.toMap(DistributorDTO::getId,c->c));
 
         //查询上级经销商
-        List<Long> parentDistributorIds = distributorDTOS.stream().map(DistributorDTO::getParent_id).collect(Collectors.toList());
+        List<Long> parentDistributorIds = distributorDTOS.stream().map(DistributorDTO::getParentId).collect(Collectors.toList());
         DistributorQuery distributorQuery2 = new DistributorQuery();
         distributorQuery2.setIds(parentDistributorIds);
         List<DistributorDTO> parentDistributorDTOS = distributorService.findPage(distributorQuery);
@@ -76,7 +76,7 @@ public class StoreDistributorBusinessServiceImpl implements StoreDistributorBusi
                     .distributorName(d.getDistributorName())
                     .distributorId(d.getId()).build();
             //父级经销商信息
-            DistributorDTO parent = distributorParentDTOMap.get(d.getParent_id());
+            DistributorDTO parent = distributorParentDTOMap.get(d.getParentId());
             dto.setParentCode(parent.getDistributorCode());
             dto.setParentId(parent.getId());
             dto.setParentName(parent.getDistributorName());
