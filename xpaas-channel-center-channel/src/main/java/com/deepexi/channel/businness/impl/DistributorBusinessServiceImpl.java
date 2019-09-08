@@ -4,6 +4,7 @@ import com.deepexi.channel.businness.DistributorBusinessService;
 import com.deepexi.channel.businness.DistributorGradeBusinessService;
 import com.deepexi.channel.dao.DistributorGradeRelationDAO;
 import com.deepexi.channel.domain.area.AreaDTO;
+import com.deepexi.channel.domain.area.AreaQuery;
 import com.deepexi.channel.domain.bank.BankAccountDTO;
 import com.deepexi.channel.domain.bank.BankAccountQuery;
 import com.deepexi.channel.domain.distributor.*;
@@ -42,6 +43,9 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
     @Autowired
     private BankAccountService bankAccountService;
+
+    @Autowired
+    AreaService areaService;
 
 
     @Transient
@@ -193,6 +197,36 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
     }
 
     @Override
+    public DistributorDTO detail(Long distributorId) {
+
+        DistributorDTO distributor = distributorService.getById(distributorId);
+
+        List<DistributorGradeDTO> grades=getGradeInfo(distributorId);
+
+        List<BankAccountDTO> bankAccounts=getBankAccountInfo(distributorId);
+
+        AreaDTO area =getAreaInfo(distributorId);
+
+        distributor.setArea(area);
+
+        distributor.setGrades(grades);
+
+        distributor.setBankAccounts(bankAccounts);
+
+        return distributor;
+    }
+
+
+    @Override
+    public AreaDTO getAreaInfo(Long distributorId){//要把上级的信息全部查出来--未完善
+
+        DistributorAreaRelationDTO bar = distributorAreaRelationService.findOneByDistributorId(distributorId);
+
+        return areaService.getAreaById(bar.getAreaId());
+
+    }
+
+    @Override
     public List<DistributorGradeDTO> getGradeInfo(Long distributorId){
 
         List<Long> butorIds=new ArrayList<>(1);
@@ -211,6 +245,8 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
         });
 
         DistributorGradeQuery query=new DistributorGradeQuery();
+
+        query.setIds(gradeIdList);
 
         return distributorGradeService.findPage(query);
     }
@@ -232,6 +268,8 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
         });
 
         BankAccountQuery query=new BankAccountQuery();
+
+        query.setIds(accountIdList);
 
         return bankAccountService.findList(query);
     }

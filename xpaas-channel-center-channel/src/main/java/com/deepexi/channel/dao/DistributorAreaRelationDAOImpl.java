@@ -64,14 +64,13 @@ public class DistributorAreaRelationDAOImpl extends ServiceImpl<DistributorAreaR
     }
 
     @Override
-    public DistributorAreaRelationDO findOne(long distributorId, long areaId) {
+    public DistributorAreaRelationDO getOne(Long distributorId) {
 
         QueryWrapper<DistributorAreaRelationDO> wp=new QueryWrapper<>();
 
         wp.eq("distributor_id",distributorId);
 
-        wp.eq("area_id",areaId);
-
         return baseMapper.selectOne(wp);
     }
+
 }

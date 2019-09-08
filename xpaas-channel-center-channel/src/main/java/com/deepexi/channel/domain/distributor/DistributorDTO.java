@@ -23,7 +23,6 @@ import java.util.List;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

@@ -40,10 +40,6 @@ public class DistributorGradeRelationDTO extends AbstractObject {
     private Long distributorGradeId;
 
     /**
-     * 描述
-     */
-    private String description;
-    /**
      * 创建人
      */
     private String createdBy;

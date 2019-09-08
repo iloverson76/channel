@@ -18,6 +18,5 @@ public interface DistributorAreaRelationDAO extends  IService<DistributorAreaRel
 
     List<DistributorAreaRelationDO> findAllByDistributorIds(long distributorId);
 
-    DistributorAreaRelationDO findOne(long distributorId, long gradeId);
-
+    DistributorAreaRelationDO getOne(Long distributorId);
 }
