@@ -1,10 +1,7 @@
 package com.deepexi.channel.controller;
 
 import com.deepexi.channel.businness.DistributorGradeBusinessService;
-import com.deepexi.channel.domain.distributor.DistributorGradeDTO;
-import com.deepexi.channel.domain.distributor.DistributorGradeQuery;
-import com.deepexi.channel.domain.distributor.DistributorGradeSystemVO;
-import com.deepexi.channel.domain.distributor.DistributorGradeVO;
+import com.deepexi.channel.domain.distributor.*;
 import com.deepexi.channel.service.DistributorGradeService;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pageHelper.PageBean;
@@ -48,12 +45,31 @@ public class DistributorGradeController {
         return new Payload(result);
     }
 
-    @GetMapping("/{id}/{systemId}")
+    @GetMapping("/{id}")
     @ApiOperation(value = "根据id查看详情")
-    public Payload<DistributorGradeVO> detail(@PathVariable(value = "id", required = true) long  gradeId,
-                                              @PathVariable(value = "systemId", required = true) long  systemId) {
+    public Payload<DistributorGradeVO> detail(@PathVariable(value = "id", required = true) long  gradeId) {
 
-        DistributorGradeVO vo=distributorGradeBusinessService.detail(gradeId,systemId).clone(DistributorGradeVO.class,CloneDirection.OPPOSITE);
+        DistributorGradeDTO dto=distributorGradeBusinessService.detail(gradeId);
+
+        DistributorGradeVO vo=new DistributorGradeVO();
+
+        BeanUtils.copyProperties(dto,vo);
+
+        DistributorGradeDTO parentDTO=dto.getParent();
+        if(null!=parentDTO){
+
+            DistributorGradeVO parentVO=parentDTO.clone(DistributorGradeVO.class,CloneDirection.OPPOSITE);
+
+            vo.setParent(parentVO);
+        }
+
+        DistributorGradeSystemDTO systemDTO=dto.getSystem();
+        if(null!=systemDTO){
+
+            DistributorGradeSystemVO systemVO=systemDTO.clone(DistributorGradeSystemVO.class,CloneDirection.OPPOSITE);
+
+            vo.setSystem(systemVO);
+        }
 
         return new Payload<>(vo);
     }
@@ -91,14 +107,22 @@ public class DistributorGradeController {
 
             dtoList.forEach(dto->{
 
-                DistributorGradeSystemVO systemVO=dto.getSystem().clone(DistributorGradeSystemVO.class,CloneDirection.OPPOSITE);
+                DistributorGradeSystemDTO systemDTO=dto.getSystem();
 
                 DistributorGradeVO vo= new DistributorGradeVO();
 
-                BeanUtils.copyProperties(dto,vo);
+                if(null!=systemDTO){
 
-                vo.setSystem(systemVO);
+                    DistributorGradeSystemVO systemVO=systemDTO.clone(DistributorGradeSystemVO.class,CloneDirection.OPPOSITE);
 
+                    BeanUtils.copyProperties(dto,vo);
+
+                    vo.setSystem(systemVO);
+
+                    voList.add(vo);
+                }else {
+                    vo=dto.clone(DistributorGradeVO.class,CloneDirection.OPPOSITE);
+                }
                 voList.add(vo);
             });
         }

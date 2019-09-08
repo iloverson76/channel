@@ -37,7 +37,6 @@ public class DistributorGradeSystemServiceImpl implements DistributorGradeSystem
 
         if(null==eo){
             return new DistributorGradeSystemDTO();
-
         }
 
         return eo.clone(DistributorGradeSystemDTO.class,CloneDirection.OPPOSITE);

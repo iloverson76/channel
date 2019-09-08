@@ -26,28 +26,29 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
     private DistributorGradeSystemService distributorGradeSystemService;
 
     @Override
-    public DistributorGradeDTO detail(Long gradeId,Long systemId) {
+    public DistributorGradeDTO detail(Long gradeId) {
 
         log.info("查看经销商等级详情");
 
         //等级表
         DistributorGradeDTO gdto=distributorGradeService.getById(gradeId);
 
-        long parentId=gdto.getParentId();
+        if(null!=gdto){
 
-        if(0!=parentId){
+            long parentId=gdto.getParentId();
 
-            DistributorGradeDTO pdto= distributorGradeService.getById(parentId);
+            if(parentId>0){
 
-            if(null!=pdto){
+                DistributorGradeDTO pdto= distributorGradeService.getById(parentId);
 
-                gdto.setParentGradeCode(pdto.getDistributorGradeCode());
-
-                gdto.setParentGradeName(pdto.getDistributorGradeName());
+                if(null!=pdto){
+                   gdto.setParent(pdto);
+                }
             }
         }
 
-        if(0!=systemId){
+        long systemId=gdto.getGradeSystemId();
+        if(systemId>0){
 
             //体系表
             DistributorGradeSystemDTO sdto=distributorGradeSystemService.detail(systemId);
@@ -145,7 +146,7 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
     }
 
     @Override
-    public List<DistributorGradeDTO> findParentNodesForCreat(long systemId) {//
+    public List<DistributorGradeDTO> findParentNodesForCreat(long systemId) {
 
         if(0==systemId){
             return Collections.emptyList();
@@ -190,16 +191,19 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
         List<DistributorGradeDTO> gradeList=new ArrayList<>();
 
-        pageList.forEach(page->{
+        if(CollectionUtil.isNotEmpty(pageList)){
 
-            if(page.getGradeSystemId()==systemId){
+            pageList.forEach(page->{
 
-                page.setSystem(systemDTO);
+                if(page.getGradeSystemId()==systemId){
 
-                gradeList.add(page);
-            }
-        });
+                    page.setSystem(systemDTO);
 
+                    gradeList.add(page);
+                }
+            });
+
+        }
         return gradeList;
     }
 }

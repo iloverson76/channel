@@ -76,13 +76,14 @@ public class DistributorGradeServiceImpl implements DistributorGradeService {
             return new DistributorGradeDTO();
         }
 
-        DistributorGradeDTO dto=distributorGradeDAO.getById(pk).clone(DistributorGradeDTO.class,CloneDirection.OPPOSITE);
+        DistributorGradeDO eo=distributorGradeDAO.getById(pk);
 
-        if(null==dto){
+        if(null==eo){
             return new DistributorGradeDTO();
         }
 
-        return dto;
+        return eo.clone(DistributorGradeDTO.class,CloneDirection.OPPOSITE);
+
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -118,8 +119,23 @@ public class DistributorGradeServiceImpl implements DistributorGradeService {
         int count= distributorGradeDAO.getByCode(garedCode);
         if(count>0){
             throw new ApplicationException(ResultEnum.GRADE_NAME_DUPLICATED);
-
         }
         return Boolean.TRUE;
+    }
+
+    @Override
+    public List<DistributorGradeDTO> findAllBySystem(Long systemId) {
+
+        if(null==systemId||systemId<0||systemId==0){
+            return Collections.emptyList();
+        }
+
+        List<DistributorGradeDO> eoList=distributorGradeDAO.findAllBySystem(systemId);
+
+        if(CollectionUtils.isEmpty(eoList)){
+            return Collections.emptyList();
+        }
+
+        return ObjectCloneUtils.convertList(eoList,DistributorGradeDTO.class,CloneDirection.OPPOSITE);
     }
 }

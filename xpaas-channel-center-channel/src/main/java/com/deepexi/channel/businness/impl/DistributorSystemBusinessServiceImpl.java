@@ -55,4 +55,23 @@ public class DistributorSystemBusinessServiceImpl implements DistributorSystemBu
 
         return systemList;
     }
+
+    @Override
+    public DistributorGradeSystemDTO detail(Long pk) {
+
+        DistributorGradeSystemDTO system=distributorGradeSystemService.detail(pk);
+
+        if(null==system){
+            return new DistributorGradeSystemDTO();
+        }
+
+        List<DistributorGradeDTO> grades=distributorGradeService.findAllBySystem(pk);
+
+        if(CollectionUtil.isNotEmpty(grades)){
+
+            system.setGrades(grades);
+        }
+
+        return system;
+    }
 }

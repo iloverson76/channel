@@ -8,6 +8,7 @@ import com.deepexi.channel.domain.area.AreaVO;
 import com.deepexi.channel.domain.bank.BankAccountDTO;
 import com.deepexi.channel.domain.bank.BankAccountVO;
 import com.deepexi.channel.domain.distributor.*;
+import com.deepexi.channel.enums.DistributorTypeEnum;
 import com.deepexi.channel.service.AreaService;
 import com.deepexi.channel.service.DistributorService;
 import com.deepexi.util.config.Payload;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -119,6 +121,15 @@ public class DistributorController {
         List<DistributorVO> voList = ObjectCloneUtils.convertList(dtoList,DistributorVO.class,CloneDirection.FORWARD);
 
         return new Payload<>(new PageBean<>(voList));
+    }
+
+    @GetMapping("/distributorType")
+    @ApiOperation("经销商类型-下拉框")
+    public Payload<PageBean<Map<String,String>>> listDistributorTypes(@ApiParam(name = "query", required = true) DistributorQuery query) {
+
+        List<Map<String,String>> typeList=DistributorTypeEnum.getTypeList();
+
+        return new Payload<>(new PageBean<>(typeList));
     }
 }
 
