@@ -14,7 +14,9 @@ import org.slf4j.LoggerFactory;
 import com.deepexi.channel.domain.eo.CcDistributor;
 import com.deepexi.channel.service.DistributorService;
 import com.deepexi.channel.mapper.DistributorMapper;
-import java.util.Arrays;import java.util.List;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import com.deepexi.util.pageHelper.PageBean;
 import com.github.pagehelper.PageHelper;
 import com.deepexi.util.BeanPowerHelper;
@@ -60,7 +62,7 @@ public class DistributorServiceImpl implements DistributorService {
         List<DistributorDO> eoList = distributorDAO.findPage(query);
 
         if(CollectionUtil.isEmpty(eoList)){
-            return null;
+            return Collections.emptyList();
         }
 
         return ObjectCloneUtils.convertList(eoList, DistributorDTO.class,CloneDirection.OPPOSITE);

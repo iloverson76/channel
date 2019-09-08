@@ -31,7 +31,10 @@ public class DistributorQuery extends CommQuery {
      * 经销商名称
      */
     @ApiModelProperty("经销商名称(中英文都可以)")
-    private String distributoNname;
+    private String distributorName;
+
+    @ApiModelProperty("经销商编码")
+    private String distributorCode;
 
     /**
      * 经销商类型 1 厂商 2 经销商

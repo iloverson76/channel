@@ -1,5 +1,6 @@
 package com.deepexi.channel.controller;
 
+import com.deepexi.channel.businness.DistributorSystemBusinessService;
 import com.deepexi.channel.domain.bank.BankAccountVO;
 import com.deepexi.channel.domain.distributor.*;
 import com.deepexi.channel.service.DistributorGradeSystemService;
@@ -27,6 +28,9 @@ public class DistributorGradeSystemController {
 
     @Autowired
     private DistributorGradeSystemService distributorGradeSystemService;
+
+    @Autowired
+    DistributorSystemBusinessService distributorSystemBusinessService;
 
     @PostMapping()
     @ApiOperation(value = "创建经销商体系")
@@ -69,14 +73,40 @@ public class DistributorGradeSystemController {
     }
 
     @GetMapping
-    @ApiOperation(value = "分页查询", notes = "分页请求")
+    @ApiOperation(value = "经销商体系列表-分页查询")
     public  Payload<PageBean<DistributorGradeSystemVO>> findPage(@ApiParam(name = "query", required = true) DistributorGradeSystemQuery query) {
 
-        List<DistributorGradeSystemDTO> dtoList=distributorGradeSystemService.findPage(query);
+        List<DistributorGradeSystemDTO> dtoList=distributorSystemBusinessService.findPage(query);
 
-        List<DistributorGradeSystemVO> voList= ObjectCloneUtils.convertList(dtoList, DistributorGradeSystemVO.class);;
+        List<DistributorGradeSystemVO> voList=new ArrayList<>();
+
+        if(CollectionUtils.isNotEmpty(dtoList)){
+
+            dtoList.forEach(dto->{
+
+                List<DistributorGradeDTO> grades=dto.getGrades();
+
+                if(CollectionUtils.isNotEmpty(grades)){
+
+                    List<DistributorGradeVO> gradeVOList=
+                            ObjectCloneUtils.convertList(grades,DistributorGradeVO.class,CloneDirection.OPPOSITE);
+
+                    DistributorGradeSystemVO vo=new DistributorGradeSystemVO();
+
+                    BeanUtils.copyProperties(dto,vo);
+
+                    vo.setGrades(gradeVOList);
+
+                    voList.add(vo);
+                }else{
+                    DistributorGradeSystemVO vo=dto.clone(DistributorGradeSystemVO.class,CloneDirection.OPPOSITE);
+
+                    voList.add(vo);
+                }
+            });
+        }
 
         return new Payload<>(new PageBean<>(voList));
-    }
 
+    }
 }
