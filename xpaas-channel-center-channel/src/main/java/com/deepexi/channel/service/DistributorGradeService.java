@@ -37,4 +37,9 @@ public interface DistributorGradeService {
     List<DistributorGradeDTO> findPage(DistributorGradeQuery query);
 
     boolean validateGradeCode(String garedCode);
+
+    /**
+     * 查找某个体系下的所有等级
+     */
+    List<DistributorGradeDTO> findAllBySystem(Long systemId);
 }

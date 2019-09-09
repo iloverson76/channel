@@ -1,5 +1,6 @@
 package com.deepexi.channel.businness;
 
+import com.deepexi.channel.domain.area.AreaDTO;
 import com.deepexi.channel.domain.bank.BankAccountDTO;
 import com.deepexi.channel.domain.distributor.*;
 
@@ -18,8 +19,13 @@ public interface DistributorBusinessService {
 
     boolean update(DistributorDTO clone);
 
+    AreaDTO getAreaInfo(Long distributorId);
+
     List<DistributorGradeDTO> getGradeInfo(Long distributorId);
 
     List<BankAccountDTO> getBankAccountInfo(Long distributorId);
 
+    DistributorDTO detail(Long id);
+
+    List<DistributorDTO> listParentDistributorsByGrade(Long gradeId);
 }

@@ -79,4 +79,14 @@ public class DistributorGradeRelationDAOImpl extends ServiceImpl<DistributorGrad
 
         return baseMapper.selectOne(wp);
     }
+
+    @Override
+    public List<DistributorGradeRelationDO> findAllByGradeId(Long gradeId) {
+
+        QueryWrapper<DistributorGradeRelationDO> wp=new QueryWrapper<>();
+
+        wp.eq("distributor_grade_id",gradeId);
+
+        return baseMapper.selectList(wp);
+    }
 }

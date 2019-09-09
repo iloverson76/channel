@@ -35,6 +35,10 @@ public class DistributorGradeSystemServiceImpl implements DistributorGradeSystem
 
         DistributorGradeSystemDO eo = distributorGradeSystemDAO.getById(pk);
 
+        if(null==eo){
+            return new DistributorGradeSystemDTO();
+        }
+
         return eo.clone(DistributorGradeSystemDTO.class,CloneDirection.OPPOSITE);
     }
 
@@ -108,5 +112,4 @@ public class DistributorGradeSystemServiceImpl implements DistributorGradeSystem
 
         });
     }
-
 }

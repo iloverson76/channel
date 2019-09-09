@@ -1,17 +1,16 @@
 package com.deepexi.channel.service.impl;
 
 import com.deepexi.channel.dao.DistributorGradeRelationDAO;
-import com.deepexi.channel.domain.distributor.DistributorDTO;
 import com.deepexi.channel.domain.distributor.DistributorGradeRelationDO;
 import com.deepexi.channel.domain.distributor.DistributorGradeRelationDTO;
 import com.deepexi.channel.service.DistributorGradeRelationService;
-import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -119,5 +118,17 @@ public class DistributorGradeRelationServiceImpl implements DistributorGradeRela
                 CloneDirection.FORWARD);
 
         return distributorGradeRelationDAO.updateBatchById(eoList);
+    }
+
+    @Override
+    public List<DistributorGradeRelationDTO> findAllByGradeId(Long gradeId) {
+
+        List<DistributorGradeRelationDO> eoList=distributorGradeRelationDAO.findAllByGradeId(gradeId);
+
+        if(CollectionUtils.isEmpty(eoList)){
+            return Collections.emptyList();
+        }
+
+        return ObjectCloneUtils.convertList(eoList,DistributorGradeRelationDTO.class,CloneDirection.OPPOSITE);
     }
 }

@@ -2,9 +2,11 @@ package com.deepexi.channel.service.impl;
 
 import com.deepexi.channel.dao.DistributorDAO;
 import com.deepexi.channel.domain.distributor.*;
+import com.deepexi.channel.service.DistributorGradeService;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
+import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
@@ -12,7 +14,9 @@ import org.slf4j.LoggerFactory;
 import com.deepexi.channel.domain.eo.CcDistributor;
 import com.deepexi.channel.service.DistributorService;
 import com.deepexi.channel.mapper.DistributorMapper;
-import java.util.Arrays;import java.util.List;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import com.deepexi.util.pageHelper.PageBean;
 import com.github.pagehelper.PageHelper;
 import com.deepexi.util.BeanPowerHelper;
@@ -33,11 +37,18 @@ public class DistributorServiceImpl implements DistributorService {
             return 0L;
         }
 
-        DistributorDO eo=dto.clone(DistributorDO.class, CloneDirection.FORWARD);
+        //只保存直接上级关系
+        if(dto.getLimitedParent()==0){//如果不指定上级,前端传parentId=0过来.这一版无法设置路径
 
-        distributorDAO.save(eo);
+            dto.setParentId(0L);
+        }
 
-        return eo.getId();
+        DistributorDO newNode=dto.clone(DistributorDO.class, CloneDirection.FORWARD);
+
+        distributorDAO.save(newNode);
+
+        return newNode.getId();
+
     }
 
     @Override
@@ -58,7 +69,7 @@ public class DistributorServiceImpl implements DistributorService {
         List<DistributorDO> eoList = distributorDAO.findPage(query);
 
         if(CollectionUtil.isEmpty(eoList)){
-            return null;
+            return Collections.emptyList();
         }
 
         return ObjectCloneUtils.convertList(eoList, DistributorDTO.class,CloneDirection.OPPOSITE);
@@ -71,7 +82,25 @@ public class DistributorServiceImpl implements DistributorService {
             return false;
         }
 
+        //只保存直接上级关系
+        if(dto.getLimitedParent()==0){//如果不指定上级,前端传parentId=0过来.这一版无法设置路径
+
+            dto.setParentId(0L);
+        }
+
         return distributorDAO.updateById(dto.clone(DistributorDO.class,CloneDirection.FORWARD));
+    }
+
+    @Override
+    public DistributorDTO getById(Long id) {
+
+        DistributorDO eo=distributorDAO.getById(id);
+
+        if(null==eo){
+            return new DistributorDTO();
+        }
+
+        return eo.clone(DistributorDTO.class, CloneDirection.OPPOSITE);
     }
 
 

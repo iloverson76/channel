@@ -20,4 +20,6 @@ public interface DistributorService {
     List<DistributorDTO> findPage(DistributorQuery query);
 
     boolean update(DistributorDTO dto);
+
+    DistributorDTO getById(Long id);
 }

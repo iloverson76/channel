@@ -20,7 +20,7 @@ public class DistributorBankAccountRelationServiceImpl implements DistributorBan
     DistributorBankAccountRelationDAO distributorBankAccountRelationDAO;
 
     @Override
-    public boolean create(List<DistributorBankAccountRelationDTO> dtoList) {
+    public boolean batchCreate(List<DistributorBankAccountRelationDTO> dtoList) {
 
         if(CollectionUtils.isEmpty(dtoList)){
             return false;
@@ -44,13 +44,18 @@ public class DistributorBankAccountRelationServiceImpl implements DistributorBan
     public List<DistributorBankAccountRelationDTO> findAllByDistributorIds(List<Long> bankAccountIds) {
 
         if(CollectionUtils.isEmpty(bankAccountIds)){
-            return null;
+            return Collections.emptyList();
 
         }
 
-        distributorBankAccountRelationDAO.findAllByDistributorIds(bankAccountIds);
+        List<DistributorBankAccountRelationDO> eos=distributorBankAccountRelationDAO.findAllByDistributorIds(bankAccountIds);
 
-        return Collections.emptyList();
+        if(CollectionUtils.isEmpty(eos)){
+
+            return Collections.emptyList();
+        }
+
+        return ObjectCloneUtils.convertList(eos,DistributorBankAccountRelationDTO.class,CloneDirection.OPPOSITE);
     }
 
 

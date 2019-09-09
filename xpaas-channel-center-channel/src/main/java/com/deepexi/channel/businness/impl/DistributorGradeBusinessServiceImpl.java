@@ -23,34 +23,32 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
     private DistributorGradeService distributorGradeService;
 
     @Autowired
-    private DistributorGradeDAO distributorGradeDAO;
-
-    @Autowired
     private DistributorGradeSystemService distributorGradeSystemService;
 
     @Override
-    public DistributorGradeDTO detail(Long gradeId,Long systemId) {
+    public DistributorGradeDTO detail(Long gradeId) {
 
         log.info("查看经销商等级详情");
 
         //等级表
         DistributorGradeDTO gdto=distributorGradeService.getById(gradeId);
 
-        long parentId=gdto.getParentId();
+        if(null!=gdto){
 
-        if(0!=parentId){
+            long parentId=gdto.getParentId();
 
-            DistributorGradeDTO pdto= distributorGradeService.getById(parentId);
+            if(parentId>0){
 
-            if(null!=pdto){
+                DistributorGradeDTO pdto= distributorGradeService.getById(parentId);
 
-                gdto.setParentGradeCode(pdto.getDistributorGradeCode());
-
-                gdto.setParentGradeName(pdto.getDistributorGradeName());
+                if(null!=pdto){
+                   gdto.setParent(pdto);
+                }
             }
         }
 
-        if(0!=systemId){
+        long systemId=gdto.getGradeSystemId();
+        if(systemId>0){
 
             //体系表
             DistributorGradeSystemDTO sdto=distributorGradeSystemService.detail(systemId);
@@ -182,5 +180,30 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
         }
 
         return resultList;
+    }
+
+    @Override
+    public List<DistributorGradeDTO> findAllGradesBySystem(long systemId) {
+
+        DistributorGradeSystemDTO systemDTO = distributorGradeSystemService.detail(systemId);
+
+        List<DistributorGradeDTO> pageList = distributorGradeService.findPage(new DistributorGradeQuery());
+
+        List<DistributorGradeDTO> gradeList=new ArrayList<>();
+
+        if(CollectionUtil.isNotEmpty(pageList)){
+
+            pageList.forEach(page->{
+
+                if(page.getGradeSystemId()==systemId){
+
+                    page.setSystem(systemDTO);
+
+                    gradeList.add(page);
+                }
+            });
+
+        }
+        return gradeList;
     }
 }

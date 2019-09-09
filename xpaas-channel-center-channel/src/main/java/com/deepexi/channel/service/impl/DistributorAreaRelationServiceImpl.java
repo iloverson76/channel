@@ -1,8 +1,6 @@
 package com.deepexi.channel.service.impl;
 
-import com.deepexi.channel.dao.AreaDAO;
 import com.deepexi.channel.dao.DistributorAreaRelationDAO;
-import com.deepexi.channel.domain.area.AreaDO;
 import com.deepexi.channel.domain.distributor.DistributorAreaRelationDO;
 import com.deepexi.channel.domain.distributor.DistributorAreaRelationDTO;
 import com.deepexi.channel.service.DistributorAreaRelationService;
@@ -46,5 +44,18 @@ public class DistributorAreaRelationServiceImpl implements DistributorAreaRelati
     public int deleteBatchByDistributorIds(List<Long> distributorIdList) {
 
         return distributorAreaRelationDAO.deleteBatchByDistributorIds(distributorIdList);
+    }
+
+    @Override
+    public DistributorAreaRelationDTO findOneByDistributorId(Long distributorId) {
+
+        DistributorAreaRelationDO eo=distributorAreaRelationDAO.getOne(distributorId);
+
+        if(eo==null){
+            return new DistributorAreaRelationDTO();
+
+        }
+
+        return eo.clone(DistributorAreaRelationDTO.class,CloneDirection.OPPOSITE);
     }
 }

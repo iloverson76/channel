@@ -3,15 +3,19 @@ package com.deepexi.channel.businness.impl;
 import com.deepexi.channel.businness.DistributorBusinessService;
 import com.deepexi.channel.businness.DistributorGradeBusinessService;
 import com.deepexi.channel.dao.DistributorGradeRelationDAO;
+import com.deepexi.channel.domain.SuperEntity;
 import com.deepexi.channel.domain.area.AreaDTO;
+import com.deepexi.channel.domain.area.AreaQuery;
 import com.deepexi.channel.domain.bank.BankAccountDTO;
 import com.deepexi.channel.domain.bank.BankAccountQuery;
 import com.deepexi.channel.domain.distributor.*;
+import com.deepexi.channel.enums.DistributorTypeEnum;
 import com.deepexi.channel.service.*;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +46,9 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
     @Autowired
     private BankAccountService bankAccountService;
+
+    @Autowired
+    AreaService areaService;
 
 
     @Transient
@@ -126,7 +133,7 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
             barList.add(bar);
         });
 
-        distributorBankAccountRelationService.create(barList);
+        distributorBankAccountRelationService.batchCreate(barList);
 
         return distId;
     }
@@ -149,7 +156,27 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
     @Override
     public List<DistributorDTO> findPage(DistributorQuery query) {
 
-       return distributorService.findPage(query);
+        List<DistributorDTO> dtoList=distributorService.findPage(query);
+
+        if(CollectionUtils.isEmpty(dtoList)){
+            return Collections.emptyList();
+        }
+
+        List<Map<String, String>> list = DistributorTypeEnum.getTypeList();
+
+        dtoList.forEach(dto->{
+
+            for (Map<String, String> map : list) {
+
+                if (dto.getDistributorType() == Integer.valueOf(map.get("code"))) {
+
+                    dto.setDistributorTypeDesc(map.get("msg"));
+                }
+            }
+
+        });
+
+       return dtoList;
     }
 
     @Override
@@ -157,9 +184,18 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
         long distributorId=dto.getId();
 
+        String createdBy=dto.getCreatedBy();
+        Date createdTime=dto.getCreatedTime();
+        String updatedBy=dto.getUpdatedBy();
+        Date updatedTime=dto.getUpdatedTime();
+
+        List<Long> distriburotIds=new ArrayList<>(1);
+
+        distriburotIds.add(dto.getId());
+
         List<Long> gradeIds = dto.getGradeIds();
 
-        if(CollectionUtils.isNotEmpty(gradeIds)){
+        if(CollectionUtils.isNotEmpty(gradeIds)){//先删除再新建
 
             distributorGradeRelationService.deleteByDistributorId(distributorId);
 
@@ -171,25 +207,187 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
                 gradeRelationDTO.setDistributorId(distributorId);
 
                 gradeRelationDTO.setDistributorGradeId(gradeId);
+
+                gradeRelationDTO.setCreatedBy(createdBy);
+
+                gradeRelationDTO.setCreatedTime(createdTime);
+
+                gradeRelationDTO.setUpdatedBy(updatedBy);
+
+                gradeRelationDTO.setCreatedTime(updatedTime);
+
             });
            distributorGradeRelationService.createBatch(dtoList);
         }
 
         AreaDTO areaDTO = dto.getArea();
 
-//        if(CollectionUtils.isNotEmpty()){
-//
-//        }
-//
-//        List<BankAccountDTO> bankAccountDTOS = dto.getBankAccounts();
-//
-//        if(CollectionUtils.isNotEmpty()){
-//
-//        }
+        if(null!=areaDTO){
+
+            distributorAreaRelationService.deleteBatchByDistributorIds(distriburotIds);
+
+            DistributorAreaRelationDTO areaRelationDTO = new DistributorAreaRelationDTO();
+
+            areaRelationDTO.setDistributorId(distributorId);
+
+            areaRelationDTO.setAreaId(areaDTO.getId());
+
+            areaRelationDTO.setCreatedBy(createdBy);
+
+            areaRelationDTO.setCreatedTime(createdTime);
+
+            areaRelationDTO.setUpdatedBy(updatedBy);
+
+            areaRelationDTO.setCreatedTime(updatedTime);
+
+            distributorAreaRelationService.create(areaRelationDTO);
+        }
+
+        List<BankAccountDTO> bankAccountDTOS = dto.getBankAccounts();
+
+        if(CollectionUtils.isNotEmpty(bankAccountDTOS)){
+
+            distributorBankAccountRelationService.deleteBatchByDistributorIds(distriburotIds);
+
+            List<DistributorBankAccountRelationDTO> barList=new ArrayList<>(bankAccountDTOS.size());
+
+            bankAccountDTOS.forEach(accountDTO->{
+
+                DistributorBankAccountRelationDTO barDTO=new DistributorBankAccountRelationDTO();
+
+                barDTO.setBankAccountId(accountDTO.getId());
+
+                barDTO.setDistributorId(distributorId);
+
+                barDTO.setCreatedBy(createdBy);
+
+                barDTO.setCreatedTime(createdTime);
+
+                barDTO.setUpdatedBy(updatedBy);
+
+                barDTO.setCreatedTime(updatedTime);
+
+                barList.add(barDTO);
+            });
+
+            distributorBankAccountRelationService.batchCreate(barList);
+        }
 
         distributorService.update(dto);
 
         return true;
+    }
+
+    @Override
+    public DistributorDTO detail(Long distributorId) {
+
+        DistributorDTO distributor = distributorService.getById(distributorId);
+
+        List<DistributorGradeDTO> grades=getGradeInfo(distributorId);
+
+        List<BankAccountDTO> bankAccounts=getBankAccountInfo(distributorId);
+
+        AreaDTO area =getAreaInfo(distributorId);
+
+        //区域信息(未完善:要查到根节点)
+        if(null!=area){
+
+            distributor.setArea(area);
+        }
+
+        //等级信息
+        if(CollectionUtils.isNotEmpty(grades)){
+
+            if(1==distributor.getLimitedParent()){//如果指定上级,就只查直接上级
+
+            }else{//如果不指定,则查所有间接上级和直接上级,但是页面不展示
+
+            }
+
+            distributor.setGrades(grades);
+        }
+
+        //银行账号信息
+        if(CollectionUtils.isNotEmpty(bankAccounts)){
+
+            distributor.setBankAccounts(bankAccounts);
+        }
+
+        //经销商类型中文描述
+        List<Map<String, String>> list = DistributorTypeEnum.getTypeList();
+
+        for (Map<String, String> map : list) {
+
+            if (distributor.getDistributorType() == Integer.valueOf(map.get("code"))) {
+
+                distributor.setDistributorTypeDesc(map.get("msg"));
+            }
+        }
+
+        return distributor;
+    }
+
+    @Override
+    public List<DistributorDTO> listParentDistributorsByGrade(Long gradeId) {
+
+        DistributorGradeDTO gradeDTO=distributorGradeService.getById(gradeId);
+
+        //根节点是最高等级,经销商不能选同级做上级
+        int root=gradeDTO.getRoot();
+
+        if(root==1){//封装枚举类
+            return Collections.emptyList();
+        }
+
+        //父等级
+        long parentGradeId=gradeDTO.getParentId();
+
+        //非根节点且没有上级的,无法确定绝对路径
+        if(parentGradeId==0){
+            return Collections.emptyList();
+        }
+
+        //中间表选经销商ID
+        List<DistributorGradeRelationDTO> dgrDTOList=
+        distributorGradeRelationService.findAllByGradeId(parentGradeId);
+
+        List<Long> distriburotIdList=new ArrayList<>(dgrDTOList.size());
+
+        List<DistributorDTO> DistributorDTOList=new ArrayList<>();
+
+        if(CollectionUtils.isNotEmpty(dgrDTOList)){
+
+            dgrDTOList.forEach(dgr->{
+
+                Long distriburotId=dgr.getDistributorId();
+
+                distriburotIdList.add(distriburotId);
+            });
+
+            //某个等级下的所有经销商信息
+            DistributorQuery query=new DistributorQuery();
+
+            query.setIds(distriburotIdList);
+
+            DistributorDTOList = distributorService.findPage(query);
+        }
+
+        return DistributorDTOList;
+    }
+
+    @Override
+    public AreaDTO getAreaInfo(Long distributorId){//要把上级的信息全部查出来--未完善
+
+        DistributorAreaRelationDTO bar = distributorAreaRelationService.findOneByDistributorId(distributorId);
+
+        Long areaId=bar.getAreaId();
+
+        if(areaId==null){
+            return new AreaDTO();
+        }
+
+        return areaService.getAreaById(areaId);
+
     }
 
     @Override
@@ -204,13 +402,17 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
         List<Long> gradeIdList=new ArrayList<>();
 
+        if(CollectionUtils.isEmpty(dgrDTOS)){
+            return Collections.emptyList();
+        }
+
         dgrDTOS.forEach(dgr->{
-
             gradeIdList.add(dgr.getDistributorGradeId());
-
         });
 
         DistributorGradeQuery query=new DistributorGradeQuery();
+
+        query.setIds(gradeIdList);
 
         return distributorGradeService.findPage(query);
     }
@@ -226,6 +428,10 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
         List<Long> accountIdList=new ArrayList<>();
 
+        if(CollectionUtils.isEmpty(barDTOS)){
+            return Collections.emptyList();
+        }
+
         barDTOS.forEach(bar->{
 
             accountIdList.add(bar.getBankAccountId());
@@ -233,8 +439,9 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
         BankAccountQuery query=new BankAccountQuery();
 
+        query.setIds(accountIdList);
+
         return bankAccountService.findList(query);
     }
-
 
 }

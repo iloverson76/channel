@@ -1,8 +1,7 @@
 package com.deepexi.channel.controller;
 
-import com.deepexi.channel.domain.distributor.DistributorGradeSystemDTO;
-import com.deepexi.channel.domain.distributor.DistributorGradeSystemQuery;
-import com.deepexi.channel.domain.distributor.DistributorGradeSystemVO;
+import com.deepexi.channel.businness.DistributorSystemBusinessService;
+import com.deepexi.channel.domain.distributor.*;
 import com.deepexi.channel.service.DistributorGradeSystemService;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pageHelper.PageBean;
@@ -11,9 +10,12 @@ import com.deepexi.util.pojo.ObjectCloneUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,6 +27,9 @@ public class DistributorGradeSystemController {
 
     @Autowired
     private DistributorGradeSystemService distributorGradeSystemService;
+
+    @Autowired
+    DistributorSystemBusinessService distributorSystemBusinessService;
 
     @PostMapping()
     @ApiOperation(value = "创建经销商体系")
@@ -41,8 +46,32 @@ public class DistributorGradeSystemController {
     @ApiOperation(value = "根据id查看详情")
     public Payload detail(@PathVariable(value = "id", required = true) long  pk) {
 
-        DistributorGradeSystemVO vo=distributorGradeSystemService.detail(pk).clone(DistributorGradeSystemVO.class,CloneDirection.OPPOSITE);
+        DistributorGradeSystemDTO dto=distributorSystemBusinessService.detail(pk);
 
+        DistributorGradeSystemVO vo=new DistributorGradeSystemVO();
+
+        BeanUtils.copyProperties(dto,vo);
+
+        if(null!=dto){
+
+            List<DistributorGradeDTO> gradeDTOList=dto.getGrades();
+
+            if(CollectionUtils.isNotEmpty(gradeDTOList)){
+
+                List<DistributorGradeVO> gradeVOList=new ArrayList<>();
+
+                if(CollectionUtils.isNotEmpty(gradeVOList)){
+
+                    gradeDTOList.forEach(gradeDTO->{
+
+                        DistributorGradeVO gradeVo=gradeDTO.clone(DistributorGradeVO.class,CloneDirection.OPPOSITE);
+
+                        gradeVOList.add(gradeVo);
+                    });
+                }
+
+            }
+        }
         return new Payload<>(vo);
     }
 
@@ -67,14 +96,37 @@ public class DistributorGradeSystemController {
     }
 
     @GetMapping
-    @ApiOperation(value = "分页查询", notes = "分页请求")
+    @ApiOperation(value = "经销商体系列表-分页查询")
     public  Payload<PageBean<DistributorGradeSystemVO>> findPage(@ApiParam(name = "query", required = true) DistributorGradeSystemQuery query) {
 
-        List<DistributorGradeSystemDTO> dtoList=distributorGradeSystemService.findPage(query);
+        List<DistributorGradeSystemDTO> dtoList=distributorSystemBusinessService.findPage(query);
 
-        List<DistributorGradeSystemVO> voList= ObjectCloneUtils.convertList(dtoList, DistributorGradeSystemVO.class);;
+        List<DistributorGradeSystemVO> voList=new ArrayList<>();
+
+        if(CollectionUtils.isNotEmpty(dtoList)){
+
+            dtoList.forEach(dto->{
+
+                List<DistributorGradeDTO> grades=dto.getGrades();
+
+                DistributorGradeSystemVO vo=new DistributorGradeSystemVO();
+
+                if(CollectionUtils.isNotEmpty(grades)){
+
+                    List<DistributorGradeVO> gradeVOList=
+                            ObjectCloneUtils.convertList(grades,DistributorGradeVO.class,CloneDirection.OPPOSITE);
+
+                    BeanUtils.copyProperties(dto,vo);
+
+                    vo.setGrades(gradeVOList);
+
+                }else{
+                    vo=dto.clone(DistributorGradeSystemVO.class,CloneDirection.OPPOSITE);
+                }
+                voList.add(vo);
+            });
+        }
 
         return new Payload<>(new PageBean<>(voList));
     }
-
 }

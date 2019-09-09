@@ -2,6 +2,7 @@ package com.deepexi.channel.businness;
 
 import com.deepexi.channel.domain.distributor.DistributorGradeDTO;
 import com.deepexi.channel.domain.distributor.DistributorGradeQuery;
+import com.deepexi.channel.domain.distributor.DistributorGradeSystemDTO;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface DistributorGradeBusinessService {
     /**
       获取详情
     */
-    DistributorGradeDTO detail(Long gradeId,Long systemId);
+    DistributorGradeDTO detail(Long gradeId);
 
     /**
      * 分页获取列表
@@ -24,4 +25,9 @@ public interface DistributorGradeBusinessService {
      * 可挂载下级的节点
      */
     List<DistributorGradeDTO> findParentNodesForCreat(long systemId);
+
+    /**
+     * 根据体系查询所有的等级
+     */
+    List<DistributorGradeDTO> findAllGradesBySystem(long systemId);
 }

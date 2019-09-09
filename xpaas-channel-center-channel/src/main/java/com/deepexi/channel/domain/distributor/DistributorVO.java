@@ -23,7 +23,6 @@ import java.util.List;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -47,7 +46,7 @@ public class DistributorVO extends AbstractObject {
     private List<Long> bankAccountIds;
 
     @ApiModelProperty("所在区域")
-    private AreaDTO area;
+    private AreaVO area;
 
     @ApiModelProperty("所在区域ID")
     private long AreaId;
@@ -62,7 +61,7 @@ public class DistributorVO extends AbstractObject {
      * 上级经销商ID
      */
     @ApiModelProperty("上级经销商ID")
-    private Long parent_id;
+    private Long parentId;
 
     /**
      * 经销商类型 1 厂商 2 经销商
@@ -71,8 +70,15 @@ public class DistributorVO extends AbstractObject {
     private Integer distributorType;
 
     /**
+     * 经销商类型中文描述
+     */
+    @ApiModelProperty("经销商类型中文描述")
+    private String distributorTypeDesc;
+
+    /**
      * 经销商编码
      */
+    @ApiModelProperty("经销商编码")
     private String distributorCode;
 
     /**
