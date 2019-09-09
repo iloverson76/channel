@@ -119,7 +119,6 @@ public class DistributorGradeController {
 
                     vo.setSystem(systemVO);
 
-                    voList.add(vo);
                 }else {
                     vo=dto.clone(DistributorGradeVO.class,CloneDirection.OPPOSITE);
                 }
