@@ -1,14 +1,12 @@
 package com.deepexi.channel.businness.impl;
 
-import com.deepexi.channel.businness.AreaBusinessService;
 import com.deepexi.channel.businness.AreaTypeBusinessService;
 import com.deepexi.channel.domain.area.AreaDTO;
 import com.deepexi.channel.domain.area.AreaQuery;
 import com.deepexi.channel.domain.area.AreaTypeDTO;
-import com.deepexi.channel.domain.distributor.DistributorGradeDTO;
+import com.deepexi.channel.domain.area.AreaTypeQuery;
 import com.deepexi.channel.service.AreaService;
 import com.deepexi.channel.service.AreaTypeService;
-import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +14,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -83,5 +80,37 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
         });
 
         return areaDTOList;
+    }
+
+
+    @Override
+    public List<AreaTypeDTO> findPage(AreaTypeQuery query){
+
+        List<AreaTypeDTO> dtoList=areaTypeService.listAreaTypePage(query);
+
+        if(CollectionUtils.isEmpty(dtoList)){
+
+            return Collections.emptyList();
+        }
+
+        List<AreaTypeDTO> childDTOList=ObjectCloneUtils.convertList(dtoList,AreaTypeDTO.class,CloneDirection.OPPOSITE);
+
+        for(AreaTypeDTO parent:dtoList){
+
+            for (AreaTypeDTO child:childDTOList){
+
+                if(0L!=parent.getParentId()&&parent.getId().equals(child.getParentId())){
+
+                    child.setParentName(parent.getAreaTypeName());
+
+                    child.setParentCode(parent.getAreaTypeCode());
+
+                    child.setParentNameEn(parent.getParentNameEn());
+                }
+            }
+
+        }
+
+        return childDTOList;
     }
 }

@@ -29,7 +29,7 @@ public class AreaDTO extends AbstractObject {
     /**
      * 父节点ID
      */
-    private Integer parentId;
+    private Long parentId;
 
     /**
      * 路径

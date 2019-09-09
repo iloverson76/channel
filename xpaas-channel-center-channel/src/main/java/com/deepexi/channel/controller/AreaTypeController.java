@@ -102,7 +102,7 @@ public class AreaTypeController {
 
         query.setAppId(appRuntimeEnv.getAppId());
 
-        List<AreaTypeDTO> dtoList = areaTypeService.listAreaTypePage(query);
+        List<AreaTypeDTO> dtoList = areaTypeBusinessService.findPage(query);
 
         List<AreaTypeVO> voList = ObjectCloneUtils.convertList(dtoList, AreaTypeVO.class);
 

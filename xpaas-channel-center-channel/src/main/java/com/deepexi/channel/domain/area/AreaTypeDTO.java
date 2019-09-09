@@ -51,6 +51,8 @@ public class AreaTypeDTO extends AbstractObject {
      */
     private String parentNameEn;
 
+    private String parentCode;
+
     /**
      * 层级路径
      */
@@ -94,5 +96,6 @@ public class AreaTypeDTO extends AbstractObject {
      * 更新时间
      */
     private Date updatedTime;
+
 
 }

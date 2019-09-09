@@ -34,38 +34,8 @@
 
     <select id="listAreaTypePage" parameterType="com.deepexi.channel.domain.area.AreaTypeQuery"
             resultType="com.deepexi.channel.domain.area.AreaTypePageDO">
-        SELECT
-        e.*
-        FROM
-        (
-            SELECT
-            d.area_type_name AS parent_name,
-            b.*
-            FROM
-            (
-            SELECT
-            a.*
-            FROM
-            cc_area_type a
-            WHERE
-            a.dr = 0
-            AND a.tenant_id = #{tenantId}
-            AND a.app_id = #{appId}
-            ) b
-            LEFT JOIN (
-            SELECT
-            c.id,
-            c.area_type_name
-            FROM
-            cc_area_type c
-            WHERE
-            c.dr = 0
-            AND c.tenant_id = #{tenantId}
-            AND c.app_id = #{appId}
-            ) d ON b.parent_id = d.id
-        ) e
-        WHERE
-        1 = 1
+       select * from cc_area_type
+        WHERE dr=0
         <if test="ids != null">
             and id in
             <foreach collection="ids" item="tempId" index="index" open="(" close=")" separator=",">

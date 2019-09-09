@@ -1,9 +1,15 @@
 package com.deepexi.channel.domain.area;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.deepexi.channel.domain.SuperEntity;
+import com.deepexi.channel.domain.BaseEntity;
+import com.deepexi.util.pojo.AbstractObject;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.Set;
 
 /**
  * <p>
@@ -18,21 +24,23 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@TableName("cc_area")
-@ApiModel(value="Area对象", description="区域表")
-public class AreaDO extends SuperEntity {
+@ApiModel(value="区域树")
+public class AreaTreeDTO extends AbstractObject implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    private Long id;
+
+    private String path;
+
+    private Set<AreaTreeDTO> children;
+
+    private AreaTypeDTO areaType;
 
     /**
      * 父节点ID
      */
     private Long parentId;
-
-    /**
-     * 路径
-     */
-    private String path;
 
     /**
      * 区域分类ID
@@ -59,4 +67,23 @@ public class AreaDO extends SuperEntity {
      */
     private String description;
 
+    /**
+     * 创建人
+     */
+    private String createdBy;
+
+    /**
+     * 创建时间
+     */
+    private Date createdTime;
+
+    /**
+     * 更新人
+     */
+    private String updatedBy;
+
+    /**
+     * 更新时间
+     */
+    private Date updatedTime;
 }

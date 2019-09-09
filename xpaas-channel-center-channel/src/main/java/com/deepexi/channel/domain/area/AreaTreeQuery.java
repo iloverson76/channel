@@ -4,6 +4,8 @@ import com.deepexi.channel.domain.CommQuery;
 import io.swagger.annotations.ApiModel;
 import lombok.*;
 
+import java.util.List;
+
 /**
  * <p>
  * 区域类型查询
@@ -23,8 +25,8 @@ public class AreaTreeQuery extends CommQuery {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 区域分类名称
+     *
      */
-    private String areaTypeName;
+    private List<Long> areaTypeIds;
 
 }
