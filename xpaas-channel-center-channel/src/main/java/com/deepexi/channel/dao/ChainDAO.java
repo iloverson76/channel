@@ -16,7 +16,7 @@ public interface ChainDAO extends IService<ChainDO> {
 
     List<ChainDO> findParentList(List<Long> ids);
 
-    boolean updateBatch(List<ChainDO> chainDOS);
+    boolean updatePathAndParentIdBatch(List<ChainDO> chainDOS);
 
     List<ChainDO> getChainTreeNode();
 

@@ -97,7 +97,7 @@
         </if>
     </select>
     <!--批量更新path parentId,不能更新其他字段！！！-->
-    <update id="updateBatch" parameterType="java.util.List">
+    <update id="updatePathAndParentIdBatch" parameterType="java.util.List">
         UPDATE cc_chain
         <trim prefix="set" suffixOverrides=",">
             <trim prefix="parent_id = case" suffix="end,">

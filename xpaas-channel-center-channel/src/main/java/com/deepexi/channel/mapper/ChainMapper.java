@@ -20,7 +20,7 @@ public interface ChainMapper extends BaseMapper<ChainDO> {
 
     List<ChainDO> findParentList(@Param("ids") List<Long> ids);
 
-    Integer updateBatch(@Param("list")List<ChainDO> list);
+    Integer updatePathAndParentIdBatch(@Param("list")List<ChainDO> list);
 
     List<ChainDO> getChainTreeNode();
 

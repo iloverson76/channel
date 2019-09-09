@@ -259,7 +259,7 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         });
 
         //批量更新所有节点的parentId与path
-        return chainService.updateBatch(chainDTOS);
+        return chainService.updatePathAndParentIdBatch(chainDTOS);
     }
 
     /**
@@ -283,7 +283,9 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         query.setPage(-1);
         query.setPath("/");
         List<ChainDTO> chainDTOS = chainService.findPage(query);
-
+        if(CollectionUtil.isEmpty(chainDTOS)){
+            return null;
+        }
         List<ChainTreeDTO> chainTreeDTOS = ObjectCloneUtils.convertList(chainDTOS, ChainTreeDTO.class);
         Map<Long,ChainTreeDTO> chainTreeMap = chainTreeDTOS.stream().collect(Collectors.toMap(ChainTreeDTO::getId,c->c));
 
@@ -299,10 +301,12 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
                 result.add(c);
             }else{
                 ChainTreeDTO parentDTO = chainTreeMap.get(c.getParentId());
-                if(parentDTO.getChildren() == null){
-                    parentDTO.setChildren(new LinkedList<>());
+                if(parentDTO != null){
+                    if(parentDTO.getChildren() == null){
+                        parentDTO.setChildren(new LinkedList<>());
+                    }
+                    parentDTO.getChildren().add(c);
                 }
-                parentDTO.getChildren().add(c);
             }
         });
         return result;
@@ -373,7 +377,7 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
             chainDTO.setPath(rootParent.getPath()+"/"+chainDTO.getId());
             List<ChainDTO> list = new LinkedList<>();
             list.add(chainDTO);
-            return chainService.updateBatch(list);
+            return chainService.updatePathAndParentIdBatch(list);
         }
         //有子节点,需要更新子节点的所有path
         List<ChainTreeDTO> chainTreeDTOS = ObjectCloneUtils.convertList(children, ChainTreeDTO.class);
@@ -398,10 +402,12 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
                 }
             }else{
                 ChainTreeDTO parentDTO = chainTreeMap.get(c.getParentId());
-                if(parentDTO.getChildren() == null){
-                    parentDTO.setChildren(new LinkedList<>());
+                if(parentDTO != null){
+                    if(parentDTO.getChildren() == null){
+                        parentDTO.setChildren(new LinkedList<>());
+                    }
+                    parentDTO.getChildren().add(c);
                 }
-                parentDTO.getChildren().add(c);
             }
         }
         //设置path和parentId，得到孙子儿子的结果列表
@@ -410,11 +416,15 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
 
         /**保存结果*/
         //批量更新所有节点的parentId与path
-        return chainService.updateBatch(recursionResult);
+        return chainService.updatePathAndParentIdBatch(recursionResult);
     }
 
     @Override
     public Boolean deleteTreeNode(Long id) {
+        //获取所有子节点
+
+        //批量设置path为空
+
         return null;
     }
 }

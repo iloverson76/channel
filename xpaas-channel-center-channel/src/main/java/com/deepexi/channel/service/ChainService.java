@@ -50,11 +50,11 @@ public interface ChainService {
     boolean haveChildren(List<Long> ids);
 
     /**
-     * 批量更新path，
+     * 批量更新path，ParentId
      * @param chainDTOS
      * @return
      */
-    boolean updateBatch(List<ChainDTO> chainDTOS);
+    boolean updatePathAndParentIdBatch(List<ChainDTO> chainDTOS);
 
     /**
      * 获取整棵树的节点

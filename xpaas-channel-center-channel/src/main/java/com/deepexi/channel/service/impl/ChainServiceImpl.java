@@ -119,12 +119,12 @@ public class ChainServiceImpl implements ChainService {
     }
 
     @Override
-    public boolean updateBatch(List<ChainDTO> chainDTOS) {
+    public boolean updatePathAndParentIdBatch(List<ChainDTO> chainDTOS) {
         if(CollectionUtil.isEmpty(chainDTOS)){
             return false;
         }
         List<ChainDO> chainDOS = ObjectCloneUtils.convertList(chainDTOS, ChainDO.class);
-        return chainDAO.updateBatch(chainDOS);
+        return chainDAO.updatePathAndParentIdBatch(chainDOS);
     }
 
     @Override

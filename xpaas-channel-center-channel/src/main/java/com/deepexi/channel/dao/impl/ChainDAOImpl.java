@@ -33,8 +33,8 @@ public class ChainDAOImpl extends ServiceImpl<ChainMapper, ChainDO> implements C
     }
 
     @Override
-    public boolean updateBatch(List<ChainDO> chainDOS) {
-        return chainMapper.updateBatch(chainDOS) > 0 ? true : false;
+    public boolean updatePathAndParentIdBatch(List<ChainDO> chainDOS) {
+        return chainMapper.updatePathAndParentIdBatch(chainDOS) > 0 ? true : false;
     }
 
     @Override
