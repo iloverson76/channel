@@ -2,6 +2,8 @@ package com.deepexi.channel.businness;
 
 import com.deepexi.channel.domain.area.AreaDTO;
 import com.deepexi.channel.domain.area.AreaQuery;
+import com.deepexi.channel.domain.area.AreaTreeDTO;
+import com.deepexi.channel.domain.area.AreaTreeQuery;
 import com.deepexi.channel.domain.distributor.DistributorDTO;
 
 import java.util.List;
@@ -16,4 +18,6 @@ public interface AreaBusinessService {
    List<AreaDTO> findPage(AreaQuery query);
 
     AreaDTO detail(Long pk, Long areaTypeId);
+
+    List<AreaTreeDTO> buildAreaTree(AreaTreeQuery query);
 }

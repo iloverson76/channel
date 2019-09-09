@@ -6,9 +6,11 @@ import com.deepexi.channel.service.AreaService;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pageHelper.PageBean;
 import com.deepexi.util.pojo.CloneDirection;
+import com.deepexi.util.pojo.ObjectCloneUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -101,5 +103,30 @@ public class AreaController {
         return new Payload<>(new PageBean<>(voList));
     }
 
+    @GetMapping("/areaTree")
+    @ApiOperation("区域树")
+    public Payload<PageBean<AreaTreeVO>> listAreaTree(@ApiParam(name = "query", required = true) AreaTreeQuery query) {
+
+        List<AreaTreeDTO> dtoList = areaBusinessService.buildAreaTree(query);
+
+        List<AreaTreeVO> voList= new ArrayList<>();
+
+        if(CollectionUtils.isNotEmpty(dtoList)){
+
+            dtoList.forEach(dto->{
+
+                AreaTypeVO areaTypeVO=dto.getAreaType().clone(AreaTypeVO.class,CloneDirection.OPPOSITE);
+
+                AreaTreeVO vo= new AreaTreeVO();
+
+                BeanUtils.copyProperties(dto,vo);
+
+                vo.setAreaType(areaTypeVO);
+
+                voList.add(vo);
+            });
+        }
+        return new Payload<>(new PageBean<>(voList));
+    }
 
 }

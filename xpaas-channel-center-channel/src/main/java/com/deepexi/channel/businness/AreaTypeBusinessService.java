@@ -3,6 +3,7 @@ package com.deepexi.channel.businness;
 import com.deepexi.channel.domain.area.AreaDTO;
 import com.deepexi.channel.domain.area.AreaQuery;
 import com.deepexi.channel.domain.area.AreaTypeDTO;
+import com.deepexi.channel.domain.area.AreaTypeQuery;
 
 import java.util.List;
 
@@ -12,4 +13,6 @@ import java.util.List;
 public interface AreaTypeBusinessService {
 
    List<AreaDTO> listLinkedAreas(long pk);
+
+   List<AreaTypeDTO> findPage(AreaTypeQuery query);
 }

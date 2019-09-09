@@ -65,6 +65,12 @@ public class AreaTypeVO extends AbstractObject {
     @ApiModelProperty("上级名称-英文")
     private String parentNameEn;
 
+    /**
+     * 上级编码
+     */
+    @ApiModelProperty("上级编码")
+    private String parentCode;
+
 
     /**
      * 区域类型名称

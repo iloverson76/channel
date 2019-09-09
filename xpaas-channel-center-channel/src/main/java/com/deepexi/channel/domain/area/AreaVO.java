@@ -45,7 +45,7 @@ public class AreaVO extends AbstractObject {
      * 区域分类ID
      */
     @ApiModelProperty("区域分类ID")
-    private Integer areaTypeId;
+    private Long areaTypeId;
 
     /**
      * 区域名称
