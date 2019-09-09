@@ -119,12 +119,12 @@ public class ChainServiceImpl implements ChainService {
     }
 
     @Override
-    public boolean updateBatch(List<ChainDTO> chainDTOS) {
+    public boolean updatePathAndParentIdBatch(List<ChainDTO> chainDTOS) {
         if(CollectionUtil.isEmpty(chainDTOS)){
             return false;
         }
         List<ChainDO> chainDOS = ObjectCloneUtils.convertList(chainDTOS, ChainDO.class);
-        return chainDAO.updateBatch(chainDOS);
+        return chainDAO.updatePathAndParentIdBatch(chainDOS);
     }
 
     @Override
@@ -145,15 +145,6 @@ public class ChainServiceImpl implements ChainService {
         return chainDAO.resetTree(dto.clone(ChainDO.class)) > 0 ? true:false;
     }
 
-    @Override
-    public Boolean addTreeNode(ChainDTO chainDTO) {
-        //查询该节点的所有子节点
-        ChainQuery query = ChainQuery.builder().path("/"+chainDTO.getId()).build();
-        query.setPage(-1);
-        List<ChainDTO> children = this.findPage(query);
-        
-        //更新该节点的parentId、path以及所有儿子孙子节点parentId和path
-        return null;
-    }
+
 
 }

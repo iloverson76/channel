@@ -25,4 +25,9 @@ public interface ChainBusinessService {
     List<ChainTreeDTO> getTree();
 
     List<ChainTreeDTO> getChildren(Long id);
+
+    Boolean addTreeNode(ChainDTO chainDTO);
+
+
+    Boolean deleteTreeNode(Long id);
 }

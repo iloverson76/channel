@@ -206,7 +206,7 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
 
     /**
      * @MethodName: recursionTree
-     * @Description: 递归更新所有儿子节点的path以及parentId，返回所有需要的dto列表
+     * @Description: 递归更新所有儿子节点的path以及parentId，返回儿子孙子的dto列表
      * @Param: [dto]
      * @Return: java.util.List<com.deepexi.channel.domain.chain.ChainDTO>
      * @Author: mumu
@@ -259,7 +259,7 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         });
 
         //批量更新所有节点的parentId与path
-        return chainService.updateBatch(chainDTOS);
+        return chainService.updatePathAndParentIdBatch(chainDTOS);
     }
 
     /**
@@ -283,7 +283,9 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         query.setPage(-1);
         query.setPath("/");
         List<ChainDTO> chainDTOS = chainService.findPage(query);
-
+        if(CollectionUtil.isEmpty(chainDTOS)){
+            return null;
+        }
         List<ChainTreeDTO> chainTreeDTOS = ObjectCloneUtils.convertList(chainDTOS, ChainTreeDTO.class);
         Map<Long,ChainTreeDTO> chainTreeMap = chainTreeDTOS.stream().collect(Collectors.toMap(ChainTreeDTO::getId,c->c));
 
@@ -294,14 +296,17 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         //for循环拼接类型名称以及儿子节点
         chainTreeDTOS.forEach(c ->{
             c.setChainTypeName(chainTypeDTOMap.get(c.getChainTypeId()) == null ? "" : chainTypeDTOMap.get(c.getChainTypeId()).getChainTypeName());
+            //parentId为0，那说明是根节点
             if(c.getParentId() == 0L ){
                 result.add(c);
             }else{
                 ChainTreeDTO parentDTO = chainTreeMap.get(c.getParentId());
-                if(parentDTO.getChildren() == null){
-                    parentDTO.setChildren(new LinkedList<>());
+                if(parentDTO != null){
+                    if(parentDTO.getChildren() == null){
+                        parentDTO.setChildren(new LinkedList<>());
+                    }
+                    parentDTO.getChildren().add(c);
                 }
-                parentDTO.getChildren().add(c);
             }
         });
         return result;
@@ -354,4 +359,72 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         return chainTypeDTOS;
     }
 
+    @Override
+    @Transactional
+    public Boolean addTreeNode(ChainDTO chainDTO) {
+        if(chainDTO == null){
+            return null;
+        }
+        //查询父节点,用于后面设置path
+        ChainDTO rootParent = chainService.detail(chainDTO.getParentId());
+        //查询该节点的所有子节点，;以及节点本身
+        ChainQuery query = ChainQuery.builder().path("/"+chainDTO.getId()).build();
+        query.setPage(-1);
+        List<ChainDTO> children = chainService.findPage(query);
+        //没有子节点
+        if(CollectionUtil.isEmpty(children)){
+            //设置path
+            chainDTO.setPath(rootParent.getPath()+"/"+chainDTO.getId());
+            List<ChainDTO> list = new LinkedList<>();
+            list.add(chainDTO);
+            return chainService.updatePathAndParentIdBatch(list);
+        }
+        //有子节点,需要更新子节点的所有path
+        List<ChainTreeDTO> chainTreeDTOS = ObjectCloneUtils.convertList(children, ChainTreeDTO.class);
+        Map<Long,ChainTreeDTO> chainTreeMap = chainTreeDTOS.stream().collect(Collectors.toMap(ChainTreeDTO::getId,c->c));
+
+        /**更新该节点的parentId、path以及所有儿子孙子节点parentId和path*/
+        //遍历拼接成树形结构
+        //根节点
+        ChainTreeDTO root = null;
+        for(ChainTreeDTO c :chainTreeDTOS){
+            //寻找根节点
+            if( c.getId().equals(chainDTO.getId())){
+                root = c;
+                //如果根节点在树中有父节点
+                if(chainDTO.getParentId() != null && chainDTO.getParentId() != 0){
+                    root.setParentId(rootParent.getId());
+                    root.setPath(rootParent.getPath()+"/"+root.getId());
+                }else{
+                    //没父节点
+                    root.setParentId(0L);
+                    root.setPath("/"+root.getId());
+                }
+            }else{
+                ChainTreeDTO parentDTO = chainTreeMap.get(c.getParentId());
+                if(parentDTO != null){
+                    if(parentDTO.getChildren() == null){
+                        parentDTO.setChildren(new LinkedList<>());
+                    }
+                    parentDTO.getChildren().add(c);
+                }
+            }
+        }
+        //设置path和parentId，得到孙子儿子的结果列表
+        List<ChainDTO> recursionResult = this.recursionTree(root);
+        recursionResult.add(root.clone(ChainDTO.class));//根节点也要设置进去
+
+        /**保存结果*/
+        //批量更新所有节点的parentId与path
+        return chainService.updatePathAndParentIdBatch(recursionResult);
+    }
+
+    @Override
+    public Boolean deleteTreeNode(Long id) {
+        //获取所有子节点
+
+        //批量设置path为空
+
+        return null;
+    }
 }

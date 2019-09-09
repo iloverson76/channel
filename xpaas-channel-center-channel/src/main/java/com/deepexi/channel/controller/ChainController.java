@@ -135,11 +135,19 @@ public class ChainController {
         return new Payload<>(chainTreeVOS);
     }
 
-    @PostMapping("/tree/node/{id}")
-    @ApiOperation(value="树形结构增量新增节点接口",notes = "")
-    public Payload<Boolean> addTreeNode(@PathVariable(value = "id", required = true) Long id, ChainVO vo){
-        if(vo==null){return new Payload<>(false);}
-        ChainDTO chainDTO = vo.clone(ChainDTO.class);
-        return new Payload<Boolean>(chainService.addTreeNode(chainDTO));
-    }
+//    @PutMapping("/tree/node/{id}")
+//    @ApiOperation(value="树形结构新增、修改节点接口",notes = "传parentId以及节点的id，自动更新该节点下所有子节点和孙子节点")
+//    public Payload<Boolean> addTreeNode(@PathVariable(value = "id", required = true) Long id, @RequestBody ChainVO vo){
+//        vo.setId(id);
+//        if(vo==null){return new Payload<>(false);}
+//        ChainDTO chainDTO = vo.clone(ChainDTO.class);
+//        return new Payload<>(chainBusinessService.addTreeNode(chainDTO));
+//    }
+//
+//    @DeleteMapping("/tree/node/{id}")
+//    @ApiOperation(value="树形结构删除节点接口",notes = "")
+//    public Payload<Boolean> deleteTreeNode(@PathVariable(value = "id" , required = true)Long id){
+//        return new Payload<>(chainBusinessService.deleteTreeNode(id));
+//    }
+
 }
