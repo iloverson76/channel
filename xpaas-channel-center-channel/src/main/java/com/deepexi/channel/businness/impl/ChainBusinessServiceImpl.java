@@ -276,7 +276,14 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         List<ChainTreeDTO> result  = new LinkedList<>();
 
         //获取所有树的节点，根据path获取三级
-        List<ChainDTO> chainDTOS = chainService.getChainTreeNode();
+        //增量就显示三级
+//        List<ChainDTO> chainDTOS = chainService.getChainTreeNode();
+        //全量需要全部数据
+        ChainQuery query = new ChainQuery();
+        query.setPage(-1);
+        query.setPath("/");
+        List<ChainDTO> chainDTOS = chainService.findPage(query);
+
         List<ChainTreeDTO> chainTreeDTOS = ObjectCloneUtils.convertList(chainDTOS, ChainTreeDTO.class);
         Map<Long,ChainTreeDTO> chainTreeMap = chainTreeDTOS.stream().collect(Collectors.toMap(ChainTreeDTO::getId,c->c));
 
@@ -332,6 +339,14 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         return chainTreeDTOS;
     }
 
+    /**
+     * @MethodName: getChainTypeListByChainDTOS
+     * @Description: 根据chainTypeId 获取chainTypeList
+     * @Param: [chainDTOS]
+     * @Return: java.util.List<com.deepexi.channel.domain.chain.ChainTypeDTO>
+     * @Author: mumu
+     * @Date: 2019/9/9
+    **/
     public List<ChainTypeDTO> getChainTypeListByChainDTOS(List<ChainDTO> chainDTOS){
         List<Long> chainTypeIds = chainDTOS.stream().map(ChainDTO::getChainTypeId).collect(Collectors.toList());
         ChainTypeQuery query = ChainTypeQuery.builder().ids(chainTypeIds).build();

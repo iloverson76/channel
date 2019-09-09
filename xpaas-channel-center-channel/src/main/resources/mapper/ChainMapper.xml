@@ -118,7 +118,7 @@
     </update>
 
     <select id="getChainTreeNode" resultType="com.deepexi.channel.domain.chain.ChainDO">
-        SELECT * FROM cc_chain WHERE path RLIKE "^/([0-9])*$|^/([0-9])*/([0-9])*$|^/([0-9])*/([0-9])*/([0-9])*$"
+        SELECT * FROM cc_chain WHERE dr = 0 and path RLIKE "^/([0-9])*$|^/([0-9])*/([0-9])*$|^/([0-9])*/([0-9])*/([0-9])*$"
     </select>
 
     <update id="resetTree">
