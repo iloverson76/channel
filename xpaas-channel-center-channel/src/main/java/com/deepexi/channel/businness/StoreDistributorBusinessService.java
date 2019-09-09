@@ -1,5 +1,6 @@
 package com.deepexi.channel.businness;
 
+import com.deepexi.channel.domain.store.StoreDetailDTO;
 import com.deepexi.channel.domain.store.StoreDistributorDTO;
 
 import java.util.List;
@@ -11,4 +12,8 @@ import java.util.List;
  */
 public interface StoreDistributorBusinessService {
     List<StoreDistributorDTO> getStoreDistributorByStoreId(Long storeId);
+
+    Boolean saveStoreDistributors(StoreDetailDTO dto);
+
+    Boolean updateStoreDistributorRelation(StoreDetailDTO dto);
 }

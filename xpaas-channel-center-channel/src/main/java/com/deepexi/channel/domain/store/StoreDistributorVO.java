@@ -34,6 +34,8 @@ public class StoreDistributorVO extends AbstractObject {
     @ApiModelProperty(value = "更新人")
     private String updatedBy;
 
+    @ApiModelProperty("门店id")
+    private Long storeId;
     @ApiModelProperty("经销商id")
     private Long distributorId;
     /**

@@ -1,5 +1,6 @@
 package com.deepexi.channel.service.impl;
 
+import com.deepexi.channel.dao.StoreDistributorRelationDAO;
 import com.deepexi.channel.domain.store.StoreDistributorRelationDO;
 import com.deepexi.channel.domain.store.StoreDistributorRelationDTO;
 import com.deepexi.channel.domain.store.StoreDistributorRelationQuery;
@@ -21,15 +22,29 @@ import java.util.List;
 public class StoreDistributorRelationServiceImpl implements StoreDistributorRelationService {
 
     @Autowired
-    StoreDistributorRelationMapper storeDistributorRelationMapper;
+    StoreDistributorRelationDAO storeDistributorRelationDAO;
 
     @Override
     public List<StoreDistributorRelationDTO> findList(StoreDistributorRelationQuery query) {
-        List<StoreDistributorRelationDO> list = storeDistributorRelationMapper.findList(query);
+        List<StoreDistributorRelationDO> list = storeDistributorRelationDAO.findList(query);
         if(CollectionUtil.isEmpty(list)){
             return null;
         }
         List<StoreDistributorRelationDTO> dtos = ObjectCloneUtils.convertList(list, StoreDistributorRelationDTO.class);
         return dtos;
+    }
+
+    @Override
+    public Boolean saveBatch(List<StoreDistributorRelationDTO> relationDTOS) {
+        if(CollectionUtil.isEmpty(relationDTOS)){
+            return false;
+        }
+        List<StoreDistributorRelationDO> storeDistributorRelationDOS = ObjectCloneUtils.convertList(relationDTOS, StoreDistributorRelationDO.class);
+        return storeDistributorRelationDAO.saveBatch(storeDistributorRelationDOS);
+    }
+
+    @Override
+    public Boolean deleteByStoreId(long storeId) {
+        return storeDistributorRelationDAO.deleteByStoreId(storeId);
     }
 }

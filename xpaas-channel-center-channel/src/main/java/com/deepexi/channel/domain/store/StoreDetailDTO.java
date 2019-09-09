@@ -20,7 +20,7 @@ public class StoreDetailDTO extends StoreDTO {
 
     private ChainDTO chainDTO;
 
-    private List<DistributorDTO> distributorDTOS;
+    private List<StoreDistributorDTO> storeDistributorDTOS;
 
     private List<StoreHistoryDTO> storeHistoryDTOS;
 }

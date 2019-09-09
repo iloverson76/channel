@@ -30,7 +30,7 @@ public class StoreDetailVO extends StoreVO {
     private ChainVO chainVO;
 
     @ApiModelProperty(value = "经销商信息")
-    private List<DistributorVO> distributorVOS;
+    private List<StoreDistributorVO> storeDistributorVOS;
 
     @ApiModelProperty(value = "修改历史", notes = "更新、新增时不用传" )
     private List<StoreHistoryVO> storeHistoryVOS;

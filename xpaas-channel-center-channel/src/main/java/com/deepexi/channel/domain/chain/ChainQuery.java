@@ -54,7 +54,7 @@ public class ChainQuery extends CommQuery {
     @ApiModelProperty(value = "连锁编码",example = "abcd123")
     private String chainCode;
 
-    @ApiModelProperty(value = "连锁层级路径，前端不用理")
+    @ApiModelProperty(value = "连锁层级路径，连琐树用于判断是否是编辑还是新增，path为空就需要新增，不为空为编辑")
     private String path;
 
     @ApiModelProperty(value = "连锁类型id列表，前端不用理")

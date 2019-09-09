@@ -20,7 +20,8 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 public class StoreDistributorDTO extends SuperEntity {
-    
+
+    Long storeId;
     Long distributorId;
     /**经销商code*/
     String distributorCode;

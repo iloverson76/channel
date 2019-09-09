@@ -7,6 +7,7 @@ import com.deepexi.channel.domain.area.AreaDTO;
 import com.deepexi.channel.domain.chain.ChainDTO;
 import com.deepexi.channel.domain.store.*;
 import com.deepexi.channel.service.*;
+import com.deepexi.util.CollectionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,7 +62,9 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
         }
 
         //新增门店经销商关联
-
+        if(CollectionUtil.isNotEmpty(dto.getStoreDistributorDTOS())){
+            Boolean storeDistributorCreate = storeDistributorBusinessService.saveStoreDistributors(dto);
+        }
         return id;
     }
 
@@ -91,13 +94,16 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
         //修改门店区域关联
         Long storeAreaUpdateResult = storeAreaBusinessService.updateStoreAreaRelation(dto);
         //修改门店经销商关联
-
+        Boolean storeDistributorUpdateResult = storeDistributorBusinessService.updateStoreDistributorRelation(dto);
         return result;
     }
 
     @Override
     public StoreDetailDTO detail(Long pk) {
         StoreDTO storeDTO = storeService.detail(pk);
+        if(storeDTO == null){
+            return null;
+        }
         StoreDetailDTO result = storeDTO.clone(StoreDetailDTO.class);
         //获取门店等级关联
         StoreGradeDTO storeGradeDTO = storeGradeBusinessService.getStroeGradeByStoreId(pk);
@@ -114,8 +120,8 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
         AreaDTO areaDTO = storeAreaBusinessService.getStoreAreaByStoreId(pk);
         result.setAreaDTO(areaDTO);
         //查询门店经销商关联
-//        List<StoreDistributorDTO> storeDistributorRelationDTOS = storeDistributorBusinessService.getStoreDistributorByStoreId(pk);
-
+        List<StoreDistributorDTO> storeDistributorRelationDTOS = storeDistributorBusinessService.getStoreDistributorByStoreId(pk);
+        result.setStoreDistributorDTOS(storeDistributorRelationDTOS);
         //查询门店修改历史
         StoreHistoryQuery query = StoreHistoryQuery.builder().storeId(pk).build();
         query.setPage(-1);

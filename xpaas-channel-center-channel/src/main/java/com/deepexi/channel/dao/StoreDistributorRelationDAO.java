@@ -13,4 +13,6 @@ import java.util.List;
  */
 public interface StoreDistributorRelationDAO  extends IService<StoreDistributorRelationDO> {
     List<StoreDistributorRelationDO> findList(StoreDistributorRelationQuery query);
+
+    Boolean deleteByStoreId(long storeId);
 }

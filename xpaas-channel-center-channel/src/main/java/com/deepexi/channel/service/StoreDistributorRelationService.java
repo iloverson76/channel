@@ -6,5 +6,11 @@ import com.deepexi.channel.domain.store.StoreDistributorRelationQuery;
 import java.util.List;
 
 public interface StoreDistributorRelationService {
+  
+
     List<StoreDistributorRelationDTO> findList(StoreDistributorRelationQuery query);
+
+    Boolean saveBatch(List<StoreDistributorRelationDTO> relationDTOS);
+
+    Boolean deleteByStoreId(long id);
 }

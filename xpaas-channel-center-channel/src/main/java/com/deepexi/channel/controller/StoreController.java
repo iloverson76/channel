@@ -98,6 +98,10 @@ public class StoreController {
             AreaDTO areaDTO = vo.getAreaVO().clone(AreaDTO.class);
             storeDetailDTO.setAreaDTO(areaDTO);
         }
+        if(CollectionUtil.isNotEmpty(vo.getStoreDistributorVOS())){
+            List<StoreDistributorDTO> storeDistributorDTOS = ObjectCloneUtils.convertList(vo.getStoreDistributorVOS(), StoreDistributorDTO.class);
+            storeDetailDTO.setStoreDistributorDTOS(storeDistributorDTOS);
+        }
         //编码是否重复
         if (!storeService.isCodeUnique(storeDetailDTO)) {
             throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
@@ -125,7 +129,10 @@ public class StoreController {
             AreaDTO areaDTO = vo.getAreaVO().clone(AreaDTO.class);
             storeDetailDTO.setAreaDTO(areaDTO);
         }
-
+        if(CollectionUtil.isNotEmpty(vo.getStoreDistributorVOS())){
+            List<StoreDistributorDTO> storeDistributorDTOS = ObjectCloneUtils.convertList(vo.getStoreDistributorVOS(), StoreDistributorDTO.class);
+            storeDetailDTO.setStoreDistributorDTOS(storeDistributorDTOS);
+        }
         //编码是否重复
         if (!storeService.isCodeUnique(storeDetailDTO)) {
             throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);

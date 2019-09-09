@@ -18,7 +18,7 @@
         <result property="tenantId" column="tenant_id" />
     </resultMap>
     <select id="findList" resultType="com.deepexi.channel.domain.store.StoreGradeRelationDO">
-        select * from cc_store_grade_relation where dr = 0
+        select * from cc_store_distributor_relation where dr = 0
         <if test="id != null">
             and id = #{id}
         </if>

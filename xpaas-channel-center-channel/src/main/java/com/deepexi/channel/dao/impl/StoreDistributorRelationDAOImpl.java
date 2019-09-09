@@ -1,5 +1,7 @@
 package com.deepexi.channel.dao.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.deepexi.channel.dao.StoreDistributorRelationDAO;
 import com.deepexi.channel.domain.store.StoreDistributorRelationDO;
@@ -24,5 +26,12 @@ public class StoreDistributorRelationDAOImpl  extends ServiceImpl<StoreDistribut
     @Override
     public List<StoreDistributorRelationDO> findList(StoreDistributorRelationQuery query) {
         return storeDistributorRelationMapper.findList(query);
+    }
+
+    @Override
+    public Boolean deleteByStoreId(long storeId) {
+        UpdateWrapper updateWrapper = new UpdateWrapper();
+        updateWrapper.eq("store_id",storeId);
+        return this.remove(updateWrapper);
     }
 }
