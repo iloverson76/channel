@@ -66,74 +66,81 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
         //等级信息保存
         List<Long> gradeList= distributor.getGradeIds();
 
-        List<DistributorGradeRelationDTO> dgrList=new ArrayList<>();
+        if(CollectionUtils.isNotEmpty(gradeList)){
 
-        gradeList.forEach(gid->{
+            List<DistributorGradeRelationDTO> dgrList=new ArrayList<>();
 
-            DistributorGradeRelationDTO dgr=new DistributorGradeRelationDTO();
+            gradeList.forEach(gid->{
 
-            dgr.setDistributorId(distId);
+                DistributorGradeRelationDTO dgr=new DistributorGradeRelationDTO();
 
-            dgr.setDistributorGradeId(gid);
+                dgr.setDistributorId(distId);
 
-            dgr.setCreatedBy(createdBy);
+                dgr.setDistributorGradeId(gid);
 
-            dgr.setCreatedTime(createdTime);
+                dgr.setCreatedBy(createdBy);
 
-            dgr.setUpdatedBy(updatedBy);
+                dgr.setCreatedTime(createdTime);
 
-            dgr.setUpdatedTime(updatedTime);
+                dgr.setUpdatedBy(updatedBy);
 
-            dgrList.add(dgr);
+                dgr.setUpdatedTime(updatedTime);
 
-        });
+                dgrList.add(dgr);
 
-        distributorGradeRelationService.createBatch(dgrList);
+            });
+
+            distributorGradeRelationService.createBatch(dgrList);
+        }
 
         //区域信息保存
         long areaId=distributor.getAreaId();
 
-        DistributorAreaRelationDTO adto=new DistributorAreaRelationDTO();
+        if(areaId>0){
+            DistributorAreaRelationDTO adto=new DistributorAreaRelationDTO();
 
-        adto.setAreaId(areaId);
+            adto.setAreaId(areaId);
 
-        adto.setDistributorId(distId);
+            adto.setDistributorId(distId);
 
-        adto.setCreatedBy(createdBy);
+            adto.setCreatedBy(createdBy);
 
-        adto.setCreatedTime(createdTime);
+            adto.setCreatedTime(createdTime);
 
-        adto.setUpdatedBy(updatedBy);
+            adto.setUpdatedBy(updatedBy);
 
-        adto.setUpdatedTime(updatedTime);
+            adto.setUpdatedTime(updatedTime);
 
-        distributorAreaRelationService.create(adto);
+            distributorAreaRelationService.create(adto);
+        }
 
         //账号信息批量保存
         List<Long> accountIds=distributor.getBankAccountIds();
 
-        List<DistributorBankAccountRelationDTO> barList=new ArrayList<>();
+        if(CollectionUtils.isNotEmpty(accountIds)){
+            List<DistributorBankAccountRelationDTO> barList=new ArrayList<>();
 
-        accountIds.forEach(a->{
+            accountIds.forEach(a->{
 
-            DistributorBankAccountRelationDTO bar=new DistributorBankAccountRelationDTO();
+                DistributorBankAccountRelationDTO bar=new DistributorBankAccountRelationDTO();
 
-            bar.setBankAccountId(a);
+                bar.setBankAccountId(a);
 
-            bar.setDistributorId(distId);
+                bar.setDistributorId(distId);
 
-            bar.setCreatedBy(createdBy);
+                bar.setCreatedBy(createdBy);
 
-            bar.setCreatedTime(createdTime);
+                bar.setCreatedTime(createdTime);
 
-            bar.setUpdatedBy(updatedBy);
+                bar.setUpdatedBy(updatedBy);
 
-            bar.setUpdatedTime(updatedTime);
+                bar.setUpdatedTime(updatedTime);
 
-            barList.add(bar);
-        });
+                barList.add(bar);
+            });
 
-        distributorBankAccountRelationService.batchCreate(barList);
+            distributorBankAccountRelationService.batchCreate(barList);
+        }
 
         return distId;
     }
