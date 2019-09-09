@@ -8,6 +8,7 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.util.Date;
+import java.util.Set;
 
 /**
  * <p>
@@ -28,6 +29,15 @@ public class AreaTreeVO extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
+    private Long id;
+
+    private String path;
+
+    /**
+     * 叶子节点
+     */
+    private Set<AreaTreeVO> children;
+
     /**
      * 父节点ID
      */
@@ -39,6 +49,12 @@ public class AreaTreeVO extends BaseEntity {
      */
     @ApiModelProperty("区域分类ID")
     private Integer areaTypeId;
+
+    /**
+     * 区域分类ID
+     */
+    @ApiModelProperty("区域分类名称")
+    private String areaTypeName;
 
     /**
      * 区域名称
@@ -64,24 +80,5 @@ public class AreaTreeVO extends BaseEntity {
     @ApiModelProperty("描述")
     private String description;
 
-    /**
-     * 创建人
-     */
-    private String createdBy;
-
-    /**
-     * 创建时间
-     */
-    private Date createdTime;
-
-    /**
-     * 更新人
-     */
-    private String updatedBy;
-
-    /**
-     * 更新时间
-     */
-    private Date updatedTime;
 
 }

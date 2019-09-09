@@ -118,6 +118,7 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
 
         //查询门店修改历史
         StoreHistoryQuery query = StoreHistoryQuery.builder().storeId(pk).build();
+        query.setPage(-1);
         List<StoreHistoryDTO> storeHistoryDTOS = storeHistoryService.findPage(query);
         result.setStoreHistoryDTOS(storeHistoryDTOS);
         return result;
