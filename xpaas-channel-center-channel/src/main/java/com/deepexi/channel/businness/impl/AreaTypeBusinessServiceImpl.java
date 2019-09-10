@@ -93,13 +93,13 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
             return Collections.emptyList();
         }
 
-        List<AreaTypeDTO> childDTOList=ObjectCloneUtils.convertList(dtoList,AreaTypeDTO.class,CloneDirection.OPPOSITE);
+        List<AreaTypeDTO> childDTOList=ObjectCloneUtils.convertList(dtoList,AreaTypeDTO.class,CloneDirection.FORWARD);
 
         for(AreaTypeDTO parent:dtoList){
 
             for (AreaTypeDTO child:childDTOList){
 
-                if(0L!=parent.getParentId()&&parent.getId().equals(child.getParentId())){
+                if(parent.getId().equals(child.getParentId())){
 
                     child.setParentName(parent.getAreaTypeName());
 
@@ -108,7 +108,6 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
                     child.setParentNameEn(parent.getParentNameEn());
                 }
             }
-
         }
 
         return childDTOList;

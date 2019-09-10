@@ -42,21 +42,7 @@ public class DistributorController {
     @ApiOperation(value = "创建经销商")
     public Payload<Boolean> create(@RequestBody DistributorVO vo) {
 
-        List<DistributorGradeDTO> grades =
-                ObjectCloneUtils.convertList(vo.getGrades(), DistributorGradeDTO.class, CloneDirection.FORWARD);
-
-        List<BankAccountDTO> bankAccounts =
-                ObjectCloneUtils.convertList(vo.getBankAccounts(), BankAccountDTO.class, CloneDirection.FORWARD);
-
-        DistributorDTO dto = new DistributorDTO();
-
-        BeanUtils.copyProperties(vo, dto);
-
-        dto.setGrades(grades);
-
-        dto.setBankAccounts(bankAccounts);
-
-        return new Payload(distributorBusinessService.create(dto));
+        return new Payload(distributorBusinessService.create(vo.clone(DistributorDTO.class,CloneDirection.OPPOSITE)));
     }
 
     @DeleteMapping("/{id:[0-9,]+}")
@@ -74,50 +60,7 @@ public class DistributorController {
 
         DistributorDTO dto = distributorBusinessService.detail(id);
 
-        AreaDTO areaDTO=dto.getArea();
-
-        List<DistributorGradeDTO> gradeDTOS=dto.getGrades();
-
-        List<BankAccountDTO> bankAccountDTOS=dto.getBankAccounts();
-
-        List<DistributorDTO> parents = dto.getParent();
-
-        DistributorVO vo=new DistributorVO();
-
-        BeanUtils.copyProperties(dto,vo);
-
-        if(null!=areaDTO){
-
-            AreaVO areaVO=areaDTO.clone(AreaVO.class,CloneDirection.OPPOSITE);
-
-            vo.setArea(areaVO);
-        }
-
-        if(CollectionUtils.isNotEmpty(gradeDTOS)){
-
-            List<DistributorGradeVO> gradeList=
-                    ObjectCloneUtils.convertList(gradeDTOS,DistributorGradeVO.class,CloneDirection.OPPOSITE);
-
-            vo.setGrades(gradeList);
-        }
-
-        if(CollectionUtils.isNotEmpty(bankAccountDTOS)){
-
-            List<BankAccountVO> bankAccountList=
-                    ObjectCloneUtils.convertList(bankAccountDTOS,BankAccountVO.class,CloneDirection.OPPOSITE);
-
-            vo.setBankAccounts(bankAccountList);
-        }
-
-        if(CollectionUtils.isNotEmpty(parents)){
-
-            List<DistributorVO> parentsvo=
-                    ObjectCloneUtils.convertList(parents,DistributorVO.class,CloneDirection.OPPOSITE);
-
-            vo.setParent(parentsvo);
-        }
-
-        return new Payload<>(vo);
+        return new Payload<>(dto.clone(DistributorVO.class,CloneDirection.FORWARD));
     }
 
     @PutMapping("/{id}")
@@ -159,11 +102,8 @@ public class DistributorController {
         List<DistributorDTO> dtoList=
         distributorBusinessService.listParentDistributorsByGrade(gradeId);
 
-        List<DistributorVO> voList=new ArrayList<>(dtoList.size());
-
-        if(CollectionUtils.isNotEmpty(dtoList)){
-            voList= ObjectCloneUtils.convertList(dtoList,DistributorVO.class,CloneDirection.OPPOSITE);
-        }
+        List<DistributorVO> voList= ObjectCloneUtils.convertList(dtoList,DistributorVO.class,
+                CloneDirection.OPPOSITE);
 
         return new Payload<>(new PageBean<>(voList));
     }

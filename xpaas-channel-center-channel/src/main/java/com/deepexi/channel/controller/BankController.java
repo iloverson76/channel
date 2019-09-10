@@ -1,7 +1,10 @@
 package com.deepexi.channel.controller;
 
+import com.deepexi.channel.domain.bank.BankAccountDTO;
+import com.deepexi.channel.domain.bank.BankAccountVO;
 import com.deepexi.channel.domain.bank.BankDTO;
 import com.deepexi.channel.domain.bank.BankVO;
+import com.deepexi.channel.service.BankAccountService;
 import com.deepexi.channel.service.BankService;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pojo.CloneDirection;
@@ -9,9 +12,7 @@ import com.deepexi.util.pojo.ObjectCloneUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,12 +27,24 @@ public class BankController {
     @Autowired
     private BankService bankService;
 
+    @Autowired
+    BankAccountService bankAccountService;
+
     @GetMapping()
     @ApiOperation("查询银行列表")
     public Payload<List<BankVO>> listChainPage(){
         List<BankDTO> bankDTOS = bankService.listBank();
         return new Payload<>(ObjectCloneUtils.convertList(bankDTOS, BankVO.class, CloneDirection.OPPOSITE));
     }
+
+    @PostMapping()
+   @ApiOperation(value = "创建银行账号")
+   public Payload<Long> create(@RequestBody BankAccountVO vo) {
+
+            Long id=bankAccountService.create(vo.clone(BankAccountDTO.class,CloneDirection.FORWARD));
+
+        return new Payload<>(id);
+   }
 
 //    @GetMapping
 //    //@ApiOperation(value = "分页查询", notes = "分页请求")
@@ -61,11 +74,6 @@ public class BankController {
 //     return new Payload(bankService.update(pk, eo));
 //    }
 //
-//    @PostMapping
-//    //@ApiOperation(value = "创建CcBank", notes = "创建CcBank")
-//    public Payload create(@RequestBody BankVO bankVO) {
-//        return new Payload(bankService.create(bankVO.clone(BankDTO.class)));
-//    }
 //
 //    @DeleteMapping("/{id}")
 //    @Transactional
