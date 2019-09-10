@@ -162,11 +162,8 @@ public class TenantSqlParserConfig extends TenantSqlParser {
                 // 过滤退出执行
                 return;
             }
-            //如果本身查询包含tenantId，则不需要设置
-            String s = plainSelect.getWhere().toString();
-            if (s.indexOf("tenant_id =")==-1){
-                plainSelect.setWhere(builderExpression(plainSelect.getWhere(), fromTable));
-            }
+            plainSelect.setWhere(builderExpression(plainSelect.getWhere(), fromTable));
+
             if (addColumn) {
                 plainSelect.getSelectItems().add(new SelectExpressionItem(new Column(getTenantHandler().getTenantIdColumn())));
             }
