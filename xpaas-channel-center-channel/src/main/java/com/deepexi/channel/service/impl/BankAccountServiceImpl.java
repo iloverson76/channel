@@ -4,6 +4,7 @@ import com.deepexi.channel.dao.BankAccountDAO;
 import com.deepexi.channel.domain.bank.BankAccountDO;
 import com.deepexi.channel.domain.bank.BankAccountDTO;
 import com.deepexi.channel.domain.bank.BankAccountQuery;
+import com.deepexi.channel.domain.bank.BankAccountVO;
 import com.deepexi.channel.service.BankAccountService;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
@@ -103,6 +104,17 @@ public class BankAccountServiceImpl implements BankAccountService {
     @Override
     public Boolean delete(List<Long> ids) {
         return bankAccountDAO.removeByIds(ids);
+    }
+
+    @Override
+    public Long create(BankAccountDTO dto) {
+
+        BankAccountDO eo=dto.clone(BankAccountDO.class,CloneDirection.FORWARD);
+
+        bankAccountDAO.save(eo);
+
+        return eo.getId();
+
     }
 
 }

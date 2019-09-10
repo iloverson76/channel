@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -27,20 +28,20 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @ApiModel(value="经销商")
-public class DistributorVO extends AbstractObject {
+public class DistributorVO extends AbstractObject implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private Long id;
 
     @ApiModelProperty("所属等级列表")
-    private List<DistributorGradeVO> grades;
+    private List<DistributorGradeVO> distributorGrade;
 
     @ApiModelProperty("所属等级ID")
     private List<Long> gradeIds;
 
     @ApiModelProperty("银行账号列表")
-    private List<BankAccountVO> bankAccounts;
+    private List<BankAccountVO> bankAccount;
 
     @ApiModelProperty("银行账号ID")
     private List<Long> bankAccountIds;

@@ -251,7 +251,7 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
             distributorAreaRelationService.create(areaRelationDTO);
         }
 
-        List<BankAccountDTO> bankAccountDTOS = dto.getBankAccounts();
+        List<BankAccountDTO> bankAccountDTOS = dto.getBankAccount();
 
         if(CollectionUtils.isNotEmpty(bankAccountDTOS)){
 
@@ -307,7 +307,7 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
         if(CollectionUtils.isNotEmpty(grades)){
 
             //等级
-            distributor.setGrades(grades);
+            distributor.setDistributorGrade(grades);
 
             //上级经销商
             List<DistributorDTO> list=new ArrayList<>();
@@ -339,7 +339,7 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
         //银行账号信息
         if(CollectionUtils.isNotEmpty(bankAccounts)){
 
-            distributor.setBankAccounts(bankAccounts);
+            distributor.setBankAccount(bankAccounts);
         }
 
         //经销商类型中文描述

@@ -5,6 +5,8 @@ import com.deepexi.channel.domain.SuperEntity;
 import io.swagger.annotations.ApiModel;
 import lombok.*;
 
+import java.io.Serializable;
+
 /**
  * <p>
  * 区域表

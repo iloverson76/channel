@@ -46,7 +46,7 @@
                 #{tempId}
             </foreach>
         </if>
-        <if test="parentId != null">
+        <if test="parentId != null  or parentId == 0">
             and parent_id = #{parentId}
         </if>
         <if test="path != null and path != ''">

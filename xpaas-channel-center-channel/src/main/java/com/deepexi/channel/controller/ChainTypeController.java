@@ -6,6 +6,7 @@ import com.deepexi.channel.domain.chain.ChainTypeQuery;
 import com.deepexi.channel.domain.chain.ChainTypeVO;
 import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.service.ChainTypeService;
+import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.extension.ApplicationException;
 import com.deepexi.util.pageHelper.PageBean;
@@ -104,10 +105,13 @@ public class ChainTypeController {
         return new Payload(chainTypeBusinessService.deleteChainType(ids));
     }
 
-    @GetMapping("parentChainType/{id}")
+    @GetMapping("/parentChainType/{id}")
     @ApiOperation(value = "根据类型的id获取合法父级类型列表")
     public Payload<List<ChainTypeVO>> getLegalParentChainType(@PathVariable(value = "id", required = true) Long id){
         List<ChainTypeDTO> list = chainTypeBusinessService.getLegalParentChainType(id);
-        return null;
+        if(CollectionUtil.isEmpty(list)){
+            return new Payload<>(null);
+        }
+        return new Payload<>(ObjectCloneUtils.convertList(list, ChainTypeVO.class));
     }
 }

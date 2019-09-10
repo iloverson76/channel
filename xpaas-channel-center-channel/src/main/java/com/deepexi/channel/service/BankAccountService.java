@@ -28,4 +28,6 @@ public interface BankAccountService {
     * @return
     */
     Boolean delete(List<Long> ids);
+
+    Long create(BankAccountDTO clone);
 }
