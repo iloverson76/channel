@@ -12,6 +12,7 @@ import com.deepexi.util.extension.ApplicationException;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import com.github.pagehelper.PageHelper;
+import okhttp3.Interceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,8 +119,33 @@ public class ChainTypeServiceImpl implements ChainTypeService {
      **/
     @Override
     public boolean isCodeUnique(ChainTypeDTO dto) {
-        List<ChainTypeDO> list = chainTypeDAO.list(new QueryWrapper<ChainTypeDO>().lambda()
-                .eq(ChainTypeDO::getChainTypeCode, dto.getChainTypeCode()));
+        ChainTypeQuery query = ChainTypeQuery.builder().chainTypeAccuracyCode(dto.getChainTypeCode()).build();
+        return this.isUnique(query, dto);
+    }
+
+    /**
+     * @MethodName: isCodeUnique
+     * @Description: 判断连锁名称是否重复
+     * @Param: [code]
+     * @Return: boolean 名称唯一, true 名称唯一 ， false 名称不唯一
+     * @Author: mumu
+     * @Date: 2019/8/30
+     **/
+    @Override
+    public boolean isNameUnique(ChainTypeDTO dto) {
+        ChainTypeQuery query = ChainTypeQuery.builder().chainTypeAccuracyName(dto.getChainTypeName()).build();
+        return this.isUnique(query, dto);
+    }
+    /**
+     * @MethodName: isUnique
+     * @Description: 判断某个属性是否唯一，排除自身干扰
+     * @Param: [query, dto] query是查询出某个属性重复的列表，dto是来判断是否唯一的dto
+     * @Return: boolean
+     * @Author: mumu
+     * @Date: 2019/9/10
+    **/
+    private boolean isUnique(ChainTypeQuery query, ChainTypeDTO dto){
+        List<ChainTypeDO> list = chainTypeDAO.findList(query);
         if (CollectionUtil.isNotEmpty(list)) {
             //不为空，还有可能是更新时自身的编码
             if (list.size() == 1) {
@@ -134,5 +160,45 @@ public class ChainTypeServiceImpl implements ChainTypeService {
         return true;
     }
 
-
+    /**
+     * @MethodName: isParentLegal
+     * @Description: 判断限制上级、父级id是否合法
+     * @Param: [dto]
+     * @Return: boolean 合法可以设置  true   不合法  false
+     * @Author: mumu
+     * @Date: 2019/9/10
+    **/
+    @Override
+    public boolean isParentLegal(ChainTypeDTO dto) {
+        //没有上级都是合法的
+        if(dto.getParentId()== null || dto.getParentId() == 0L){
+            return true;
+        }
+        //判断设置父级是否合法
+        ChainTypeQuery query = ChainTypeQuery.builder().parentId(dto.getParentId()).build();
+        List<ChainTypeDTO> chainTypeDTOS = this.findAll(query);
+        //如果父级节点没被其他节点设置为父级，那必定合法
+        if(CollectionUtil.isEmpty(chainTypeDTOS)){
+            return true;
+        }else{
+            //如果要限制上级
+            if(dto.getLimitParent()==1){
+                //父级节点被其他节点设置了父亲，只能1:1, 但需要排除节点本身
+                for (ChainTypeDTO c : chainTypeDTOS){
+                    if(!c.getId().equals(dto.getId())){
+                        return false;
+                    }
+                }
+                return true;
+            }else{
+                //不限制上级，判断父亲节点的其他儿子节点是否限制上级
+                for (ChainTypeDTO c : chainTypeDTOS){
+                    if(c.getLimitParent()==1 && !c.getId().equals(dto.getId())){
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+    }
 }

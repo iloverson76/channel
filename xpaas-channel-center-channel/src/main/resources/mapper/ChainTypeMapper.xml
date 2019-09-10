@@ -28,11 +28,20 @@
                 #{tempId}
             </foreach>
         </if>
+        <if test="parentId != null">
+            and parent_id = #{parentId}
+        </if>
         <if test="chainTypeCode != null and chainTypeCode != ''">
             and chain_type_code  like concat('%',#{chainTypeCode},'%')
         </if>
+        <if test="chainTypeAccuracyCode != null and chainTypeAccuracyCode != ''">
+            and chain_type_code = #{chainTypeAccuracyCode}
+        </if>
         <if test="chainTypeName != null and chainTypeName != ''">
             and chain_type_name like concat('%',#{chainTypeName},'%')
+        </if>
+        <if test="chainTypeAccuracyName != null and chainTypeAccuracyName != ''">
+            and chain_type_name = #{chainTypeAccuracyName}
         </if>
         <if test="startTime != null">
             and created_time &gt;= #{startTime}

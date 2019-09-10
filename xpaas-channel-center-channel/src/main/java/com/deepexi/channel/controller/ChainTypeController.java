@@ -14,6 +14,7 @@ import com.deepexi.util.pojo.ObjectCloneUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import javafx.application.Application;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,8 +60,14 @@ public class ChainTypeController {
         if (!chainTypeService.isCodeUnique(dto)) {
             throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
         }
-        //TODO 判断父级节点是否合法,是否出现环形结构
-
+        //判断名称是否重复
+        if(!chainTypeService.isNameUnique(dto)){
+            throw new ApplicationException(ResultEnum.NAME_DUPLICATE);
+        }
+        //限制上级分类
+        if(!chainTypeService.isParentLegal(dto)){
+            throw new ApplicationException(ResultEnum.PARENT_ILLEGAL);
+        }
         return new Payload(chainTypeService.update(dto));
     }
 
@@ -71,6 +78,14 @@ public class ChainTypeController {
         //新增校验,编码不能重复
         if (!chainTypeService.isCodeUnique(dto)) {
             throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
+        }
+        //判断名称是否重复
+        if(!chainTypeService.isNameUnique(dto)){
+            throw new ApplicationException(ResultEnum.NAME_DUPLICATE);
+        }
+        //限制上级分类
+        if(!chainTypeService.isParentLegal(dto)){
+            throw new ApplicationException(ResultEnum.PARENT_ILLEGAL);
         }
         return new Payload( chainTypeService.create(dto));
     }
