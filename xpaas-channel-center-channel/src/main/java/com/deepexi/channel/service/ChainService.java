@@ -1,6 +1,7 @@
 package com.deepexi.channel.service;
 
 import com.deepexi.channel.domain.chain.ChainDTO;
+import com.deepexi.channel.domain.chain.ChainDetailDTO;
 import com.deepexi.channel.domain.chain.ChainQuery;
 
 import java.util.List;
@@ -67,6 +68,13 @@ public interface ChainService {
      * @return
      */
     Boolean resetTree();
+
+    /**
+     * 判断名称是否重复
+     * @param dto
+     * @return
+     */
+    boolean isNameUnique(ChainDetailDTO dto);
 
 //    Boolean addTreeNode(ChainDTO chainDTO);
 }

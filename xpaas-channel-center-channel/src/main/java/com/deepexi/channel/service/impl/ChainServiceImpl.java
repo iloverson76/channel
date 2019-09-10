@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.deepexi.channel.dao.ChainDAO;
 import com.deepexi.channel.domain.chain.ChainDO;
 import com.deepexi.channel.domain.chain.ChainDTO;
+import com.deepexi.channel.domain.chain.ChainDetailDTO;
 import com.deepexi.channel.domain.chain.ChainQuery;
 import com.deepexi.channel.extension.AppRuntimeEnv;
 import com.deepexi.channel.service.ChainService;
@@ -77,11 +78,14 @@ public class ChainServiceImpl implements ChainService {
         return chainDAO.removeByIds(ids);
     }
 
-//    @Override
-//    public Integer getChainCountByTypeIds(List<Long> typeIds) {
-//        return chainDAO.getChainCountByTypeIds(typeIds);
-//    }
-
+    /**
+     * @MethodName: isCodeUnique
+     * @Description: 编码是否唯一，更新时会排除本身
+     * @Param: [dto]
+     * @Return: boolean
+     * @Author: mumu
+     * @Date: 2019/9/10
+    **/
     @Override
     public boolean isCodeUnique(ChainDTO dto) {
         List<ChainDO> list = chainDAO.list(new QueryWrapper<ChainDO>().lambda()
@@ -99,6 +103,17 @@ public class ChainServiceImpl implements ChainService {
         }
         return true;
     }
+
+    /**
+     * 判断名称是否重复
+     * @param dto
+     * @return
+     */
+    @Override
+    public boolean isNameUnique(ChainDetailDTO dto) {
+        return false;
+    }
+
 
     @Override
     public boolean haveChildren(List<Long> ids) {
@@ -118,6 +133,14 @@ public class ChainServiceImpl implements ChainService {
         return false;
     }
 
+    /**
+     * @MethodName: updatePathAndParentIdBatch
+     * @Description: 批量更新path 和parentId，用于连琐树形结构用
+     * @Param: [chainDTOS]
+     * @Return: boolean
+     * @Author: mumu
+     * @Date: 2019/9/10
+    **/
     @Override
     public boolean updatePathAndParentIdBatch(List<ChainDTO> chainDTOS) {
         if(CollectionUtil.isEmpty(chainDTOS)){
@@ -127,6 +150,14 @@ public class ChainServiceImpl implements ChainService {
         return chainDAO.updatePathAndParentIdBatch(chainDOS);
     }
 
+    /**
+     * @MethodName: getChainTreeNode
+     * @Description: 获取展示三层的整棵树节点
+     * @Param: []
+     * @Return: java.util.List<com.deepexi.channel.domain.chain.ChainDTO>
+     * @Author: mumu
+     * @Date: 2019/9/10
+    **/
     @Override
     public List<ChainDTO> getChainTreeNode() {
         List<ChainDO> chainDOS = chainDAO.getChainTreeNode();
@@ -137,6 +168,14 @@ public class ChainServiceImpl implements ChainService {
         return chainDTOS;
     }
 
+    /**
+     * @MethodName: resetTree
+     * @Description: 重置整一棵树
+     * @Param: []
+     * @Return: java.lang.Boolean
+     * @Author: mumu
+     * @Date: 2019/9/10
+    **/
     @Override
     public Boolean resetTree() {
         ChainDTO dto = new ChainDTO();
@@ -144,7 +183,4 @@ public class ChainServiceImpl implements ChainService {
         dto.setTenantId(appRuntimeEnv.getTenantId());
         return chainDAO.resetTree(dto.clone(ChainDO.class)) > 0 ? true:false;
     }
-
-
-
 }
