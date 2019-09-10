@@ -153,5 +153,4 @@ public class AreaController {
         return new Payload<>(new PageBean<>(ObjectCloneUtils.convertList(dtoList,AreaDTO.class,CloneDirection.FORWARD)));
     }
 
-
 }
