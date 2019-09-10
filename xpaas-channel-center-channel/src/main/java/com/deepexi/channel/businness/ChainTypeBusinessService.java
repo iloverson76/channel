@@ -12,4 +12,6 @@ public interface ChainTypeBusinessService {
     boolean haveChainRelation(List<Long> ids);
 
     List<ChainTypeDTO> findPage(ChainTypeQuery query);
+
+    List<ChainTypeDTO> getLegalParentChainType(Long id);
 }

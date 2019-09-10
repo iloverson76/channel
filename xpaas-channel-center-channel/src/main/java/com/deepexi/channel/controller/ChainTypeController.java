@@ -14,7 +14,6 @@ import com.deepexi.util.pojo.ObjectCloneUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import javafx.application.Application;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -105,4 +104,10 @@ public class ChainTypeController {
         return new Payload(chainTypeBusinessService.deleteChainType(ids));
     }
 
+    @GetMapping("parentChainType/{id}")
+    @ApiOperation(value = "根据类型的id获取合法父级类型列表")
+    public Payload<List<ChainTypeVO>> getLegalParentChainType(@PathVariable(value = "id", required = true) Long id){
+        List<ChainTypeDTO> list = chainTypeBusinessService.getLegalParentChainType(id);
+        return null;
+    }
 }
