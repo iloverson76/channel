@@ -306,13 +306,33 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
         //等级信息-经销商:等级:体系=1:1:N
         if(CollectionUtils.isNotEmpty(grades)){
 
+            //等级
+            distributor.setGrades(grades);
+
+            //上级经销商
+            List<DistributorDTO> list=new ArrayList<>();
+
             if(1==distributor.getLimitedParent()){//如果指定上级,就只查直接上级
 
+                long parentId=distributorService.getById(distributorId).getParentId();
+
+                DistributorDTO dto=distributorService.getById(parentId);
+
+                if(null!=dto){
+
+                    list.add(dto);
+
+                    distributor.setParent(list);
+                }
 
             }else{//如果不指定,则查所有间接上级和直接上级,但是页面不展示
 
+                 list=listParentDistributorsByGrade(distributorId);
+
+                 if(CollectionUtils.isNotEmpty(list)){
+                     distributor.setParent(list);
+                 }
             }
-            distributor.setGrades(grades);
 
         }
 

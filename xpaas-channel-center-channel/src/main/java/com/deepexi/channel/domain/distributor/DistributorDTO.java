@@ -47,6 +47,11 @@ public class DistributorDTO extends AbstractObject {
     private AreaDTO area;
     private long AreaId;
 
+    /**
+     * 上级经销商ID
+     */
+    @ApiModelProperty("直接上级经销商")
+    private List<DistributorDTO> parent;
 
     /**
      * 是否指定上级(0:parentId=0,1:parentId=3/4/5/...)

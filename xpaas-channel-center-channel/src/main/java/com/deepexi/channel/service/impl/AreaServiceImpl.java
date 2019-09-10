@@ -1,7 +1,9 @@
 package com.deepexi.channel.service.impl;
 
 import com.deepexi.channel.dao.AreaDAO;
-import com.deepexi.channel.domain.area.*;
+import com.deepexi.channel.domain.area.AreaDO;
+import com.deepexi.channel.domain.area.AreaDTO;
+import com.deepexi.channel.domain.area.AreaQuery;
 import com.deepexi.channel.service.AreaService;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
@@ -11,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -121,13 +122,27 @@ public class AreaServiceImpl implements AreaService{
     }
 
     @Override
+    public boolean updateBatch(List<AreaDTO> dtoList) {
+
+        if(CollectionUtils.isEmpty(dtoList)){
+            return false;
+        }
+
+        areaDAO.updateBatchById(ObjectCloneUtils.convertList(dtoList,AreaDO.class,CloneDirection.FORWARD));
+
+        return Boolean.TRUE;
+    }
+
+    @Override
     public boolean deleteBatch(List<Long> ids) {
 
         if(CollectionUtils.isEmpty(ids)){
             return false;
         }
 
-        areaDAO.removeByIds(ids);
+        ids.forEach(id->{
+            deleteById(id);
+        });
 
         return true;
     }
