@@ -28,4 +28,6 @@ public interface AreaBusinessService {
     boolean deleteBatch(List<Long> ids);
 
     boolean deleteById(Long id);
+
+    boolean update(AreaDTO dto);
 }

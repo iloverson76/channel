@@ -2,7 +2,6 @@ package com.deepexi.channel.businness.impl;
 
 import com.deepexi.channel.businness.AreaBusinessService;
 import com.deepexi.channel.domain.area.*;
-import com.deepexi.channel.domain.distributor.DistributorGradeDTO;
 import com.deepexi.channel.service.AreaService;
 import com.deepexi.channel.service.AreaTypeService;
 import com.deepexi.util.CollectionUtil;
@@ -12,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.beans.Transient;
 import java.util.*;
@@ -264,6 +262,59 @@ public class ArearBusinessServiceImpl implements AreaBusinessService {
         areaService.updateBatch(children);
 
         areaService.deleteById(id);
+
+        return Boolean.TRUE;
+    }
+
+    @Override
+    public boolean update(AreaDTO dto) {
+
+        long id=dto.getId();
+
+        AreaDTO origDTO=areaService.getAreaById(id);
+
+        String OrigParentPath=origDTO.getPath();
+
+        long origParentId=origDTO.getParentId();
+
+        long newParentId=dto.getParentId();
+
+        AreaDTO newParent=areaService.getAreaById(newParentId);
+
+        String newParentPath=newParent.getPath();
+
+        String updatePath=newParentPath+"/"+id;
+
+        long newParentTypeId=newParent.getAreaTypeId();
+
+        long origAreaTypeId=origDTO.getAreaTypeId();
+
+        //原来有上级,且挂载到了新上级
+        if(origParentId!=0&&origParentId!=-1&&origParentId!=newParentId){
+
+            List<AreaDTO> children = areaService.listChildrenAreas(id);
+
+            //有下级
+            if(CollectionUtils.isNotEmpty(children)){
+
+                children.forEach(child->{
+
+                    String path=child.getPath();
+
+                    child.setPath(path.replaceAll(OrigParentPath,updatePath));//更改所有子节点的路径
+
+                    /*if(newParentTypeId>0&&origAreaTypeId!=newParentTypeId){
+
+                        child.setAreaTypeId(newParentTypeId);//更改所有子节点的类型
+                    }*/
+                });
+                areaService.updateBatch(children);
+            }
+        }
+
+        dto.setPath(updatePath);
+
+        areaService.update(dto);
 
         return Boolean.TRUE;
     }
