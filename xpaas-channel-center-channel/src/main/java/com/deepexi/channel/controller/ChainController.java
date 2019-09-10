@@ -80,6 +80,9 @@ public class ChainController {
         if(!chainService.isCodeUnique(dto)){
             throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
         }
+        if(!chainService.isNameUnique(dto)){
+
+        }
         List<BankAccountDTO> bankAccountList = ObjectCloneUtils.convertList(chainDetailVO.getBankAccountList(), BankAccountDTO.class);
         dto.setBankAccountList(bankAccountList);
         return new Payload(chainBusinessService.insertChain(dto));

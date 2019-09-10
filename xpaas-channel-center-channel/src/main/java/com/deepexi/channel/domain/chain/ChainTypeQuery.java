@@ -30,16 +30,27 @@ public class ChainTypeQuery extends CommQuery {
     @ApiModelProperty(value = "主键", example = "123")
     private Long id;
     /**
-     * 品牌id数组
+     * 连琐类型id数组
      */
     @ApiModelProperty("连锁类型id数组")
     private List<Long> ids;
+    /**
+     * 连琐类型id数组
+     */
+    @ApiModelProperty("不包含这些id的连琐类型")
+    private List<Long> excludeIds;
 
     /**
      * 父级分类ID
      */
     @ApiModelProperty("父节点ID")
     private Long parentId;
+
+    /**
+     * 是否限制上级 0 不限制 1 限制
+     */
+    @ApiModelProperty("是否限制上级 0 不限制 1 限制")
+    private Integer limitParent;
 
     /**
      * 连锁分类名称
