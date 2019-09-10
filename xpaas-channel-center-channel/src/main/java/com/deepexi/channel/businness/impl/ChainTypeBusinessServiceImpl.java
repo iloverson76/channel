@@ -111,8 +111,14 @@ public class ChainTypeBusinessServiceImpl implements ChainTypeBusinessService {
     @Override
     public List<ChainTypeDTO> getLegalParentChainType(Long id) {
         //查询所有限制上级的父级id，这些分类不能被设置上级
-//        ChainTypeQuery query = ChainTypeQuery.builder().
+        ChainTypeQuery query = ChainTypeQuery.builder().limitParent(1).build();
+        List<ChainTypeDTO> list = chainTypeService.findPage(query);
+        //排除掉的id
+        List<Long> excludeIds = list.stream().map(ChainTypeDTO::getParentId).collect(Collectors.toList());
+        //本身也要排除
+        excludeIds.add(id);
 
-        return null;
+        ChainTypeQuery query2 = ChainTypeQuery.builder().excludeIds(excludeIds).build();
+        return chainTypeService.findPage(query2);
     }
 }

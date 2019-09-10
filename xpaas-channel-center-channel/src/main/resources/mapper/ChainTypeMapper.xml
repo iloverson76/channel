@@ -28,7 +28,13 @@
                 #{tempId}
             </foreach>
         </if>
-        <if test="parentId != null">
+        <if test="excludeIds != null and excludeIds.size()>0">
+            and id not in
+            <foreach collection="excludeIds" item="tempId" index="index" open="(" close=")" separator=",">
+                #{tempId}
+            </foreach>
+        </if>
+        <if test="parentId != null or parentId == 0">
             and parent_id = #{parentId}
         </if>
         <if test="chainTypeCode != null and chainTypeCode != ''">
