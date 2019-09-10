@@ -76,7 +76,7 @@ public class AreaController {
 
         List<Long> idList= Arrays.stream(ids.split(",")).map(Long::parseLong).collect(Collectors.toList());
 
-        return new Payload(areaService.deleteBatch(idList));
+        return new Payload(areaBusinessService.deleteBatch(idList));
     }
 
     @GetMapping()

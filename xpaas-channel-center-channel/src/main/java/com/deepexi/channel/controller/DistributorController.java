@@ -80,24 +80,42 @@ public class DistributorController {
 
         List<BankAccountDTO> bankAccountDTOS=dto.getBankAccounts();
 
-        AreaVO areaVO=areaDTO.clone(AreaVO.class,CloneDirection.OPPOSITE);
-
-        List<DistributorGradeVO> gradeList=
-        ObjectCloneUtils.convertList(gradeDTOS,DistributorGradeVO.class,CloneDirection.OPPOSITE);
-
-        List<BankAccountVO> bankAccountList=
-        ObjectCloneUtils.convertList(bankAccountDTOS,BankAccountVO.class,CloneDirection.OPPOSITE);
+        List<DistributorDTO> parents = dto.getParent();
 
         DistributorVO vo=new DistributorVO();
 
         BeanUtils.copyProperties(dto,vo);
 
-        vo.setArea(areaVO);
+        if(null!=areaDTO){
 
-        vo.setGrades(gradeList);
+            AreaVO areaVO=areaDTO.clone(AreaVO.class,CloneDirection.OPPOSITE);
 
-        vo.setBankAccounts(bankAccountList);
+            vo.setArea(areaVO);
+        }
 
+        if(CollectionUtils.isNotEmpty(gradeDTOS)){
+
+            List<DistributorGradeVO> gradeList=
+                    ObjectCloneUtils.convertList(gradeDTOS,DistributorGradeVO.class,CloneDirection.OPPOSITE);
+
+            vo.setGrades(gradeList);
+        }
+
+        if(CollectionUtils.isNotEmpty(bankAccountDTOS)){
+
+            List<BankAccountVO> bankAccountList=
+                    ObjectCloneUtils.convertList(bankAccountDTOS,BankAccountVO.class,CloneDirection.OPPOSITE);
+
+            vo.setBankAccounts(bankAccountList);
+        }
+
+        if(CollectionUtils.isNotEmpty(parents)){
+
+            List<DistributorVO> parentsvo=
+                    ObjectCloneUtils.convertList(parents,DistributorVO.class,CloneDirection.OPPOSITE);
+
+            vo.setParent(parentsvo);
+        }
 
         return new Payload<>(vo);
     }
