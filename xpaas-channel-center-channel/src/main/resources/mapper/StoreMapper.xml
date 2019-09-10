@@ -34,7 +34,7 @@
         <if test="storeName!=null and storeName!=''">
             and store_name like concat('%',#{storeName},'%')
         </if>
-        <if test="enable!=null and enable!=''">
+        <if test="enable!=null and enable!='' or id ==0">
             and enable = #{enable}
         </if>
         <if test="startTime != null">
