@@ -163,6 +163,7 @@ public class TenantSqlParserConfig extends TenantSqlParser {
                 return;
             }
             plainSelect.setWhere(builderExpression(plainSelect.getWhere(), fromTable));
+
             if (addColumn) {
                 plainSelect.getSelectItems().add(new SelectExpressionItem(new Column(getTenantHandler().getTenantIdColumn())));
             }

@@ -41,12 +41,6 @@ public class ChainController {
         return new Payload(new PageBean<>(chainDetailVOS));
     }
 
-//    @GetMapping("/list")
-//    //@ApiOperation(value = "树形查询", notes = "查询全部请求")
-//    public Payload findAll(CcChain eo) {
-//        return new Payload(chainService.findAll(eo));
-//    }
-//
     @GetMapping("/{id}")
     @ApiOperation("根据id获取连锁店详情")
     public Payload<ChainDetailVO> detail(@PathVariable(value = "id", required = true) Long id) {

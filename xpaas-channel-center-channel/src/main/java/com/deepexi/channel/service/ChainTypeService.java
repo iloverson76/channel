@@ -56,6 +56,15 @@ public interface ChainTypeService {
      * @return
      */
     boolean isCodeUnique(ChainTypeDTO dto);
+    /**
+     * @MethodName: isNameUnique
+     * @Description: 判断名字是否重复，具备排除本身功能
+     * @Param: [dto]
+     * @Return: boolean
+     * @Author: mumu
+     * @Date: 2019/9/10
+    **/
+    boolean isNameUnique(ChainTypeDTO dto);
 
     /**
      * 判断id列表是否具有子节点,并且不在ids中
@@ -63,4 +72,11 @@ public interface ChainTypeService {
      * @return
      */
     Boolean haveChildren(List<Long> ids);
+
+    /**
+     * 判断dto设置的上级是否合法，限制上级是否合法
+     * @param dto
+     * @return
+     */
+    boolean isParentLegal(ChainTypeDTO dto);
 }
