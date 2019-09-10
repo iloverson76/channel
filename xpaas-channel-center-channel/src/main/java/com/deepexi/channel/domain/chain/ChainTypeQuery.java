@@ -44,13 +44,25 @@ public class ChainTypeQuery extends CommQuery {
     /**
      * 连锁分类名称
      */
-    @ApiModelProperty("连锁分类名称")
+    @ApiModelProperty("连锁分类名称，用作模糊查询")
     private String chainTypeName;
+
+    /**
+     * 连锁分类名称
+     */
+    @ApiModelProperty("连锁分类名称,用作精确查询")
+    private String chainTypeAccuracyName;
 
     /**
      * 连锁分类编码
      */
-    @ApiModelProperty("连锁分类编码")
+    @ApiModelProperty("连锁分类编码, 用作模糊查询")
     private String chainTypeCode;
+
+    /**
+     * 连锁分类编码
+     */
+    @ApiModelProperty("连锁分类编码， 用作精准查询")
+    private String chainTypeAccuracyCode;
 
 }

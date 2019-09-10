@@ -65,7 +65,7 @@ public class AreaController {
 
         vo.setId(pk);
 
-        areaService.update(vo.clone(AreaDTO.class,CloneDirection.FORWARD));
+        areaBusinessService.update(vo.clone(AreaDTO.class,CloneDirection.FORWARD));
 
         return new Payload<>(Boolean.TRUE);
     }
@@ -152,6 +152,5 @@ public class AreaController {
 
         return new Payload<>(new PageBean<>(ObjectCloneUtils.convertList(dtoList,AreaDTO.class,CloneDirection.FORWARD)));
     }
-
 
 }

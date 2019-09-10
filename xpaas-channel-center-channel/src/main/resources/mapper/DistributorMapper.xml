@@ -18,6 +18,10 @@
             </foreach>
         </if>
 
+        <if test="enable!=null">
+            AND enable =#{enable}
+        </if>
+
         <if test="distributorName!=null">
             AND distributor_name LIKE concat('%',#{distributorName},'%')
         </if>
