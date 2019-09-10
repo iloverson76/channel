@@ -19,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ApiModel("区域层级元素列表和树形结构查询")
+@ApiModel("树形结构查询")
 public class AreaTreeQuery extends CommQuery {
 
     private static final long serialVersionUID = 1L;
@@ -28,5 +28,7 @@ public class AreaTreeQuery extends CommQuery {
      *
      */
     private List<Long> areaTypeIds;
+
+    private Long areaId;
 
 }

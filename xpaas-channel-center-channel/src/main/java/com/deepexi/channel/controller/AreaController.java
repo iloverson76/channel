@@ -103,11 +103,26 @@ public class AreaController {
         return new Payload<>(new PageBean<>(voList));
     }
 
-    @GetMapping("/areaTree")
+    @GetMapping("/tree")
     @ApiOperation("区域树")
     public Payload<PageBean<AreaTreeVO>> listAreaTree(@ApiParam(name = "query", required = true) AreaTreeQuery query) {
 
         List<AreaTreeDTO> dtoList = areaBusinessService.buildAreaTree(query);
+
+        return tree( dtoList);
+    }
+
+    @GetMapping("/childrenTree/{areaId}")
+    @ApiOperation("根据区域ID查找所有下级树")
+    public Payload<PageBean<AreaTreeVO>> listChildrenTree(@PathVariable(name = "areaId", required = true) Long areaId) {
+
+        List<AreaTreeDTO> dtoList = areaBusinessService.listChildrenTree(areaId);
+
+        return tree( dtoList);
+
+    }
+
+    private Payload<PageBean<AreaTreeVO>>  tree(List<AreaTreeDTO> dtoList){
 
         List<AreaTreeVO> voList= new ArrayList<>();
 
@@ -128,5 +143,15 @@ public class AreaController {
         }
         return new Payload<>(new PageBean<>(voList));
     }
+
+    @GetMapping("/linkedAreas/{areaTypeId}")
+    @ApiOperation("根据区域类型查找挂载的所有区域")
+    public Payload<PageBean<AreaDTO>> listLinkedAreasByType(@PathVariable(name = "areaTypeId", required = true) Long areaTypeId) {
+
+        List<AreaDTO> dtoList = areaBusinessService.listLinkedAreasByType(areaTypeId);
+
+        return new Payload<>(new PageBean<>(ObjectCloneUtils.convertList(dtoList,AreaDTO.class,CloneDirection.FORWARD)));
+    }
+
 
 }

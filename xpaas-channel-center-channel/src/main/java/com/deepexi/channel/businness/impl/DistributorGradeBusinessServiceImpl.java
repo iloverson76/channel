@@ -9,6 +9,7 @@ import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -171,7 +172,7 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
             gradeList.forEach(grade->{
 
-                Long v=parentMap.get(grade.getId());
+                Long v=parentMap.get(grade.getId());//没有下级的才可以挂载新子节点
 
                 if(null==v&&grade.getGradeSystemId()==systemId){//按体系查
                     resultList.add(grade);
@@ -206,4 +207,6 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
         }
         return gradeList;
     }
+
+
 }

@@ -20,4 +20,8 @@ public interface AreaBusinessService {
     AreaDTO detail(Long pk, Long areaTypeId);
 
     List<AreaTreeDTO> buildAreaTree(AreaTreeQuery query);
+
+    List<AreaTreeDTO> listChildrenTree(Long areaId);
+
+    List<AreaDTO> listLinkedAreasByType(Long areaTypeId);
 }

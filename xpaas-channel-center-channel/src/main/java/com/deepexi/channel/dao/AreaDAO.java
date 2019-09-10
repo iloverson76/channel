@@ -10,4 +10,8 @@ import java.util.List;
 public interface AreaDAO extends  IService<AreaDO> {
 
     List<AreaDO> listAreaPage(AreaQuery query);
+
+    List<AreaDO> listChildrenAreas(Long areaId);
+
+    List<AreaDO> listLinkedAreasByType(Long areaTypeId);
 }

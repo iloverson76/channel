@@ -1,5 +1,6 @@
 package com.deepexi.channel.dao.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.deepexi.channel.dao.AreaDAO;
 import com.deepexi.channel.domain.area.AreaDO;
@@ -8,6 +9,7 @@ import com.deepexi.channel.domain.area.AreaTypeQuery;
 import com.deepexi.channel.mapper.AreaMapper;
 import org.springframework.stereotype.Repository;
 
+import javax.management.Query;
 import java.util.List;
 
 /**
@@ -21,5 +23,25 @@ public class AreaDAOImpl extends ServiceImpl<AreaMapper, AreaDO> implements Area
     public List<AreaDO> listAreaPage(AreaQuery query) {
 
         return baseMapper.listAreaPage(query);
+    }
+
+    @Override
+    public List<AreaDO> listChildrenAreas(Long areaId) {
+
+        QueryWrapper<AreaDO> wp=new QueryWrapper<>();
+
+        wp.like("path","/"+areaId+"/");
+
+        return baseMapper.selectList(wp);
+    }
+
+    @Override
+    public List<AreaDO> listLinkedAreasByType(Long areaTypeId) {
+
+        QueryWrapper<AreaDO> wp=new QueryWrapper<>();
+
+        wp.eq("area_type_id",areaTypeId);
+
+        return baseMapper.selectList(wp);
     }
 }

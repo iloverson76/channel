@@ -11,6 +11,7 @@ import com.deepexi.channel.domain.bank.BankAccountQuery;
 import com.deepexi.channel.domain.distributor.*;
 import com.deepexi.channel.enums.DistributorTypeEnum;
 import com.deepexi.channel.service.*;
+import com.deepexi.util.StringUtil;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -296,22 +297,23 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
         AreaDTO area =getAreaInfo(distributorId);
 
-        //区域信息(未完善:要查到根节点)
+        //区域信息(查到根节点)
         if(null!=area){
 
             distributor.setArea(area);
         }
 
-        //等级信息
+        //等级信息-经销商:等级:体系=1:1:N
         if(CollectionUtils.isNotEmpty(grades)){
 
             if(1==distributor.getLimitedParent()){//如果指定上级,就只查直接上级
 
+
             }else{//如果不指定,则查所有间接上级和直接上级,但是页面不展示
 
             }
-
             distributor.setGrades(grades);
+
         }
 
         //银行账号信息
@@ -383,7 +385,7 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
     }
 
     @Override
-    public AreaDTO getAreaInfo(Long distributorId){//要把上级的信息全部查出来--未完善
+    public AreaDTO getAreaInfo(Long distributorId){
 
         DistributorAreaRelationDTO bar = distributorAreaRelationService.findOneByDistributorId(distributorId);
 
@@ -393,8 +395,7 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
             return new AreaDTO();
         }
 
-        return areaService.getAreaById(areaId);
-
+        return  areaService.getAreaById(areaId);
     }
 
     @Override

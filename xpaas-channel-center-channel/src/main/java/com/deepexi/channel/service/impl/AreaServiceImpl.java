@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -34,10 +35,6 @@ public class AreaServiceImpl implements AreaService{
 
         long newId=newNode.getId();
 
-
-/* 修改的时候再处理上级和路径
-
-
         //设置处理(id路径)
 
         long parentId=newNode.getParentId();
@@ -54,7 +51,6 @@ public class AreaServiceImpl implements AreaService{
         }
 
         areaDAO.updateById(newNode);
-     */
 
         return newId;
     }
@@ -97,6 +93,31 @@ public class AreaServiceImpl implements AreaService{
         areaDAO.removeById(id);
 
         return true;
+    }
+
+    @Override
+    public List<AreaDTO> listChildrenAreas(Long areaId) {
+
+        List<AreaDO> eoList=areaDAO.listChildrenAreas(areaId);
+
+        if(CollectionUtils.isEmpty(eoList)){
+
+            return Collections.emptyList();
+        }
+
+        return ObjectCloneUtils.convertList(eoList,AreaDTO.class,CloneDirection.OPPOSITE);
+    }
+
+    @Override
+    public List<AreaDTO> listLinkedAreasByType(Long areaTypeId) {
+
+        List<AreaDO> eoList= areaDAO.listLinkedAreasByType(areaTypeId);
+
+         if(CollectionUtils.isEmpty(eoList)){
+             return Collections.emptyList();
+        }
+
+         return ObjectCloneUtils.convertList(eoList,AreaDTO.class,CloneDirection.FORWARD);
     }
 
     @Override

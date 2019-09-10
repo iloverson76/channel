@@ -45,7 +45,6 @@ public class ArearBusinessServiceImpl implements AreaBusinessService {
 
          List<AreaDTO> areaDTOList=areaService.findPage(query);
 
-
         //区域类型信息
         List<Long> areaTyeIdList=areaDTOList.stream().map(AreaDTO::getAreaTypeId).collect(Collectors.toList());
 
@@ -92,17 +91,44 @@ public class ArearBusinessServiceImpl implements AreaBusinessService {
         return areaDTO;
     }
 
-    //区域树构建
     @Override
-    public List<AreaTreeDTO> buildAreaTree(AreaTreeQuery query) {
+    public List<AreaDTO> listLinkedAreasByType(Long areaTypeId) {
+
+        return areaService.listLinkedAreasByType(areaTypeId);
+    }
+
+    @Override
+    public List<AreaTreeDTO> listChildrenTree(Long areaId){
+
+        List<AreaDTO> areaDTOList=areaService.listChildrenAreas(areaId);
+
+        //区域类型
+        setAreaTypeInfo(areaDTOList);
+
+        //树构建
+        return treeNode(areaDTOList,areaId);
+    }
+
+    @Override
+    public List<AreaTreeDTO> buildAreaTree(AreaTreeQuery query) {//默认展开三级:未完善
 
         List<AreaDTO> areaDTOList=areaService.findPage(new AreaQuery());
 
+        //区域类型
+        setAreaTypeInfo(areaDTOList);
+
+        //树构建
+        return treeAll(areaDTOList);
+    }
+
+    //区域类型设置
+    private List<AreaDTO> setAreaTypeInfo( List<AreaDTO> areaDTOList){
+
         if(CollectionUtils.isEmpty(areaDTOList)){
+
             return Collections.emptyList();
         }
 
-        //区域类型设置
         List<AreaTypeDTO> typeDTOS = areaTypeService.listAreaTypePage(new AreaTypeQuery());
 
         if(CollectionUtils.isNotEmpty(typeDTOS)){
@@ -120,25 +146,34 @@ public class ArearBusinessServiceImpl implements AreaBusinessService {
             });
         }
 
-        //树构建
+        return areaDTOList;
+    }
+
+    //从根节点构建完整树
+    private List<AreaTreeDTO> treeAll(List<AreaDTO> areaDTOList){
+
+        if(CollectionUtils.isEmpty(areaDTOList)){
+
+            return Collections.emptyList();
+        }
+
         List<AreaTreeDTO> list = ObjectCloneUtils.convertList(areaDTOList, AreaTreeDTO.class, CloneDirection.OPPOSITE);
 
-        List<AreaTreeDTO> result = new ArrayList<>();
+        List<AreaTreeDTO> tree = new ArrayList<>();
 
         for (AreaTreeDTO vo1 : list) {
 
             if (vo1.getChildren() == null) {
 
                 vo1.setChildren(new LinkedHashSet<>());
-
             }
-            if (0 == vo1.getParentId()) {
+            if (0 == vo1.getParentId()) {//根节点
 
-                result.add(vo1);
+                tree.add(vo1);
             }
             for (AreaTreeDTO vo2 : list) {
 
-                if (0L != vo2.getParentId() && vo2.getParentId().equals(vo1.getId())) {
+                if (0 != vo2.getParentId() && vo2.getParentId().equals(vo1.getId())) {
 
                     if (vo1.getChildren() == null) {
 
@@ -148,6 +183,45 @@ public class ArearBusinessServiceImpl implements AreaBusinessService {
                 }
             }
         }
-        return result;
+        return tree;
     }
+
+    //从某一节点开始构建下级数
+    private List<AreaTreeDTO> treeNode(List<AreaDTO> areaDTOList,Long areaId){
+
+        if(CollectionUtils.isEmpty(areaDTOList)){
+
+            return Collections.emptyList();
+        }
+
+        List<AreaTreeDTO> list = ObjectCloneUtils.convertList(areaDTOList, AreaTreeDTO.class, CloneDirection.OPPOSITE);
+
+        List<AreaTreeDTO> tree = new ArrayList<>();
+
+        for (AreaTreeDTO vo1 : list) {
+
+            if (vo1.getChildren() == null) {
+
+                vo1.setChildren(new LinkedHashSet<>());
+            }
+            if (vo1.getParentId().equals(areaId)) {//根节点
+
+                tree.add(vo1);
+            }
+            for (AreaTreeDTO vo2 : list) {
+
+                if (0 != vo2.getParentId() && vo2.getParentId().equals(vo1.getId())) {
+
+                    if (vo1.getChildren() == null) {
+
+                        vo1.setChildren(new LinkedHashSet<>());
+                    }
+                    vo1.getChildren().add(vo2);
+                }
+            }
+        }
+        return tree;
+    }
+
+
 }

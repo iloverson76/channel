@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -40,10 +41,10 @@ public class DistributorGradeServiceImpl implements DistributorGradeService {
 
         distributorGradeDAO.save(newNode);
 
-        //路径处理(id)
+        //路径处理(id)--不维护路径,性能成本可以忽略
         long newId=newNode.getId();
 
-        long parentId=newNode.getParentId();
+ /*       long parentId=newNode.getParentId();
 
         if (0==parentId) {
 
@@ -57,13 +58,48 @@ public class DistributorGradeServiceImpl implements DistributorGradeService {
         }
 
         distributorGradeDAO.updateById(newNode);
-
+*/
         return newId;
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public Boolean update(DistributorGradeDTO dto) {
+
+        long id=dto.getId();
+
+        DistributorGradeDTO origDTO=getById(id);
+
+        //根节点修改的冲突
+        if(dto.getRoot()==1){
+
+            findPage(new DistributorGradeQuery()).forEach(grade->{
+
+                if(grade.getRoot()==1){
+                    throw new ApplicationException("已存在一个根节点"+"["+dto.getDistributorGradeName()+"]");
+                }
+            });
+        }
+
+        //改变所属体系
+        long newSystemId=dto.getGradeSystemId();
+
+        long origSystemId=origDTO.getGradeSystemId();
+
+        if(origSystemId==newSystemId){
+
+            List<DistributorGradeDTO> children=listChildrenNodes(id);
+
+            children.forEach(child->{
+                child.setGradeSystemId(newSystemId);
+            });
+
+            List<DistributorGradeDO> childrenDO=ObjectCloneUtils.convertList(children,
+                    DistributorGradeDO.class,CloneDirection.FORWARD);
+
+            distributorGradeDAO.updateBatchById(childrenDO);
+
+        }
 
         return distributorGradeDAO.updateById(dto.clone(DistributorGradeDO.class,CloneDirection.FORWARD));
     }
@@ -93,7 +129,44 @@ public class DistributorGradeServiceImpl implements DistributorGradeService {
             return false;
         }
 
-        return distributorGradeDAO.removeByIds(ids);
+        ids.forEach(id->{
+            delete(id);
+        });
+
+        return Boolean.TRUE;
+    }
+
+    public boolean delete(long id) {
+
+        List<DistributorGradeDTO> children=listChildrenNodes(id);
+
+        children.forEach(child->{
+            child.setParentId(0L);
+        });
+
+        List<DistributorGradeDO> childrenDO=ObjectCloneUtils.convertList(children,
+                DistributorGradeDO.class,CloneDirection.FORWARD);
+
+       distributorGradeDAO.updateBatchById(childrenDO);
+
+       return distributorGradeDAO.removeById(id);
+    }
+
+    private List<DistributorGradeDTO> listChildrenNodes(long id){
+        //修改所有子节点的parentId=0
+        List<DistributorGradeDTO> dtoList=findPage(new DistributorGradeQuery());
+
+        List<DistributorGradeDTO> children=new ArrayList<>();
+
+        dtoList.forEach(dto->{
+
+            if(dto.getParentId()==id){//查出所有子节点:新建的时候已经归属了某一个体系
+
+                children.add(dto);
+            }
+        });
+
+        return children;
     }
 
     @Override

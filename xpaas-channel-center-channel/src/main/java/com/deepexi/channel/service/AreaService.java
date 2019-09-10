@@ -21,4 +21,8 @@ public interface AreaService {
     boolean deleteBatch(List<Long> ids);
 
     boolean deleteById(Long id);
+
+    List<AreaDTO> listChildrenAreas(Long areaId);
+
+    List<AreaDTO> listLinkedAreasByType(Long areaTypeId);
 }

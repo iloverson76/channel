@@ -97,6 +97,24 @@ public class AreaTypeServiceImpl implements AreaTypeService {
        return areaTypeDAO.update(ado,wrapper);
     }
 
+    private boolean deleteAreaTypeById(Long id){
+
+        List<AreaTypeDTO> dtoList1 = listAreaTypePage(new AreaTypeQuery());
+
+        List<AreaTypeDTO> dtoList2=ObjectCloneUtils.convertList(dtoList1,AreaTypeDTO.class,CloneDirection.FORWARD);
+
+        for (AreaTypeDTO dto1:dtoList1){
+
+            for (AreaTypeDTO dto2:dtoList2){
+
+                if(dto1.getId().equals(dto2.getParentId())){//有下级不能删除
+                    throw new ApplicationException("已被下级["+dto2.getAreaTypeName()+"关联]不能删除!");
+                }
+            }
+        }
+        return Boolean.TRUE;
+    }
+
     @Transactional
     @Override
     public boolean deleteAreaTypeByIds(Set<Long> ids) {
@@ -112,7 +130,12 @@ public class AreaTypeServiceImpl implements AreaTypeService {
             ids.remove(0);//parent=0不能作为id=0来删除
         }
 
-        return areaTypeDAO.removeByIds(ids);
+        ids.forEach(id->{
+            deleteAreaTypeById(id);
+        });
+
+        return Boolean.TRUE;
+       // return areaTypeDAO.removeByIds(ids);
     }
 
     @Override
