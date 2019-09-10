@@ -106,8 +106,8 @@ public class MybatisPlusConfig {
             }
         });
         ArrayList list = new ArrayList();
-        list.add(tenantSqlParser);
         list.add(tenantSqlParserAppId);
+        list.add(tenantSqlParser);
         paginationInterceptor.setSqlParserList(list);
         return paginationInterceptor;
 
