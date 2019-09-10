@@ -24,4 +24,8 @@ public interface AreaBusinessService {
     List<AreaTreeDTO> listChildrenTree(Long areaId);
 
     List<AreaDTO> listLinkedAreasByType(Long areaTypeId);
+
+    boolean deleteBatch(List<Long> ids);
+
+    boolean deleteById(Long id);
 }

@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.beans.Transient;
 import java.util.*;
@@ -221,6 +222,50 @@ public class ArearBusinessServiceImpl implements AreaBusinessService {
             }
         }
         return tree;
+    }
+
+    @Override
+    public boolean deleteBatch(List<Long> ids) {
+
+        if(CollectionUtils.isEmpty(ids)){
+            return false;
+        }
+
+        ids.forEach(id->{
+            deleteById(id);
+        });
+
+        return Boolean.TRUE;
+    }
+
+    @Override
+    public boolean deleteById(Long id) {
+
+        AreaDTO dto=areaService.getAreaById(id);
+
+        String parentPath=dto.getPath();
+
+        List<AreaDTO> children= areaService.listChildrenAreas(id);
+
+        children.forEach(child->{
+
+            String path=child.getPath();
+
+            child.setPath(path.replaceAll(parentPath,""));
+
+            //直接下级
+            if(child.getParentId()==id){
+
+                child.setParentId(-1L);
+            }
+
+        });
+
+        areaService.updateBatch(children);
+
+        areaService.deleteById(id);
+
+        return Boolean.TRUE;
     }
 
 
