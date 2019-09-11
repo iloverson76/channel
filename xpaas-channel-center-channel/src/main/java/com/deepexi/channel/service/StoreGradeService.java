@@ -55,4 +55,6 @@ public interface StoreGradeService {
     Boolean delete(List<Long> ids);
 
     boolean isCodeUnique(StoreGradeDTO dto);
+
+    boolean isNameUnique(StoreGradeDTO storeGradeDTO);
 }

@@ -29,6 +29,9 @@
         <if test="storeGradeName!=null and storeGradeName!=''">
             and store_grade_name like concat('%',#{storeGradeName},'%')
         </if>
+        <if test="storeGradeAccuracyName!=null and storeGradeAccuracyName!=''">
+            and store_grade_name = #{storeGradeAccuracyName}
+        </if>
         <if test="startTime != null">
             and created_time &gt;= #{startTime}
         </if>
