@@ -14,7 +14,9 @@ public interface StoreAreaService {
 
     Boolean removeByStoreId(Long id);
 
-    StoreAreaDTO getStoreAreaByStoreId(Long storeId);
+    List<StoreAreaDTO> getStoreAreaByStoreId(Long storeId);
 
     Boolean removeByStoreIds(List<Long> ids);
+
+    Boolean saveBatch(List<StoreAreaDTO> list);
 }

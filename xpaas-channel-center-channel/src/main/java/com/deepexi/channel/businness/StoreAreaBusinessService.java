@@ -6,10 +6,10 @@ import com.deepexi.channel.domain.store.StoreDetailDTO;
 import java.util.List;
 
 public interface StoreAreaBusinessService {
-    AreaDTO getStoreAreaByStoreId(Long pk);
-    Long saveStoreAreaRelation(StoreDetailDTO dto);
+    List<AreaDTO> getStoreAreaByStoreId(Long pk);
+    Boolean saveStoreAreaRelation(StoreDetailDTO dto);
 
-    Long updateStoreAreaRelation(StoreDetailDTO dto);
+    Boolean updateStoreAreaRelation(StoreDetailDTO dto);
 
     Boolean deleteStoreAreaRelation(List<Long> ids);
 }

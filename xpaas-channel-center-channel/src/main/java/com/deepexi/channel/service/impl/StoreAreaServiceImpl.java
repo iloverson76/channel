@@ -5,6 +5,7 @@ import com.deepexi.channel.domain.store.StoreAreaDO;
 import com.deepexi.channel.domain.store.StoreAreaDTO;
 import com.deepexi.channel.service.StoreAreaService;
 import com.deepexi.util.CollectionUtil;
+import com.deepexi.util.pojo.ObjectCloneUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,13 +38,13 @@ public class StoreAreaServiceImpl implements StoreAreaService {
     }
 
     @Override
-    public StoreAreaDTO getStoreAreaByStoreId(Long storeId) {
+    public List<StoreAreaDTO> getStoreAreaByStoreId(Long storeId) {
         List<StoreAreaDO> storeAreaDOS = storeAreaDAO.getByStoreId(storeId);
         if(CollectionUtil.isEmpty(storeAreaDOS)){
             return null;
         }
-        StoreAreaDO storeAreaDO = storeAreaDOS.get(0);
-        return storeAreaDO.clone(StoreAreaDTO.class);
+        List<StoreAreaDTO> result = ObjectCloneUtils.convertList(storeAreaDOS, StoreAreaDTO.class);
+        return result;
     }
 
     @Override
@@ -52,5 +53,14 @@ public class StoreAreaServiceImpl implements StoreAreaService {
             return false;
         }
         return storeAreaDAO.removeByStoreIds(storeIds);
+    }
+
+    @Override
+    public Boolean saveBatch(List<StoreAreaDTO> list) {
+        if(CollectionUtil.isEmpty(list)){
+            return false;
+        }
+        List<StoreAreaDO> storeAreaDOS = ObjectCloneUtils.convertList(list, StoreAreaDO.class);
+        return storeAreaDAO.saveBatch(storeAreaDOS);
     }
 }

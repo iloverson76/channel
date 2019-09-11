@@ -36,7 +36,7 @@ public class AreaServiceImpl implements AreaService{
 
         Long newId=newNode.getId();
 
-        //设置处理(id路径)
+  /*      //设置处理(id路径)
 
         Long parentId=newNode.getParentId();
 
@@ -52,7 +52,7 @@ public class AreaServiceImpl implements AreaService{
         }
 
         areaDAO.updateById(newNode);
-
+*/
         return newId;
     }
 
@@ -131,6 +131,23 @@ public class AreaServiceImpl implements AreaService{
         areaDAO.updateBatchById(ObjectCloneUtils.convertList(dtoList,AreaDO.class,CloneDirection.FORWARD));
 
         return Boolean.TRUE;
+    }
+
+    @Override
+    public List<AreaDTO> findAllByIds(List<Long> ids) {
+
+        if(CollectionUtils.isEmpty(ids)){
+            return Collections.emptyList();
+        }
+
+        List<AreaDO> eoList= areaDAO.findAllByIds(ids);
+
+        if(CollectionUtils.isEmpty(eoList)){
+            return Collections.emptyList();
+        }
+
+
+        return ObjectCloneUtils.convertList(eoList,AreaDTO.class,CloneDirection.OPPOSITE);
     }
 
     @Override

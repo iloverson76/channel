@@ -44,4 +44,14 @@ public class AreaDAOImpl extends ServiceImpl<AreaMapper, AreaDO> implements Area
 
         return baseMapper.selectList(wp);
     }
+
+    @Override
+    public List<AreaDO> findAllByIds(List<Long> ids) {
+
+        QueryWrapper<AreaDO> wp=new QueryWrapper<>();
+
+        wp.in("area_type_id",ids);
+
+        return baseMapper.selectList(wp);
+    }
 }

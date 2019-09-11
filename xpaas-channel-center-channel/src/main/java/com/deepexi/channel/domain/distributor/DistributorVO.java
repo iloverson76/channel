@@ -32,37 +32,42 @@ public class DistributorVO extends AbstractObject implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Long id;
+    //新增
+    @ApiModelProperty("新增-所属等级")
+    private List<DistributorGradeRelationVO> distributorGradeRelation;
 
-    @ApiModelProperty("所属等级列表")
-    private List<DistributorGradeVO> distributorGrade;
+    @ApiModelProperty("新增-银行账号列表")
+    private List<DistributorBankAccountRelationVO> distributorBankAccountRelation;
 
-    @ApiModelProperty("所属等级ID")
-    private List<Long> gradeIds;
 
-    @ApiModelProperty("银行账号列表")
+    @ApiModelProperty("新增-所在区域")
+    private List<DistributorAreaRelationVO> distributorAreaRelation;
+
+
+    //详情
+    @ApiModelProperty("详情-区域ID")
+    private List<GradeInfoVO> gradeInfo;
+
+    @ApiModelProperty("详情-区域ID")
     private List<BankAccountVO> bankAccount;
 
-    @ApiModelProperty("银行账号ID")
+    @ApiModelProperty("详情-区域ID")
+    private List<AreaDTO> area;
+
+    //删除
+    @ApiModelProperty("删除-区域ID")
+    private List<Long> areaIds;
+
+    @ApiModelProperty("删除-所属等级ID")
+    private List<Long> gradeIds;
+
+    @ApiModelProperty("删除-银行账号ID")
     private List<Long> bankAccountIds;
 
-    @ApiModelProperty("所在区域")
-    private AreaVO area;
-
-    @ApiModelProperty("所在区域ID")
-    private long AreaId;
-
     /**
-     * 是否指定上级
+     * 主键
      */
-    @ApiModelProperty("是否指定上级 0 否 1 是")
-    private int limitedParent;
-
-    /**
-     * 上级经销商ID
-     */
-    @ApiModelProperty("直接上级经销商")
-    private List<DistributorVO> parent;
+    private Long id;
 
     /**
      * 经销商类型 1 厂商 2 经销商

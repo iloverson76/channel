@@ -28,18 +28,6 @@ public class DistributorDO extends SuperEntity {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 是否指定上级
-     */
-    @ApiModelProperty("是否指定上级 0 否 1 是")
-    private int limitedParent;
-
-    /**
-     * 上级经销商ID
-     */
-    @ApiModelProperty("直接上级经销商ID")
-    private Long parentId;
-
-    /**
      * 经销商类型 1 厂商 2 经销商
      */
     private Integer distributorType;

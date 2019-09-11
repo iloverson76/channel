@@ -68,19 +68,17 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
         Date updatedTime=distributor.getUpdatedTime();
 
         //等级信息保存
-        List<Long> gradeList= distributor.getGradeIds();
+        List<DistributorGradeRelationDTO> gdrList= distributor.getDistributorGradeRelation();
 
-        if(CollectionUtils.isNotEmpty(gradeList)){
+        if(CollectionUtils.isNotEmpty(gdrList)){
 
-            List<DistributorGradeRelationDTO> dgrList=new ArrayList<>();
+            List<DistributorGradeRelationDTO> dgrInsertList=new ArrayList<>();
 
-            gradeList.forEach(gid->{
+            gdrList.forEach(dgr->{
 
-                DistributorGradeRelationDTO dgr=new DistributorGradeRelationDTO();
+                DistributorGradeRelationDTO dgrDTO=new DistributorGradeRelationDTO();
 
                 dgr.setDistributorId(distId);
-
-                dgr.setDistributorGradeId(gid);
 
                 dgr.setCreatedBy(createdBy);
 
@@ -90,45 +88,52 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
                 dgr.setUpdatedTime(updatedTime);
 
-                dgrList.add(dgr);
+                dgrInsertList.add(dgrDTO);
 
             });
 
-            distributorGradeRelationService.createBatch(dgrList);
+            distributorGradeRelationService.createBatch(dgrInsertList);
         }
 
         //区域信息保存
-        long areaId=distributor.getAreaId();
+        List<Long> areaIds=distributor.getAreaIds();
 
-        if(areaId>0){
-            DistributorAreaRelationDTO adto=new DistributorAreaRelationDTO();
+        if(CollectionUtils.isNotEmpty(areaIds)){
 
-            adto.setAreaId(areaId);
+            List<DistributorAreaRelationDTO> areaInsertList=new ArrayList<>();
 
-            adto.setDistributorId(distId);
+            areaIds.forEach(areaId->{
 
-            adto.setCreatedBy(createdBy);
+                DistributorAreaRelationDTO adto=new DistributorAreaRelationDTO();
 
-            adto.setCreatedTime(createdTime);
+                adto.setAreaId(areaId);
 
-            adto.setUpdatedBy(updatedBy);
+                adto.setDistributorId(distId);
 
-            adto.setUpdatedTime(updatedTime);
+                adto.setCreatedBy(createdBy);
 
-            distributorAreaRelationService.create(adto);
+                adto.setCreatedTime(createdTime);
+
+                adto.setUpdatedBy(updatedBy);
+
+                adto.setUpdatedTime(updatedTime);
+
+                areaInsertList.add(adto);
+            });
+            distributorAreaRelationService.createBatch(areaInsertList);
         }
 
         //账号信息批量保存
         List<Long> accountIds=distributor.getBankAccountIds();
 
         if(CollectionUtils.isNotEmpty(accountIds)){
+
             List<DistributorBankAccountRelationDTO> barList=new ArrayList<>();
 
-            accountIds.forEach(a->{
-
+            accountIds.forEach(accountId->{
                 DistributorBankAccountRelationDTO bar=new DistributorBankAccountRelationDTO();
 
-                bar.setBankAccountId(a);
+                bar.setBankAccountId(accountId);
 
                 bar.setDistributorId(distId);
 
@@ -141,8 +146,8 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
                 bar.setUpdatedTime(updatedTime);
 
                 barList.add(bar);
-            });
 
+            });
             distributorBankAccountRelationService.batchCreate(barList);
         }
 
@@ -200,88 +205,77 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
         String updatedBy=dto.getUpdatedBy();
         Date updatedTime=dto.getUpdatedTime();
 
+        //等级信息
         List<Long> distriburotIds=new ArrayList<>(1);
 
         distriburotIds.add(dto.getId());
 
-        List<Long> gradeIds = dto.getGradeIds();
+        List<DistributorGradeRelationDTO> gradeInsertList= dto.getDistributorGradeRelation();
 
-        if(CollectionUtils.isNotEmpty(gradeIds)){//先删除再新建
+        if(CollectionUtils.isNotEmpty(gradeInsertList)) {
 
+            //先删除再新建
             distributorGradeRelationService.deleteByDistributorId(distributorId);
 
-            List<DistributorGradeRelationDTO> dtoList=new ArrayList<>();
-            gradeIds.forEach(gradeId->{
+            gradeInsertList.forEach(grade -> {
 
-                DistributorGradeRelationDTO gradeRelationDTO = new DistributorGradeRelationDTO();
+                grade.setDistributorId(distributorId);
 
-                gradeRelationDTO.setDistributorId(distributorId);
+                grade.setCreatedBy(createdBy);
 
-                gradeRelationDTO.setDistributorGradeId(gradeId);
+                grade.setCreatedTime(createdTime);
 
-                gradeRelationDTO.setCreatedBy(createdBy);
+                grade.setUpdatedBy(updatedBy);
 
-                gradeRelationDTO.setCreatedTime(createdTime);
-
-                gradeRelationDTO.setUpdatedBy(updatedBy);
-
-                gradeRelationDTO.setCreatedTime(updatedTime);
-
-            });
-           distributorGradeRelationService.createBatch(dtoList);
-        }
-
-        AreaDTO areaDTO = dto.getArea();
-
-        if(null!=areaDTO){
-
-            distributorAreaRelationService.deleteBatchByDistributorIds(distriburotIds);
-
-            DistributorAreaRelationDTO areaRelationDTO = new DistributorAreaRelationDTO();
-
-            areaRelationDTO.setDistributorId(distributorId);
-
-            areaRelationDTO.setAreaId(areaDTO.getId());
-
-            areaRelationDTO.setCreatedBy(createdBy);
-
-            areaRelationDTO.setCreatedTime(createdTime);
-
-            areaRelationDTO.setUpdatedBy(updatedBy);
-
-            areaRelationDTO.setCreatedTime(updatedTime);
-
-            distributorAreaRelationService.create(areaRelationDTO);
-        }
-
-        List<BankAccountDTO> bankAccountDTOS = dto.getBankAccount();
-
-        if(CollectionUtils.isNotEmpty(bankAccountDTOS)){
-
-            distributorBankAccountRelationService.deleteBatchByDistributorIds(distriburotIds);
-
-            List<DistributorBankAccountRelationDTO> barList=new ArrayList<>(bankAccountDTOS.size());
-
-            bankAccountDTOS.forEach(accountDTO->{
-
-                DistributorBankAccountRelationDTO barDTO=new DistributorBankAccountRelationDTO();
-
-                barDTO.setBankAccountId(accountDTO.getId());
-
-                barDTO.setDistributorId(distributorId);
-
-                barDTO.setCreatedBy(createdBy);
-
-                barDTO.setCreatedTime(createdTime);
-
-                barDTO.setUpdatedBy(updatedBy);
-
-                barDTO.setCreatedTime(updatedTime);
-
-                barList.add(barDTO);
+                grade.setUpdatedTime(updatedTime);
             });
 
-            distributorBankAccountRelationService.batchCreate(barList);
+            distributorGradeRelationService.createBatch(gradeInsertList);
+        }
+
+
+        //区域信息
+        List<DistributorAreaRelationDTO> areaInsertList= dto.getDistributorAreaRelation();
+
+        if(CollectionUtils.isNotEmpty(areaInsertList)) {
+
+            //先删除再新建
+            distributorAreaRelationService.deleteByDistributorId(distributorId);
+
+            areaInsertList.forEach(area -> {
+
+                area.setDistributorId(distributorId);
+
+                area.setCreatedBy(createdBy);
+
+                area.setCreatedTime(createdTime);
+
+                area.setUpdatedBy(updatedBy);
+
+                area.setUpdatedTime(updatedTime);
+            });
+
+            distributorAreaRelationService.createBatch(areaInsertList);
+        }
+
+        //银行账号信息
+        List<DistributorBankAccountRelationDTO> bankAccountInsertList = dto.getDistributorBankAccountRelation();
+
+        if(CollectionUtils.isNotEmpty(bankAccountInsertList)){
+
+            bankAccountInsertList.forEach(account->{
+
+                account.setDistributorId(distributorId);
+
+                account.setCreatedBy(createdBy);
+
+                account.setCreatedTime(createdTime);
+
+                account.setUpdatedBy(updatedBy);
+
+                account.setCreatedTime(updatedTime);
+            });
+            distributorBankAccountRelationService.batchCreate(bankAccountInsertList);
         }
 
         distributorService.update(dto);
@@ -298,18 +292,18 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
         List<BankAccountDTO> bankAccounts=getBankAccountInfo(distributorId);
 
-        AreaDTO area =getAreaInfo(distributorId);
+       List<AreaDTO> areas =getAreaInfo(distributorId);
 
         //区域信息(查到根节点)
-        if(null!=area){
+        if(CollectionUtils.isNotEmpty(areas)){
 
-            distributor.setArea(area);
+            distributor.setArea(areas);
         }
 
         //等级信息-经销商:等级:体系=1:1:N
         if(CollectionUtils.isNotEmpty(grades)){
 
-            distributor.setGrades(grades);
+            distributor.setGradeInfo(grades);
         }
 
         //银行账号信息
@@ -381,17 +375,28 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
     }
 
     @Override
-    public AreaDTO getAreaInfo(Long distributorId){
+    public List<AreaDTO> getAreaInfo(Long distributorId){
 
-        DistributorAreaRelationDTO bar = distributorAreaRelationService.findOneByDistributorId(distributorId);
+        List<DistributorAreaRelationDTO> dars = distributorAreaRelationService.findAllByDistributorId(distributorId);
 
-        Long areaId=bar.getAreaId();
+        List<Long> areaIds=new ArrayList<>();
 
-        if(areaId==null){
-            return new AreaDTO();
+        if(CollectionUtils.isNotEmpty(dars)){
+
+            dars.forEach(dar->{
+
+                areaIds.add(dar.getAreaId());
+
+            });
         }
 
-        return  areaService.getAreaById(areaId);
+        List<AreaDTO> areas = areaService.findAllByIds(areaIds);
+
+        if(CollectionUtils.isEmpty(areas)){
+            return Collections.emptyList();
+        }
+
+        return areas;
     }
 
     @Override
@@ -424,82 +429,99 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
     @Override
     public List<GradeInfoDTO> getGradeInfo(Long distributorId) {
 
-        DistributorDTO distributor = distributorService.getById(distributorId);
-
-        int limitedParent=distributor.getLimitedParent();
-
         List<Long> butorIds=new ArrayList<>(1);
 
         butorIds.add(distributorId);
 
-        List<DistributorGradeRelationDTO> dgrDTOS=
+        List<DistributorGradeRelationDTO> relationList=
                 distributorGradeRelationService.findAllByDistributorIds(butorIds);
 
         List<Long> gradeIdList=new ArrayList<>();
 
-        if(CollectionUtils.isEmpty(dgrDTOS)){
-            return Collections.emptyList();
-        }
-
-        //等级信息
-        dgrDTOS.forEach(dgr->{
-            gradeIdList.add(dgr.getDistributorGradeId());
-        });
-
-        DistributorGradeQuery query=new DistributorGradeQuery();
-
-        query.setIds(gradeIdList);
-
-        List<DistributorGradeDTO> gradeDTOS = distributorGradeService.findPage(query);
-
-        //体系信息
         List<Long> systemIdList=new ArrayList<>();
-        gradeDTOS.forEach(gdto->{
-            systemIdList.add(gdto.getGradeSystemId());
-        });
 
-        DistributorGradeSystemQuery sqry=new DistributorGradeSystemQuery();
+        if(CollectionUtils.isNotEmpty(relationList)){
 
-        query.setIds(systemIdList);
+            //中间表数据
+            gradeIdList=relationList.stream().map(DistributorGradeRelationDTO::getGradeId).
+                    collect(Collectors.toList());
 
-        List<DistributorGradeSystemDTO> systemDTOS = distributorGradeSystemService.findPage(sqry);
+            systemIdList=relationList.stream().map(DistributorGradeRelationDTO::getSystemId).
+                    collect(Collectors.toList());
 
-        //组装返回页面
-        List<GradeInfoDTO> gradeInfos=new ArrayList<>();
+            //
+            Map<Long, List<DistributorGradeRelationDTO>> relationSystemMap =
+                    relationList.stream().collect(Collectors.groupingBy(DistributorGradeRelationDTO::getSystemId));
 
-        for (DistributorGradeSystemDTO system:systemDTOS){
 
-            for (DistributorGradeDTO grade: gradeDTOS){
+            //
 
-                if(grade.getGradeSystemId()==system.getId()){
+            DistributorGradeQuery query=new DistributorGradeQuery();
 
-                    GradeInfoDTO gif=new GradeInfoDTO();
+            query.setIds(gradeIdList);
 
-                    gif.setSystemId(system.getId());
+            List<DistributorGradeDTO> gradeDTOS = distributorGradeService.findPage(query);
 
-                    gif.setSystemName(system.getGradeSystemName());
+            //体系信息
+            DistributorGradeSystemQuery sqry=new DistributorGradeSystemQuery();
 
-                    gif.setSystemCode(system.getGradeSystemCode());
+            query.setIds(systemIdList);
 
-                    gif.setGradeId(grade.getId());
+            List<DistributorGradeSystemDTO> systemDTOS = distributorGradeSystemService.findPage(sqry);
 
-                    gif.setGradeCode(grade.getDistributorGradeCode());
+            //组装返回页面
+            List<GradeInfoDTO> gradeInfos=new ArrayList<>();
 
-                    if(limitedParent==1){
+            for (DistributorGradeSystemDTO system:systemDTOS){
 
-                       DistributorDTO dis= distributorService.getById(distributor.getParentId());
+                for (DistributorGradeDTO grade: gradeDTOS){
 
-                       gif.setParentDistributorId(dis.getId());
+                    Long gradeSystemId=grade.getGradeSystemId();
 
-                       gif.setParentDistributorName(dis.getDistributorName());
+                    if(gradeSystemId==system.getId()){
+
+                        GradeInfoDTO gif=new GradeInfoDTO();
+
+                        gif.setSystemId(system.getId());
+
+                        gif.setSystemName(system.getGradeSystemName());
+
+                        gif.setSystemCode(system.getGradeSystemCode());
+
+                        gif.setGradeId(grade.getId());
+
+                        gif.setGradeCode(grade.getDistributorGradeCode());
+
+                        //中间表按体系来分组只有一条数据
+                        DistributorGradeRelationDTO dgr=relationSystemMap.get(gradeSystemId).get(0);
+                        Integer limitedParent=dgr.getLimitedParent();
+
+                        if(limitedParent.equals(1)){
+
+                            DistributorDTO dis= distributorService.getById(dgr.getParentId());
+
+                            gif.setParentDistributorId(dis.getId());
+
+                            gif.setParentDistributorName(dis.getDistributorName());
+                        }
+
+                        gradeInfos.add(gif);
                     }
-
-                    gradeInfos.add(gif);
                 }
             }
+
+
+
+
+
+
+
+
+
         }
 
-        return gradeInfos;
+
+        return Collections.emptyList();
     }
 
 }

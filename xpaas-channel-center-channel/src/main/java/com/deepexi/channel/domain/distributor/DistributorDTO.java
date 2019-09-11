@@ -31,41 +31,42 @@ public class DistributorDTO extends AbstractObject {
 
     private static final long serialVersionUID = 1L;
 
-    private Long id;
+    //新增
+    @ApiModelProperty("新增-所属等级")
+    private List<DistributorGradeRelationDTO> distributorGradeRelation;
 
-    @ApiModelProperty("所属等级")
-    private List<DistributorGradeDTO> distributorGrade;
+    @ApiModelProperty("新增-银行账号列表")
+    private List<DistributorBankAccountRelationDTO> distributorBankAccountRelation;
 
-    @ApiModelProperty("所属等级ID")
+
+    @ApiModelProperty("新增-所在区域")
+    private List<DistributorAreaRelationDTO> distributorAreaRelation;
+
+
+    //详情
+    @ApiModelProperty("详情-区域ID")
+    private List<GradeInfoDTO> gradeInfo;
+
+    @ApiModelProperty("详情-区域ID")
+    private List<BankAccountDTO> bankAccount;
+
+    @ApiModelProperty("详情-区域ID")
+    private List<AreaDTO> area;
+
+    //删除
+    @ApiModelProperty("删除-区域ID")
+    private List<Long> areaIds;
+
+    @ApiModelProperty("删除-所属等级ID")
     private List<Long> gradeIds;
 
-    @ApiModelProperty("银行账号列表")
-    private List<BankAccountDTO> bankAccount;
+    @ApiModelProperty("删除-银行账号ID")
     private List<Long> bankAccountIds;
 
-    @ApiModelProperty("所在区域")
-    private AreaDTO area;
-    private long AreaId;
-
-    private List<GradeInfoDTO> grades;
-
     /**
-     * 上级经销商ID
+     * 主键
      */
-    @ApiModelProperty("直接/所有上级经销商")
-    private List<DistributorDTO> parent;
-
-    /**
-     * 是否指定上级(0:parentId=0,1:parentId=3/4/5/...)
-     */
-    @ApiModelProperty("是否指定上级 0 否 1 是")
-    private int limitedParent;
-
-    /**
-     * 直接上级经销商ID(只保存直接上级)
-     */
-    @ApiModelProperty("直接上级经销商ID")
-    private Long parentId;
+    private Long id;
 
     /**
      * 经销商类型 1 厂商 2 经销商

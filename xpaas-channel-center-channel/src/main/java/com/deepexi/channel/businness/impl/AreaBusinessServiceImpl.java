@@ -269,15 +269,15 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
     @Override
     public boolean update(AreaDTO dto) {
 
-        long id=dto.getId();
+        Long id=dto.getId();
 
         AreaDTO origDTO=areaService.getAreaById(id);
 
         String OrigParentPath=origDTO.getPath();
 
-        long origParentId=origDTO.getParentId();
+        Long origParentId=origDTO.getParentId();
 
-        long newParentId=dto.getParentId();
+        Long newParentId=dto.getParentId();
 
         AreaDTO newParent=areaService.getAreaById(newParentId);
 
@@ -285,9 +285,9 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
         String updatePath=newParentPath+"/"+id;
 
-        long newParentTypeId=newParent.getAreaTypeId();
+        Long newParentTypeId=newParent.getAreaTypeId();
 
-        long origAreaTypeId=origDTO.getAreaTypeId();
+        Long origAreaTypeId=origDTO.getAreaTypeId();
 
         //原来有上级,且挂载到了新上级
         if(origParentId!=0&&origParentId!=-1&&origParentId!=newParentId){

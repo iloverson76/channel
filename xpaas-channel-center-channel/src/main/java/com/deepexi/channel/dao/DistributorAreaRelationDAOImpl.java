@@ -54,7 +54,7 @@ public class DistributorAreaRelationDAOImpl extends ServiceImpl<DistributorAreaR
     }
 
     @Override
-    public List<DistributorAreaRelationDO> findAllByDistributorIds(long distributorId) {
+    public List<DistributorAreaRelationDO> findAllByDistributorId(Long distributorId) {
 
         QueryWrapper<DistributorAreaRelationDO> wp=new QueryWrapper<>();
 
