@@ -21,7 +21,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @TableName("cc_distributor_grade_relation")
-@ApiModel(value="DistributorGradeRelation对象", description="经销商-等级关联表")
+@ApiModel(value="DistributorGradeRelation对象", description="经销商-等级-体系关联表")
 public class DistributorGradeRelationDO extends SuperEntity {
 
     private static final long serialVersionUID = 1L;
@@ -32,8 +32,20 @@ public class DistributorGradeRelationDO extends SuperEntity {
     private Long distributorId;
 
     /**
-     * 区域ID
+     * 等级ID
      */
-    private Long distributorGradeId;
+    private Long gradeId;
+    /**
+     * 体系ID
+     */
+    private Long systemId;
+    /**
+     * 是否限制上级
+     */
+    private Integer limitedParent;
+    /**
+     * 指定的上级(一个)
+     */
+    private Long parentId;
 
 }

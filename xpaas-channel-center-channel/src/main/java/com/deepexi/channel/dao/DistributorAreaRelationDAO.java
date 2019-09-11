@@ -16,7 +16,7 @@ public interface DistributorAreaRelationDAO extends  IService<DistributorAreaRel
 
     boolean updateBatchById(List<DistributorAreaRelationDO> eoList);
 
-    List<DistributorAreaRelationDO> findAllByDistributorIds(long distributorId);
+    List<DistributorAreaRelationDO> findAllByDistributorId(Long distributorId);
 
     DistributorAreaRelationDO getOne(Long distributorId);
 }

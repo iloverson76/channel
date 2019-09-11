@@ -36,8 +36,19 @@ public class DistributorGradeRelationDTO extends AbstractObject {
     /**
      * 等级ID
      */
-    @ApiModelProperty("等级ID")
-    private Long distributorGradeId;
+    private Long gradeId;
+    /**
+     * 体系ID
+     */
+    private Long systemId;
+    /**
+     * 是否限制上级
+     */
+    private Integer limitedParent;
+    /**
+     * 指定的上级(一个)
+     */
+    private Long parentId;
 
     /**
      * 创建人
