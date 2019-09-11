@@ -433,19 +433,93 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
         butorIds.add(distributorId);
 
-        List<DistributorGradeRelationDTO> dgrList=
+        List<DistributorGradeRelationDTO> relationList=
                 distributorGradeRelationService.findAllByDistributorIds(butorIds);
 
         List<Long> gradeIdList=new ArrayList<>();
 
-        if(CollectionUtils.isEmpty(dgrList)){
-            return Collections.emptyList();
+        List<Long> systemIdList=new ArrayList<>();
+
+        if(CollectionUtils.isNotEmpty(relationList)){
+
+            //中间表数据
+            gradeIdList=relationList.stream().map(DistributorGradeRelationDTO::getGradeId).
+                    collect(Collectors.toList());
+
+            systemIdList=relationList.stream().map(DistributorGradeRelationDTO::getSystemId).
+                    collect(Collectors.toList());
+
+            //
+            Map<Long, List<DistributorGradeRelationDTO>> relationSystemMap =
+                    relationList.stream().collect(Collectors.groupingBy(DistributorGradeRelationDTO::getSystemId));
+
+
+            //
+
+            DistributorGradeQuery query=new DistributorGradeQuery();
+
+            query.setIds(gradeIdList);
+
+            List<DistributorGradeDTO> gradeDTOS = distributorGradeService.findPage(query);
+
+            //体系信息
+            DistributorGradeSystemQuery sqry=new DistributorGradeSystemQuery();
+
+            query.setIds(systemIdList);
+
+            List<DistributorGradeSystemDTO> systemDTOS = distributorGradeSystemService.findPage(sqry);
+
+            //组装返回页面
+            List<GradeInfoDTO> gradeInfos=new ArrayList<>();
+
+            for (DistributorGradeSystemDTO system:systemDTOS){
+
+                for (DistributorGradeDTO grade: gradeDTOS){
+
+                    Long gradeSystemId=grade.getGradeSystemId();
+
+                    if(gradeSystemId==system.getId()){
+
+                        GradeInfoDTO gif=new GradeInfoDTO();
+
+                        gif.setSystemId(system.getId());
+
+                        gif.setSystemName(system.getGradeSystemName());
+
+                        gif.setSystemCode(system.getGradeSystemCode());
+
+                        gif.setGradeId(grade.getId());
+
+                        gif.setGradeCode(grade.getDistributorGradeCode());
+
+                        //中间表按等级来分组只有一条数据
+                        DistributorGradeRelationDTO dgr=relationSystemMap.get(gradeSystemId).get(0);
+                        Integer limitedParent=dgr.getLimitedParent();
+
+                        if(limitedParent.equals(1)){
+
+                            DistributorDTO dis= distributorService.getById(dgr.getParentId());
+
+                            gif.setParentDistributorId(dis.getId());
+
+                            gif.setParentDistributorName(dis.getDistributorName());
+                        }
+
+                        gradeInfos.add(gif);
+                    }
+                }
+            }
+
+
+
+
+
+
+
+
+
         }
 
-        dgrList.forEach(dgr->{
-
-
-        });
 
         return Collections.emptyList();
     }

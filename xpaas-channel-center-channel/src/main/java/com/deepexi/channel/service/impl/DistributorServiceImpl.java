@@ -37,11 +37,11 @@ public class DistributorServiceImpl implements DistributorService {
             return 0L;
         }
 
-        //只保存直接上级关系
-        if(dto.getLimitedParent()==0){//如果不指定上级,前端传parentId=0过来.这一版无法设置路径
-
-            dto.setParentId(0L);
-        }
+//        //只保存直接上级关系
+//        if(dto.getLimitedParent()==0){//如果不指定上级,前端传parentId=0过来.这一版无法设置路径
+//
+//            dto.setParentId(0L);
+//        }
 
         DistributorDO newNode=dto.clone(DistributorDO.class, CloneDirection.FORWARD);
 
@@ -82,11 +82,11 @@ public class DistributorServiceImpl implements DistributorService {
             return false;
         }
 
-        //只保存直接上级关系
-        if(dto.getLimitedParent()==0){//如果不指定上级,前端传parentId=0过来.这一版无法设置路径
-
-            dto.setParentId(0L);
-        }
+//        //只保存直接上级关系
+//        if(dto.getLimitedParent()==0){//如果不指定上级,前端传parentId=0过来.这一版无法设置路径
+//
+//            dto.setParentId(0L);
+//        }
 
         return distributorDAO.updateById(dto.clone(DistributorDO.class,CloneDirection.FORWARD));
     }
