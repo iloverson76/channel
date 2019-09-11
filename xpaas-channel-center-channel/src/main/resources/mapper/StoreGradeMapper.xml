@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deepexi.channel.mapper.StoreGradeMapper">
+    <resultMap type="com.deepexi.channel.domain.store.StoreGradeDO" id="StoreGradeDOResult">
+        <result property="id" column="id" />
+        <result property="storeGradeName" column="store_grade_name" />
+        <result property="storeGradeCode" column="store_grade_code" />
+        <result property="storeGradeNameEn" column="store_grade_name_en" />
+        <result property="description" column="description" />
+        <result property="version" column="version" />
+        <result property="remark" column="remark" />
+        <result property="dr" column="dr" />
+        <result property="createdBy" column="created_by" />
+        <result property="createdTime" column="created_time" />
+        <result property="updatedBy" column="updated_by" />
+        <result property="updatedTime" column="updated_time" />
+    </resultMap>
+    <select id="findList" resultType="com.deepexi.channel.domain.store.StoreGradeDO">
+        SELECT * FROM cc_store_grade WHERE dr=0
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="storeGradeCode!=null and storeGradeCode!=''">
+            and store_grade_code like concat('%',#{storeGradeCode},'%')
+        </if>
+        <if test="storeGradeAccuracyCode!=null and storeGradeAccuracyCode!=''">
+            and store_grade_code = #{storeGradeAccuracyCode}
+        </if>
+        <if test="storeGradeName!=null and storeGradeName!=''">
+            and store_grade_name like concat('%',#{storeGradeName},'%')
+        </if>
+        <if test="storeGradeAccuracyName!=null and storeGradeAccuracyName!=''">
+            and store_grade_name = #{storeGradeAccuracyName}
+        </if>
+        <if test="startTime != null">
+            and created_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null">
+            and created_time &lt;= #{endTime}
+        </if>
+        <if test="updateStartTime != null">
+            and updated_time &gt;= #{updateStartTime}
+        </if>
+        <if test="updateEndTime != null">
+            and updated_time &lt;= #{updateEndTime}
+        </if>
+        <if test="tenantId!=null">
+            AND tenant_id = #{tenantId}
+        </if>
+        <if test="appId!=null">
+            AND app_id =#{appId}
+        </if>
+        order by created_time desc
+    </select>
+
+    <update id="deleteByIds">
+        UPDATE cc_store_grade set dr=1 where id in
+        <foreach collection="ids" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+</mapper>
