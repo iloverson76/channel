@@ -29,6 +29,9 @@
         <if test="storeTypeName!=null and storeTypeName!=''">
             and store_type_name like concat('%',#{storeTypeName},'%')
         </if>
+        <if test="storeTypeAccuracyName!=null and storeTypeAccuracyName!=''">
+            and store_type_name = #{storeTypeAccuracyName}
+        </if>
         <if test="startTime != null">
             and created_time &gt;= #{startTime}
         </if>
