@@ -124,8 +124,8 @@ public class ChainTypeServiceImpl implements ChainTypeService {
     }
 
     /**
-     * @MethodName: isCodeUnique
-     * @Description: 判断连锁名称是否重复
+     * @MethodName: isNameUnique
+     * @Description: 判断连锁类型是否重复
      * @Param: [code]
      * @Return: boolean 名称唯一, true 名称唯一 ， false 名称不唯一
      * @Author: mumu

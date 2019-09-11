@@ -45,4 +45,7 @@ public class StoreTypeQuery  extends CommQuery {
      */
     @ApiModelProperty(value = "多个id查询")
     private List<Long> ids;
+
+    @ApiModelProperty(value = "门店类型精准名称，不会进行模糊查询")
+    private String storeTypeAccuracyName;
 }
