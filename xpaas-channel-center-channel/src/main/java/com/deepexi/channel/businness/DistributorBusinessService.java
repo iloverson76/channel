@@ -19,7 +19,7 @@ public interface DistributorBusinessService {
 
     boolean update(DistributorDTO clone);
 
-    AreaDTO getAreaInfo(Long distributorId);
+    List<AreaDTO> getAreaInfo(Long distributorId);
 
     List<BankAccountDTO> getBankAccountInfo(Long distributorId);
 

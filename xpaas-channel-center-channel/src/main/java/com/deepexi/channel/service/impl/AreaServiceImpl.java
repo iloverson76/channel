@@ -134,6 +134,23 @@ public class AreaServiceImpl implements AreaService{
     }
 
     @Override
+    public List<AreaDTO> findAllByIds(List<Long> ids) {
+
+        if(CollectionUtils.isEmpty(ids)){
+            return Collections.emptyList();
+        }
+
+        List<AreaDO> eoList= areaDAO.findAllByIds(ids);
+
+        if(CollectionUtils.isEmpty(eoList)){
+            return Collections.emptyList();
+        }
+
+
+        return ObjectCloneUtils.convertList(eoList,AreaDTO.class,CloneDirection.OPPOSITE);
+    }
+
+    @Override
     public boolean deleteBatch(List<Long> ids) {
 
         if(CollectionUtils.isEmpty(ids)){

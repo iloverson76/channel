@@ -27,4 +27,6 @@ public interface AreaService {
     List<AreaDTO> listLinkedAreasByType(Long areaTypeId);
 
     boolean updateBatch(List<AreaDTO> dtoList);
+
+    List<AreaDTO> findAllByIds(List<Long> ids);
 }

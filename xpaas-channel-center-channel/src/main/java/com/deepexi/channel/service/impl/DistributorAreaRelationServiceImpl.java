@@ -6,10 +6,12 @@ import com.deepexi.channel.domain.distributor.DistributorAreaRelationDTO;
 import com.deepexi.channel.service.DistributorAreaRelationService;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -47,15 +49,27 @@ public class DistributorAreaRelationServiceImpl implements DistributorAreaRelati
     }
 
     @Override
-    public DistributorAreaRelationDTO findOneByDistributorId(Long distributorId) {
+    public List<DistributorAreaRelationDTO> findAllByDistributorId(Long distributorId) {
 
-        DistributorAreaRelationDO eo=distributorAreaRelationDAO.getOne(distributorId);
+        List<DistributorAreaRelationDO> eoList=distributorAreaRelationDAO.findAllByDistributorId(distributorId);
 
-        if(eo==null){
-            return new DistributorAreaRelationDTO();
+        if(CollectionUtils.isNotEmpty(eoList)){
+            return Collections.emptyList();
 
         }
 
-        return eo.clone(DistributorAreaRelationDTO.class,CloneDirection.OPPOSITE);
+        return ObjectCloneUtils.convertList(eoList,DistributorAreaRelationDTO.class,CloneDirection.OPPOSITE);
+    }
+
+    @Override
+    public Boolean deleteByDistributorId(Long distributorId) {
+
+        if(distributorId<=0){
+            return false;
+        }
+
+        distributorAreaRelationDAO.deleteBatchByDistributorIds(Collections.singletonList(distributorId));
+
+        return Boolean.TRUE;
     }
 }
