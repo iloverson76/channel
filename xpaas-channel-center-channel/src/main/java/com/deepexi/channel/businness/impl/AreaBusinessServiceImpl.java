@@ -277,63 +277,58 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
     }
 
     @Override
-    public boolean updateTreeChange(Long parentId,Long id) {
-
-        //根节点处理
+    public boolean updateTreeChange(Long newParentId,Long id,Integer root) {
 
         //自己
         AreaDTO self=areaService.getAreaById(id);
 
-        if(self.getRoot()==1){
-
-            self.setPath("/"+id);
-
+        //根节点处理
+        if(root==1){
+            String origPath=self.getPath();
+            self.setParentId(0L);
+            String rootPath="/"+id;
+            self.setPath(rootPath);
             areaService.update(self);
-        }
+            UpdateChildrenPath(id,origPath,rootPath);
+        }else{
 
-        //原来上级
-        AreaDTO origParentNode=areaService.getAreaById(id);
+            //从新上级节点拼接新路径
+            AreaDTO newParentNode=areaService.getAreaById(newParentId);
 
-        Long origParentId=origParentNode.getId();//原来上级ID
+            String newParentPath=newParentNode.getPath();
 
-        String OrigParentPath=origParentNode.getPath();//原来上级路径
+            String updatePath=newParentPath+"/"+id;
 
+            String replacepath=self.getPath();
 
-        //新上级
-        AreaDTO newParent=areaService.getAreaById(parentId);
+            //自己
+            self.setParentId(newParentId);
+            self.setPath(updatePath);
+            areaService.update(self);
 
-        Long newParentId=newParent.getId();//新上级ID
-
-        String newParentPath=newParent.getPath();//新上级路径
-
-        String updatePath=newParentPath+"/"+id;//子节点需要更新的路径
-
-        //自己下级
-
-        //更新自己的路径
-        self.setPath(updatePath);
-        areaService.update(self);
-
-        //原来有上级,且挂载到了新上级
-        if(origParentId!=0&&origParentId!=-1&&origParentId!=newParentId){
-
-            List<AreaDTO> children = areaService.listChildrenAreas(id);
-
-            //有下级
-            if(CollectionUtils.isNotEmpty(children)){
-
-                children.forEach(child->{
-
-                    String path=child.getPath();
-
-                    child.setPath(path.replaceAll(OrigParentPath,updatePath));//更改所有子节点的路径
-
-                });
-                areaService.updateBatch(children);
-            }
+            //子节点
+            UpdateChildrenPath(id,replacepath,updatePath);
         }
 
         return Boolean.TRUE;
+    }
+
+    private void UpdateChildrenPath(Long id,String OrigParentPath,String updatePath){
+
+        //更改所有子节点的路径
+        List<AreaDTO> children = areaService.listChildrenAreas(id);
+
+        if(CollectionUtils.isNotEmpty(children)){
+
+            for(AreaDTO child:children){
+
+                String path=child.getPath();
+
+                child.setPath(path.replaceAll(OrigParentPath,updatePath));
+            }
+
+            areaService.updateBatch(children);
+        }
     }
 
 
