@@ -118,8 +118,9 @@ public class ChainTypeController {
         return new Payload<>(ObjectCloneUtils.convertList(list, ChainTypeVO.class));
     }
 
-    @GetMapping("/linkIdNoIn")
-    public Payload<ChainTypeListLinkVO> getListChainType(String linkIds){
+    @GetMapping("/linkIdNotIn")
+    @ApiOperation("查询是否已经关联")
+    public Payload<ChainTypeListLinkVO> getListChainType(@RequestParam String linkIds){
         List<Long> ids = Arrays.stream(linkIds.split(",")).map(Long::parseLong).collect(Collectors.toList());
         ChainTypeListLinkVO vo = new ChainTypeListLinkVO();
         List<ChainTypeDTO> listChainType = chainTypeBusinessService.getListChainType(ids);
