@@ -4,7 +4,10 @@ import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.deepexi.channel.dao.ChainTypeDAO;
 import com.deepexi.channel.domain.chain.ChainTypeDO;
 import com.deepexi.channel.domain.chain.ChainTypeDTO;
+import com.deepexi.channel.domain.chain.ChainTypeDO;
+import com.deepexi.channel.domain.chain.ChainTypeDTO;
 import com.deepexi.channel.domain.chain.ChainTypeQuery;
+import com.deepexi.channel.enums.LimitedEnum;
 import com.deepexi.channel.extension.AppRuntimeEnv;
 import com.deepexi.channel.service.ChainTypeService;
 import com.deepexi.util.CollectionUtil;
@@ -16,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -203,6 +207,7 @@ public class ChainTypeServiceImpl implements ChainTypeService {
         return chainTypeDAO.updateBatchById(chainTypeDOS);
     }
 
+    
     @Override
     public List<ChainTypeDTO> listParentNodesForCreate() {
 
@@ -217,5 +222,63 @@ public class ChainTypeServiceImpl implements ChainTypeService {
             return dtoList;
         }
         return Collections.emptyList();
+    }
+    /**
+     * 新增节点时的上级列表
+     *
+     * 上级与下级只能1:1
+     *
+     */
+    @Override
+    public List<ChainTypeDTO> listParentNodesForUpdate(Long id) {
+        //没有被限制分类的节点
+        List<ChainTypeDO> unLimitedNodes=chainTypeDAO.listNotLimitedNode(appRuntimeEnv.getTenantId(),appRuntimeEnv.getAppId());
+
+        if(org.apache.commons.collections.CollectionUtils.isEmpty(unLimitedNodes)){
+            return Collections.emptyList();
+        }
+        //如果自己原来的上级被限制了,也要选上
+        ChainTypeDTO node=detail(id);
+
+        long parentId=node.getParentId();
+
+        boolean limited= LimitedEnum.LIMITED.getCode().equals(node.getLimitParent());
+
+        if(0!=parentId&&limited){
+
+            ChainTypeDTO parentDTO=detail(parentId);
+
+            unLimitedNodes.add(parentDTO.clone(ChainTypeDO.class,CloneDirection.FORWARD));
+        }
+
+        //不能选自己和自己的所有子节点
+        ChainTypeDO self=chainTypeDAO.getById(id);
+
+        List<ChainTypeDO>  childNodes=chainTypeDAO.listChildNodes(appRuntimeEnv.getTenantId(),appRuntimeEnv.getAppId(),id+"/");
+
+        List<ChainTypeDO> removeList=new ArrayList<>();
+
+        unLimitedNodes.forEach(u->{
+
+            if(u.getId().equals(self.getId())){
+
+                removeList.add(u);
+            }
+
+            if(org.apache.commons.collections.CollectionUtils.isNotEmpty(childNodes)){
+
+                childNodes.forEach(c->{
+
+                    if(c.getId().equals(u.getId())){
+
+                        removeList.add(u);
+                    }
+                });
+            }
+        });
+
+        unLimitedNodes.removeAll(removeList);
+
+        return ObjectCloneUtils.convertList(unLimitedNodes,ChainTypeDTO.class);
     }
 }

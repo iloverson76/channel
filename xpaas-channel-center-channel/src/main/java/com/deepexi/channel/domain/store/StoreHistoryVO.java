@@ -20,7 +20,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ApiModel("门店")
+@ApiModel("门店历史")
 public class StoreHistoryVO extends AbstractObject {
 
     private static final long serialVersionUID = 1L;

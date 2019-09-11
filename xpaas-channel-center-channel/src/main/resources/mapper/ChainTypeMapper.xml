@@ -117,4 +117,13 @@
         AND b.limit_parent=1
         )
     </select>
+
+    <select id="listChildNodes" resultType="com.deepexi.channel.domain.chain.ChainTypeDO">
+        select a.* from cc_chain_type a where a.dr=0
+        AND a.tenant_id = #{tenantId}
+        AND a.app_id = #{appId}
+        <if test="idPath!=null">
+            AND a.path like concat('%',#{idPath}, '%')
+        </if>
+    </select>
 </mapper>

@@ -14,6 +14,8 @@ public interface ChainTypeDAO extends IService<ChainTypeDO> {
 
     List<ChainTypeDO> listNotLimitedNode(String tenantId, String appId);
 
+    List<ChainTypeDO> listChildNodes(String tenantId, String appId, String s);
+
 //    List<ChainTypeDO> selectListByIds(Set<Long> idList);
 
 //    List<ChainTypeDO> findParentList(List<Long> ids);
