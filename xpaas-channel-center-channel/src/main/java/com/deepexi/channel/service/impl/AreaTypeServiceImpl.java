@@ -192,6 +192,7 @@ public class AreaTypeServiceImpl implements AreaTypeService {
 
         log.info("创建区域分类接口:查询可用上级分类");
 
+
         //没有被限制分类的节点
         List<AreaTypeDO> doList=areaTypeDAO.listNotLimitedNode(appRuntimeEnv.getTenantId(),appRuntimeEnv.getAppId());
 

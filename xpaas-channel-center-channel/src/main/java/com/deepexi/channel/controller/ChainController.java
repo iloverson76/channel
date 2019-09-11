@@ -12,6 +12,7 @@ import com.deepexi.util.pageHelper.PageBean;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -156,4 +157,10 @@ public class ChainController {
         return new Payload<>(chainBusinessService.deleteTreeNode(id));
     }
 
+    @GetMapping("/tree/node/parent")
+    @ApiModelProperty(value = "树中根据上级节点分类，获取合法的上级节点")
+    public Payload<List<ChainDTO>> getLegalParentChain(){
+
+        return null;
+    }
 }

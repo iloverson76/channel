@@ -27,6 +27,16 @@ public class ChainTypeDAOImpl extends ServiceImpl<ChainTypeMapper, ChainTypeDO> 
         return chainTypeMapper.selectList(new QueryWrapper<ChainTypeDO>().lambda().notIn(ChainTypeDO::getLinkId, chainIdList));
     }
 
+    @Override
+    public List<ChainTypeDO> listNotLimitedNode(String tenantId, String appId) {
+        return chainTypeMapper.listNotLimitedNode(tenantId,appId);
+    }
+
+    @Override
+    public List<ChainTypeDO> listChildNodes(String tenantId, String appId, String idPath) {
+        return chainTypeMapper.listChildNodes(tenantId,appId,idPath);
+    }
+
 
 //    @Override
 //    public List<ChainTypeDO> selectListByIds(Set<Long> idList) {

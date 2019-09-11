@@ -85,12 +85,30 @@ public class StoreGradeServiceImpl implements StoreGradeService {
      **/
     @Override
     public boolean isCodeUnique(StoreGradeDTO dto){
-        StoreGradeQuery storeGradeQuery = StoreGradeQuery.builder()
+        StoreGradeQuery query = StoreGradeQuery.builder()
                 .storeGradeAccuracyCode(dto.getStoreGradeCode())
                 .build();
-        List<StoreGradeDO> list = storeGradeDAO.findList(storeGradeQuery);
-//                list(new QueryWrapper<StoreGradeDO>().lambda()
-//                .eq(StoreGradeDO::getStoreGradeCode,dto.getStoreGradeCode()));
+        return this.isUnique(query, dto);
+    }
+
+    /**
+     * @MethodName: isNameUnique
+     * @Description: 名字是否唯一校验
+     * @Param: [storeGradeDTO]
+     * @Return: boolean
+     * @Author: mumu
+     * @Date: 2019/9/11
+    **/
+    @Override
+    public boolean isNameUnique(StoreGradeDTO storeGradeDTO) {
+        StoreGradeQuery query = StoreGradeQuery.builder()
+                .storeGradeAccuracyName(storeGradeDTO.getStoreGradeName())
+                .build();
+        return this.isUnique(query, storeGradeDTO);
+    }
+
+    private boolean isUnique(StoreGradeQuery query, StoreGradeDTO dto){
+        List<StoreGradeDO> list = storeGradeDAO.findList(query);
         if(CollectionUtil.isNotEmpty(list)){
             //不为空，还有可能是更新时自身的编码
             if(list.size()==1){

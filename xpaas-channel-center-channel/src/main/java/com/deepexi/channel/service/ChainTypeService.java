@@ -91,4 +91,8 @@ public interface ChainTypeService {
      * @return
      */
     Boolean updateBatch(List<ChainTypeDTO> list);
+
+    List<ChainTypeDTO> listParentNodesForCreate();
+
+    List<ChainTypeDTO> listParentNodesForUpdate(Long id);
 }

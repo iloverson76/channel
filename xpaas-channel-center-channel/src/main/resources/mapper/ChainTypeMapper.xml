@@ -94,4 +94,36 @@
             </foreach>
         </if>
     </select>
+
+    <select id="listNotLimitedNode" resultType="com.deepexi.channel.domain.chain.ChainTypeDO">
+        SELECT
+            a.*
+        FROM
+            cc_chain_type a
+        WHERE
+            a.dr = 0
+        AND a.tenant_id = #{tenantId}
+        AND a.app_id = #{appId}
+        and a.id not in(
+        SELECT
+            parent_id
+        FROM
+            cc_chain_type b
+        WHERE
+            b.dr = 0
+        AND b.tenant_id = #{tenantId}
+        AND b.app_id = #{appId}
+        AND b.parent_id!=0
+        AND b.limit_parent=1
+        )
+    </select>
+
+    <select id="listChildNodes" resultType="com.deepexi.channel.domain.chain.ChainTypeDO">
+        select a.* from cc_chain_type a where a.dr=0
+        AND a.tenant_id = #{tenantId}
+        AND a.app_id = #{appId}
+        <if test="idPath!=null">
+            AND a.path like concat('%',#{idPath}, '%')
+        </if>
+    </select>
 </mapper>

@@ -16,4 +16,8 @@ public interface ChainTypeMapper extends BaseMapper<ChainTypeDO> {
     int deleteByIds(@Param("ids") List<Integer > ids);
 
     List<ChainTypeDO> findParentList(@Param("ids")List<Long> ids);
+
+    List<ChainTypeDO> listNotLimitedNode(@Param("tenantId") String tenantId, @Param("appId") String appId);
+
+    List<ChainTypeDO> listChildNodes (@Param("tenantId") String tenantId, @Param("appId") String appId,@Param("idPath") String idPath);
 }

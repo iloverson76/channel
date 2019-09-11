@@ -1,6 +1,8 @@
 package com.deepexi.channel.controller;
 
 import com.deepexi.channel.businness.ChainTypeBusinessService;
+import com.deepexi.channel.domain.area.AreaTypeDTO;
+import com.deepexi.channel.domain.area.AreaTypeVO;
 import com.deepexi.channel.domain.chain.ChainTypeDTO;
 import com.deepexi.channel.domain.chain.ChainTypeListLinkVO;
 import com.deepexi.channel.domain.chain.ChainTypeQuery;
@@ -138,4 +140,28 @@ public class ChainTypeController {
         vo.setChainType(chainTypeVOList);
         return new Payload<>(vo);
     }
+
+    @GetMapping("/limitedCreate")
+    @ApiOperation("查询未受分类限制上级-新增用")
+    public Payload<PageBean<ChainTypeVO>> listParentForCreate() {
+        //方法从陈鹏AreaTypeController拷贝
+
+        List<ChainTypeDTO> dtoList = chainTypeService.listParentNodesForCreate();
+
+        List<ChainTypeVO> voList = ObjectCloneUtils.convertList(dtoList, ChainTypeVO.class);
+
+        return new Payload<>(new PageBean<>(voList));
+    }
+    @GetMapping("/limitedUpdaTe/{id:[0-9,]+}")
+    @ApiOperation("查询未受分类限制上级-更新用")
+    public Payload<PageBean<ChainTypeVO>> listParentForUpdate(@PathVariable Long id) {
+        //方法从陈鹏AreaTypeController拷贝
+
+        List<ChainTypeDTO> dtoList = chainTypeService.listParentNodesForUpdate(id);
+
+        List<ChainTypeVO> voList = ObjectCloneUtils.convertList(dtoList, ChainTypeVO.class);
+
+        return new Payload<>(new PageBean<>(voList));
+    }
+
 }
