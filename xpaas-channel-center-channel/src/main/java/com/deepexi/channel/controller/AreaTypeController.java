@@ -9,6 +9,7 @@ import com.deepexi.channel.domain.chain.ChainTypeVO;
 import com.deepexi.channel.extension.AppRuntimeEnv;
 import com.deepexi.channel.service.AreaTypeService;
 import com.deepexi.util.CollectionUtil;
+import com.deepexi.util.StringUtil;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pageHelper.PageBean;
 import com.deepexi.util.pojo.CloneDirection;
@@ -161,7 +162,10 @@ public class AreaTypeController {
     @GetMapping("/linkIdNotIn")
     @ApiOperation("查询是否已经关联")
     public Payload<AreaTypeListLinkVO> getListChainType(@RequestParam String linkIds){
-        List<Long> ids = Arrays.stream(linkIds.split(",")).map(Long::parseLong).collect(Collectors.toList());
+        List<Long> ids = new ArrayList<>();
+        if (StringUtil.isNotEmpty(linkIds)){
+            ids = Arrays.stream(linkIds.split(",")).map(Long::parseLong).collect(Collectors.toList());
+        }
         List<AreaTypeDTO> listAreaType = areaTypeBusinessService.getListAreaType(ids);
         List<AreaTypeVO> areaTypeVOList = ObjectCloneUtils.convertList(listAreaType, AreaTypeVO.class, CloneDirection.OPPOSITE);
         if (CollectionUtil.isEmpty(areaTypeVOList)){
