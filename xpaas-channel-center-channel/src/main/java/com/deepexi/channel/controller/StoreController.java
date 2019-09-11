@@ -84,11 +84,11 @@ public class StoreController {
     public Payload<Boolean> update(@PathVariable(value = "id", required = true) Long pk, @RequestBody StoreDetailVO vo) {
         vo.setId(pk);
         StoreDetailDTO storeDetailDTO = vo.clone(StoreDetailDTO.class);
-        if (vo.getStoreGradeVO() != null) {
+        if (vo.getStoreGradeVO() != null && vo.getStoreGradeVO().getId() != null && !vo.getStoreGradeVO().getId().equals(0)) {
             StoreGradeDTO storeGradeDTO = vo.getStoreGradeVO().clone(StoreGradeDTO.class);
             storeDetailDTO.setStoreGradeDTO(storeGradeDTO);
         }
-        if (vo.getStoreTypeVO() != null) {
+        if (vo.getStoreTypeVO() != null && vo.getStoreTypeVO().getId() != null && !vo.getStoreTypeVO().getId().equals(0)) {
             StoreTypeDTO storeTypeDTO = vo.getStoreTypeVO().clone(StoreTypeDTO.class);
             storeDetailDTO.setStoreTypeDTO(storeTypeDTO);
         }
@@ -115,11 +115,11 @@ public class StoreController {
     @ApiOperation(value = "创建门店", notes = "创建门店")
     public Payload<Long> create(@RequestBody StoreDetailVO vo) {
         StoreDetailDTO storeDetailDTO = vo.clone(StoreDetailDTO.class, CloneDirection.OPPOSITE);
-        if (vo.getStoreGradeVO() != null) {
+        if (vo.getStoreGradeVO() != null && vo.getStoreGradeVO().getId() != null && !vo.getStoreGradeVO().getId().equals(0)) {
             StoreGradeDTO storeGradeDTO = vo.getStoreGradeVO().clone(StoreGradeDTO.class);
             storeDetailDTO.setStoreGradeDTO(storeGradeDTO);
         }
-        if (vo.getStoreTypeVO() != null) {
+        if (vo.getStoreTypeVO() != null && vo.getStoreTypeVO().getId() != null && !vo.getStoreTypeVO().getId().equals(0)) {
             StoreTypeDTO storeTypeDTO = vo.getStoreTypeVO().clone(StoreTypeDTO.class);
             storeDetailDTO.setStoreTypeDTO(storeTypeDTO);
         }

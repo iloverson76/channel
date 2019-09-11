@@ -102,8 +102,9 @@ public class ChainController {
     @PostMapping("/tree")
     @ApiOperation(value = "保存连锁树", notes = "保存连锁树,整颗树一起保存，关键是id与children里的id")
     public Payload<Boolean> saveTree(@RequestBody List<ChainTreeVO> vos){
+        //如果传过来列表为空，则代表清空整棵树
         if(CollectionUtil.isEmpty(vos)){
-            return new Payload<>(false);
+            return new Payload<>(chainService.resetTree());
         }
         List<ChainTreeDTO> chainTreeDTOS = ObjectCloneUtils.convertList(vos, ChainTreeDTO.class, CloneDirection.OPPOSITE);
         return new Payload<>(chainBusinessService.saveTree(chainTreeDTOS));
