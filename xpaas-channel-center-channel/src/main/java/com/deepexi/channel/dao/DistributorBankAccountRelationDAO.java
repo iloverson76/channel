@@ -12,6 +12,8 @@ public interface DistributorBankAccountRelationDAO extends  IService<Distributor
 
     int deleteBatchByDistributorIds(List<Long> distributorIdList);
 
+    int deleteBatchByDistributorId(Long distributorId);
+
     boolean updateById(DistributorBankAccountRelationDO eo);
 
     boolean updateBatchById(List<DistributorBankAccountRelationDO> eoList);

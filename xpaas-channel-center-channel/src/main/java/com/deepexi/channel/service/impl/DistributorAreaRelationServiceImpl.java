@@ -53,7 +53,7 @@ public class DistributorAreaRelationServiceImpl implements DistributorAreaRelati
 
         List<DistributorAreaRelationDO> eoList=distributorAreaRelationDAO.findAllByDistributorId(distributorId);
 
-        if(CollectionUtils.isNotEmpty(eoList)){
+        if(CollectionUtils.isEmpty(eoList)){
             return Collections.emptyList();
 
         }

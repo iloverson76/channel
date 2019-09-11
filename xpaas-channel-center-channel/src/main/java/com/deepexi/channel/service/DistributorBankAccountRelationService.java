@@ -14,6 +14,8 @@ public interface DistributorBankAccountRelationService {
 
     int deleteBatchByDistributorIds(List<Long> idList);
 
+    int deleteBatchByDistributorId(Long distributorId);
+
     List<DistributorBankAccountRelationDTO> findAllByDistributorIds(List<Long> bankAccountIds);
 
 }
