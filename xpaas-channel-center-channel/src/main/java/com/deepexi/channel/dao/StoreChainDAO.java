@@ -11,4 +11,6 @@ public interface StoreChainDAO extends IService<StoreChainDO> {
     List<StoreChainDO> getByStoreId(Long storeId);
 
     Boolean removeByStoreIds(List<Long> ids);
+
+    List<StoreChainDO> getByChainIds(List<Long> ids);
 }

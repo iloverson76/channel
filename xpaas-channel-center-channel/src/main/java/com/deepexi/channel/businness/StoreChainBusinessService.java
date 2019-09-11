@@ -16,4 +16,5 @@ public interface StoreChainBusinessService {
     List<ChainDetailDTO> getStoreChainByStoreId(Long pk);
 
     Boolean deleteStoreChainRelation(List<Long> ids);
+
 }
