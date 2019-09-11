@@ -2,6 +2,7 @@ package com.deepexi.channel.controller;
 
 import com.deepexi.channel.businness.ChainTypeBusinessService;
 import com.deepexi.channel.domain.chain.ChainTypeDTO;
+import com.deepexi.channel.domain.chain.ChainTypeListLinkVO;
 import com.deepexi.channel.domain.chain.ChainTypeQuery;
 import com.deepexi.channel.domain.chain.ChainTypeVO;
 import com.deepexi.channel.enums.ResultEnum;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -113,5 +115,19 @@ public class ChainTypeController {
             return new Payload<>(null);
         }
         return new Payload<>(ObjectCloneUtils.convertList(list, ChainTypeVO.class));
+    }
+
+    @GetMapping("/LinkIdNoIn")
+    public Payload<ChainTypeListLinkVO> getListChainType(List<Long> ids){
+        ChainTypeListLinkVO vo = new ChainTypeListLinkVO();
+        List<ChainTypeDTO> listChainType = chainTypeBusinessService.getListChainType(ids);
+        List<ChainTypeVO> chainTypeVOList = ObjectCloneUtils.convertList(listChainType, ChainTypeVO.class, CloneDirection.OPPOSITE);
+        if (CollectionUtil.isEmpty(chainTypeVOList)){
+            return new Payload<>();
+        }
+        Set<Long> setMap = chainTypeVOList.stream().map(ChainTypeVO::getId).collect(Collectors.toSet());
+        vo.setLinkType(setMap.size());
+        vo.setChainType(chainTypeVOList);
+        return new Payload<>(vo);
     }
 }

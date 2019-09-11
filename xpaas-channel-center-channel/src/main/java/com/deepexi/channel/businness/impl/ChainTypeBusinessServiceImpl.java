@@ -9,15 +9,19 @@ import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.service.ChainService;
 import com.deepexi.channel.service.ChainTypeService;
 import com.deepexi.util.CollectionUtil;
+import com.deepexi.util.StringUtil;
 import com.deepexi.util.extension.ApplicationException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
+@Slf4j
 @Service
 public class ChainTypeBusinessServiceImpl implements ChainTypeBusinessService {
 
@@ -174,5 +178,29 @@ public class ChainTypeBusinessServiceImpl implements ChainTypeBusinessService {
         }
 
         return null;
+    }
+
+    @Override
+    public List<ChainTypeDTO> getListChainType(List<Long> ids) {
+        if (CollectionUtil.isEmpty(ids)){
+            List<ChainTypeDTO> list = chainTypeService.findAll(null);
+            return list;
+        }
+        ChainTypeQuery query = new ChainTypeQuery();
+        query.setIds(ids);
+        List<ChainTypeDTO> list = chainTypeService.findAll(query);
+        log.info("区域链路",list);
+        if (CollectionUtil.isEmpty(list)){
+            return new ArrayList<>();
+        }
+        Set<Long> set = new HashSet<>();
+        for (ChainTypeDTO chainTypeDTO : list) {
+            String path = chainTypeDTO.getPath();
+            List<Long> idList = Arrays.stream(path.split("/")).filter(StringUtil::isNotEmpty).map(Long::parseLong).collect(Collectors.toList());
+            set.add(idList.get(0));
+        }
+        List<Long> linkIdList = new ArrayList<>(set);
+        List<ChainTypeDTO> ChainTypeDTO = chainTypeService.findByChainIdNotInAll(linkIdList);
+        return ChainTypeDTO;
     }
 }

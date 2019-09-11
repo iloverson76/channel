@@ -79,4 +79,9 @@ public interface ChainTypeService {
      * @return
      */
     boolean isParentLegal(ChainTypeDTO dto);
+
+    /**
+     * 查询不在chainId的ChainType
+     */
+    List<ChainTypeDTO> findByChainIdNotInAll(List<Long> chainIdList);
 }

@@ -190,4 +190,10 @@ public class ChainTypeServiceImpl implements ChainTypeService {
         }
     }
 
+    @Override
+    public List<ChainTypeDTO> findByChainIdNotInAll(List<Long> chainIdList) {
+        List<ChainTypeDO> chainTypeDO = chainTypeDAO.findByChainIdNotInAll(chainIdList);
+        List<ChainTypeDTO> chainTypeDTOList = ObjectCloneUtils.convertList(chainTypeDO, ChainTypeDTO.class, CloneDirection.OPPOSITE);
+        return chainTypeDTOList;
+    }
 }
