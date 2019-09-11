@@ -81,7 +81,7 @@ public class AreaTypeServiceImpl implements AreaTypeService {
         //链路
         long id=newNode.getId();
 
-        newNode.setChainId(id);
+        newNode.setLinkId(id);
 
         areaTypeDAO.updateById(newNode);
 

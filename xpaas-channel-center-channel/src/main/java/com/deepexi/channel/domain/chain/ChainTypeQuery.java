@@ -80,6 +80,6 @@ public class ChainTypeQuery extends CommQuery {
     private String path;
 
     @ApiModelProperty("根节点id，为0时证明不是根节点")
-    private Long rootId;
+    private Long linkId;
 
 }

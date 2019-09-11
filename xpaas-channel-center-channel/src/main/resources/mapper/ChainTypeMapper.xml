@@ -8,6 +8,8 @@
         <result property="chainTypeName" column="chain_type_name" />
         <result property="chainTypeCode" column="chain_type_code" />
         <result property="chainTypeNameEn" column="chain_type_name_en" />
+        <result property="path" column="path" />
+        <result property="linkId" column="link_id" />
         <result property="description" column="description" />
         <result property="version" column="version" />
         <result property="remark" column="remark" />
@@ -52,8 +54,8 @@
         <if test="path !=null and path != ''" >
             and path like  concat('%',#{path},'%')
         </if>
-        <if test="rootId !=null and rootId != '' or rootId == 0">
-            and root_id = #{rootId}
+        <if test="linkId !=null and linkId != '' or linkId == 0">
+            and link_id = #{linkId}
         </if>
         <if test="startTime != null">
             and created_time &gt;= #{startTime}

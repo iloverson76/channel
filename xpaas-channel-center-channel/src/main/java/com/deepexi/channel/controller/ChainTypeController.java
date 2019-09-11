@@ -2,6 +2,7 @@ package com.deepexi.channel.controller;
 
 import com.deepexi.channel.businness.ChainTypeBusinessService;
 import com.deepexi.channel.domain.chain.ChainTypeDTO;
+import com.deepexi.channel.domain.chain.ChainTypeListLinkVO;
 import com.deepexi.channel.domain.chain.ChainTypeQuery;
 import com.deepexi.channel.domain.chain.ChainTypeVO;
 import com.deepexi.channel.enums.ResultEnum;
@@ -16,10 +17,12 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -68,7 +71,7 @@ public class ChainTypeController {
         if(!chainTypeService.isParentLegal(dto)){
             throw new ApplicationException(ResultEnum.PARENT_ILLEGAL);
         }
-        return new Payload(chainTypeService.update(dto));
+        return new Payload(chainTypeBusinessService.update(dto));
     }
 
     @PostMapping
@@ -113,5 +116,20 @@ public class ChainTypeController {
             return new Payload<>(null);
         }
         return new Payload<>(ObjectCloneUtils.convertList(list, ChainTypeVO.class));
+    }
+
+    @GetMapping("/linkIdNoIn")
+    public Payload<ChainTypeListLinkVO> getListChainType(String linkIds){
+        List<Long> ids = Arrays.stream(linkIds.split(",")).map(Long::parseLong).collect(Collectors.toList());
+        ChainTypeListLinkVO vo = new ChainTypeListLinkVO();
+        List<ChainTypeDTO> listChainType = chainTypeBusinessService.getListChainType(ids);
+        List<ChainTypeVO> chainTypeVOList = ObjectCloneUtils.convertList(listChainType, ChainTypeVO.class, CloneDirection.OPPOSITE);
+        if (CollectionUtil.isEmpty(chainTypeVOList)){
+            return new Payload<>();
+        }
+        Set<Long> setMap = chainTypeVOList.stream().filter(s->null!=s.getLinkId()).map(ChainTypeVO::getLinkId).collect(Collectors.toSet());
+        vo.setLinkType(setMap.size());
+        vo.setChainType(chainTypeVOList);
+        return new Payload<>(vo);
     }
 }
