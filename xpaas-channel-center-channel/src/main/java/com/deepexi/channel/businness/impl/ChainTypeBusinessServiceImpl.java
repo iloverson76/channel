@@ -121,4 +121,18 @@ public class ChainTypeBusinessServiceImpl implements ChainTypeBusinessService {
         ChainTypeQuery query2 = ChainTypeQuery.builder().excludeIds(excludeIds).build();
         return chainTypeService.findPage(query2);
     }
+
+    @Override
+    public Long create(ChainTypeDTO dto) {
+        //判断是否限制上级，限制了就需要处理path
+        if(dto.getLimitParent().equals(1)){
+            ChainTypeDTO parentDTO = chainTypeService.detail(dto.getParentId());
+//            dto.setPath();
+//            dto.setRo
+
+
+        }
+
+        return chainTypeService.create(dto);
+    }
 }

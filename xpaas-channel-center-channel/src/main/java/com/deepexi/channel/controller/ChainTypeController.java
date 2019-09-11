@@ -87,7 +87,7 @@ public class ChainTypeController {
         if(!chainTypeService.isParentLegal(dto)){
             throw new ApplicationException(ResultEnum.PARENT_ILLEGAL);
         }
-        return new Payload( chainTypeService.create(dto));
+        return new Payload( chainTypeBusinessService.create(dto));
     }
 
     @DeleteMapping("/{id:[a-zA-Z0-9,]+}")
