@@ -39,7 +39,9 @@ public class GradeInfoDTO extends AbstractObject {
 
     private Integer limitedParent;
 
-    private List<DistributorGradeSystemDTO> parentDistributors;
+    private Long parentDistributorId;
+
+    private String parentDistributorName;
 
 
 }
