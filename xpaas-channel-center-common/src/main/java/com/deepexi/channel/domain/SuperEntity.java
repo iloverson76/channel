@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -19,7 +20,7 @@ import java.util.Date;
  */
 @Setter
 @Getter
-public class SuperEntity extends AbstractObject {
+public class SuperEntity extends AbstractObject implements Serializable {
 
     /**
      * 自增主键

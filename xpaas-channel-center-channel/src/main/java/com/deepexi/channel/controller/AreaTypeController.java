@@ -72,9 +72,11 @@ public class AreaTypeController {
         return new Payload<>(result);
     }
 
-    @PutMapping()
+    @PutMapping("/{id}")
     @ApiOperation(value = "修改区域类型")
-    public Payload<Boolean> updateAreaTypeById(@RequestBody AreaTypeVO vo) {
+    public Payload<Boolean> updateAreaTypeById(@PathVariable(value = "id", required = true) Long pk,@RequestBody AreaTypeVO vo) {
+
+        vo.setId(pk);
 
         AreaTypeDTO dto = vo.clone(AreaTypeDTO.class, CloneDirection.FORWARD);
 
@@ -97,10 +99,6 @@ public class AreaTypeController {
     @GetMapping()
     @ApiOperation("查询区域类型列表")
     public Payload<PageBean<AreaTypeVO>> listAreaTypePage(@ApiParam(name = "query", required = true) AreaTypeQuery query) {
-
-        query.setTenantId(appRuntimeEnv.getTenantId());
-
-        query.setAppId(appRuntimeEnv.getAppId());
 
         List<AreaTypeDTO> dtoList = areaTypeBusinessService.findPage(query);
 
