@@ -24,6 +24,8 @@ public class AreaDTO extends AbstractObject {
 
     private Long id;
 
+    private Integer root;//是否根节点
+
     private AreaTypeDTO areaType;
 
     /**

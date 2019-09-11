@@ -75,7 +75,7 @@ public class DistributorGradeRelationDAOImpl extends ServiceImpl<DistributorGrad
 
         wp.eq("distributor_id",distributorId);
 
-        wp.eq("distributor_grade_id",gradeId);
+        wp.eq("grade_id",gradeId);
 
         return baseMapper.selectOne(wp);
     }
@@ -85,7 +85,7 @@ public class DistributorGradeRelationDAOImpl extends ServiceImpl<DistributorGrad
 
         QueryWrapper<DistributorGradeRelationDO> wp=new QueryWrapper<>();
 
-        wp.eq("distributor_grade_id",gradeId);
+        wp.eq("grade_id",gradeId);
 
         return baseMapper.selectList(wp);
     }

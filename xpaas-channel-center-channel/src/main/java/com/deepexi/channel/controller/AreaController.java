@@ -70,13 +70,12 @@ public class AreaController {
         return new Payload<>(Boolean.TRUE);
     }
 
-    @PutMapping("/treeEdit/{id}")
+    @PutMapping("/treeEdit/{parentId}/{id}")
     @ApiOperation(value = "区域树修改保存")
-    public Payload<Boolean> updateTreeChange(@PathVariable(value = "id", required = true) Long  pk, @RequestBody AreaTreeVO vo) {
+    public Payload<Boolean> updateTreeChange(@PathVariable(value = "id", required = true) Long parentId,Long id) {
 
-        vo.setId(pk);
 
-        areaBusinessService.update(vo.clone(AreaDTO.class,CloneDirection.FORWARD));
+        areaBusinessService.updateTreeChange(parentId,id);
 
         return new Payload<>(Boolean.TRUE);
     }

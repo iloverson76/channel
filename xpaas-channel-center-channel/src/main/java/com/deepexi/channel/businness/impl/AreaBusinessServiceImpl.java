@@ -269,33 +269,50 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
     @Override
     public boolean update(AreaDTO dto) {
 
-        areaService.update(dto);
+        areaService.update(dto);//未处理路径
+
+        //处理路径
 
         return Boolean.TRUE;
     }
 
     @Override
-    public boolean updateTreeChange(AreaDTO dto) {
+    public boolean updateTreeChange(Long parentId,Long id) {
 
-        Long id=dto.getId();
+        //根节点处理
 
-        AreaDTO origDTO=areaService.getAreaById(id);
+        //自己
+        AreaDTO self=areaService.getAreaById(id);
 
-        String OrigParentPath=origDTO.getPath();
+        if(self.getRoot()==1){
 
-        Long origParentId=origDTO.getParentId();
+            self.setPath("/"+id);
 
-        Long newParentId=dto.getParentId();
+            areaService.update(self);
+        }
 
-        AreaDTO newParent=areaService.getAreaById(newParentId);
+        //原来上级
+        AreaDTO origParentNode=areaService.getAreaById(id);
 
-        String newParentPath=newParent.getPath();
+        Long origParentId=origParentNode.getId();//原来上级ID
 
-        String updatePath=newParentPath+"/"+id;
+        String OrigParentPath=origParentNode.getPath();//原来上级路径
 
-        Long newParentTypeId=newParent.getAreaTypeId();
 
-        Long origAreaTypeId=origDTO.getAreaTypeId();
+        //新上级
+        AreaDTO newParent=areaService.getAreaById(parentId);
+
+        Long newParentId=newParent.getId();//新上级ID
+
+        String newParentPath=newParent.getPath();//新上级路径
+
+        String updatePath=newParentPath+"/"+id;//子节点需要更新的路径
+
+        //自己下级
+
+        //更新自己的路径
+        self.setPath(updatePath);
+        areaService.update(self);
 
         //原来有上级,且挂载到了新上级
         if(origParentId!=0&&origParentId!=-1&&origParentId!=newParentId){
@@ -311,18 +328,10 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
                     child.setPath(path.replaceAll(OrigParentPath,updatePath));//更改所有子节点的路径
 
-                    /*if(newParentTypeId>0&&origAreaTypeId!=newParentTypeId){
-
-                        child.setAreaTypeId(newParentTypeId);//更改所有子节点的类型
-                    }*/
                 });
                 areaService.updateBatch(children);
             }
         }
-
-        dto.setPath(updatePath);
-
-        areaService.update(dto);
 
         return Boolean.TRUE;
     }
