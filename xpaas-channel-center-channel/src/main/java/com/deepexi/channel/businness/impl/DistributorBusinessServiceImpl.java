@@ -206,7 +206,7 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
     @Override
     public boolean update(DistributorDTO dto) {
 
-        long distributorId=dto.getId();
+        long distId=dto.getId();
 
         String createdBy=dto.getCreatedBy();
         Date createdTime=dto.getCreatedTime();
@@ -218,29 +218,29 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
         distriburotIds.add(dto.getId());
 
-        List<DistributorGradeRelationDTO> gradeInsertList= dto.getDistributorGradeRelation();
+        List<DistributorGradeRelationDTO> dgrInsertList= dto.getDistributorGradeRelation();
 
-        if(CollectionUtils.isNotEmpty(gradeInsertList)) {
+        if(CollectionUtils.isNotEmpty(dgrInsertList)) {
 
             //先删除再新建
-            distributorGradeRelationService.deleteByDistributorId(distributorId);
+            distributorGradeRelationService.deleteByDistributorId(distId);
 
-            gradeInsertList.forEach(grade -> {
+            dgrInsertList.forEach(dgr -> {
 
-                grade.setDistributorId(distributorId);
+                dgr.setDistributorId(distId);
 
-                grade.setCreatedBy(createdBy);
+                dgr.setCreatedBy(createdBy);
 
-                grade.setCreatedTime(createdTime);
+                dgr.setCreatedTime(createdTime);
 
-                grade.setUpdatedBy(updatedBy);
+                dgr.setUpdatedBy(updatedBy);
 
-                grade.setUpdatedTime(updatedTime);
+                dgr.setUpdatedTime(updatedTime);
+
             });
 
-            distributorGradeRelationService.createBatch(gradeInsertList);
+            distributorGradeRelationService.createBatch(dgrInsertList);
         }
-
 
         //区域信息
         List<DistributorAreaRelationDTO> areaInsertList= dto.getDistributorAreaRelation();
@@ -248,11 +248,11 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
         if(CollectionUtils.isNotEmpty(areaInsertList)) {
 
             //先删除再新建
-            distributorAreaRelationService.deleteByDistributorId(distributorId);
+            distributorAreaRelationService.deleteByDistributorId(distId);
 
             areaInsertList.forEach(area -> {
 
-                area.setDistributorId(distributorId);
+                area.setDistributorId(distId);
 
                 area.setCreatedBy(createdBy);
 
@@ -269,11 +269,13 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
         //银行账号信息
         List<DistributorBankAccountRelationDTO> bankAccountInsertList = dto.getDistributorBankAccountRelation();
 
+        distributorBankAccountRelationService.deleteBatchByDistributorId(distId);
+
         if(CollectionUtils.isNotEmpty(bankAccountInsertList)){
 
             bankAccountInsertList.forEach(account->{
 
-                account.setDistributorId(distributorId);
+                account.setDistributorId(distId);
 
                 account.setCreatedBy(createdBy);
 
@@ -288,7 +290,7 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
         distributorService.update(dto);
 
-        return true;
+        return Boolean.TRUE;
     }
 
     @Override

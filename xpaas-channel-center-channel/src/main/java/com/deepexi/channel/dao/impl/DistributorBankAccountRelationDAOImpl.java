@@ -36,7 +36,16 @@ public class DistributorBankAccountRelationDAOImpl extends ServiceImpl<Distribut
         wp.in("distributor_id",distributorIdList);
 
         return baseMapper.delete(wp);
+    }
 
+    @Override
+    public int deleteBatchByDistributorId(Long distributorId) {
+
+        UpdateWrapper<DistributorBankAccountRelationDO> wp=new UpdateWrapper<>();
+
+        wp.eq("distributor_id",distributorId);
+
+        return baseMapper.delete(wp);
     }
 
     @Override
