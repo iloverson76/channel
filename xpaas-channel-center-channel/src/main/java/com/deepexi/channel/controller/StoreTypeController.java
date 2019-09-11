@@ -63,6 +63,9 @@ public class StoreTypeController {
         if(!storeTypeService.isCodeUnique(dto)){
             throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
         }
+        if(!storeTypeService.isNameUnique(dto)){
+            throw new ApplicationException(ResultEnum.NAME_DUPLICATE);
+        }
          return new Payload(storeTypeService.update(dto));
     }
 
@@ -74,9 +77,9 @@ public class StoreTypeController {
         if(!storeTypeService.isCodeUnique(dto)){
             throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
         }
-//        if(!storeTypeService.isNameUnique(dto)){
-//            throw new ApplicationException(ResultEnum.NAME_DUPLICATE);
-//        }
+        if(!storeTypeService.isNameUnique(dto)){
+            throw new ApplicationException(ResultEnum.NAME_DUPLICATE);
+        }
         return new Payload<>(storeTypeService.create(dto));
     }
 
