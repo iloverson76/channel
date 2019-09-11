@@ -41,6 +41,12 @@ public class DistributorBankAccountRelationServiceImpl implements DistributorBan
     }
 
     @Override
+    public int deleteBatchByDistributorId(Long distributorId) {
+
+        return distributorBankAccountRelationDAO.deleteBatchByDistributorId(distributorId);
+    }
+
+    @Override
     public List<DistributorBankAccountRelationDTO> findAllByDistributorIds(List<Long> bankAccountIds) {
 
         if(CollectionUtils.isEmpty(bankAccountIds)){
