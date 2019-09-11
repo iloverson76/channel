@@ -114,7 +114,6 @@ public class ChainServiceImpl implements ChainService {
         return false;
     }
 
-
     @Override
     public boolean haveChildren(List<Long> ids) {
         //获得所有子节点
@@ -148,6 +147,15 @@ public class ChainServiceImpl implements ChainService {
         }
         List<ChainDO> chainDOS = ObjectCloneUtils.convertList(chainDTOS, ChainDO.class);
         return chainDAO.updatePathAndParentIdBatch(chainDOS);
+    }
+
+    @Override
+    public Boolean updatePathAndParentId(ChainDTO chainDTO) {
+        if(chainDTO == null){
+            return false;
+        }
+        ChainDO chainDO = chainDTO.clone(ChainDO.class);
+        return chainDAO.updatePathAndParentId(chainDO);
     }
 
     /**
