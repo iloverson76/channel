@@ -38,4 +38,11 @@ public class StoreGradeRelationDAOImpl extends ServiceImpl<StoreGradeRelationMap
         queryWrapper.eq("store_id",storeId);
         return this.remove(queryWrapper);
     }
+
+    @Override
+    public Boolean removeByStoreIds(List<Long> storeIds) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.in("store_id",storeIds);
+        return this.remove(queryWrapper);
+    }
 }

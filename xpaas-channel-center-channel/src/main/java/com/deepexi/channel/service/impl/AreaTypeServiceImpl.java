@@ -342,4 +342,10 @@ public class AreaTypeServiceImpl implements AreaTypeService {
         }
     }
 
+    @Override
+    public List<AreaTypeDTO> findByAreaIdNotInLinkIdAll(List<Long> linkIdList) {
+        List<AreaTypeDO> list = areaTypeDAO.findByAreaIdNotInLinkIdAll(linkIdList);
+        List<AreaTypeDTO> areaTypeDTOList = ObjectCloneUtils.convertList(list, AreaTypeDTO.class, CloneDirection.OPPOSITE);
+        return areaTypeDTOList;
+    }
 }

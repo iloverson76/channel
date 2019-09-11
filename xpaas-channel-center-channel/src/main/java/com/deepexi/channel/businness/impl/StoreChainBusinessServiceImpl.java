@@ -10,6 +10,8 @@ import com.deepexi.channel.service.StoreChainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class StoreChainBusinessServiceImpl implements StoreChainBusinessService {
 
@@ -43,5 +45,18 @@ public class StoreChainBusinessServiceImpl implements StoreChainBusinessService 
         //获取连锁
         ChainDTO chainDTO = chainService.detail(storeChainDTO.getChainId());
         return chainDTO;
+    }
+
+    /** 
+     * @MethodName: deleteStoreChainRelation
+     * @Description: 批量删除门店连琐关系
+     * @Param: [ids]
+     * @Return: java.lang.Boolean
+     * @Author: mumu
+     * @Date: 2019/9/11
+    **/
+    @Override
+    public Boolean deleteStoreChainRelation(List<Long> ids) {
+        return storeChainService.removeByStoreIds(ids);
     }
 }

@@ -23,4 +23,11 @@ public interface StoreGradeBusinessService {
      * @Date: 2019/9/6
     **/
     Long updateStoreGradeRelation(StoreDetailDTO dto);
+
+    /**
+     * 根据storeId批量删除门店等级关联
+     * @param ids
+     * @return
+     */
+    Boolean deleteStoreGradeRelation(List<Long> ids);
 }

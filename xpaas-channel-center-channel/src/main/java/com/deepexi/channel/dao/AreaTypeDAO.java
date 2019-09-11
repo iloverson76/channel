@@ -22,4 +22,6 @@ public interface AreaTypeDAO extends  IService<AreaTypeDO> {
     List<AreaTypeDTO> listAreaTypeByIds(List<Long> areaTyeIdList);
 
     List<AreaTypeDO> listLinkedAreas(long pk);
+
+    List<AreaTypeDO> findByAreaIdNotInLinkIdAll(List<Long> linkIdList);
 }

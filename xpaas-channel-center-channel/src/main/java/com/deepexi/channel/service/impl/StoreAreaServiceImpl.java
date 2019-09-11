@@ -45,4 +45,12 @@ public class StoreAreaServiceImpl implements StoreAreaService {
         StoreAreaDO storeAreaDO = storeAreaDOS.get(0);
         return storeAreaDO.clone(StoreAreaDTO.class);
     }
+
+    @Override
+    public Boolean removeByStoreIds(List<Long> storeIds) {
+        if(CollectionUtil.isEmpty(storeIds)){
+            return false;
+        }
+        return storeAreaDAO.removeByStoreIds(storeIds);
+    }
 }

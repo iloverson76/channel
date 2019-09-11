@@ -15,4 +15,6 @@ public interface StoreTypeBusinessService {
     boolean haveStoreRelation(List<Long> ids);
 
     Long updateStoreTypeRelation(StoreDetailDTO dto);
+
+    Boolean deleteStoreTypeRelation(List<Long> ids);
 }

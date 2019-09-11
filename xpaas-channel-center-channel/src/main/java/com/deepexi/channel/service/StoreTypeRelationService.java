@@ -13,4 +13,6 @@ public interface StoreTypeRelationService {
     List<StoreTypeRelationDTO> findAll(StoreTypeRelationQuery storeGradeRelationQuery);
 
     Boolean removeByStoreId(Long id);
+
+    Boolean removeByStoreIds(List<Long> storeIds);
 }

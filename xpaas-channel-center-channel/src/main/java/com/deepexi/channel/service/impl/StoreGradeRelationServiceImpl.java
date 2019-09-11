@@ -52,4 +52,12 @@ public class StoreGradeRelationServiceImpl implements StoreGradeRelationService 
     public Boolean removeByStoreId(Long storeId) {
         return storeGradeRelationDAO.removeByStoreId(storeId);
     }
+
+    @Override
+    public Boolean removeByStoreIds(List<Long> storeIds) {
+        if(CollectionUtil.isEmpty(storeIds)) {
+            return false;
+        }
+        return storeGradeRelationDAO.removeByStoreIds(storeIds);
+    }
 }
