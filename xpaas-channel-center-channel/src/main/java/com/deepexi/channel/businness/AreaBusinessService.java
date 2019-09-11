@@ -30,4 +30,6 @@ public interface AreaBusinessService {
     boolean deleteById(Long id);
 
     boolean update(AreaDTO dto);
+
+    boolean updateTreeChange(AreaDTO dto);
 }

@@ -172,7 +172,7 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
             }
             for (AreaTreeDTO vo2 : list) {
 
-                if (0 != vo2.getParentId() && vo2.getParentId().equals(vo1.getId())) {
+                if (vo2.getParentId()!=null&&0 != vo2.getParentId()&& vo2.getParentId().equals(vo1.getId())) {
 
                     if (vo1.getChildren() == null) {
 
@@ -209,7 +209,7 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
             }
             for (AreaTreeDTO vo2 : list) {
 
-                if (0 != vo2.getParentId() && vo2.getParentId().equals(vo1.getId())) {
+                if (vo2.getParentId()!=null&&0 != vo2.getParentId() && vo2.getParentId().equals(vo1.getId())) {
 
                     if (vo1.getChildren() == null) {
 
@@ -268,6 +268,14 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
     @Override
     public boolean update(AreaDTO dto) {
+
+        areaService.update(dto);
+
+        return Boolean.TRUE;
+    }
+
+    @Override
+    public boolean updateTreeChange(AreaDTO dto) {
 
         Long id=dto.getId();
 
