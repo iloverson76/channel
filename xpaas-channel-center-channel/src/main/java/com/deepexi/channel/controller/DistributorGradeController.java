@@ -129,11 +129,23 @@ public class DistributorGradeController {
         return new Payload<>(new PageBean<>(voList));
     }
 
-    @GetMapping("/parent/{systemId}")
-    @ApiOperation(value = "上级接口-新增用")
-    public  Payload<PageBean<DistributorGradeVO>> findParentNodesForCreat(@PathVariable(value = "systemId", required = true) long  systemId) {
+    @GetMapping("/parent/create/{systemId}")
+    @ApiOperation(value = "查询可用的上级-新增用")
+    public  Payload<PageBean<DistributorGradeVO>> findParentNodesForCreat(@PathVariable(value = "systemId", required = true) Long  systemId) {
 
-        List<DistributorGradeDTO> dtoList= distributorGradeBusinessService.findParentNodesForCreat(systemId);
+        List<DistributorGradeDTO> dtoList= distributorGradeBusinessService.findParentNodesForCreate(systemId);
+
+        List<DistributorGradeVO> voList= ObjectCloneUtils.convertList(dtoList, DistributorGradeVO.class);
+
+        return new Payload<>(new PageBean<>(voList));
+    }
+
+    @GetMapping("/parent/update/{systemId}/{gradeId}")
+    @ApiOperation(value = "查询可用的上级-修改用")
+    public  Payload<PageBean<DistributorGradeVO>> findParentNodesForUpdate(@PathVariable(value = "systemId", required = true) Long  systemId,
+                                                                          @PathVariable(value = "gradeId", required = false)Long gradeId) {
+
+        List<DistributorGradeDTO> dtoList= distributorGradeBusinessService.findParentNodesForUpdate(systemId,gradeId);
 
         List<DistributorGradeVO> voList= ObjectCloneUtils.convertList(dtoList, DistributorGradeVO.class);
 

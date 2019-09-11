@@ -22,9 +22,14 @@ public interface DistributorGradeBusinessService {
     List<DistributorGradeDTO> findPage(DistributorGradeQuery query);
 
     /**
-     * 可挂载下级的节点
+     * 可挂载下级的节点--修改
      */
-    List<DistributorGradeDTO> findParentNodesForCreat(long systemId);
+    List<DistributorGradeDTO> findParentNodesForUpdate(Long systemId,Long gradeId);
+
+    /**
+     * 可挂载下级的节点-新增
+     */
+    List<DistributorGradeDTO> findParentNodesForCreate(Long systemId);
 
     /**
      * 根据体系查询所有的等级

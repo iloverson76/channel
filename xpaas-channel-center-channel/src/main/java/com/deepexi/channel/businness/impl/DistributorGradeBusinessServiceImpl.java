@@ -147,7 +147,30 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
     }
 
     @Override
-    public List<DistributorGradeDTO> findParentNodesForCreat(long systemId) {
+    public List<DistributorGradeDTO> findParentNodesForUpdate(Long systemId,Long gradeId) {
+
+        List<DistributorGradeDTO> resultList= findParentNodesForCreate(systemId);
+
+        DistributorGradeDTO gdto=distributorGradeService.getById(gradeId);
+
+        Long parentId=gdto.getParentId();
+
+        if(parentId>0){
+
+            DistributorGradeDTO parent=distributorGradeService.getById(parentId);
+
+            resultList.add(parent);
+        }
+        //不能把自己给选上
+        if(gdto!=null&&resultList.contains(gdto)){
+            resultList.remove(gdto);
+        }
+
+        return resultList;
+    }
+
+    @Override
+    public List<DistributorGradeDTO> findParentNodesForCreate(Long systemId) {
 
         if(0==systemId){
             return Collections.emptyList();
@@ -177,6 +200,7 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
                 if(null==v&&grade.getGradeSystemId()==systemId){//按体系查
                     resultList.add(grade);
                 }
+
             });
         }
 
