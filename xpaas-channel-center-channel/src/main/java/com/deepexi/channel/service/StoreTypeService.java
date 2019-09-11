@@ -50,4 +50,10 @@ public interface StoreTypeService {
      */
     boolean isCodeUnique(StoreTypeDTO dto);
 
+    /**
+     * 判断名字是否唯一
+     * @param dto
+     * @return
+     */
+    boolean isNameUnique(StoreTypeDTO dto);
 }
