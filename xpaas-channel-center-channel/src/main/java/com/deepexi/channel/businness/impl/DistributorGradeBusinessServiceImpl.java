@@ -147,7 +147,7 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
     }
 
     @Override
-    public List<DistributorGradeDTO> findParentNodesForCreat(long systemId) {
+    public List<DistributorGradeDTO> findParentNodesForCreateAndUpdate(Long systemId,Long gradeId) {
 
         if(0==systemId){
             return Collections.emptyList();
@@ -177,7 +177,27 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
                 if(null==v&&grade.getGradeSystemId()==systemId){//按体系查
                     resultList.add(grade);
                 }
+
             });
+        }
+
+        DistributorGradeDTO gdto=null;
+        if(null!=gradeId||gradeId>0){//修改时,原来的父节点也要加上--新增是不带,修改时带gradeId
+
+            gdto=distributorGradeService.getById(gradeId);
+
+            Long parentId=gdto.getParentId();
+
+            if(parentId>0){
+
+                DistributorGradeDTO parent=distributorGradeService.getById(parentId);
+
+                resultList.add(parent);
+            }
+        }
+        //不能把自己给选上
+        if(gdto!=null&&resultList.contains(gdto)){
+            resultList.remove(gdto);
         }
 
         return resultList;

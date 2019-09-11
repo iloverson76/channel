@@ -24,7 +24,7 @@ public interface DistributorGradeBusinessService {
     /**
      * 可挂载下级的节点
      */
-    List<DistributorGradeDTO> findParentNodesForCreat(long systemId);
+    List<DistributorGradeDTO> findParentNodesForCreateAndUpdate(Long systemId,Long gradeId);
 
     /**
      * 根据体系查询所有的等级

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -79,7 +80,6 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
         }
         StoreHistoryDTO storeHistoryDTO = storeDTO.clone(StoreHistoryDTO.class);
         storeHistoryDTO.setStoreId(dto.getId());
-        Long saveStoreHistory = storeHistoryService.create(storeHistoryDTO);
         //设置版本号
         storeHistoryDTO.setVersionNumber(this.generateHistoryVersionNumber(storeDTO));
         Long saveHistoryId = storeHistoryService.create(storeHistoryDTO);
@@ -174,7 +174,7 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
     **/
     private String generateHistoryVersionNumber(StoreDTO storeDTO){
         Integer count = storeHistoryService.getStoreHistoryCountByStoreId(storeDTO.getId());
-        DateTime dateTime = new DateTime(storeDTO.getUpdatedTime());
+        DateTime dateTime = new DateTime(new Date());
         String code = dateTime.toString(DatePattern.PURE_DATE_PATTERN)+"-"+count;
         return code;
     }
