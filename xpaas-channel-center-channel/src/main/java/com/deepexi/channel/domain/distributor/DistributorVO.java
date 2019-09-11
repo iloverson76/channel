@@ -34,22 +34,22 @@ public class DistributorVO extends AbstractObject implements Serializable {
 
     //新增
     @ApiModelProperty("新增-所属等级")
-    private List<DistributorGradeRelationDTO> distributorGradeRelation;
+    private List<DistributorGradeRelationVO> distributorGradeRelation;
 
     @ApiModelProperty("新增-银行账号列表")
-    private List<DistributorBankAccountRelationDTO> distributorBankAccountRelation;
+    private List<DistributorBankAccountRelationVO> distributorBankAccountRelation;
 
 
     @ApiModelProperty("新增-所在区域")
-    private List<DistributorAreaRelationDTO> distributorAreaRelation;
+    private List<DistributorAreaRelationVO> distributorAreaRelation;
 
 
     //详情
     @ApiModelProperty("详情-区域ID")
-    private List<GradeInfoDTO> gradeInfo;
+    private List<GradeInfoVO> gradeInfo;
 
     @ApiModelProperty("详情-区域ID")
-    private List<BankAccountDTO> bankAccount;
+    private List<BankAccountVO> bankAccount;
 
     @ApiModelProperty("详情-区域ID")
     private List<AreaDTO> area;
