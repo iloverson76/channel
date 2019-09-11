@@ -452,7 +452,7 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
         List<Long> systemIdList=new ArrayList<>();
 
-        List<GradeInfoDTO> gradeInfos=new ArrayList<>(relationList.size());
+        List<GradeInfoDTO> gradeInfos=new ArrayList<>();
 
         if(CollectionUtils.isNotEmpty(relationList)){
 
