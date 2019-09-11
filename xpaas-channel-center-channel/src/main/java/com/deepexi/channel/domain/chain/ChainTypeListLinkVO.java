@@ -25,9 +25,9 @@ import java.util.List;
 public class ChainTypeListLinkVO extends AbstractObject {
 
     private static final long serialVersionUID = 1L;
-
+    @ApiModelProperty("连锁list")
    List<ChainTypeVO> ChainType;
-
+    @ApiModelProperty("连锁链路数")
    private Integer linkType;
 
 }

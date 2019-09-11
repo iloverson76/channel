@@ -177,7 +177,7 @@ public class ChainTypeBusinessServiceImpl implements ChainTypeBusinessService {
             d.getPath().split("/");
         }
 
-        return null;
+        return chainTypeService.create(dto)>0;
     }
 
     @Override
