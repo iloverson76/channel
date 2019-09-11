@@ -196,4 +196,13 @@ public class ChainTypeServiceImpl implements ChainTypeService {
         List<ChainTypeDTO> chainTypeDTOList = ObjectCloneUtils.convertList(chainTypeDO, ChainTypeDTO.class, CloneDirection.OPPOSITE);
         return chainTypeDTOList;
     }
+
+    @Override
+    public Boolean updateBatch(List<ChainTypeDTO> list) {
+        if(CollectionUtil.isEmpty(list)){
+            return false;
+        }
+        List<ChainTypeDO> chainTypeDOS = ObjectCloneUtils.convertList(list, ChainTypeDO.class);
+        return chainTypeDAO.updateBatchById(chainTypeDOS);
+    }
 }

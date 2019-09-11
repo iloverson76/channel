@@ -34,4 +34,11 @@ public class StoreDistributorRelationDAOImpl  extends ServiceImpl<StoreDistribut
         updateWrapper.eq("store_id",storeId);
         return this.remove(updateWrapper);
     }
+
+    @Override
+    public Boolean deleteByStoreIds(List<Long> ids) {
+        UpdateWrapper wrapper = new UpdateWrapper();
+        wrapper.in("store_id", ids);
+        return this.remove(wrapper);
+    }
 }

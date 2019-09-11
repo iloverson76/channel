@@ -131,6 +131,29 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
     }
 
     /**
+     * @MethodName: delete
+     * @Description: 批量删除门店
+     * @Param: [ids]
+     * @Return: java.lang.Boolean
+     * @Author: mumu
+     * @Date: 2019/9/11
+    **/
+    @Override
+    public Boolean delete(List<Long> ids) {
+        //批量删除门店类型关联
+        Boolean storeTypeResult= storeTypeBusinessService.deleteStoreTypeRelation(ids);
+        //批量删除门店等级关联
+        Boolean storeGradeResult = storeGradeBusinessService.deleteStoreGradeRelation(ids);
+        //批量删除门店区域关联
+        Boolean storeAreaResult = storeAreaBusinessService.deleteStoreAreaRelation(ids);
+        //批量删除门店连琐关联
+        Boolean storeChainResult = storeChainBusinessService.deleteStoreChainRelation(ids);
+        //批量删除门店经销商关联
+        Boolean storeDistributor = storeDistributorBusinessService.deleteStoreDistributor(ids);
+        return storeService.delete(ids);
+    }
+
+    /**
      * @MethodName: generateHistoryVersionNumber
      * @Description: 根据门店id生成历史版本号
      * @Param: [storeId]

@@ -11,4 +11,6 @@ public interface StoreGradeRelationDAO extends IService<StoreGradeRelationDO>{
     StoreGradeRelationDO getStoreGradeRelationByStoreId(Long pk);
 
     Boolean removeByStoreId(Long storeId);
+
+    Boolean removeByStoreIds(List<Long> storeIds);
 }

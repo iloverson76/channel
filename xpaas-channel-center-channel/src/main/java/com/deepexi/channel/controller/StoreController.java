@@ -144,7 +144,7 @@ public class StoreController {
     @ApiOperation(value = "根据id批量删除门店", notes = "根据id批量删除store")
     public Payload<Boolean> delete(@PathVariable(value = "id", required = true) String id) {
         List<Long> ids = Arrays.stream(id.split(",")).map(Long::parseLong).collect(Collectors.toList());
-        return new Payload(storeService.delete(ids));
+        return new Payload(storeBusinessService.delete(ids));
     }
 
 }

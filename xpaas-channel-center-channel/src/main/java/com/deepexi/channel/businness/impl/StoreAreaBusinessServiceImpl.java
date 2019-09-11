@@ -43,6 +43,11 @@ public class StoreAreaBusinessServiceImpl implements StoreAreaBusinessService {
     }
 
     @Override
+    public Boolean deleteStoreAreaRelation(List<Long> ids) {
+        return storeAreaService.removeByStoreIds(ids);
+    }
+
+    @Override
     public AreaDTO getStoreAreaByStoreId(Long storeId) {
         //获取关联信息
         StoreAreaDTO storeAreaDTO = storeAreaService.getStoreAreaByStoreId(storeId);

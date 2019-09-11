@@ -14,4 +14,6 @@ public interface StoreGradeRelationService {
     StoreGradeRelationDTO getStoreGradeRelationByStoreId(Long pk);
 
     Boolean removeByStoreId(Long id);
+
+    Boolean removeByStoreIds(List<Long> storeIds);
 }

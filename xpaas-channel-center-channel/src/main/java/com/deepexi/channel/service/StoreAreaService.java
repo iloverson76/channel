@@ -2,6 +2,8 @@ package com.deepexi.channel.service;
 
 import com.deepexi.channel.domain.store.StoreAreaDTO;
 
+import java.util.List;
+
 /**
  * @author mumu
  * @version 1.0
@@ -13,4 +15,6 @@ public interface StoreAreaService {
     Boolean removeByStoreId(Long id);
 
     StoreAreaDTO getStoreAreaByStoreId(Long storeId);
+
+    Boolean removeByStoreIds(List<Long> ids);
 }

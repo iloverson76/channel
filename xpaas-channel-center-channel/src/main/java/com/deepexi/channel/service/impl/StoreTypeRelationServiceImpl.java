@@ -52,4 +52,12 @@ public class StoreTypeRelationServiceImpl implements StoreTypeRelationService {
     public Boolean removeByStoreId(Long storeId) {
         return storeTypeRelationDAO.removeByStoreId(storeId);
     }
+
+    @Override
+    public Boolean removeByStoreIds(List<Long> storeIds) {
+        if(CollectionUtil.isEmpty(storeIds)){
+            return false;
+        }
+        return storeTypeRelationDAO.removeByStoreIds(storeIds);
+    }
 }

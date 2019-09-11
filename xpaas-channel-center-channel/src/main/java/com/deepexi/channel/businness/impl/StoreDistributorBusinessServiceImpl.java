@@ -150,4 +150,17 @@ public class StoreDistributorBusinessServiceImpl implements StoreDistributorBusi
         //添加新的关联
         return this.saveStoreDistributors(dto);
     }
+
+    /**
+     * @MethodName: deleteStoreDistributor
+     * @Description: 根据门店id批量删除门店经销商关系
+     * @Param: [ids]
+     * @Return: java.lang.Boolean
+     * @Author: mumu
+     * @Date: 2019/9/11
+    **/
+    @Override
+    public Boolean deleteStoreDistributor(List<Long> ids) {
+        return storeDistributorRelationService.deleteByStoreIds(ids);
+    }
 }

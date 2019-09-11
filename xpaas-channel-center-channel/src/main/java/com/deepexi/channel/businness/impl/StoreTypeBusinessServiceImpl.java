@@ -91,4 +91,9 @@ public class StoreTypeBusinessServiceImpl implements StoreTypeBusinessService {
         //新增泯殿类型关联
         return this.saveStoreTypeRelation(dto);
     }
+
+    @Override
+    public Boolean deleteStoreTypeRelation(List<Long> storeIds) {
+        return storeTypeRelationService.removeByStoreIds(storeIds);
+    }
 }

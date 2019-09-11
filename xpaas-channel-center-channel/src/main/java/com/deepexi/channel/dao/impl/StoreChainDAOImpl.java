@@ -24,4 +24,11 @@ public class StoreChainDAOImpl extends ServiceImpl<StoreChainMapper, StoreChainD
         queryWrapper.eq("store_id", storeId);
         return this.list(queryWrapper);
     }
+
+    @Override
+    public Boolean removeByStoreIds(List<Long> ids) {
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.in("store_id",ids);
+        return this.remove(wrapper);
+    }
 }
