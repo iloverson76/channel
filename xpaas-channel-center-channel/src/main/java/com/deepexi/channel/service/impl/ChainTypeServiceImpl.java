@@ -1,33 +1,30 @@
 package com.deepexi.channel.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.deepexi.channel.dao.ChainTypeDAO;
 import com.deepexi.channel.domain.chain.ChainTypeDO;
 import com.deepexi.channel.domain.chain.ChainTypeDTO;
 import com.deepexi.channel.domain.chain.ChainTypeQuery;
-import com.deepexi.channel.enums.ResultEnum;
+import com.deepexi.channel.extension.AppRuntimeEnv;
 import com.deepexi.channel.service.ChainTypeService;
 import com.deepexi.util.CollectionUtil;
-import com.deepexi.util.extension.ApplicationException;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import com.github.pagehelper.PageHelper;
-import okhttp3.Interceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class ChainTypeServiceImpl implements ChainTypeService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    AppRuntimeEnv appRuntimeEnv= AppRuntimeEnv.getInstance();
     @Autowired
     private ChainTypeDAO chainTypeDAO;
 
@@ -204,5 +201,21 @@ public class ChainTypeServiceImpl implements ChainTypeService {
         }
         List<ChainTypeDO> chainTypeDOS = ObjectCloneUtils.convertList(list, ChainTypeDO.class);
         return chainTypeDAO.updateBatchById(chainTypeDOS);
+    }
+
+    @Override
+    public List<ChainTypeDTO> listParentNodesForCreate() {
+
+        //没有被限制分类的节点
+        List<ChainTypeDO> doList=chainTypeDAO.listNotLimitedNode(appRuntimeEnv.getTenantId(),appRuntimeEnv.getAppId());
+
+        //首次创建处理空值
+        if(CollectionUtils.isNotEmpty(doList)){
+
+            List<ChainTypeDTO> dtoList=ObjectCloneUtils.convertList(doList, ChainTypeDTO.class, CloneDirection.OPPOSITE);
+
+            return dtoList;
+        }
+        return Collections.emptyList();
     }
 }

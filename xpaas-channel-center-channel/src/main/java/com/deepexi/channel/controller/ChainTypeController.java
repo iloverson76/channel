@@ -138,4 +138,15 @@ public class ChainTypeController {
         vo.setChainType(chainTypeVOList);
         return new Payload<>(vo);
     }
+    @GetMapping("/limitedCreate")
+    @ApiOperation("查询未受分类限制上级-新增用")
+    public Payload<PageBean<ChainTypeVO>> listParentForCreate() {
+
+        List<ChainTypeDTO> dtoList = chainTypeService.listParentNodesForCreate();
+
+        List<ChainTypeVO> voList = ObjectCloneUtils.convertList(dtoList, ChainTypeVO.class);
+
+        return new Payload<>(new PageBean<>(voList));
+    }
+
 }

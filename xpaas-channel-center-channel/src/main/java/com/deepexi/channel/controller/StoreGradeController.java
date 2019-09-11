@@ -61,6 +61,9 @@ public class StoreGradeController {
         if(!storeGradeService.isCodeUnique(storeGradeDTO)){
             throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
         }
+        if(!storeGradeService.isNameUnique(storeGradeDTO)){
+            throw new ApplicationException(ResultEnum.NAME_DUPLICATE);
+        }
         return new Payload(storeGradeService.update(storeGradeDTO));
     }
 
@@ -71,6 +74,9 @@ public class StoreGradeController {
         //判断编码是否重复
         if(!storeGradeService.isCodeUnique(storeGradeDTO)){
             throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
+        }
+        if(!storeGradeService.isNameUnique(storeGradeDTO)){
+            throw new ApplicationException(ResultEnum.NAME_DUPLICATE);
         }
         return new Payload(storeGradeService.create(storeGradeDTO));
     }

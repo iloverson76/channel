@@ -130,7 +130,7 @@ public class ChainTypeBusinessServiceImpl implements ChainTypeBusinessService {
 
     @Override
     @Transactional
-    public Long create(ChainTypeDTO dto) {
+    public Long  create(ChainTypeDTO dto) {
         //先保存基本信息
         Long id = chainTypeService.create(dto);
         dto.setId(id);
