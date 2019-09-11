@@ -63,9 +63,9 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
         }
 
         //新增门店经销商关联
-        if(CollectionUtil.isNotEmpty(dto.getStoreDistributorDTOS())){
-            Boolean storeDistributorCreate = storeDistributorBusinessService.saveStoreDistributors(dto);
-        }
+//        if(CollectionUtil.isNotEmpty(dto.getStoreDistributorDTOS())){
+//            Boolean storeDistributorCreate = storeDistributorBusinessService.saveStoreDistributors(dto);
+//        }
         return id;
     }
 
@@ -103,9 +103,9 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
             Boolean storeAreaUpdateResult = storeAreaBusinessService.updateStoreAreaRelation(dto);
         }
         //修改门店经销商关联
-        if(CollectionUtil.isNotEmpty(dto.getStoreDistributorDTOS())) {
-            Boolean storeDistributorUpdateResult = storeDistributorBusinessService.updateStoreDistributorRelation(dto);
-        }
+//        if(CollectionUtil.isNotEmpty(dto.getStoreDistributorDTOS())) {
+//            Boolean storeDistributorUpdateResult = storeDistributorBusinessService.updateStoreDistributorRelation(dto);
+//        }
         return result;
     }
 
@@ -131,8 +131,8 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
         List<AreaDTO> areaDTOS = storeAreaBusinessService.getStoreAreaByStoreId(pk);
         result.setAreaDTOS(areaDTOS);
         //查询门店经销商关联
-        List<StoreDistributorDTO> storeDistributorRelationDTOS = storeDistributorBusinessService.getStoreDistributorByStoreId(pk);
-        result.setStoreDistributorDTOS(storeDistributorRelationDTOS);
+//        List<StoreDistributorDTO> storeDistributorRelationDTOS = storeDistributorBusinessService.getStoreDistributorByStoreId(pk);
+//        result.setStoreDistributorDTOS(storeDistributorRelationDTOS);
         //查询门店修改历史
         StoreHistoryQuery query = StoreHistoryQuery.builder().storeId(pk).build();
         query.setPage(-1);
