@@ -82,6 +82,7 @@ public class ChainTypeBusinessServiceImpl implements ChainTypeBusinessService {
             // 得到所有连锁类型id
             List<Long> idList = chainTypeDTOS.stream().map(ChainTypeDTO::getId).collect(Collectors.toList());
             ChainTypeQuery parentQuery = ChainTypeQuery.builder().ids(idList).build();
+            parentQuery.setPage(-1);
             List<ChainTypeDTO> parentChainTypeDTOS = chainTypeService.findPage(parentQuery);
             if(CollectionUtil.isEmpty(parentChainTypeDTOS)){
                 return chainTypeDTOS;
@@ -118,6 +119,7 @@ public class ChainTypeBusinessServiceImpl implements ChainTypeBusinessService {
     public List<ChainTypeDTO> getLegalParentChainType(Long id) {
         //查询所有限制上级的父级id，这些分类不能被设置上级
         ChainTypeQuery query = ChainTypeQuery.builder().limitParent(1).build();
+        query.setPage(-1);
         List<ChainTypeDTO> list = chainTypeService.findPage(query);
         //排除掉的id
         List<Long> excludeIds = list.stream().map(ChainTypeDTO::getParentId).collect(Collectors.toList());
@@ -125,6 +127,7 @@ public class ChainTypeBusinessServiceImpl implements ChainTypeBusinessService {
         excludeIds.add(id);
 
         ChainTypeQuery query2 = ChainTypeQuery.builder().excludeIds(excludeIds).build();
+        query2.setPage(-1);
         return chainTypeService.findPage(query2);
     }
 
@@ -165,6 +168,7 @@ public class ChainTypeBusinessServiceImpl implements ChainTypeBusinessService {
         //更新节点需要更新下级path和root_id
         //查询所有下级节点
         ChainTypeQuery query = ChainTypeQuery.builder().path("/"+dto.getId()+"/").build();
+        query.setPage(-1);
         List<ChainTypeDTO> list = chainTypeService.findPage(query);
         //list为空，表示没有子节点，更新本身节点信息即可
         if(CollectionUtil.isEmpty(list)){
@@ -192,7 +196,11 @@ public class ChainTypeBusinessServiceImpl implements ChainTypeBusinessService {
     @Override
     public List<ChainTypeDTO> parentChainType(Long chainTypeId) {
         //TODO 排除本身，排除所有被限制的上级节点
-        
+        //查出所有节点
+        ChainTypeQuery query = new ChainTypeQuery();
+        query.setPage(-1);
+
+        //排查被限制上级的节点和本身节点
         return null;
     }
 
@@ -203,6 +211,7 @@ public class ChainTypeBusinessServiceImpl implements ChainTypeBusinessService {
             return list;
         }
         ChainTypeQuery query = new ChainTypeQuery();
+        query.setPage(-1);
         query.setIds(ids);
         List<ChainTypeDTO> list = chainTypeService.findAll(query);
         log.info("区域链路",list);

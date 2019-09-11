@@ -365,6 +365,7 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
     public List<ChainTypeDTO> getChainTypeListByChainDTOS(List<ChainDTO> chainDTOS){
         List<Long> chainTypeIds = chainDTOS.stream().map(ChainDTO::getChainTypeId).collect(Collectors.toList());
         ChainTypeQuery query = ChainTypeQuery.builder().ids(chainTypeIds).build();
+        query.setPage(-1);
         List<ChainTypeDTO> chainTypeDTOS = chainTypeService.findPage(query);
         return chainTypeDTOS;
     }

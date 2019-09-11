@@ -95,6 +95,7 @@ public class ChainTypeServiceImpl implements ChainTypeService {
     public Boolean haveChildren(List<Long> ids) {
         //获得所有子节点
         ChainTypeQuery query = ChainTypeQuery.builder().ids(ids).build();
+        query.setPage(-1);
         List<ChainTypeDO> chainTypeDOS = chainTypeDAO.findList(query);
         //没有子节点
         if (CollectionUtil.isEmpty(chainTypeDOS)) {
@@ -121,6 +122,7 @@ public class ChainTypeServiceImpl implements ChainTypeService {
     @Override
     public boolean isCodeUnique(ChainTypeDTO dto) {
         ChainTypeQuery query = ChainTypeQuery.builder().chainTypeAccuracyCode(dto.getChainTypeCode()).build();
+        query.setPage(-1);
         return this.isUnique(query, dto);
     }
 
@@ -135,6 +137,7 @@ public class ChainTypeServiceImpl implements ChainTypeService {
     @Override
     public boolean isNameUnique(ChainTypeDTO dto) {
         ChainTypeQuery query = ChainTypeQuery.builder().chainTypeAccuracyName(dto.getChainTypeName()).build();
+        query.setPage(-1);
         return this.isUnique(query, dto);
     }
     /**
@@ -177,6 +180,7 @@ public class ChainTypeServiceImpl implements ChainTypeService {
         }
         //限制上级，就有父级节点，判断设置父级是否合法
         ChainTypeQuery query = ChainTypeQuery.builder().parentId(dto.getParentId()).build();
+        query.setPage(-1);
         List<ChainTypeDTO> chainTypeDTOS = this.findAll(query);
         if(CollectionUtil.isEmpty(chainTypeDTOS)){
             return true;
