@@ -3,8 +3,12 @@ package com.deepexi.channel.controller;
 
 import com.deepexi.channel.businness.AreaTypeBusinessService;
 import com.deepexi.channel.domain.area.*;
+import com.deepexi.channel.domain.chain.ChainTypeDTO;
+import com.deepexi.channel.domain.chain.ChainTypeListLinkVO;
+import com.deepexi.channel.domain.chain.ChainTypeVO;
 import com.deepexi.channel.extension.AppRuntimeEnv;
 import com.deepexi.channel.service.AreaTypeService;
+import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pageHelper.PageBean;
 import com.deepexi.util.pojo.CloneDirection;
@@ -17,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -151,6 +156,22 @@ public class AreaTypeController {
         });
 
         return new Payload<>(new PageBean<>(voList));
+    }
+
+    @GetMapping("/linkIdNotIn")
+    @ApiOperation("查询是否已经关联")
+    public Payload<AreaTypeListLinkVO> getListChainType(@RequestParam String linkIds){
+        List<Long> ids = Arrays.stream(linkIds.split(",")).map(Long::parseLong).collect(Collectors.toList());
+        List<AreaTypeDTO> listAreaType = areaTypeBusinessService.getListAreaType(ids);
+        List<AreaTypeVO> areaTypeVOList = ObjectCloneUtils.convertList(listAreaType, AreaTypeVO.class, CloneDirection.OPPOSITE);
+        if (CollectionUtil.isEmpty(areaTypeVOList)){
+            return new Payload<>();
+        }
+        AreaTypeListLinkVO vo = new AreaTypeListLinkVO();
+        Set<Long> setMap = areaTypeVOList.stream().filter(s->null!=s.getLinkId()).map(AreaTypeVO::getLinkId).collect(Collectors.toSet());
+        vo.setLinkType(setMap.size());
+        vo.setAreaType(areaTypeVOList);
+        return new Payload<>(vo);
     }
 
 }

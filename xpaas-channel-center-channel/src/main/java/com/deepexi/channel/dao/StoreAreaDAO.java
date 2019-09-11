@@ -9,4 +9,6 @@ public interface StoreAreaDAO extends IService<StoreAreaDO> {
     Boolean removeByStoreId(Long storeId);
 
     List<StoreAreaDO> getByStoreId(Long storeId);
+
+    Boolean removeByStoreIds(List<Long> storeIds);
 }

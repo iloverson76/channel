@@ -173,11 +173,13 @@ public class ChainTypeBusinessServiceImpl implements ChainTypeBusinessService {
         //list不为空，需要更新子节点的path与rootId
         for(ChainTypeDTO d: list){
             d.setLinkId(dto.getLinkId());
-            //设置path
-            d.getPath().split("/");
+            //设置path，取父节点后面那一段拼接父级path
+            String[] ss = d.getPath().split("/"+dto.getId());
+            d.setPath(dto.getPath()+ss[1]);
         }
-
-        return chainTypeService.create(dto)>0;
+        list.add(dto);
+        //批量更新
+        return chainTypeService.updateBatch(list);
     }
 
     @Override

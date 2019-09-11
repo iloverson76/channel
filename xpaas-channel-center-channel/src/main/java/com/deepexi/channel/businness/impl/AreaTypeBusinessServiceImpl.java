@@ -7,6 +7,8 @@ import com.deepexi.channel.domain.area.AreaTypeDTO;
 import com.deepexi.channel.domain.area.AreaTypeQuery;
 import com.deepexi.channel.service.AreaService;
 import com.deepexi.channel.service.AreaTypeService;
+import com.deepexi.util.CollectionUtil;
+import com.deepexi.util.StringUtil;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -14,10 +16,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -111,5 +110,29 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
         }
 
         return childDTOList;
+    }
+
+    @Override
+    public List<AreaTypeDTO> getListAreaType(List<Long> ids) {
+        AreaTypeQuery query = new AreaTypeQuery();
+        if (CollectionUtil.isEmpty(ids)){
+            List<AreaTypeDTO> list = areaTypeService.listAreaTypePage(query);
+            return list;
+        }
+        query.setIds(ids);
+        List<AreaTypeDTO> list = areaTypeService.listAreaTypePage(query);
+        log.info("区域链路",list);
+        if (CollectionUtil.isEmpty(list)){
+            return new ArrayList<>();
+        }
+        Set<Long> set = new HashSet<>();
+        for (AreaTypeDTO areaTypeDTO : list) {
+            String path = areaTypeDTO.getPath();
+            List<Long> idList = Arrays.stream(path.split("/")).filter(StringUtil::isNotEmpty).map(Long::parseLong).collect(Collectors.toList());
+            set.add(idList.get(0));
+        }
+        List<Long> linkIdList = new ArrayList<>(set);
+        List<AreaTypeDTO> areaTypeDTO = areaTypeService.findByAreaIdNotInLinkIdAll(linkIdList);
+        return areaTypeDTO;
     }
 }

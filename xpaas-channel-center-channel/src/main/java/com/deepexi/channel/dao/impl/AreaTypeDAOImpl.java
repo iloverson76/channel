@@ -1,5 +1,6 @@
 package com.deepexi.channel.dao.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.deepexi.channel.dao.AreaTypeDAO;
 import com.deepexi.channel.domain.area.AreaTypeDO;
@@ -58,5 +59,10 @@ public class AreaTypeDAOImpl extends ServiceImpl<AreaTypeMapper, AreaTypeDO> imp
     public List<AreaTypeDO> listLinkedAreas(long pk) {
 
         return baseMapper.listLinkedAreas(pk);
+    }
+
+    @Override
+    public List<AreaTypeDO> findByAreaIdNotInLinkIdAll(List<Long> linkIdList) {
+        return baseMapper.selectList(new QueryWrapper<AreaTypeDO>().lambda().notIn(AreaTypeDO::getLinkId, linkIdList));
     }
 }

@@ -24,4 +24,11 @@ public class StoreAreaDAOImpl extends ServiceImpl<StoreAreaMapper, StoreAreaDO> 
         queryWrapper.eq("store_id", storeId);
         return this.list(queryWrapper);
     }
+
+    @Override
+    public Boolean removeByStoreIds(List<Long> storeIds) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.in("store_id",storeIds);
+        return this.remove(queryWrapper);
+    }
 }

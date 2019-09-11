@@ -33,4 +33,6 @@ public interface AreaTypeService {
     List<AreaTypeDTO> listAreaTypeByIds(List<Long> areaTyeIdList);
 
     List<AreaTypeDTO> listLinkedAreas(long pk);
+
+    List<AreaTypeDTO> findByAreaIdNotInLinkIdAll(List<Long> linkIdList);
 }

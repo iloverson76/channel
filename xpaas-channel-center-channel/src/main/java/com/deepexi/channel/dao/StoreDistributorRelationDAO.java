@@ -15,4 +15,6 @@ public interface StoreDistributorRelationDAO  extends IService<StoreDistributorR
     List<StoreDistributorRelationDO> findList(StoreDistributorRelationQuery query);
 
     Boolean deleteByStoreId(long storeId);
+
+    Boolean deleteByStoreIds(List<Long> ids);
 }

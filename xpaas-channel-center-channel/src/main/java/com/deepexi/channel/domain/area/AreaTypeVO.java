@@ -35,7 +35,8 @@ public class AreaTypeVO extends AbstractObject {
     /**
      * 链路ID
      */
-    private Long chainId;
+    @ApiModelProperty("链路ID")
+    private Long linkId;
 
     /**
      * 挂载的区域

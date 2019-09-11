@@ -13,4 +13,6 @@ public interface StoreDistributorRelationService {
     Boolean saveBatch(List<StoreDistributorRelationDTO> relationDTOS);
 
     Boolean deleteByStoreId(long id);
+
+    Boolean deleteByStoreIds(List<Long> ids);
 }
