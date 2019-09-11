@@ -54,4 +54,13 @@ public class ChainTypeDO extends SuperEntity {
      */
     private String description;
 
+    /**
+     *    节点路径
+     */
+    private String path;
+
+    /**
+     * 根节点id，为0时证明不是根节点
+     */
+    private Long rootId;
 }

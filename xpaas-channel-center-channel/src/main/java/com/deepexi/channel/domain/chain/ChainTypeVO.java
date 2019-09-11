@@ -81,4 +81,10 @@ public class ChainTypeVO extends AbstractObject {
     @ApiModelProperty("描述")
     private String description;
 
+    @ApiModelProperty("节点路径 /1/10/100")
+    private String path;
+
+    @ApiModelProperty("根节点id，为0时证明不是根节点")
+    private Long rootId;
+
 }

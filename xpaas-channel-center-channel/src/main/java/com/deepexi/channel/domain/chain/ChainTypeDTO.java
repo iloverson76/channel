@@ -1,6 +1,7 @@
 package com.deepexi.channel.domain.chain;
 
 import com.deepexi.channel.domain.SuperEntity;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 /**
@@ -54,5 +55,14 @@ public class ChainTypeDTO extends SuperEntity {
      * 描述
      */
     private String description;
+    /**
+     *    节点路径
+     */
+    private String path;
+
+    /**
+     * 根节点id，为0时证明不是根节点
+     */
+    private Long rootId;
 
 }

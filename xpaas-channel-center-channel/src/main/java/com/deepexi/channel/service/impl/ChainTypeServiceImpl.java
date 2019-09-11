@@ -188,30 +188,6 @@ public class ChainTypeServiceImpl implements ChainTypeService {
             }
             return true;
         }
-
-
-//        //如果父级节点没被其他节点设置为父级，那必定合法
-//        if(CollectionUtil.isEmpty(chainTypeDTOS)){
-//            return true;
-//        }else{
-//            //如果要限制上级
-//            if(dto.getLimitParent()==1){
-//                //父级节点被其他节点设置了父亲，只能1:1, 但需要排除节点本身
-//                for (ChainTypeDTO c : chainTypeDTOS){
-//                    if(!c.getId().equals(dto.getId())){
-//                        return false;
-//                    }
-//                }
-//                return true;
-//            }else{
-//                //不限制上级，判断父亲节点的其他儿子节点是否限制上级
-//                for (ChainTypeDTO c : chainTypeDTOS){
-//                    if(c.getLimitParent()==1 && !c.getId().equals(dto.getId())){
-//                        return false;
-//                    }
-//                }
-//                return true;
-//            }
-//        }
     }
+
 }
