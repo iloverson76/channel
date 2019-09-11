@@ -72,21 +72,29 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
         if(CollectionUtils.isNotEmpty(gdrList)){
 
-            List<DistributorGradeRelationDTO> dgrInsertList=new ArrayList<>();
+            List<DistributorGradeRelationDTO> dgrInsertList=new ArrayList<>(gdrList.size());
 
             gdrList.forEach(dgr->{
 
                 DistributorGradeRelationDTO dgrDTO=new DistributorGradeRelationDTO();
 
-                dgr.setDistributorId(distId);
+                dgrDTO.setDistributorId(distId);
 
-                dgr.setCreatedBy(createdBy);
+                dgrDTO.setGradeId(dgr.getGradeId());
 
-                dgr.setCreatedTime(createdTime);
+                dgrDTO.setSystemId(dgr.getSystemId());
 
-                dgr.setUpdatedBy(updatedBy);
+                dgrDTO.setLimitedParent(dgr.getLimitedParent());
 
-                dgr.setUpdatedTime(updatedTime);
+                dgrDTO.setParentId(dgr.getParentId());
+
+                dgrDTO.setCreatedBy(createdBy);
+
+                dgrDTO.setCreatedTime(createdTime);
+
+                dgrDTO.setUpdatedBy(updatedBy);
+
+                dgrDTO.setUpdatedTime(updatedTime);
 
                 dgrInsertList.add(dgrDTO);
 
@@ -96,17 +104,17 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
         }
 
         //区域信息保存
-        List<Long> areaIds=distributor.getAreaIds();
+        List<DistributorAreaRelationDTO> areaList=distributor.getDistributorAreaRelation();
 
-        if(CollectionUtils.isNotEmpty(areaIds)){
+        if(CollectionUtils.isNotEmpty(areaList)){
 
             List<DistributorAreaRelationDTO> areaInsertList=new ArrayList<>();
 
-            areaIds.forEach(areaId->{
+            areaList.forEach(area->{
 
                 DistributorAreaRelationDTO adto=new DistributorAreaRelationDTO();
 
-                adto.setAreaId(areaId);
+                adto.setAreaId(area.getAreaId());
 
                 adto.setDistributorId(distId);
 
@@ -124,16 +132,16 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
         }
 
         //账号信息批量保存
-        List<Long> accountIds=distributor.getBankAccountIds();
+        List<DistributorBankAccountRelationDTO> accountList=distributor.getDistributorBankAccountRelation();
 
-        if(CollectionUtils.isNotEmpty(accountIds)){
+        if(CollectionUtils.isNotEmpty(accountList)){
 
-            List<DistributorBankAccountRelationDTO> barList=new ArrayList<>();
+            List<DistributorBankAccountRelationDTO> barInsertList=new ArrayList<>();
 
-            accountIds.forEach(accountId->{
+            accountList.forEach(account->{
                 DistributorBankAccountRelationDTO bar=new DistributorBankAccountRelationDTO();
 
-                bar.setBankAccountId(accountId);
+                bar.setBankAccountId(account.getBankAccountId());
 
                 bar.setDistributorId(distId);
 
@@ -145,10 +153,10 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
                 bar.setUpdatedTime(updatedTime);
 
-                barList.add(bar);
+                barInsertList.add(bar);
 
             });
-            distributorBankAccountRelationService.batchCreate(barList);
+            distributorBankAccountRelationService.batchCreate(barInsertList);
         }
 
         return distId;
@@ -423,7 +431,9 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
         query.setIds(accountIdList);
 
-        return bankAccountService.findList(query);
+        List<BankAccountDTO> bankAccountDTOList= bankAccountService.findList(query);
+
+        return bankAccountDTOList;
     }
 
     @Override
@@ -440,6 +450,8 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
         List<Long> systemIdList=new ArrayList<>();
 
+        List<GradeInfoDTO> gradeInfos=new ArrayList<>(relationList.size());
+
         if(CollectionUtils.isNotEmpty(relationList)){
 
             //中间表数据
@@ -449,12 +461,8 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
             systemIdList=relationList.stream().map(DistributorGradeRelationDTO::getSystemId).
                     collect(Collectors.toList());
 
-            //
             Map<Long, List<DistributorGradeRelationDTO>> relationSystemMap =
                     relationList.stream().collect(Collectors.groupingBy(DistributorGradeRelationDTO::getSystemId));
-
-
-            //
 
             DistributorGradeQuery query=new DistributorGradeQuery();
 
@@ -465,13 +473,11 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
             //体系信息
             DistributorGradeSystemQuery sqry=new DistributorGradeSystemQuery();
 
-            query.setIds(systemIdList);
+            sqry.setIds(systemIdList);
 
             List<DistributorGradeSystemDTO> systemDTOS = distributorGradeSystemService.findPage(sqry);
 
             //组装返回页面
-            List<GradeInfoDTO> gradeInfos=new ArrayList<>();
-
             for (DistributorGradeSystemDTO system:systemDTOS){
 
                 for (DistributorGradeDTO grade: gradeDTOS){
@@ -503,6 +509,8 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
                             gif.setParentDistributorId(dis.getId());
 
                             gif.setParentDistributorName(dis.getDistributorName());
+
+                            gif.setLimitedParent(limitedParent);
                         }
 
                         gradeInfos.add(gif);
@@ -510,18 +518,8 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
                 }
             }
 
-
-
-
-
-
-
-
-
         }
-
-
-        return Collections.emptyList();
+        return gradeInfos;
     }
 
 }

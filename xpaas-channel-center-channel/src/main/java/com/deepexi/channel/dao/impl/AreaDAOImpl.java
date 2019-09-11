@@ -50,7 +50,7 @@ public class AreaDAOImpl extends ServiceImpl<AreaMapper, AreaDO> implements Area
 
         QueryWrapper<AreaDO> wp=new QueryWrapper<>();
 
-        wp.in("area_type_id",ids);
+        wp.in("id",ids);
 
         return baseMapper.selectList(wp);
     }

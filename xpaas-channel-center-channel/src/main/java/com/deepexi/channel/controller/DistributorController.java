@@ -60,7 +60,9 @@ public class DistributorController {
 
         DistributorDTO dto = distributorBusinessService.detail(id);
 
-        return new Payload<>(dto.clone(DistributorVO.class,CloneDirection.FORWARD));
+        DistributorVO vo=dto.clone(DistributorVO.class,CloneDirection.FORWARD);
+
+        return new Payload<>(vo);
     }
 
     @PutMapping("/{id}")
