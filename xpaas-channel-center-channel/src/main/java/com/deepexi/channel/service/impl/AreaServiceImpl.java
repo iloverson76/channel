@@ -36,7 +36,7 @@ public class AreaServiceImpl implements AreaService{
 
         Long newId=newNode.getId();
 
-        //设置处理(id路径)
+  /*      //设置处理(id路径)
 
         Long parentId=newNode.getParentId();
 
@@ -52,7 +52,7 @@ public class AreaServiceImpl implements AreaService{
         }
 
         areaDAO.updateById(newNode);
-
+*/
         return newId;
     }
 
