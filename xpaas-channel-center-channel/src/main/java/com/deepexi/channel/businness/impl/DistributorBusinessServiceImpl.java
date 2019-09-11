@@ -492,7 +492,7 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
                         gif.setGradeCode(grade.getDistributorGradeCode());
 
-                        //中间表按等级来分组只有一条数据
+                        //中间表按体系来分组只有一条数据
                         DistributorGradeRelationDTO dgr=relationSystemMap.get(gradeSystemId).get(0);
                         Integer limitedParent=dgr.getLimitedParent();
 
