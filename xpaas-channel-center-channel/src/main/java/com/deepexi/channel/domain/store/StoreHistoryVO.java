@@ -94,7 +94,7 @@ public class StoreHistoryVO extends AbstractObject {
      * 是否启用 0 禁用 1 启用
      */
     @ApiModelProperty(value = "是否启用 0 禁用 1 启用")
-    private Boolean enable;
+    private Integer enable;
 
 
 }
