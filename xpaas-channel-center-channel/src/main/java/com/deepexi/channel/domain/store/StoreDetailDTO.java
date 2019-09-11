@@ -1,9 +1,11 @@
 package com.deepexi.channel.domain.store;
 
 import com.deepexi.channel.domain.area.AreaDTO;
-import com.deepexi.channel.domain.chain.ChainDTO;
-import com.deepexi.channel.domain.distributor.DistributorDTO;
-import lombok.*;
+import com.deepexi.channel.domain.chain.ChainDetailDTO;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -16,9 +18,9 @@ public class StoreDetailDTO extends StoreDTO {
 
     private StoreGradeDTO storeGradeDTO;
 
-    private AreaDTO areaDTO;
+    private List<AreaDTO> areaDTOS;
 
-    private ChainDTO chainDTO;
+    private List<ChainDetailDTO> chainDTOS;
 
     private List<StoreDistributorDTO> storeDistributorDTOS;
 

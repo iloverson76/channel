@@ -4,6 +4,8 @@ import com.deepexi.channel.businness.StoreBusinessService;
 import com.deepexi.channel.domain.area.AreaDTO;
 import com.deepexi.channel.domain.area.AreaVO;
 import com.deepexi.channel.domain.chain.ChainDTO;
+import com.deepexi.channel.domain.chain.ChainDetailDTO;
+import com.deepexi.channel.domain.chain.ChainDetailVO;
 import com.deepexi.channel.domain.chain.ChainVO;
 import com.deepexi.channel.domain.store.*;
 import com.deepexi.channel.enums.ResultEnum;
@@ -62,12 +64,12 @@ public class StoreController {
             storeDetailVO.setStoreTypeVO(storeDetailDTO.getStoreTypeDTO().clone(StoreTypeVO.class));
         }
         //设置连锁
-        if (storeDetailDTO.getChainDTO() != null) {
-            storeDetailVO.setChainVO(storeDetailDTO.getChainDTO().clone(ChainVO.class));
+        if (CollectionUtil.isNotEmpty(storeDetailDTO.getChainDTOS())) {
+            storeDetailVO.setChainVOS(ObjectCloneUtils.convertList(storeDetailDTO.getChainDTOS(), ChainDetailVO.class));
         }
         //设置区域
-        if (storeDetailDTO.getAreaDTO() != null) {
-            storeDetailVO.setAreaVO(storeDetailDTO.getAreaDTO().clone(AreaVO.class));
+        if (CollectionUtil.isNotEmpty(storeDetailDTO.getAreaDTOS())) {
+            storeDetailVO.setAreaVOS(ObjectCloneUtils.convertList(storeDetailDTO.getAreaDTOS(), AreaVO.class));
         }
         //设置修改历史
         if(CollectionUtil.isNotEmpty(storeDetailDTO.getStoreHistoryDTOS())){
@@ -90,13 +92,13 @@ public class StoreController {
             StoreTypeDTO storeTypeDTO = vo.getStoreTypeVO().clone(StoreTypeDTO.class);
             storeDetailDTO.setStoreTypeDTO(storeTypeDTO);
         }
-        if (vo.getChainVO() != null) {
-            ChainDTO chainDTO = vo.getChainVO().clone(ChainDTO.class);
-            storeDetailDTO.setChainDTO(chainDTO);
+        if (CollectionUtil.isNotEmpty(vo.getChainVOS())) {
+            List<ChainDetailDTO> chainDTOS = ObjectCloneUtils.convertList(vo.getChainVOS(), ChainDetailDTO.class);
+            storeDetailDTO.setChainDTOS(chainDTOS);
         }
-        if (vo.getAreaVO() != null) {
-            AreaDTO areaDTO = vo.getAreaVO().clone(AreaDTO.class);
-            storeDetailDTO.setAreaDTO(areaDTO);
+        if (CollectionUtil.isNotEmpty(vo.getAreaVOS())) {
+            List<AreaDTO> areaDTOS = ObjectCloneUtils.convertList(vo.getAreaVOS(), AreaDTO.class);
+            storeDetailDTO.setAreaDTOS(areaDTOS);
         }
         if(CollectionUtil.isNotEmpty(vo.getStoreDistributorVOS())){
             List<StoreDistributorDTO> storeDistributorDTOS = ObjectCloneUtils.convertList(vo.getStoreDistributorVOS(), StoreDistributorDTO.class);
@@ -121,13 +123,13 @@ public class StoreController {
             StoreTypeDTO storeTypeDTO = vo.getStoreTypeVO().clone(StoreTypeDTO.class);
             storeDetailDTO.setStoreTypeDTO(storeTypeDTO);
         }
-        if (vo.getChainVO() != null) {
-            ChainDTO chainDTO = vo.getChainVO().clone(ChainDTO.class);
-            storeDetailDTO.setChainDTO(chainDTO);
+        if (CollectionUtil.isNotEmpty(vo.getChainVOS())) {
+            List<ChainDetailDTO> chainDTOS = ObjectCloneUtils.convertList(vo.getChainVOS(), ChainDetailDTO.class);
+            storeDetailDTO.setChainDTOS(chainDTOS);
         }
-        if (vo.getAreaVO() != null) {
-            AreaDTO areaDTO = vo.getAreaVO().clone(AreaDTO.class);
-            storeDetailDTO.setAreaDTO(areaDTO);
+        if (CollectionUtil.isNotEmpty(vo.getAreaVOS())) {
+            List<AreaDTO> areaDTOS = ObjectCloneUtils.convertList(vo.getAreaVOS(), AreaDTO.class);
+            storeDetailDTO.setAreaDTOS(areaDTOS);
         }
         if(CollectionUtil.isNotEmpty(vo.getStoreDistributorVOS())){
             List<StoreDistributorDTO> storeDistributorDTOS = ObjectCloneUtils.convertList(vo.getStoreDistributorVOS(), StoreDistributorDTO.class);

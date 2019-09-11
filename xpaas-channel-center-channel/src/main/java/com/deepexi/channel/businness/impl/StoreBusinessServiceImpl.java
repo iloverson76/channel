@@ -5,6 +5,7 @@ import cn.hutool.core.date.DateTime;
 import com.deepexi.channel.businness.*;
 import com.deepexi.channel.domain.area.AreaDTO;
 import com.deepexi.channel.domain.chain.ChainDTO;
+import com.deepexi.channel.domain.chain.ChainDetailDTO;
 import com.deepexi.channel.domain.store.*;
 import com.deepexi.channel.service.*;
 import com.deepexi.util.CollectionUtil;
@@ -53,12 +54,12 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
             Long storeGradeRelationId = storeGradeBusinessService.saveStoreGradeRelation(dto);
         }
         //新增门店连锁关联
-        if (dto.getChainDTO() != null) {
-            Long storeChainRelationId = storeChainBusinessService.saveStoreChainRelation(dto);
+        if (CollectionUtil.isNotEmpty(dto.getChainDTOS()) ) {
+            Boolean storeChainRelation = storeChainBusinessService.saveStoreChainRelation(dto);
         }
         //新增门店区域关联
-        if(dto.getAreaDTO() != null){
-            Long storeAreaRelationId = storeAreaBusinessService.saveStoreAreaRelation(dto);
+        if(CollectionUtil.isNotEmpty(dto.getAreaDTOS())){
+            Boolean storeAreaRelation = storeAreaBusinessService.saveStoreAreaRelation(dto);
         }
 
         //新增门店经销商关联
@@ -86,15 +87,25 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
         //修改门店基本信息
         Boolean result = storeService.update(dto);
         //修改门店等级关联
-        Long storeGradeUpdateResult = storeGradeBusinessService.updateStoreGradeRelation(dto);
+        if (dto.getStoreGradeDTO() != null) {
+            Long storeGradeUpdateResult = storeGradeBusinessService.updateStoreGradeRelation(dto);
+        }
         //修改门店类型关联
-        Long storeTypeUpdateResult = storeTypeBusinessService.updateStoreTypeRelation(dto);
+        if (dto.getStoreTypeDTO() != null) {
+            Long storeTypeUpdateResult = storeTypeBusinessService.updateStoreTypeRelation(dto);
+        }
         //修改门店连锁关联
-        Long storeChainUpdateResult = storeChainBusinessService.updateStoreChainRelation(dto);
+        if (CollectionUtil.isNotEmpty(dto.getChainDTOS()) ) {
+            Boolean storeChainUpdateResult = storeChainBusinessService.updateStoreChainRelation(dto);
+        }
         //修改门店区域关联
-        Long storeAreaUpdateResult = storeAreaBusinessService.updateStoreAreaRelation(dto);
+        if(CollectionUtil.isNotEmpty(dto.getAreaDTOS())) {
+            Boolean storeAreaUpdateResult = storeAreaBusinessService.updateStoreAreaRelation(dto);
+        }
         //修改门店经销商关联
-        Boolean storeDistributorUpdateResult = storeDistributorBusinessService.updateStoreDistributorRelation(dto);
+        if(CollectionUtil.isNotEmpty(dto.getStoreDistributorDTOS())) {
+            Boolean storeDistributorUpdateResult = storeDistributorBusinessService.updateStoreDistributorRelation(dto);
+        }
         return result;
     }
 
@@ -114,11 +125,11 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
         result.setStoreTypeDTO(storeTypeDTO);
 
         //查询门店连锁关联
-        ChainDTO chainDTO = storeChainBusinessService.getStoreChainByStoreId(pk);
-        result.setChainDTO(chainDTO);
+        List<ChainDetailDTO> chainDTOS = storeChainBusinessService.getStoreChainByStoreId(pk);
+        result.setChainDTOS(chainDTOS);
         //查询门店区域关联
-        AreaDTO areaDTO = storeAreaBusinessService.getStoreAreaByStoreId(pk);
-        result.setAreaDTO(areaDTO);
+        List<AreaDTO> areaDTOS = storeAreaBusinessService.getStoreAreaByStoreId(pk);
+        result.setAreaDTOS(areaDTOS);
         //查询门店经销商关联
         List<StoreDistributorDTO> storeDistributorRelationDTOS = storeDistributorBusinessService.getStoreDistributorByStoreId(pk);
         result.setStoreDistributorDTOS(storeDistributorRelationDTOS);

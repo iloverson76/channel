@@ -1,5 +1,6 @@
 package com.deepexi.channel.businness.impl;
 
+import com.deepexi.channel.businness.AreaBusinessService;
 import com.deepexi.channel.businness.StoreAreaBusinessService;
 import com.deepexi.channel.domain.area.AreaDTO;
 import com.deepexi.channel.domain.area.AreaQuery;
@@ -8,11 +9,14 @@ import com.deepexi.channel.domain.store.StoreDetailDTO;
 import com.deepexi.channel.service.AreaService;
 import com.deepexi.channel.service.StoreAreaService;
 import com.deepexi.util.CollectionUtil;
+import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.awt.geom.Area;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author mumu
@@ -26,16 +30,22 @@ public class StoreAreaBusinessServiceImpl implements StoreAreaBusinessService {
     StoreAreaService storeAreaService;
     @Autowired
     AreaService areaService;
+    @Autowired
+    AreaBusinessService areaBusinessService;
 
     @Override
-    public Long saveStoreAreaRelation(StoreDetailDTO dto) {
-        AreaDTO areaDTO = dto.getAreaDTO();
-        StoreAreaDTO storeAreaDTO = StoreAreaDTO.builder().storeId(dto.getId()).areaId(areaDTO.getId()).build();
-        return storeAreaService.save(storeAreaDTO);
+    public Boolean saveStoreAreaRelation(StoreDetailDTO dto) {
+        List<AreaDTO> areaDTOS = dto.getAreaDTOS();
+        List<StoreAreaDTO> list = new LinkedList<>();
+        areaDTOS.forEach(a->{
+            StoreAreaDTO storeAreaDTO = StoreAreaDTO.builder().storeId(dto.getId()).areaId(a.getId()).build();
+            list.add(storeAreaDTO);
+        });
+        return storeAreaService.saveBatch(list);
     }
 
     @Override
-    public Long updateStoreAreaRelation(StoreDetailDTO dto) {
+    public Boolean updateStoreAreaRelation(StoreDetailDTO dto) {
         //根据门店id删除门店区域关联
         Boolean result = storeAreaService.removeByStoreId(dto.getId());
         //保存最新的门店区域关联
@@ -48,20 +58,20 @@ public class StoreAreaBusinessServiceImpl implements StoreAreaBusinessService {
     }
 
     @Override
-    public AreaDTO getStoreAreaByStoreId(Long storeId) {
+    public List<AreaDTO> getStoreAreaByStoreId(Long storeId) {
         //获取关联信息
-        StoreAreaDTO storeAreaDTO = storeAreaService.getStoreAreaByStoreId(storeId);
-        if(storeAreaDTO == null){
+        List<StoreAreaDTO> storeAreaDTOS = storeAreaService.getStoreAreaByStoreId(storeId);
+        if(CollectionUtil.isEmpty(storeAreaDTOS)){
             return null;
         }
+        List<Long> ids = storeAreaDTOS.stream().map(StoreAreaDTO::getAreaId).collect(Collectors.toList());
         //获取区域
         AreaQuery areaQuery = new AreaQuery();
-        areaQuery.setId(storeAreaDTO.getAreaId());
-        List<AreaDTO> areaDTOList = areaService.findPage(areaQuery);
+        areaQuery.setIds(ids);
+        List<AreaDTO> areaDTOList = areaBusinessService.findPage(areaQuery);
         if(CollectionUtil.isEmpty(areaDTOList)){
             return null;
         }
-        AreaDTO areaDTO = areaDTOList.get(0);
-        return areaDTO;
+        return areaDTOList;
     }
 }
