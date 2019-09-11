@@ -422,7 +422,7 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
     @Override
     public Boolean deleteTreeNode(Long id) {
         //获取所有子节点
-
+        
         //批量设置path为空
 
         return null;

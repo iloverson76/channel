@@ -70,6 +70,17 @@ public class AreaController {
         return new Payload<>(Boolean.TRUE);
     }
 
+    @PutMapping("/treeEdit/{id}")
+    @ApiOperation(value = "区域树修改保存")
+    public Payload<Boolean> updateTreeChange(@PathVariable(value = "id", required = true) Long  pk, @RequestBody AreaTreeVO vo) {
+
+        vo.setId(pk);
+
+        areaBusinessService.update(vo.clone(AreaDTO.class,CloneDirection.FORWARD));
+
+        return new Payload<>(Boolean.TRUE);
+    }
+
     @DeleteMapping("/{ids:[0-9,]+}")
     @ApiOperation(value = "根据id批量删除")
     public Payload delete(@PathVariable(value = "ids") String ids) {
