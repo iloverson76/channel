@@ -26,6 +26,8 @@ public class AreaDO extends SuperEntity {
 
     private static final long serialVersionUID = 1L;
 
+    private Integer root;//是否根节点
+
     /**
      * 父节点ID
      */
