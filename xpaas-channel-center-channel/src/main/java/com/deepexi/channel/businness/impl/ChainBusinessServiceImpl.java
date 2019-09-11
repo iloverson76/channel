@@ -1,11 +1,13 @@
 package com.deepexi.channel.businness.impl;
 
 import com.deepexi.channel.businness.ChainBusinessService;
+import com.deepexi.channel.businness.StoreChainBusinessService;
 import com.deepexi.channel.domain.bank.BankAccountDTO;
 import com.deepexi.channel.domain.bank.BankAccountQuery;
 import com.deepexi.channel.domain.bank.BankDTO;
 import com.deepexi.channel.domain.bank.ChainBankDTO;
 import com.deepexi.channel.domain.chain.*;
+import com.deepexi.channel.domain.store.StoreChainDTO;
 import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.service.*;
 import com.deepexi.util.CollectionUtil;
@@ -33,6 +35,8 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
     ChainTypeService chainTypeService;
     @Autowired
     BankService bankService;
+    @Autowired
+    StoreChainService storeChainService;
 
     @Override
     @Transactional
@@ -107,7 +111,11 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         if(chainService.haveChildren(ids)){
             throw new ApplicationException(ResultEnum.HAVE_CHILDREN);
         }
-        //TODO 删除的连锁是否被其他门店所关联
+        // 删除的连锁是否被其他门店所关联
+        List<StoreChainDTO> storeChainDTOS = storeChainService.getStoreChainByChainIds(ids);
+        if(CollectionUtil.isNotEmpty(storeChainDTOS)){
+            throw new ApplicationException(ResultEnum.HAVE_RELATION);
+        }
         return true;
     }
 
