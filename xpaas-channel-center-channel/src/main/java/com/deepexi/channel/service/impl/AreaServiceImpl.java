@@ -34,13 +34,13 @@ public class AreaServiceImpl implements AreaService{
         //save后,ado是插入数据库后返回的新数据,包括id,ado克隆要拆成两步写
         areaDAO.save(newNode);
 
-        long newId=newNode.getId();
+        Long newId=newNode.getId();
 
         //设置处理(id路径)
 
-        long parentId=newNode.getParentId();
+        Long parentId=newNode.getParentId();
 
-        if (0==parentId) {
+        if (null==parentId || 0==parentId) {
 
             newNode.setPath("/"+String.valueOf(newId));//首次创建
 

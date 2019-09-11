@@ -8,6 +8,7 @@ import com.deepexi.channel.domain.chain.ChainTypeVO;
 import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.service.ChainTypeService;
 import com.deepexi.util.CollectionUtil;
+import com.deepexi.util.StringUtil;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.extension.ApplicationException;
 import com.deepexi.util.pageHelper.PageBean;
@@ -20,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -121,7 +123,10 @@ public class ChainTypeController {
     @GetMapping("/linkIdNotIn")
     @ApiOperation("查询是否已经关联")
     public Payload<ChainTypeListLinkVO> getListChainType(@RequestParam String linkIds){
-        List<Long> ids = Arrays.stream(linkIds.split(",")).map(Long::parseLong).collect(Collectors.toList());
+        List<Long> ids = new ArrayList<>();
+        if (StringUtil.isNotEmpty(linkIds)){
+            ids = Arrays.stream(linkIds.split(",")).map(Long::parseLong).collect(Collectors.toList());
+        }
         ChainTypeListLinkVO vo = new ChainTypeListLinkVO();
         List<ChainTypeDTO> listChainType = chainTypeBusinessService.getListChainType(ids);
         List<ChainTypeVO> chainTypeVOList = ObjectCloneUtils.convertList(listChainType, ChainTypeVO.class, CloneDirection.OPPOSITE);
