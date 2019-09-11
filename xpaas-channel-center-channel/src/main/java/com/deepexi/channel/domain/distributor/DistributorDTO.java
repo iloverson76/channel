@@ -50,7 +50,7 @@ public class DistributorDTO extends AbstractObject {
     /**
      * 上级经销商ID
      */
-    @ApiModelProperty("直接上级经销商")
+    @ApiModelProperty("直接/所有上级经销商")
     private List<DistributorDTO> parent;
 
     /**

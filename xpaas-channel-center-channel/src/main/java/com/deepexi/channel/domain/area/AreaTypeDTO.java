@@ -26,6 +26,11 @@ public class AreaTypeDTO extends AbstractObject {
 
     private Long id;
 
+    private Integer root;
+
+    private Long chainId;
+
+
     /**
      * 挂载的区域
      */

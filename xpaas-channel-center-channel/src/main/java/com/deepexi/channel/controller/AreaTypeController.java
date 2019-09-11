@@ -41,11 +41,11 @@ public class AreaTypeController {
 
     @PostMapping()
     @ApiOperation(value = "新增区域类型")
-    public Payload<Boolean> saveAreaType(@RequestBody AreaTypeVO vo) {
+    public Payload<Long> saveAreaType(@RequestBody AreaTypeVO vo) {
 
         AreaTypeDTO dto = vo.clone(AreaTypeDTO.class, CloneDirection.FORWARD);
 
-        boolean result = areaTypeService.saveAreaType(dto);
+        Long result = areaTypeService.saveAreaType(dto);
 
         return new Payload<>(result);
     }

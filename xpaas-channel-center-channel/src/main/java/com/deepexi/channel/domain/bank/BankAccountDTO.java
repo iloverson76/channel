@@ -1,6 +1,7 @@
 package com.deepexi.channel.domain.bank;
 
 import com.deepexi.channel.domain.SuperEntity;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 /**
@@ -41,5 +42,11 @@ public class BankAccountDTO extends SuperEntity {
     private String bankCode;
 
     private String bankName;
+
+    /**
+     * 描述
+     */
+    @ApiModelProperty(value = "描述")
+    private String description;
 
 }

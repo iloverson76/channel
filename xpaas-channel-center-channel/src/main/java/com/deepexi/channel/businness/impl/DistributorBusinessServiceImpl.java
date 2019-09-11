@@ -327,7 +327,7 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
             }else{//如果不指定,则查所有间接上级和直接上级,但是页面不展示
 
-                 list=listParentDistributorsByGrade(distributorId);
+                 list=listParentDistributorsByGrade(distributorId);//应该传gradeId,这里是错的,要重构
 
                  if(CollectionUtils.isNotEmpty(list)){
                      distributor.setParent(list);

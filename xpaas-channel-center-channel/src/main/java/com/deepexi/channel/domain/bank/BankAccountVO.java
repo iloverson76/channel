@@ -66,4 +66,10 @@ public class BankAccountVO extends AbstractObject {
     @ApiModelProperty(value = "银行名称,例如建设银行")
     private String bankName;
 
+    /**
+     * 描述
+     */
+    @ApiModelProperty(value = "描述")
+    private String description;
+
 }
