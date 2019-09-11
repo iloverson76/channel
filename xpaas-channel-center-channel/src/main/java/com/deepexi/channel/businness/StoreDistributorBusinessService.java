@@ -16,4 +16,6 @@ public interface StoreDistributorBusinessService {
     Boolean saveStoreDistributors(StoreDetailDTO dto);
 
     Boolean updateStoreDistributorRelation(StoreDetailDTO dto);
+
+    Boolean deleteStoreDistributor(List<Long> ids);
 }

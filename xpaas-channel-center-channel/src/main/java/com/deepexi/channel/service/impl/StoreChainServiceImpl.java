@@ -45,4 +45,12 @@ public class StoreChainServiceImpl implements StoreChainService {
         StoreChainDO storeChainDO = storeChainDOS.get(0);
         return storeChainDO.clone(StoreChainDTO.class);
     }
+
+    @Override
+    public Boolean removeByStoreIds(List<Long> ids) {
+        if(CollectionUtil.isEmpty(ids)){
+            return false;
+        }
+        return storeChainDAO.removeByStoreIds(ids);
+    }
 }

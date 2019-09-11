@@ -84,4 +84,11 @@ public interface ChainTypeService {
      * 查询不在chainId的ChainType
      */
     List<ChainTypeDTO> findByChainIdNotInAll(List<Long> chainIdList);
+
+    /**
+     * 批量更新ChainType
+     * @param list
+     * @return
+     */
+    Boolean updateBatch(List<ChainTypeDTO> list);
 }

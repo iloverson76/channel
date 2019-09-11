@@ -12,4 +12,6 @@ public interface StoreTypeRelationDAO extends IService<StoreTypeRelationDO>{
     List<StoreTypeRelationDO> findAll(StoreTypeRelationQuery query);
 
     Boolean removeByStoreId(Long storeId);
+
+    Boolean removeByStoreIds(List<Long> storeIds);
 }

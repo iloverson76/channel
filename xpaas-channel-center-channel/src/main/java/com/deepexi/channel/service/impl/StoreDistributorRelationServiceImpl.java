@@ -47,4 +47,12 @@ public class StoreDistributorRelationServiceImpl implements StoreDistributorRela
     public Boolean deleteByStoreId(long storeId) {
         return storeDistributorRelationDAO.deleteByStoreId(storeId);
     }
+
+    @Override
+    public Boolean deleteByStoreIds(List<Long> ids) {
+        if(CollectionUtil.isEmpty(ids)){
+            return false;
+        }
+        return storeDistributorRelationDAO.deleteByStoreIds(ids);
+    }
 }

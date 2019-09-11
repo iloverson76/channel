@@ -72,4 +72,17 @@ public class StoreGradeBusinessServiceImpl implements StoreGradeBusinessService 
         //新增门店关系
        return this.saveStoreGradeRelation(dto);
     }
+
+    /**
+     * @MethodName: deleteStoreGradeRelation
+     * @Description: 根据storeId批量删除门店等级关联
+     * @Param: [storeIds]
+     * @Return: java.lang.Boolean
+     * @Author: mumu
+     * @Date: 2019/9/11
+    **/
+    @Override
+    public Boolean deleteStoreGradeRelation(List<Long> storeIds) {
+        return storeGradeRelationService.removeByStoreIds(storeIds);
+    }
 }
