@@ -25,13 +25,28 @@ public class StoreTypeBusinessServiceImpl implements StoreTypeBusinessService {
         return storeTypeService.delete(ids);
     }
 
+    /**
+     * @MethodName: saveStoreTypeRelation
+     * @Description: 保存门店类型关联
+     * @Param: [dto]
+     * @Return: java.lang.Long
+     * @Author: mumu
+     * @Date: 2019/9/10
+    **/
     @Override
     public Long saveStoreTypeRelation(StoreDetailDTO dto) {
         StoreTypeDTO storeTypeDTO = dto.getStoreTypeDTO();
         StoreTypeRelationDTO storeTypeRelationDTO = StoreTypeRelationDTO.builder().storeTypeId(storeTypeDTO.getId()).storeId(dto.getId()).build();
         return storeTypeRelationService.save(storeTypeRelationDTO);
     }
-
+    /**
+     * @MethodName: getStoreTypeByStoreId
+     * @Description: 根据门店id查询门店类型
+     * @Param: [pk]
+     * @Return: com.deepexi.channel.domain.store.StoreTypeDTO
+     * @Author: mumu
+     * @Date: 2019/9/10
+    **/
     @Override
     public StoreTypeDTO getStoreTypeByStoreId(Long pk) {
         StoreTypeRelationDTO storeTypeRelationDTO = storeTypeRelationService.getStoreTypeRelationByStoreId(pk);
@@ -61,6 +76,14 @@ public class StoreTypeBusinessServiceImpl implements StoreTypeBusinessService {
         }
     }
 
+    /**
+     * @MethodName: updateStoreTypeRelation
+     * @Description: 更新门店类型关联
+     * @Param: [dto]
+     * @Return: java.lang.Long
+     * @Author: mumu
+     * @Date: 2019/9/10
+    **/
     @Override
     public Long updateStoreTypeRelation(StoreDetailDTO dto) {
         //根据storeId删除门店类型关联

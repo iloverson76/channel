@@ -41,12 +41,11 @@ public class AreaTypeServiceImpl implements AreaTypeService {
 
     @Transactional
     @Override
-    public boolean
-    saveAreaType(AreaTypeDTO dto) {
+    public Long saveAreaType(AreaTypeDTO dto) {
 
         log.info("保存区域分类");
         if(null==dto){
-            return false;
+            return 0L;
         }
 
         //编码不能重复
@@ -79,7 +78,14 @@ public class AreaTypeServiceImpl implements AreaTypeService {
             newNode.setPath(parent_path);
         }
 
-        return areaTypeDAO.updateById(newNode);
+        //链路
+        long id=newNode.getId();
+
+        newNode.setChainId(id);
+
+        areaTypeDAO.updateById(newNode);
+
+        return id;
     }
 
     @Transactional

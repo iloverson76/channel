@@ -9,11 +9,14 @@ import com.deepexi.channel.service.BankAccountService;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import com.github.pagehelper.PageHelper;
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -114,6 +117,29 @@ public class BankAccountServiceImpl implements BankAccountService {
         bankAccountDAO.save(eo);
 
         return eo.getId();
+
+    }
+
+    @Override
+    public Boolean update(BankAccountDTO dto) {
+
+        if(null==dto){
+            return false;
+        }
+
+        BankAccountDO eo=dto.clone(BankAccountDO.class,CloneDirection.FORWARD);
+
+        return bankAccountDAO.updateById(eo);
+    }
+
+    @Override
+    public Boolean deleteBankAccounts(List<Long> ids) {
+
+        if(CollectionUtils.isEmpty(ids)){
+            return false;
+        }
+
+        return bankAccountDAO.removeByIds(ids);
 
     }
 

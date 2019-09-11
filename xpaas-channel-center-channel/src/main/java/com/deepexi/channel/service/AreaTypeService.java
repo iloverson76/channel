@@ -16,7 +16,7 @@ import java.util.Set;
  */
 public interface AreaTypeService {
 
-    boolean saveAreaType(AreaTypeDTO dto);
+    Long saveAreaType(AreaTypeDTO dto);
 
     boolean updateAreaTypeById(AreaTypeDTO dto);
 

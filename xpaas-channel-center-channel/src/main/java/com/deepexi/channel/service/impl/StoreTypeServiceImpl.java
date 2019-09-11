@@ -4,10 +4,8 @@ import com.deepexi.channel.dao.StoreTypeDAO;
 import com.deepexi.channel.domain.store.StoreTypeDO;
 import com.deepexi.channel.domain.store.StoreTypeDTO;
 import com.deepexi.channel.domain.store.StoreTypeQuery;
-import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.service.StoreTypeService;
 import com.deepexi.util.CollectionUtil;
-import com.deepexi.util.extension.ApplicationException;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import com.github.pagehelper.PageHelper;
@@ -82,7 +80,33 @@ public class StoreTypeServiceImpl implements StoreTypeService {
     @Override
     public boolean isCodeUnique(StoreTypeDTO dto){
         StoreTypeQuery storeTypeQuery = StoreTypeQuery.builder().storeTypeAccuracyCode(dto.getStoreTypeCode()).build();
-        List<StoreTypeDO> list = storeTypeDAO.findList(storeTypeQuery);
+        return this.isUnique(storeTypeQuery, dto);
+    }
+
+    /**
+     * @MethodName: isNameUnique
+     * @Description: 判断门店类型是否重复
+     * @Param: [code]
+     * @Return: boolean 名称唯一, true 名称唯一 ， false 名称不唯一
+     * @Author: mumu
+     * @Date: 2019/8/30
+     **/
+    @Override
+    public boolean isNameUnique(StoreTypeDTO dto) {
+        StoreTypeQuery query = StoreTypeQuery.builder().storeTypeAccuracyName(dto.getStoreTypeName()).build();
+        return this.isUnique(query, dto);
+    }
+
+    /**
+     * @MethodName: isUnique
+     * @Description: 判断某个属性是否唯一，排除自身干扰
+     * @Param: [query, dto] query是查询出某个属性重复的列表，dto是来判断是否唯一的dto
+     * @Return: boolean
+     * @Author: mumu
+     * @Date: 2019/9/10
+     **/
+    private boolean isUnique(StoreTypeQuery query, StoreTypeDTO dto){
+        List<StoreTypeDO> list = storeTypeDAO.findList(query);
         if(CollectionUtil.isNotEmpty(list)){
             //不为空，还有可能是更新时自身的编码
             if(list.size()==1){
@@ -96,4 +120,5 @@ public class StoreTypeServiceImpl implements StoreTypeService {
         }
         return true;
     }
+
 }

@@ -14,7 +14,11 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 //import io.swagger.annotations.Api;
 
@@ -46,47 +50,22 @@ public class BankController {
         return new Payload<>(id);
    }
 
-//    @GetMapping
-//    //@ApiOperation(value = "分页查询", notes = "分页请求")
-//    public  Payload findPage(CcBank eo,
-//                             @RequestParam(value = "page", defaultValue = "0") Integer page,
-//                             @RequestParam(value = "size", defaultValue = "10") Integer size) {
-//        return new Payload(bankService.findPage(eo, page, size));
-//    }
-//
-//    @GetMapping("/list")
-//    //@ApiOperation(value = "树形查询", notes = "查询全部请求")
-//    public Payload findAll(CcBank eo) {
-//        return new Payload(bankService.findAll(eo));
-//    }
-//
-//    @GetMapping("/{id}")
-//    public Payload detail(@PathVariable(value = "id", required = true) Integer  pk) {
-//        return new Payload(bankService.detail(pk));
-//    }
-//
-//
-//    @PutMapping("/{id}")
-//    @Transactional
-////@ApiOperation(value = "根据id修改", notes = "根据id修改CcBank")
-//    public Payload update(@PathVariable(value = "id", required = true) Integer  pk, @RequestBody CcBank eo) {
-//     eo.setId(pk);
-//     return new Payload(bankService.update(pk, eo));
-//    }
-//
-//
-//    @DeleteMapping("/{id}")
-//    @Transactional
-////@ApiOperation(value = "根据id删除CcBank", notes = "根据id删除CcBank")
-//    public Payload delete(@PathVariable(value = "id", required = true) Integer  pk) {
-//        return new Payload(bankService.delete(pk));
-//    }
-//
-//    @DeleteMapping
-//    @Transactional
-//    //@ApiOperation(value = "根据id批量删除CcBank", notes = "根据id批量删除CcBank")
-//    public Payload delete(@RequestParam(required = true) Integer [] ids) {
-//        return new Payload(bankService.delete(ids));
-//    }
+    @PutMapping("/{id}")
+    @ApiOperation(value = "根据id修改银行账号")
+    public Payload<Boolean> update(@PathVariable(value = "id", required = true) Long  pk, @RequestBody BankAccountVO vo) {
+
+     vo.setId(pk);
+
+     return new Payload<>(bankAccountService.update(vo.clone(BankAccountDTO.class,CloneDirection.FORWARD)));
+    }
+
+    @DeleteMapping("/{ids}")
+    @ApiOperation(value = "根据id批量删除银行账号")
+    public Payload<Boolean> delete(@PathVariable(value = "ids") String ids) {
+
+        return new Payload(bankAccountService.deleteBankAccounts(Arrays.stream(ids.split(",")).map(Long::parseLong).collect(Collectors.toList())));
+    }
+
+
 
 }

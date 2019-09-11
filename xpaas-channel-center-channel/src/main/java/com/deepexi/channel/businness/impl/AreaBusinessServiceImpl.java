@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public class ArearBusinessServiceImpl implements AreaBusinessService {
+public class AreaBusinessServiceImpl implements AreaBusinessService {
 
     @Autowired
     AreaService areaService;
