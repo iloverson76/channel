@@ -181,6 +181,20 @@ public class ChainTypeBusinessServiceImpl implements ChainTypeBusinessService {
         //批量更新
         return chainTypeService.updateBatch(list);
     }
+    /**
+     * @MethodName: parentChainType
+     * @Description: 树形结构中，根据连琐类型id获取合法的上级类型
+     * @Param: [chainTypeId]
+     * @Return: com.deepexi.channel.domain.chain.ChainDTO
+     * @Author: mumu
+     * @Date: 2019/9/12
+     **/
+    @Override
+    public List<ChainTypeDTO> parentChainType(Long chainTypeId) {
+        //TODO 排除本身，排除所有被限制的上级节点
+        
+        return null;
+    }
 
     @Override
     public List<ChainTypeDTO> getListChainType(List<Long> ids) {

@@ -24,5 +24,6 @@ public class ChainDetailVO extends ChainVO {
     @ApiModelProperty(value = "连锁父级名称")
     private String parentName;
 
-
+    @ApiModelProperty(value = "上级节点分类id")
+    private Long parentChainTypeId;
 }

@@ -20,4 +20,6 @@ public interface ChainTypeBusinessService {
     List<ChainTypeDTO> getListChainType(List<Long> ids);
 
     Boolean update(ChainTypeDTO dto);
+
+    List<ChainTypeDTO> parentChainType(Long chainTypeId);
 }

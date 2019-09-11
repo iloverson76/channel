@@ -66,6 +66,7 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         ChainTypeDTO chainTypeDTO = chainTypeService.detail(dto.getChainTypeId());
         if(chainTypeDTO != null){
             dto.setChainTypeName(chainTypeDTO.getChainTypeName());
+            dto.setLimitParent(chainTypeDTO.getLimitParent());
         }
 
         //查询连锁的所有账户，获取账户信息
@@ -146,8 +147,8 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         parentQuery.setIds(idList);
         List<ChainDTO> parentChainDTOS = chainService.findPage(parentQuery);
         // id->连锁的map关系
-        Map<Long, List<ChainDTO>> parentCollect =
-                parentChainDTOS.stream().collect(Collectors.groupingBy(ChainDTO::getId));
+        Map<Long, ChainDTO> parentCollect =
+                parentChainDTOS.stream().collect(Collectors.toMap(ChainDTO::getId, a -> a,(k1,k2)->k1));
         //获取连锁类型信息
         //得到所有连锁类型信息
         List<Long> chainTypeIds = chainDetailDTOS.stream().map(ChainDetailDTO::getChainTypeId).collect(Collectors.toList());
@@ -156,28 +157,29 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         typeQuery.setPage(-1);
         List<ChainTypeDTO> chainTypeDTOS = chainTypeService.findPage(typeQuery);
         //chainTypeId->连锁类型的map关系
-        Map<Long, List<ChainTypeDTO>> chainTypeCollect =
-                chainTypeDTOS.stream().collect(Collectors.groupingBy(ChainTypeDTO::getId));
+        Map<Long, ChainTypeDTO> chainTypeCollect =
+                chainTypeDTOS.stream().collect(Collectors.toMap(ChainTypeDTO::getId, a -> a,(k1,k2)->k1));
 
         //拼接父级节点信息、类型信息
         chainDetailDTOS.forEach(m -> {
             // 根据id对应设置父级名称字段
-            List<ChainDTO> dos = parentCollect.get(m.getParentId());
-            if (CollectionUtil.isEmpty(dos)) {
+            ChainDTO dos = parentCollect.get(m.getParentId());
+            if ( dos == null) {
                 m.setParentName("");
             } else {
-                ChainDTO chainDTO = dos.get(0);
-                m.setParentName(chainDTO.getChainName() == null ? "" :
-                        chainDTO.getChainName());
+                m.setParentName(dos.getChainName() == null ? "" :
+                        dos.getChainName());
+                m.setParentChainTypeId(dos.getChainTypeId());
             }
 
             //根据chainTypeId对应设置类型名称字段
-            List<ChainTypeDTO> dos2 =  chainTypeCollect.get(m.getChainTypeId());
-            if(CollectionUtil.isEmpty(dos2)){
+            ChainTypeDTO dos2 =  chainTypeCollect.get(m.getChainTypeId());
+            if(dos2 == null){
                 m.setChainTypeName("");
+                m.setLimitParent(null);
             } else {
-                ChainTypeDTO chainTypeDTO = dos2.get(0);
-                m.setChainTypeName(chainTypeDTO.getChainTypeName() == null?"":chainTypeDTO.getChainTypeName());
+                m.setChainTypeName(dos2.getChainTypeName() == null?"":dos2.getChainTypeName());
+                m.setLimitParent(dos2.getLimitParent());
             }
         });
 
@@ -455,4 +457,23 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         }
         return chainService.updatePathAndParentId(chainDTO);
     }
+
+    /**
+     * @MethodName: getLegalParentChainByChainId
+     * @Description: 根据连琐类型id获取合法的上级节点列表
+     * @Param: [chainId]
+     * @Return: java.util.List<com.deepexi.channel.domain.chain.ChainDTO>
+     * @Author: mumu
+     * @Date: 2019/9/12
+    **/
+    @Override
+    public List<ChainDTO> getLegalParentChainByChainId(Long chainTypeId) {
+        //查询已经在树中，类型为chainTypeId的节点
+        ChainQuery query = new ChainQuery();
+        query.setChainTypeId(chainTypeId);
+        //path不为空的，就是在树中的节点
+        query.setPath("/");
+        return chainService.findPage(query);
+    }
+
 }
