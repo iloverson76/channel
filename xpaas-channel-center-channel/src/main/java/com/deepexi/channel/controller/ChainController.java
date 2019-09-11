@@ -134,7 +134,15 @@ public class ChainController {
     }
 
     @PutMapping("/tree/node/{id}")
-    @ApiOperation(value="树形结构新增、修改节点接口",notes = "传parentId以及节点的id，自动更新该节点下所有子节点和孙子节点")
+    @ApiOperation(value="树形结构修改节点接口",notes = "传parentId以及节点的id，自动更新该节点下所有子节点和孙子节点")
+    public Payload<Boolean> updateTreeNode(@PathVariable(value = "id", required = true) Long id, @RequestBody ChainVO vo){
+        vo.setId(id);
+        if(vo==null){return new Payload<>(false);}
+        ChainDTO chainDTO = vo.clone(ChainDTO.class);
+        return new Payload<>(chainBusinessService.updateTreeNode(chainDTO));
+    }
+    @PostMapping("/tree/node/{id}")
+    @ApiOperation(value="树形结构修改节点接口",notes = "传parentId以及节点的id，如果parentId为0，设置为根节点")
     public Payload<Boolean> addTreeNode(@PathVariable(value = "id", required = true) Long id, @RequestBody ChainVO vo){
         vo.setId(id);
         if(vo==null){return new Payload<>(false);}

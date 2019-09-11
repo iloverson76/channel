@@ -21,4 +21,6 @@ public interface ChainDAO extends IService<ChainDO> {
     List<ChainDO> getChainTreeNode();
 
     Integer resetTree(ChainDO chainDO);
+
+    Boolean updatePathAndParentId(ChainDO chainDO);
 }

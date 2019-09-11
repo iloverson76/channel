@@ -25,4 +25,6 @@ public interface ChainMapper extends BaseMapper<ChainDO> {
     List<ChainDO> getChainTreeNode();
 
     Integer resetTree(ChainDO chainDO);
+
+    Boolean updatePathAndParentId(ChainDO chainDO);
 }
