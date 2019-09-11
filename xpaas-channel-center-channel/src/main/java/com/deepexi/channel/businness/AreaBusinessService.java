@@ -31,5 +31,5 @@ public interface AreaBusinessService {
 
     boolean update(AreaDTO dto);
 
-    boolean updateTreeChange(Long parentId,Long id);
+    boolean updateTreeChange(Long parentId,Long id,Integer root);
 }
