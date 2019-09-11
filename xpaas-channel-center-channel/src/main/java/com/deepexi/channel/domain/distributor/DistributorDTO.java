@@ -47,6 +47,8 @@ public class DistributorDTO extends AbstractObject {
     private AreaDTO area;
     private long AreaId;
 
+    private List<GradeInfoDTO> grades;
+
     /**
      * 上级经销商ID
      */

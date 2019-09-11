@@ -108,6 +108,20 @@ public class DistributorController {
         return new Payload<>(new PageBean<>(voList));
     }
 
+    @GetMapping("/gradeInfo/{distributorId}")
+    @ApiOperation("根据经销商查询等级信息列表")
+    public Payload<PageBean<GradeInfoVO>> listDistributorGradeInfo(
+            @PathVariable(name = "distributorId", required = true) long distributorId) {
+
+        List<GradeInfoDTO> dtoList=
+                distributorBusinessService.getGradeInfo(distributorId);
+
+        List<GradeInfoVO> voList= ObjectCloneUtils.convertList(dtoList,GradeInfoVO.class,
+                CloneDirection.OPPOSITE);
+
+        return new Payload<>(new PageBean<>(voList));
+    }
+
 
 
 }
