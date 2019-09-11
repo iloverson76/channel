@@ -21,11 +21,11 @@ public interface DistributorBusinessService {
 
     AreaDTO getAreaInfo(Long distributorId);
 
-    List<DistributorGradeDTO> getGradeInfo(Long distributorId);
-
     List<BankAccountDTO> getBankAccountInfo(Long distributorId);
 
     DistributorDTO detail(Long id);
 
     List<DistributorDTO> listParentDistributorsByGrade(Long gradeId);
+
+    List<GradeInfoDTO> getGradeInfo(Long distributorId);
 }

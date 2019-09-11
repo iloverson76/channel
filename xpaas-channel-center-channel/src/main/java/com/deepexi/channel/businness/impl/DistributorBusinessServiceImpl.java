@@ -40,6 +40,9 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
     DistributorGradeService distributorGradeService;
 
     @Autowired
+    DistributorGradeSystemService distributorGradeSystemService;
+
+    @Autowired
     DistributorAreaRelationService distributorAreaRelationService;
 
     @Autowired
@@ -291,7 +294,7 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
         DistributorDTO distributor = distributorService.getById(distributorId);
 
-        List<DistributorGradeDTO> grades=getGradeInfo(distributorId);
+        List<GradeInfoDTO> grades=getGradeInfo(distributorId);
 
         List<BankAccountDTO> bankAccounts=getBankAccountInfo(distributorId);
 
@@ -306,34 +309,7 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
         //等级信息-经销商:等级:体系=1:1:N
         if(CollectionUtils.isNotEmpty(grades)){
 
-            //等级
-            distributor.setDistributorGrade(grades);
-
-            //上级经销商
-            List<DistributorDTO> list=new ArrayList<>();
-
-            if(1==distributor.getLimitedParent()){//如果指定上级,就只查直接上级
-
-                long parentId=distributorService.getById(distributorId).getParentId();
-
-                DistributorDTO dto=distributorService.getById(parentId);
-
-                if(null!=dto){
-
-                    list.add(dto);
-
-                    distributor.setParent(list);
-                }
-
-            }else{//如果不指定,则查所有间接上级和直接上级,但是页面不展示
-
-                 list=listParentDistributorsByGrade(distributorId);//应该传gradeId,这里是错的,要重构
-
-                 if(CollectionUtils.isNotEmpty(list)){
-                     distributor.setParent(list);
-                 }
-            }
-
+            distributor.setGrades(grades);
         }
 
         //银行账号信息
@@ -419,33 +395,6 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
     }
 
     @Override
-    public List<DistributorGradeDTO> getGradeInfo(Long distributorId){
-
-        List<Long> butorIds=new ArrayList<>(1);
-
-        butorIds.add(distributorId);
-
-        List<DistributorGradeRelationDTO> dgrDTOS=
-        distributorGradeRelationService.findAllByDistributorIds(butorIds);
-
-        List<Long> gradeIdList=new ArrayList<>();
-
-        if(CollectionUtils.isEmpty(dgrDTOS)){
-            return Collections.emptyList();
-        }
-
-        dgrDTOS.forEach(dgr->{
-            gradeIdList.add(dgr.getDistributorGradeId());
-        });
-
-        DistributorGradeQuery query=new DistributorGradeQuery();
-
-        query.setIds(gradeIdList);
-
-        return distributorGradeService.findPage(query);
-    }
-
-    @Override
     public List<BankAccountDTO> getBankAccountInfo(Long distributorId){
 
         List<Long> butorIds=new ArrayList<>(1);
@@ -470,6 +419,87 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
         query.setIds(accountIdList);
 
         return bankAccountService.findList(query);
+    }
+
+    @Override
+    public List<GradeInfoDTO> getGradeInfo(Long distributorId) {
+
+        DistributorDTO distributor = distributorService.getById(distributorId);
+
+        int limitedParent=distributor.getLimitedParent();
+
+        List<Long> butorIds=new ArrayList<>(1);
+
+        butorIds.add(distributorId);
+
+        List<DistributorGradeRelationDTO> dgrDTOS=
+                distributorGradeRelationService.findAllByDistributorIds(butorIds);
+
+        List<Long> gradeIdList=new ArrayList<>();
+
+        if(CollectionUtils.isEmpty(dgrDTOS)){
+            return Collections.emptyList();
+        }
+
+        //等级信息
+        dgrDTOS.forEach(dgr->{
+            gradeIdList.add(dgr.getDistributorGradeId());
+        });
+
+        DistributorGradeQuery query=new DistributorGradeQuery();
+
+        query.setIds(gradeIdList);
+
+        List<DistributorGradeDTO> gradeDTOS = distributorGradeService.findPage(query);
+
+        //体系信息
+        List<Long> systemIdList=new ArrayList<>();
+        gradeDTOS.forEach(gdto->{
+            systemIdList.add(gdto.getGradeSystemId());
+        });
+
+        DistributorGradeSystemQuery sqry=new DistributorGradeSystemQuery();
+
+        query.setIds(systemIdList);
+
+        List<DistributorGradeSystemDTO> systemDTOS = distributorGradeSystemService.findPage(sqry);
+
+        //组装返回页面
+        List<GradeInfoDTO> gradeInfos=new ArrayList<>();
+
+        for (DistributorGradeSystemDTO system:systemDTOS){
+
+            for (DistributorGradeDTO grade: gradeDTOS){
+
+                if(grade.getGradeSystemId()==system.getId()){
+
+                    GradeInfoDTO gif=new GradeInfoDTO();
+
+                    gif.setSystemId(system.getId());
+
+                    gif.setSystemName(system.getGradeSystemName());
+
+                    gif.setSystemCode(system.getGradeSystemCode());
+
+                    gif.setGradeId(grade.getId());
+
+                    gif.setGradeCode(grade.getDistributorGradeCode());
+
+                    if(limitedParent==1){
+
+                       DistributorDTO dis= distributorService.getById(distributor.getParentId());
+
+                       gif.setParentDistributorId(dis.getId());
+
+                       gif.setParentDistributorName(dis.getDistributorName());
+                    }
+
+                    gradeInfos.add(gif);
+                }
+            }
+        }
+
+        return gradeInfos;
     }
 
 }
