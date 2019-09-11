@@ -30,7 +30,7 @@ public class AreaTypeDO extends SuperEntity {
 
     private Integer root;
 
-    private Long chainId;
+    private Long linkId;
 
     /**
      * 父级分类ID

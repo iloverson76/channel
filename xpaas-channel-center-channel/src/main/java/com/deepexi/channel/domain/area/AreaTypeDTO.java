@@ -28,7 +28,7 @@ public class AreaTypeDTO extends AbstractObject {
 
     private Integer root;
 
-    private Long chainId;
+    private Long linkId;
 
 
     /**
