@@ -27,6 +27,9 @@ public class AreaVO extends AbstractObject {
 
     private Long id;
 
+    @ApiModelProperty(value = "是否根节点 0否 1是")
+    private Integer root;
+
     private AreaTypeVO areaType;
 
     /**
