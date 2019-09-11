@@ -64,4 +64,22 @@ public class StoreChainServiceImpl implements StoreChainService {
         List<StoreChainDO> storeChainDOS = ObjectCloneUtils.convertList(storeChainDTOS, StoreChainDO.class);
         return storeChainDAO.saveBatch(storeChainDOS);
     }
+
+    /**
+     * @MethodName: getStoreChainByChainIds
+     * @Description: 更具连琐ids获取关联信息
+     * @Param: [ids]
+     * @Return: java.util.List<com.deepexi.channel.domain.store.StoreChainDTO>
+     * @Author: mumu
+     * @Date: 2019/9/11
+     **/
+    @Override
+    public List<StoreChainDTO> getStoreChainByChainIds(List<Long> ids) {
+        List<StoreChainDO> list = storeChainDAO.getByChainIds(ids);
+        if(CollectionUtil.isEmpty(list)){
+            return null;
+        }
+        List<StoreChainDTO> result = ObjectCloneUtils.convertList(list, StoreChainDTO.class);
+        return result;
+    }
 }

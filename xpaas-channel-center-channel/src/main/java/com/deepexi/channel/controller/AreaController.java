@@ -70,18 +70,6 @@ public class AreaController {
         return new Payload<>(Boolean.TRUE);
     }
 
-    @PutMapping("/treeEdit/{parentId}/{id}/{root}")
-    @ApiOperation(value = "区域树修改保存")
-    public Payload<Boolean> updateTreeChange(@PathVariable(value = "parentId") Long parentId,
-                                             @PathVariable(value = "id", required = true) Long id,
-                                             @PathVariable(value = "root", required = true) Integer root) {
-
-
-        areaBusinessService.updateTreeChange(parentId,id,root);
-
-        return new Payload<>(Boolean.TRUE);
-    }
-
     @DeleteMapping("/{ids:[0-9,]+}")
     @ApiOperation(value = "根据id批量删除")
     public Payload delete(@PathVariable(value = "ids") String ids) {
@@ -123,6 +111,19 @@ public class AreaController {
 
         return tree( dtoList);
     }
+
+    @GetMapping("/treeEdit/{parentId}/{id}/{root}")
+    @ApiOperation("区域树修改保存")
+    public Payload<Boolean> editTree(@PathVariable(name = "parentId") Long parentId,
+                                                  @PathVariable(name = "id", required = true) Long id,
+                                                  @PathVariable(name = "root", required = true) Integer root) {
+
+        areaBusinessService.updateTreeChange(parentId,id,root);
+
+        return new Payload<>( Boolean.TRUE);
+    }
+
+
 
     @GetMapping("/childrenTree/{areaId}")
     @ApiOperation("根据区域ID查找所有下级树")
