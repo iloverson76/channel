@@ -12,6 +12,8 @@ import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.extension.ApplicationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -123,16 +125,54 @@ public class ChainTypeBusinessServiceImpl implements ChainTypeBusinessService {
     }
 
     @Override
+    @Transactional
     public Long create(ChainTypeDTO dto) {
+        //先保存基本信息
+        Long id = chainTypeService.create(dto);
+        dto.setId(id);
+        //得到id后拼接path与rootId
         //判断是否限制上级，限制了就需要处理path
         if(dto.getLimitParent().equals(1)){
             ChainTypeDTO parentDTO = chainTypeService.detail(dto.getParentId());
-//            dto.setPath();
-//            dto.setRo
+            dto.setPath(parentDTO.getPath()+"/"+id);
+            dto.setLinkId(parentDTO.getLinkId());
+        }else{
+            //没限制上级就为根节点
+            dto.setLinkId(id);
+            dto.setPath("/"+id);
+        }
+        //修改path与rootid
+        chainTypeService.update(dto);
+        return id;
+    }
 
-
+    @Override
+    public Boolean update(ChainTypeDTO dto) {
+        //查询是否限制上级，限制了就需要拼接path
+        if(dto.getLimitParent().equals(1)){
+            ChainTypeDTO parentDTO = chainTypeService.detail(dto.getParentId());
+            dto.setPath(parentDTO.getPath()+"/"+dto.getId());
+            dto.setLinkId(parentDTO.getLinkId());
+        }else{
+            //没限制上级就为根节点
+            dto.setLinkId(dto.getId());
+            dto.setPath("/"+dto.getId());
+        }
+        //更新节点需要更新下级path和root_id
+        //查询所有下级节点
+        ChainTypeQuery query = ChainTypeQuery.builder().path("/"+dto.getId()+"/").build();
+        List<ChainTypeDTO> list = chainTypeService.findPage(query);
+        //list为空，表示没有子节点，更新本身节点信息即可
+        if(CollectionUtil.isEmpty(list)){
+            return chainTypeService.update(dto);
+        }
+        //list不为空，需要更新子节点的path与rootId
+        for(ChainTypeDTO d: list){
+            d.setLinkId(dto.getLinkId());
+            //设置path
+            d.getPath().split("/");
         }
 
-        return chainTypeService.create(dto);
+        return null;
     }
 }

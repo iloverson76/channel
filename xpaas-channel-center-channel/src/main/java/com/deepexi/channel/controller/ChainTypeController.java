@@ -68,7 +68,7 @@ public class ChainTypeController {
         if(!chainTypeService.isParentLegal(dto)){
             throw new ApplicationException(ResultEnum.PARENT_ILLEGAL);
         }
-        return new Payload(chainTypeService.update(dto));
+        return new Payload(chainTypeBusinessService.update(dto));
     }
 
     @PostMapping
