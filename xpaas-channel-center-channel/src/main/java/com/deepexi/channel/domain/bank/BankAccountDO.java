@@ -3,6 +3,7 @@ package com.deepexi.channel.domain.bank;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.deepexi.channel.domain.SuperEntity;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 /**
@@ -43,5 +44,10 @@ public class BankAccountDO extends SuperEntity {
      * 银行编码
      */
     private String bankCode;
+
+    /**
+     * 描述
+     */
+    private String description;
 
 }

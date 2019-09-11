@@ -28,6 +28,10 @@ public class AreaTypeDO extends SuperEntity {
 
     private static final long serialVersionUID = 1L;
 
+    private Integer root;
+
+    private Long chainId;
+
     /**
      * 父级分类ID
      */
