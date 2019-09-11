@@ -129,11 +129,12 @@ public class DistributorGradeController {
         return new Payload<>(new PageBean<>(voList));
     }
 
-    @GetMapping("/parent/{systemId}")
-    @ApiOperation(value = "上级接口-新增用")
-    public  Payload<PageBean<DistributorGradeVO>> findParentNodesForCreat(@PathVariable(value = "systemId", required = true) long  systemId) {
+    @GetMapping("/parent/{systemId}/{gradeId}")
+    @ApiOperation(value = "查询可用的上级-新增&修改用")
+    public  Payload<PageBean<DistributorGradeVO>> findParentNodesForCreat(@PathVariable(value = "systemId", required = true) Long  systemId,
+                                                                          @PathVariable(value = "gradeId", required = false)Long gradeId) {
 
-        List<DistributorGradeDTO> dtoList= distributorGradeBusinessService.findParentNodesForCreat(systemId);
+        List<DistributorGradeDTO> dtoList= distributorGradeBusinessService.findParentNodesForCreateAndUpdate(systemId,gradeId);
 
         List<DistributorGradeVO> voList= ObjectCloneUtils.convertList(dtoList, DistributorGradeVO.class);
 

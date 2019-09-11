@@ -1,30 +1,22 @@
 package com.deepexi.channel.businness.impl;
 
 import com.deepexi.channel.businness.DistributorBusinessService;
-import com.deepexi.channel.businness.DistributorGradeBusinessService;
-import com.deepexi.channel.dao.DistributorGradeRelationDAO;
-import com.deepexi.channel.domain.SuperEntity;
 import com.deepexi.channel.domain.area.AreaDTO;
-import com.deepexi.channel.domain.area.AreaQuery;
 import com.deepexi.channel.domain.bank.BankAccountDTO;
 import com.deepexi.channel.domain.bank.BankAccountQuery;
+import com.deepexi.channel.domain.bank.BankDTO;
 import com.deepexi.channel.domain.distributor.*;
 import com.deepexi.channel.enums.DistributorTypeEnum;
 import com.deepexi.channel.service.*;
-import com.deepexi.util.StringUtil;
-import com.deepexi.util.pojo.CloneDirection;
-import com.deepexi.util.pojo.ObjectCloneUtils;
+import com.netflix.discovery.converters.Auto;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.beans.Transient;
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 @Slf4j
@@ -53,6 +45,9 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
     @Autowired
     AreaService areaService;
+
+    @Autowired
+    BankService bankService;
 
 
     @Transient
@@ -434,6 +429,17 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
         query.setIds(accountIdList);
 
         List<BankAccountDTO> bankAccountDTOList= bankAccountService.findList(query);
+
+        bankAccountDTOList.forEach(account->{
+
+            Long bankId=account.getBankId();
+
+            List<BankDTO> bankList=bankService.getBankByIds(Collections.singletonList(bankId));
+
+            String bankName=bankList.get(0).getBankName();
+
+            account.setBankName(bankName);
+        });
 
         return bankAccountDTOList;
     }
