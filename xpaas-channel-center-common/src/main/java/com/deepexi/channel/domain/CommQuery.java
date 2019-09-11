@@ -38,26 +38,26 @@ public abstract class CommQuery extends AbstractObject {
      * 開始時間
      */
     @ApiModelProperty("创建时间-开始日期")
-    private Date startTime;
+    private String startTime;
 
 
     /**
      * 结束时间
      */
     @ApiModelProperty("创建时间-结束日期")
-    private Date endTime;
+    private String endTime;
 
     /**
      * 更新開始時間
      */
     @ApiModelProperty("更新时间-开始日期")
-    private Date updateStartTime;
+    private String updateStartTime;
 
     /**
      * 更新结束时间
      */
     @ApiModelProperty("更新时间-结束日期")
-    private Date updateEndTime;
+    private String updateEndTime;
 
     @ApiModelProperty("页码")
     @Min(value = -1,message = "page最小为-1,代表不分页")
