@@ -76,5 +76,7 @@ public interface ChainService {
      */
     boolean isNameUnique(ChainDetailDTO dto);
 
+    Boolean updatePathAndParentId(ChainDTO chainDTO);
+
 //    Boolean addTreeNode(ChainDTO chainDTO);
 }
