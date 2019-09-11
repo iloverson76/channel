@@ -72,7 +72,7 @@ public class AreaController {
 
     @PutMapping("/treeEdit/{parentId}/{id}/{root}")
     @ApiOperation(value = "区域树修改保存")
-    public Payload<Boolean> updateTreeChange(@PathVariable(value = "parentId", required = true) Long parentId,
+    public Payload<Boolean> updateTreeChange(@PathVariable(value = "parentId") Long parentId,
                                              @PathVariable(value = "id", required = true) Long id,
                                              @PathVariable(value = "root", required = true) Integer root) {
 

@@ -292,20 +292,6 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
             UpdateChildrenPath(id,origPath,rootPath);
         }else{
 
-//            //原来上级
-//            Long origParentId=self.getParentId();
-//
-//            String OrigParentPath="";
-//
-//            if(origParentId>0){//原来有上级
-//
-//                OrigParentPath=areaService.getAreaById(origParentId).getPath();
-//
-//            }else{//原来没上级
-//
-//                OrigParentPath=self.getPath();
-//            }
-
             //从新上级节点拼接新路径
             AreaDTO newParentNode=areaService.getAreaById(newParentId);
 
