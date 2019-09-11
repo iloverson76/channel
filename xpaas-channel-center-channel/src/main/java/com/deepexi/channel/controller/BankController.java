@@ -14,7 +14,11 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 //import io.swagger.annotations.Api;
 
@@ -45,6 +49,23 @@ public class BankController {
 
         return new Payload<>(id);
    }
+
+    @PutMapping("/{id}")
+    @ApiOperation(value = "根据id修改银行账号")
+    public Payload<Boolean> update(@PathVariable(value = "id", required = true) Long  pk, @RequestBody BankAccountVO vo) {
+
+     vo.setId(pk);
+
+     return new Payload<>(bankAccountService.update(vo.clone(BankAccountDTO.class,CloneDirection.FORWARD)));
+    }
+
+    @DeleteMapping("/{ids}")
+    @ApiOperation(value = "根据id批量删除银行账号")
+    public Payload<Boolean> delete(@PathVariable(value = "ids") String ids) {
+
+        return new Payload(bankAccountService.deleteBankAccounts(Arrays.stream(ids.split(",")).map(Long::parseLong).collect(Collectors.toList())));
+    }
+
 
 
 }

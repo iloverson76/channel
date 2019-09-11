@@ -79,7 +79,6 @@ public class AreaTypeServiceImpl implements AreaTypeService {
         }
 
         //链路
-
         long id=newNode.getId();
 
         newNode.setChainId(id);

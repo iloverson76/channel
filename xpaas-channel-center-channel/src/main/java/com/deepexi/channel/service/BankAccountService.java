@@ -2,6 +2,7 @@ package com.deepexi.channel.service;
 
 import com.deepexi.channel.domain.bank.BankAccountDTO;
 import com.deepexi.channel.domain.bank.BankAccountQuery;
+import com.deepexi.channel.domain.bank.BankAccountVO;
 
 import java.util.List;
 
@@ -30,4 +31,8 @@ public interface BankAccountService {
     Boolean delete(List<Long> ids);
 
     Long create(BankAccountDTO clone);
+
+    Boolean update(BankAccountDTO dto);
+
+    Boolean deleteBankAccounts(List<Long> ids);
 }
