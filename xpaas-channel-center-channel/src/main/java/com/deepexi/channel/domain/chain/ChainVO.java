@@ -92,4 +92,8 @@ public class ChainVO extends AbstractObject {
      */
     @ApiModelProperty(value = "连锁分类名称", example = "渠道")
     private String chainTypeName;
+
+    @ApiModelProperty(value = "分类是否限制上级")
+    private Integer limitParent;
+
 }

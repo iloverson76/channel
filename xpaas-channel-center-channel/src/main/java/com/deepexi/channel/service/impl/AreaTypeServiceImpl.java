@@ -140,8 +140,7 @@ public class AreaTypeServiceImpl implements AreaTypeService {
             deleteAreaTypeById(id);
         });
 
-        return Boolean.TRUE;
-       // return areaTypeDAO.removeByIds(ids);
+       return areaTypeDAO.removeByIds(ids);
     }
 
     @Override

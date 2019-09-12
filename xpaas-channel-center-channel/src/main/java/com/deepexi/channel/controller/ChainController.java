@@ -157,10 +157,10 @@ public class ChainController {
         return new Payload<>(chainBusinessService.deleteTreeNode(id));
     }
 
-    @GetMapping("/tree/node/parent")
-    @ApiModelProperty(value = "树中根据上级节点分类，获取合法的上级节点")
-    public Payload<List<ChainDTO>> getLegalParentChain(){
-
-        return null;
+    @GetMapping("/tree/node/parentChain/{id}")
+    @ApiModelProperty(value = "树中根据上级节点分类Id，获取合法的上级节点")
+    public Payload<List<ChainDTO>> getLegalParentChainByChainId(@PathVariable(value = "id" , required = true)Long chainTypeId){
+        return new Payload<>(chainBusinessService.getLegalParentChainByChainId(chainTypeId));
     }
+
 }
