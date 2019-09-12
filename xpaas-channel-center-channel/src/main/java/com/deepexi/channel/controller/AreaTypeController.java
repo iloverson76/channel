@@ -70,7 +70,7 @@ public class AreaTypeController {
 
             idSet.add(Long.valueOf(itemArray[0]));
 
-            idSet.add(Long.valueOf(itemArray[1]));
+           // idSet.add(Long.valueOf(itemArray[1]));
         });
 
         Boolean result = areaTypeService.deleteAreaTypeByIds(idSet);
