@@ -20,8 +20,7 @@ public class ChainDetailDTO extends ChainDTO {
      */
     private String parentName;
 
-    /**
-     * 连锁分类名称
-     */
-    private String chainTypeName;
+
+
+    private Long parentChainTypeId;
 }

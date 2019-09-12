@@ -58,4 +58,11 @@ public class ChainDTO extends SuperEntity {
     private String path;
 
     private String other;
+
+    private Integer limitParent;
+
+    /**
+     * 连锁分类名称
+     */
+    private String chainTypeName;
 }

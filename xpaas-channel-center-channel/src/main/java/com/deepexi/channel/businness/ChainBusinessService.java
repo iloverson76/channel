@@ -32,4 +32,7 @@ public interface ChainBusinessService {
     Boolean deleteTreeNode(Long id);
 
     Boolean addTreeNode(ChainDTO chainDTO);
+
+    List<ChainDTO> getLegalParentChainByChainId(Long chainTypeId);
+
 }

@@ -3,10 +3,7 @@ package com.deepexi.channel.controller;
 import com.deepexi.channel.businness.ChainTypeBusinessService;
 import com.deepexi.channel.domain.area.AreaTypeDTO;
 import com.deepexi.channel.domain.area.AreaTypeVO;
-import com.deepexi.channel.domain.chain.ChainTypeDTO;
-import com.deepexi.channel.domain.chain.ChainTypeListLinkVO;
-import com.deepexi.channel.domain.chain.ChainTypeQuery;
-import com.deepexi.channel.domain.chain.ChainTypeVO;
+import com.deepexi.channel.domain.chain.*;
 import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.service.ChainTypeService;
 import com.deepexi.util.CollectionUtil;
@@ -17,6 +14,7 @@ import com.deepexi.util.pageHelper.PageBean;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -164,4 +162,9 @@ public class ChainTypeController {
         return new Payload<>(new PageBean<>(voList));
     }
 
+    @GetMapping("/tree/node/parentChainType/{id}")
+    @ApiModelProperty(value = "根据当前分类Id，获取合法的上级节点分类")
+    public Payload<List<ChainTypeDTO>> parentChainType(@PathVariable(value = "id" , required = true)Long chainTypeId) {
+        return new Payload<>(chainTypeBusinessService.parentChainType(chainTypeId));
+    }
 }
