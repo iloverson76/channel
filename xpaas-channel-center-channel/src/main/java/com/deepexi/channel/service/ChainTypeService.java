@@ -95,4 +95,5 @@ public interface ChainTypeService {
     List<ChainTypeDTO> listParentNodesForCreate();
 
     List<ChainTypeDTO> listParentNodesForUpdate(Long id);
+
 }

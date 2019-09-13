@@ -111,7 +111,7 @@ public class ChainTypeController {
     }
 
     @GetMapping("/parentChainType/{id}")
-    @ApiOperation(value = "根据类型的id获取合法父级类型列表")
+    @ApiOperation(value = "修改分类时，根据类型的id获取合法父级类型列表",notes = "根据类型的id获取合法父级类型列表")
     public Payload<List<ChainTypeVO>> getLegalParentChainType(@PathVariable(value = "id", required = true) Long id){
         List<ChainTypeDTO> list = chainTypeBusinessService.getLegalParentChainType(id);
         if(CollectionUtil.isEmpty(list)){
@@ -163,7 +163,7 @@ public class ChainTypeController {
     }
 
     @GetMapping("/tree/node/parentChainType/{id}")
-    @ApiModelProperty(value = "根据当前分类Id，获取合法的上级节点分类")
+    @ApiOperation(value = "树行结构中，添加或编辑树节点时，根据当前分类Id，获取合法的上级节点分类")
     public Payload<List<ChainTypeDTO>> parentChainType(@PathVariable(value = "id" , required = true)Long chainTypeId) {
         return new Payload<>(chainTypeBusinessService.parentChainType(chainTypeId));
     }
