@@ -1,24 +1,18 @@
 package com.deepexi.channel.businness.impl;
 
 import com.deepexi.channel.businness.StoreDistributorBusinessService;
+import com.deepexi.channel.dao.StoreDistributorRelationDAO;
 import com.deepexi.channel.domain.distributor.*;
-import com.deepexi.channel.domain.store.StoreDetailDTO;
-import com.deepexi.channel.domain.store.StoreDistributorDTO;
-import com.deepexi.channel.domain.store.StoreDistributorRelationDTO;
-import com.deepexi.channel.domain.store.StoreDistributorRelationQuery;
-import com.deepexi.channel.service.DistributorGradeService;
-import com.deepexi.channel.service.DistributorGradeSystemService;
-import com.deepexi.channel.service.DistributorService;
-import com.deepexi.channel.service.StoreDistributorRelationService;
+import com.deepexi.channel.domain.store.*;
+import com.deepexi.channel.service.*;
 import com.deepexi.util.CollectionUtil;
+import com.deepexi.util.pojo.ObjectCloneUtils;
+import com.netflix.discovery.converters.Auto;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -35,6 +29,10 @@ public class StoreDistributorBusinessServiceImpl implements StoreDistributorBusi
     DistributorService distributorService;
     @Autowired
     DistributorGradeSystemService distributorGradeSystemService;
+    @Autowired
+    DistributorGradeRelationService distributorGradeRelationService;
+    @Autowired
+    StoreDistributorRelationDAO storeDistributorRelationDAO;
 
 
     /**
@@ -47,66 +45,54 @@ public class StoreDistributorBusinessServiceImpl implements StoreDistributorBusi
     **/
     @Override
     public List<StoreDistributorDTO> getStoreDistributorByStoreId(Long storeId) {
-        return null;
-        //        List<StoreDistributorDTO> result = new LinkedList<>();
-//
-//        //查询所有关联的经销商id和等级id
-//        StoreDistributorRelationQuery query = StoreDistributorRelationQuery.builder().storeId(storeId).build();
-//        List<StoreDistributorRelationDTO>  list = storeDistributorRelationService.findList(query);
-//        if(CollectionUtil.isEmpty(list)){
-//            return null;
-//        }
-//        //查询经销商
-//        List<Long> distributorIds = list.stream().map(StoreDistributorRelationDTO::getDistributorId).collect(Collectors.toList());
-//        DistributorQuery distributorQuery = new DistributorQuery();
-//        distributorQuery.setIds(distributorIds);
-//        List<DistributorDTO> distributorDTOS = distributorService.findPage(distributorQuery);
-//        Map<Long, DistributorDTO> distributorDTOMap = distributorDTOS.stream().collect(Collectors.toMap(DistributorDTO::getId,c->c));
-//
-//        //查询上级经销商
-//        List<Long> parentDistributorIds = distributorDTOS.stream().map(DistributorDTO::getParentId).collect(Collectors.toList());
-//        DistributorQuery distributorQuery2 = new DistributorQuery();
-//        distributorQuery2.setIds(parentDistributorIds);
-//        List<DistributorDTO> parentDistributorDTOS = distributorService.findPage(distributorQuery);
-//        Map<Long, DistributorDTO> distributorParentDTOMap = distributorDTOS.stream().collect(Collectors.toMap(DistributorDTO::getId,c->c));
-//
-//        //查询经销商等级
-//        List<Long> gradeIds = list.stream().map(StoreDistributorRelationDTO::getGradeSystemId).collect(Collectors.toList());
-//        DistributorGradeSystemQuery distributorGradeSystemQuery = new DistributorGradeSystemQuery();
-//        distributorGradeSystemQuery.setIds(gradeIds);
-//        List<DistributorGradeSystemDTO> distributorGradeSystemDTOS =  distributorGradeSystemService.findPage(distributorGradeSystemQuery);
-//        Map<Long, DistributorGradeSystemDTO> distributorGradeSystemDTOMap = distributorGradeSystemDTOS.stream().collect(Collectors.toMap(DistributorGradeSystemDTO::getId,c->c));
-//
-//        //拼接数据
-//        list.forEach(dd->{
-//            StoreDistributorDTO dto = new StoreDistributorDTO();
-//            //经销商基本信息
-//            DistributorDTO d = distributorDTOMap.get(dd.getDistributorId());
-//           if(d != null){
-//               dto.setDistributorId(d.getId());
-//               dto.setDistributorCode(d.getDistributorCode());
-//               dto.setDistributorName(d.getDistributorName());
-//               //父级经销商信息
-//               DistributorDTO parent = distributorParentDTOMap.get(d.getParentId());
-//               if(parent!=null) {
-//                   dto.setParentCode(parent.getDistributorCode());
-//                   dto.setParentId(parent.getId());
-//                   dto.setParentName(parent.getDistributorName());
-//               }
-//           }
-//
-//            //经销商等级信息
-//            DistributorGradeSystemDTO distributorGradeSystemDTO = distributorGradeSystemDTOMap.get(dd.getGradeSystemId());
-//            if(distributorGradeSystemDTO != null){
-//                dto.setDistributorGradeSystemCode(distributorGradeSystemDTO.getGradeSystemCode());
-//                dto.setDistributorGradeSystemId(distributorGradeSystemDTO.getId());
-//                dto.setDistributorGradeSystemName(distributorGradeSystemDTO.getGradeSystemName());
-//            }
-//            result.add(dto);
-//        });
-//
-//
-//        return result;
+        //查询所有关联的经销商id，等级体系id，parent_id
+        List<StoreDistributorDO> storeDistributorDOS = storeDistributorRelationDAO.findParentDistributorByStoreId(storeId);
+        if(CollectionUtil.isEmpty(storeDistributorDOS)){
+            return Collections.emptyList();
+        }
+        List<StoreDistributorDTO> result = ObjectCloneUtils.convertList(storeDistributorDOS, StoreDistributorDTO.class);
+        Set<Long> distributorIds = new HashSet<>();
+        Set<Long> gradeIds = new HashSet<>();
+        //遍历得到查询的id
+        for ( StoreDistributorDTO dto : result){
+            distributorIds.add(dto.getDistributorId());
+            distributorIds.add(dto.getParentId());
+            gradeIds.add(dto.getGradeSystemId());
+        }
+        //查询所有经销商
+        DistributorQuery distributorQuery = new DistributorQuery();
+        distributorQuery.setIds(new LinkedList<>(distributorIds));
+        List<DistributorDTO> distributorDTOS = distributorService.findPage(distributorQuery);
+        Map<Long, DistributorDTO> distributorDTOMap = distributorDTOS.stream().collect(Collectors.toMap(DistributorDTO::getId,c->c));
+
+        //查询经销商等级
+        DistributorGradeSystemQuery distributorGradeSystemQuery = new DistributorGradeSystemQuery();
+        distributorGradeSystemQuery.setIds(new LinkedList<>(gradeIds));
+        List<DistributorGradeSystemDTO> distributorGradeSystemDTOS =  distributorGradeSystemService.findPage(distributorGradeSystemQuery);
+        Map<Long, DistributorGradeSystemDTO> distributorGradeSystemDTOMap = distributorGradeSystemDTOS.stream().collect(Collectors.toMap(DistributorGradeSystemDTO::getId,c->c));
+
+        //拼接数据
+        result.forEach(dd->{
+            //经销商基本信息
+            DistributorDTO self = distributorDTOMap.get(dd.getDistributorId());
+            DistributorDTO parent = distributorDTOMap.get(dd.getParentId());
+            if(self != null){
+               dd.setDistributorCode(self.getDistributorCode());
+               dd.setDistributorName(self.getDistributorName());
+               //父级经销商信息
+               if(parent!=null) {
+                   dd.setParentCode(parent.getDistributorCode());
+                   dd.setParentName(parent.getDistributorName());
+               }
+           }
+            //经销商等级信息
+            DistributorGradeSystemDTO distributorGradeSystemDTO = distributorGradeSystemDTOMap.get(dd.getGradeSystemId());
+            if(distributorGradeSystemDTO != null){
+                dd.setDistributorGradeSystemCode(distributorGradeSystemDTO.getGradeSystemCode());
+                dd.setDistributorGradeSystemName(distributorGradeSystemDTO.getGradeSystemName());
+            }
+        });
+        return result;
     }
 
     /**
@@ -119,22 +105,21 @@ public class StoreDistributorBusinessServiceImpl implements StoreDistributorBusi
     **/
     @Override
     public Boolean saveStoreDistributors(StoreDetailDTO dto) {
-        return false;
-//        List<StoreDistributorDTO> storeDistributorDTOS = dto.getStoreDistributorDTOS();
-//        if(CollectionUtil.isEmpty(storeDistributorDTOS)){
-//            return false;
-//        }
-//        //新建经销商关联列表
-//        List<StoreDistributorRelationDTO> relationDTOS = new LinkedList<>();
-//        storeDistributorDTOS.forEach(s->{
-//            StoreDistributorRelationDTO storeDistributorRelationDTO = StoreDistributorRelationDTO.builder()
-//                    .storeId(dto.getId())
-//                    .distributorId(s.getDistributorId())
-//                    .gradeSystemId(s.getDistributorGradeSystemId()).build();
-//            relationDTOS.add(storeDistributorRelationDTO);
-//        });
-//        //批量添加经销商列表
-//        return storeDistributorRelationService.saveBatch(relationDTOS);
+        List<StoreDistributorDTO> storeDistributorDTOS = dto.getStoreDistributorDTOS();
+        if(CollectionUtil.isEmpty(storeDistributorDTOS)){
+            return false;
+        }
+        //新建经销商关联列表
+        List<StoreDistributorRelationDTO> relationDTOS = new LinkedList<>();
+        storeDistributorDTOS.forEach(s->{
+            StoreDistributorRelationDTO storeDistributorRelationDTO = StoreDistributorRelationDTO.builder()
+                    .storeId(dto.getId())
+                    .distributorId(s.getDistributorId())
+                    .gradeSystemId(s.getGradeSystemId()).build();
+            relationDTOS.add(storeDistributorRelationDTO);
+        });
+        //批量添加经销商列表
+        return storeDistributorRelationService.saveBatch(relationDTOS);
     }
 
     /**

@@ -23,11 +23,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 
-@Api(value = "/门店信息表", description = "查询门店列表")
+@Api(value = "/门店信息表")
 @RestController
 @RequestMapping("/api/v1/store")
 public class StoreController {
@@ -74,6 +75,10 @@ public class StoreController {
         //设置修改历史
         if(CollectionUtil.isNotEmpty(storeDetailDTO.getStoreHistoryDTOS())){
             storeDetailVO.setStoreHistoryVOS(ObjectCloneUtils.convertList(storeDetailDTO.getStoreHistoryDTOS(),StoreHistoryVO.class,CloneDirection.OPPOSITE ));
+        }
+        //设置经销商列表
+        if(CollectionUtil.isNotEmpty(storeDetailDTO.getStoreDistributorDTOS())){
+            storeDetailVO.setStoreDistributorVOS(ObjectCloneUtils.convertList(storeDetailDTO.getStoreDistributorDTOS(),StoreDistributorVO.class));
         }
 
         return new Payload(storeDetailVO);
