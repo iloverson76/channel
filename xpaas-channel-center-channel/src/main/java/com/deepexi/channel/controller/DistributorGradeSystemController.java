@@ -3,6 +3,7 @@ package com.deepexi.channel.controller;
 import com.deepexi.channel.businness.DistributorSystemBusinessService;
 import com.deepexi.channel.domain.distributor.*;
 import com.deepexi.channel.service.DistributorGradeSystemService;
+import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pageHelper.PageBean;
 import com.deepexi.util.pojo.CloneDirection;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -128,5 +130,15 @@ public class DistributorGradeSystemController {
         }
 
         return new Payload<>(new PageBean<>(voList));
+    }
+
+    @GetMapping("/distributorGradeSystem/{distributorId}")
+    @ApiOperation("根据经销商id查询经销商体系列表")
+    public  Payload<List<DistributorGradeSystemVO>> getDistributorGradeSystemByDistributorId( @PathVariable(name = "distributorId", required = true) long distributorId){
+        List<DistributorGradeSystemDTO> dtos = distributorSystemBusinessService.getDistributorGradeSystemByDistributorId(distributorId);
+        if (CollectionUtil.isEmpty(dtos)){
+            return new Payload<>(Collections.emptyList());
+        }
+        return new Payload<>(ObjectCloneUtils.convertList(dtos, DistributorGradeSystemVO.class));
     }
 }
