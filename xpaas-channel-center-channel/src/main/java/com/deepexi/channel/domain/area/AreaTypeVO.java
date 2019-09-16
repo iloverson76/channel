@@ -29,9 +29,6 @@ public class AreaTypeVO extends AbstractObject {
 
     private Long id;
 
-    @ApiModelProperty("是否根节点")
-    private Integer root;
-
     /**
      * 链路ID
      */

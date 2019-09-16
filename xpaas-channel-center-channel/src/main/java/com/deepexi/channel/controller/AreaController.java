@@ -1,6 +1,7 @@
 package com.deepexi.channel.controller;
 
 import com.deepexi.channel.businness.AreaBusinessService;
+import com.deepexi.channel.businness.AreaTypeBusinessService;
 import com.deepexi.channel.domain.area.*;
 import com.deepexi.channel.service.AreaService;
 import com.deepexi.util.config.Payload;
@@ -31,6 +32,9 @@ public class AreaController {
 
     @Autowired
     private AreaService areaService;
+
+    @Autowired
+    AreaTypeBusinessService areaTypeBusinessService;
 
     @PostMapping
     @ApiOperation(value = "创建区域")
@@ -123,8 +127,6 @@ public class AreaController {
         return new Payload<>( Boolean.TRUE);
     }
 
-
-
     @GetMapping("/childrenTree/{areaId}")
     @ApiOperation("根据区域ID查找所有下级树")
     public Payload<PageBean<AreaTreeVO>> listChildrenTree(@PathVariable(name = "areaId", required = true) Long areaId) {
@@ -157,8 +159,19 @@ public class AreaController {
         return new Payload<>(new PageBean<>(voList));
     }
 
+    @GetMapping("/ParentAreaType/{areaId}")
+    @ApiOperation("根据区域ID查找其上级分类")
+    public Payload<PageBean<AreaTypeVO>> findParentAreaTypeByAreaId(@PathVariable(value = "areaId", required = true) Long areaId) {
+
+        List<AreaTypeDTO> dtoList = areaTypeBusinessService.findParentAreaTypeByAreaId(areaId);
+
+        List<AreaTypeVO> voList = ObjectCloneUtils.convertList(dtoList, AreaTypeVO.class);
+
+        return new Payload<>(new PageBean<>(voList));
+    }
+
     @GetMapping("/linkedAreas/{areaTypeId}")
-    @ApiOperation("根据区域类型查找挂载的所有区域")
+    @ApiOperation("根据区域类型ID查找其挂载的所有区域")
     public Payload<PageBean<AreaDTO>> listLinkedAreasByType(@PathVariable(name = "areaTypeId", required = true) Long areaTypeId) {
 
         List<AreaDTO> dtoList = areaBusinessService.listLinkedAreasByType(areaTypeId);

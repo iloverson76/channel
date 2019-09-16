@@ -18,4 +18,6 @@ public interface AreaTypeBusinessService {
    List<AreaTypeDTO> findPage(AreaTypeQuery query);
 
     List<AreaTypeDTO> getListAreaType(List<Long> ids);
+
+    List<AreaTypeDTO> findParentAreaTypeByAreaId(Long areaId);
 }
