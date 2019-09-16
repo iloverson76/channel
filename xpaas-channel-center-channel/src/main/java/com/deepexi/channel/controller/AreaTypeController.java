@@ -3,9 +3,6 @@ package com.deepexi.channel.controller;
 
 import com.deepexi.channel.businness.AreaTypeBusinessService;
 import com.deepexi.channel.domain.area.*;
-import com.deepexi.channel.domain.chain.ChainTypeDTO;
-import com.deepexi.channel.domain.chain.ChainTypeListLinkVO;
-import com.deepexi.channel.domain.chain.ChainTypeVO;
 import com.deepexi.channel.extension.AppRuntimeEnv;
 import com.deepexi.channel.service.AreaTypeService;
 import com.deepexi.util.CollectionUtil;
@@ -21,7 +18,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -56,22 +56,11 @@ public class AreaTypeController {
         return new Payload<>(result);
     }
 
-    @DeleteMapping("/{ids}")
+    @DeleteMapping("/{ids:[0-9,]+}")
     @ApiOperation(value = "批量删除区域类型")
     public Payload<Boolean> deleteAreaTypeByIds(@PathVariable(value = "ids") String ids) {//前端的列表每一个id都去拿子节点的话,性能很慢
 
-        String[] idsArray=ids.split(";");
-
-        Set<Long> idSet=new HashSet<>();
-
-        Arrays.stream(idsArray).forEach(item->{
-
-           String[] itemArray=item.split(",");
-
-            idSet.add(Long.valueOf(itemArray[0]));
-
-           // idSet.add(Long.valueOf(itemArray[1]));
-        });
+        Set<Long> idSet=Arrays.stream(ids.split(",")).map(Long::parseLong).collect(Collectors.toSet());
 
         Boolean result = areaTypeService.deleteAreaTypeByIds(idSet);
 
@@ -91,7 +80,7 @@ public class AreaTypeController {
         return new Payload<>(result);
     }
 
-    @GetMapping("/{id:[0-9,]+}")
+    @GetMapping("/{id}")
     @ApiOperation("根据id获取类目详情")
     public Payload<AreaTypeVO> getAreaTypeById(@PathVariable Long id) {
 

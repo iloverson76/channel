@@ -4,12 +4,14 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.deepexi.channel.dao.StoreDistributorRelationDAO;
+import com.deepexi.channel.domain.store.StoreDistributorDO;
 import com.deepexi.channel.domain.store.StoreDistributorRelationDO;
 import com.deepexi.channel.domain.store.StoreDistributorRelationQuery;
 import com.deepexi.channel.mapper.StoreDistributorRelationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -40,5 +42,13 @@ public class StoreDistributorRelationDAOImpl  extends ServiceImpl<StoreDistribut
         UpdateWrapper wrapper = new UpdateWrapper();
         wrapper.in("store_id", ids);
         return this.remove(wrapper);
+    }
+
+    @Override
+    public List<StoreDistributorDO> findParentDistributorByStoreId(Long storeId) {
+        if(storeId == null){
+            return Collections.emptyList();
+        }
+        return storeDistributorRelationMapper.findParentDistributorByStoreId(storeId);
     }
 }
