@@ -135,4 +135,42 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
         List<AreaTypeDTO> areaTypeDTO = areaTypeService.findByAreaIdNotInLinkIdAll(linkIdList);
         return areaTypeDTO;
     }
+
+    @Override
+    public List<AreaTypeDTO> findParentAreaTypeByAreaId(Long areaId) {//要处理首次请求时的空值问题
+
+        AreaDTO area = areaService.getAreaById(areaId);
+
+        Long areaTypeId=area.getAreaTypeId();
+
+        AreaTypeDTO type = areaTypeService.getAreaTypeById(areaTypeId);
+
+        String selfPath=type.getPath();
+
+        if(type.getParentId()==0){
+            return Collections.emptyList();
+        }
+
+        String parentPath=selfPath.replaceAll("/"+type.getId(),"");
+
+        List<AreaTypeDTO> areaTypeDTOS = areaTypeService.listAreaTypePage(new AreaTypeQuery());
+
+        if(CollectionUtils.isEmpty(areaTypeDTOS)){
+            return Collections.emptyList();
+        }
+
+        List<AreaTypeDTO> typeDTOList=new ArrayList<>();
+
+        areaTypeDTOS.forEach(dto->{
+
+            Long id=dto.getId();
+
+            if(parentPath.contains("/"+id)){
+
+                typeDTOList.add(dto);
+            }
+        });
+
+        return typeDTOList;
+    }
 }
