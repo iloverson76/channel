@@ -3,9 +3,6 @@ package com.deepexi.channel.controller;
 
 import com.deepexi.channel.businness.AreaTypeBusinessService;
 import com.deepexi.channel.domain.area.*;
-import com.deepexi.channel.domain.chain.ChainTypeDTO;
-import com.deepexi.channel.domain.chain.ChainTypeListLinkVO;
-import com.deepexi.channel.domain.chain.ChainTypeVO;
 import com.deepexi.channel.extension.AppRuntimeEnv;
 import com.deepexi.channel.service.AreaTypeService;
 import com.deepexi.util.CollectionUtil;
@@ -21,7 +18,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
