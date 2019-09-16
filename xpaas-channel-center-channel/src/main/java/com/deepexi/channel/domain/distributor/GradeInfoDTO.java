@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -23,19 +24,21 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class GradeInfoDTO extends AbstractObject {
+public class GradeInfoDTO extends AbstractObject implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private Long systemId;
 
-    private String systemName;
+    private String gradeSystemName;
 
-    private String systemCode;
+    private String gradeSystemCode;
 
     private Long gradeId;
 
-    private String gradeCode;
+    private String distributorGradeCode;
+
+    private String distributorGradeName;
 
     private Integer limitedParent;
 

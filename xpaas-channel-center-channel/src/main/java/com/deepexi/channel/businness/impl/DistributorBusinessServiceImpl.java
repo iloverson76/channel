@@ -498,13 +498,15 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
                         gif.setSystemId(system.getId());
 
-                        gif.setSystemName(system.getGradeSystemName());
+                        gif.setGradeSystemName(system.getGradeSystemName());
 
-                        gif.setSystemCode(system.getGradeSystemCode());
+                        gif.setGradeSystemCode(system.getGradeSystemCode());
 
                         gif.setGradeId(grade.getId());
 
-                        gif.setGradeCode(grade.getDistributorGradeCode());
+                        gif.setDistributorGradeCode(grade.getDistributorGradeCode());
+
+                        gif.setDistributorGradeName(grade.getDistributorGradeName());
 
                         //中间表按体系来分组只有一条数据
                         DistributorGradeRelationDTO dgr=relationSystemMap.get(gradeSystemId).get(0);

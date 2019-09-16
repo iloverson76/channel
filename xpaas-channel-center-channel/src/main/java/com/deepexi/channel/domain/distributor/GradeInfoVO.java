@@ -24,15 +24,21 @@ public class GradeInfoVO extends AbstractObject {
 
     private Long systemId;
 
-    private String systemName;
+    private String gradeSystemName;
 
-    private String systemCode;
+    private String gradeSystemCode;
 
     private Long gradeId;
 
-    private String gradeCode;
+    private String distributorGradeCode;
+
+    private String distributorGradeName;
 
     private Integer limitedParent;
+
+    private Long parentDistributorId;
+
+    private String parentDistributorName;
 
     private List<DistributorGradeSystemDTO> parentDistributors;
 
