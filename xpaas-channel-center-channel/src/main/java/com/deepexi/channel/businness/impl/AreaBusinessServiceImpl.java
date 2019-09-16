@@ -277,6 +277,14 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
     }
 
     @Override
+    public boolean updateToRootNode(Long areaId) {
+
+
+
+        return false;
+    }
+
+    @Override
     public boolean updateTreeChange(Long newParentId,Long id,Integer root) {
 
         //自己
