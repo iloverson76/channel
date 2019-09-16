@@ -1,6 +1,7 @@
 package com.deepexi.channel.dao;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.deepexi.channel.domain.store.StoreDistributorDO;
 import com.deepexi.channel.domain.store.StoreDistributorRelationDO;
 import com.deepexi.channel.domain.store.StoreDistributorRelationQuery;
 
@@ -17,4 +18,6 @@ public interface StoreDistributorRelationDAO  extends IService<StoreDistributorR
     Boolean deleteByStoreId(long storeId);
 
     Boolean deleteByStoreIds(List<Long> ids);
+
+    List<StoreDistributorDO> findParentDistributorByStoreId(Long storeId);
 }

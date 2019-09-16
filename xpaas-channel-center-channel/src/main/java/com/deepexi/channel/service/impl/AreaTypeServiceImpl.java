@@ -114,7 +114,7 @@ public class AreaTypeServiceImpl implements AreaTypeService {
             for (AreaTypeDTO dto2:dtoList2){
 
                 if(dto1.getId().equals(dto2.getParentId())){//有下级不能删除
-                    throw new ApplicationException("已被下级["+dto2.getAreaTypeName()+"关联]不能删除!");
+                    throw new ApplicationException("已被下级["+dto2.getAreaTypeName()+"]关联,不能删除!");
                 }
             }
         }

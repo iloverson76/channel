@@ -29,4 +29,14 @@
             and store_id = #{storeId}
         </if>
     </select>
+
+    <select id="findParentDistributorByStoreId" resultType="com.deepexi.channel.domain.store.StoreDistributorDO">
+        SELECT s.distributor_id,s.grade_system_id,g.parent_id
+        FROM cc_distributor_grade_relation AS g,
+        cc_store_distributor_relation AS s
+        WHERE g.distributor_id = s.distributor_id
+        AND  s.grade_system_id = g.system_id
+        AND s.dr	= 0 AND g.dr = 0
+        AND store_id = #{storeId}
+    </select>
 </mapper>
