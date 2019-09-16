@@ -300,8 +300,6 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
             areaService.updateBatch(children);
         }
 
-
-
         area.setRoot(1);
 
         area.setPath(newRootPath);
