@@ -21,4 +21,6 @@ public interface DistributorSystemBusinessService {
      * 获取详情
      */
     DistributorGradeSystemDTO detail(Long pk);
+
+    List<DistributorGradeSystemDTO> getDistributorGradeSystemByDistributorId(long distributorId);
 }
