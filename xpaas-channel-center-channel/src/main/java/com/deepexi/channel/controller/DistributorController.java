@@ -60,7 +60,7 @@ public class DistributorController {
 
         DistributorDTO dto = distributorBusinessService.detail(id);
 
-        DistributorVO vo=dto.clone(DistributorVO.class,CloneDirection.FORWARD);
+        DistributorVO vo=dto.clone(DistributorVO.class,CloneDirection.OPPOSITE);
 
         return new Payload<>(vo);
     }
