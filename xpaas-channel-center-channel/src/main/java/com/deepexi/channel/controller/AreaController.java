@@ -159,7 +159,7 @@ public class AreaController {
         return new Payload<>(new PageBean<>(voList));
     }
 
-    @GetMapping("/ParentAreaType/{areaId}")
+    @GetMapping("/parentAreaType/{areaId}")
     @ApiOperation("根据区域ID查找其上级分类")
     public Payload<PageBean<AreaTypeVO>> findParentAreaTypeByAreaId(@PathVariable(value = "areaId", required = true) Long areaId) {
 
@@ -177,6 +177,15 @@ public class AreaController {
         List<AreaDTO> dtoList = areaBusinessService.listLinkedAreasByType(areaTypeId);
 
         return new Payload<>(new PageBean<>(ObjectCloneUtils.convertList(dtoList,AreaDTO.class,CloneDirection.FORWARD)));
+    }
+
+    @PutMapping("/updateToRootNode/{areaId}")
+    @ApiOperation("添加层级-修改为根节点")
+    public Payload<Boolean> updateToRootNode(@PathVariable(name = "areaId", required = true) Long areaId) {
+
+        Boolean result=areaBusinessService.updateToRootNode(areaId);
+
+        return new Payload<>((result));
     }
 
 }

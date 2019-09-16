@@ -4,7 +4,6 @@ import com.deepexi.channel.domain.area.AreaDTO;
 import com.deepexi.channel.domain.area.AreaQuery;
 import com.deepexi.channel.domain.area.AreaTreeDTO;
 import com.deepexi.channel.domain.area.AreaTreeQuery;
-import com.deepexi.channel.domain.distributor.DistributorDTO;
 
 import java.util.List;
 
@@ -32,4 +31,6 @@ public interface AreaBusinessService {
     boolean update(AreaDTO dto);
 
     boolean updateTreeChange(Long parentId,Long id,Integer root);
+
+    boolean updateToRootNode(Long areaId);
 }
