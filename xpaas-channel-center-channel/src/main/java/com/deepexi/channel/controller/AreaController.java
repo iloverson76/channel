@@ -127,8 +127,6 @@ public class AreaController {
         return new Payload<>( Boolean.TRUE);
     }
 
-
-
     @GetMapping("/childrenTree/{areaId}")
     @ApiOperation("根据区域ID查找所有下级树")
     public Payload<PageBean<AreaTreeVO>> listChildrenTree(@PathVariable(name = "areaId", required = true) Long areaId) {
@@ -179,6 +177,14 @@ public class AreaController {
         List<AreaTypeVO> voList = ObjectCloneUtils.convertList(dtoList, AreaTypeVO.class);
 
         return new Payload<>(new PageBean<>(voList));
+    }
+
+    @PutMapping("/updateToRootNode/{areaId}")
+    @ApiOperation(value = "添加层级-修改区域为根节点")
+    public Payload<Boolean> update(@PathVariable(value = "areaId", required = true) Long  areaId) {
+
+
+        return new Payload<>(Boolean.TRUE);
     }
 
 }
