@@ -194,16 +194,18 @@ public class AreaTypeServiceImpl implements AreaTypeService {
 
 
         //没有被限制分类的节点
-        List<AreaTypeDO> doList=areaTypeDAO.listNotLimitedNode(appRuntimeEnv.getTenantId(),appRuntimeEnv.getAppId());
+       // List<AreaTypeDO> doList=areaTypeDAO.listNotLimitedNode(appRuntimeEnv.getTenantId(),appRuntimeEnv.getAppId());
+
+        List<AreaTypeDTO> dtoList=listAreaTypePage(new AreaTypeQuery());
 
         //首次创建处理空值
-        if(CollectionUtils.isNotEmpty(doList)){
+        if(CollectionUtils.isEmpty(dtoList)){
 
-            List<AreaTypeDTO> dtoList=ObjectCloneUtils.convertList(doList, AreaTypeDTO.class, CloneDirection.OPPOSITE);
-
-            return dtoList;
+            return Collections.emptyList();
         }
-        return Collections.emptyList();
+
+        return dtoList;
+
     }
 
     @Override
