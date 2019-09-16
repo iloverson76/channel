@@ -181,8 +181,9 @@ public class AreaController {
 
     @PutMapping("/updateToRootNode/{areaId}")
     @ApiOperation(value = "添加层级-修改区域为根节点")
-    public Payload<Boolean> update(@PathVariable(value = "areaId", required = true) Long  areaId) {
+    public Payload<Boolean> updateToRootNode(@PathVariable(value = "areaId", required = true) Long  areaId) {
 
+        areaBusinessService.updateToRootNode(areaId);
 
         return new Payload<>(Boolean.TRUE);
     }

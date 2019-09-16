@@ -279,9 +279,38 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
     @Override
     public boolean updateToRootNode(Long areaId) {
 
+        AreaDTO area = areaService.getAreaById(areaId);
+
+        String updatePath=area.getPath();
+
+        String newRootPath="/"+areaId;
+
+        //更新子节点路径
+        List<AreaDTO> children = areaService.listChildrenAreas(areaId);
+
+        if(CollectionUtils.isNotEmpty(children)){
+
+            children.forEach(child->{
+
+                String newPath=child.getPath().replaceAll(updatePath,newRootPath);
+
+                child.setPath(newPath);
+            });
+
+            areaService.updateBatch(children);
+        }
 
 
-        return false;
+
+        area.setRoot(1);
+
+        area.setPath(newRootPath);
+
+        area.setParentId(0L);
+
+        areaService.update(area);
+
+        return Boolean.TRUE;
     }
 
     @Override
