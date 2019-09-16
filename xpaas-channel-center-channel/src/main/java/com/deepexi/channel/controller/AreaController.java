@@ -179,13 +179,33 @@ public class AreaController {
         return new Payload<>(new PageBean<>(voList));
     }
 
-    @PutMapping("/updateToRootNode/{areaId}")
-    @ApiOperation(value = "添加层级-修改区域为根节点")
-    public Payload<Boolean> updateToRootNode(@PathVariable(value = "areaId", required = true) Long  areaId) {
+    @PostMapping("/tree/addNode")
+    @ApiOperation(value = "添加树节点")
+    public Payload<Boolean> treeAddNode(@RequestBody AreaVO vo) {
 
-        areaBusinessService.updateToRootNode(areaId);
+        Boolean result= areaBusinessService.treeAddNode(vo.clone(AreaDTO.class, CloneDirection.FORWARD));
 
-        return new Payload<>(Boolean.TRUE);
+        return new Payload<>(result);
+    }
+
+    @PutMapping("/tree/updateNode/{id}")
+    @ApiOperation(value = "修改树节点")
+    public Payload<Boolean> treeupdateNode(@PathVariable(value = "id", required = true) Long  pk, @RequestBody AreaVO vo) {
+
+        vo.setId(pk);
+
+        boolean result= areaBusinessService.treeUpdateNode(vo.clone(AreaDTO.class, CloneDirection.FORWARD));
+
+        return new Payload<>(result);
+    }
+
+    @DeleteMapping("/tree/deleteNode/{id}")
+    @ApiOperation(value = "删除树节点")
+    public Payload<Boolean> treeDeleteNode(@PathVariable(value = "id",required = true) Long pk) {
+
+        boolean result= areaBusinessService.treeDeleteNode(pk);
+
+        return new Payload(result);
     }
 
 }

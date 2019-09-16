@@ -269,9 +269,7 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
     @Override
     public boolean update(AreaDTO dto) {
 
-        areaService.update(dto);//未处理路径
-
-        //处理路径
+        areaService.update(dto);
 
         return Boolean.TRUE;
     }
@@ -279,13 +277,29 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
     @Override
     public boolean updateToRootNode(Long areaId) {
 
-        AreaDTO area = areaService.getAreaById(areaId);
+        AreaDTO self = areaService.getAreaById(areaId);
 
-        String updatePath=area.getPath();
+        String updatePath=self.getPath();
 
         String newRootPath="/"+areaId;
 
         //更新子节点路径
+        updateChildrenNodesPath(areaId,updatePath,newRootPath);
+
+        //更新自己
+        self.setRoot(1);
+
+        self.setPath(newRootPath);
+
+        self.setParentId(0L);
+
+        areaService.update(self);
+
+        return Boolean.TRUE;
+    }
+
+    private void updateChildrenNodesPath(Long areaId,String updatePath,String newRootPath){
+
         List<AreaDTO> children = areaService.listChildrenAreas(areaId);
 
         if(CollectionUtils.isNotEmpty(children)){
@@ -299,16 +313,6 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
             areaService.updateBatch(children);
         }
-
-        area.setRoot(1);
-
-        area.setPath(newRootPath);
-
-        area.setParentId(0L);
-
-        areaService.update(area);
-
-        return Boolean.TRUE;
     }
 
     @Override
@@ -332,23 +336,25 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
             String newParentPath=newParentNode.getPath();
 
-            String updatePath=newParentPath+"/"+id;
+            newParentPath=newParentPath+"/"+id;
 
             String replacepath=self.getPath();
 
             //自己
             self.setParentId(newParentId);
-            self.setPath(updatePath);
+            self.setPath(newParentPath);
             areaService.update(self);
 
             //子节点
-            UpdateChildrenPath(id,replacepath,updatePath);
+            UpdateChildrenPath(id,replacepath,newParentPath);
         }
 
         return Boolean.TRUE;
     }
 
-    private void UpdateChildrenPath(Long id,String OrigParentPath,String updatePath){
+    private void UpdateChildrenPath(Long id,String OrigParentPath,String newParentPath){
+
+        log.info("更新子节点路径");
 
         //更改所有子节点的路径
         List<AreaDTO> children = areaService.listChildrenAreas(id);
@@ -359,12 +365,99 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
                 String path=child.getPath();
 
-                child.setPath(path.replaceAll(OrigParentPath,updatePath));
+                child.setPath(path.replaceAll(OrigParentPath,newParentPath));
             }
 
             areaService.updateBatch(children);
         }
     }
 
+    @Override
+    public boolean treeAddNode(AreaDTO dto) {
+
+        log.info("新增区域树节点");
+
+        Long areaId=dto.getId();
+
+        Integer root=dto.getRoot();
+
+        Long newParentId=dto.getParentId();
+
+        AreaDTO self = areaService.getAreaById(areaId);
+
+        Long origParentId=self.getParentId();
+
+        //首次新建(不一定是根节点)
+        if(null==origParentId||origParentId==0L){
+
+            self.setPath("/"+areaId);
+
+            areaService.update(self);
+
+            return Boolean.TRUE;
+        }
+
+        //如果是根节点
+        if(root==1){
+
+            updateToRootNode(areaId);
+
+            return Boolean.TRUE;
+        }
+
+        //挂载到新节点下
+        if(null!=newParentId&&newParentId>0L){
+
+            //从新上级节点拼接新路径
+            AreaDTO newParentNode=areaService.getAreaById(newParentId);
+
+            String newParentPath=newParentNode.getPath();
+
+            String updatePath=newParentPath+"/"+areaId;
+
+            String replacepath=self.getPath();
+
+            //自己
+            self.setParentId(newParentId);
+            self.setPath(updatePath);
+            areaService.update(self);
+
+            //子节点
+            UpdateChildrenPath(areaId,replacepath,updatePath);
+
+        }
+
+        return Boolean.TRUE;
+    }
+
+    @Override
+    public boolean treeUpdateNode(AreaDTO dto) {
+        return treeAddNode(dto);
+    }
+
+    @Override
+    public boolean treeDeleteNode(Long areaId) {
+
+        //如果有下级,下级的路径也要改,但是记录不能删掉
+
+        log.info("删除区域树节点");
+        AreaDTO self=areaService.getAreaById(areaId);
+
+        Long parentId=self.getParentId();
+
+        AreaDTO parent=areaService.getAreaById(parentId);
+
+        String parentPath=parent.getPath();
+
+        String newParentPath="";
+
+        UpdateChildrenPath(areaId,parentPath,newParentPath);
+
+        self.setPath("/"+areaId);
+
+        self.setParentId(-1L);
+
+        return areaService.update(self);
+    }
 
 }

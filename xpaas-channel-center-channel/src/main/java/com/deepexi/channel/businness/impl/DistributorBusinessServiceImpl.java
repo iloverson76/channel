@@ -510,9 +510,10 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
                         //中间表按体系来分组只有一条数据
                         DistributorGradeRelationDTO dgr=relationSystemMap.get(gradeSystemId).get(0);
+
                         Integer limitedParent=dgr.getLimitedParent();
 
-                        if(limitedParent.equals(1)){
+                        if(limitedParent.equals(1L)){
 
                             DistributorDTO dis= distributorService.getById(dgr.getParentId());
 

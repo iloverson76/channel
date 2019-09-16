@@ -31,8 +31,9 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
 
 
     @Override
-    public List<AreaDTO> listLinkedAreas(long pk) {//pk=0选全部
+    public List<AreaDTO> listLinkedAreas(long pk) {
 
+        //pk=0选全部
         if(pk<0){
             return Collections.emptyList();
         }
@@ -137,40 +138,49 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
     }
 
     @Override
-    public List<AreaTypeDTO> findParentAreaTypeByAreaId(Long areaId) {//要处理首次请求时的空值问题
+    public List<AreaTypeDTO> findParentAreaTypeByAreaId(Long areaId) {
 
-        AreaDTO area = areaService.getAreaById(areaId);
+        //要处理首次请求时的空值问题
+        log.info("根据区域ID查找其上级分类");
 
-        Long areaTypeId=area.getAreaTypeId();
+        AreaDTO self = areaService.getAreaById(areaId);
+
+        Long areaTypeId=self.getAreaTypeId();
 
         AreaTypeDTO type = areaTypeService.getAreaTypeById(areaTypeId);
 
-        String selfPath=type.getPath();
+        Long parentTypeId=type.getParentId();
 
-        if(type.getParentId()==0){
-            return Collections.emptyList();
-        }
+        List<AreaTypeDTO> resultList=new ArrayList<>();
 
-        String parentPath=selfPath.replaceAll("/"+type.getId(),"");
+        //限制上级分类
+        if(type.getLimitParent().equals(1L)&&parentTypeId!=null){
 
-        List<AreaTypeDTO> areaTypeDTOS = areaTypeService.listAreaTypePage(new AreaTypeQuery());
+            AreaTypeDTO parentType = areaTypeService.getAreaTypeById(parentTypeId);
 
-        if(CollectionUtils.isEmpty(areaTypeDTOS)){
-            return Collections.emptyList();
-        }
+            resultList.add(parentType);
 
-        List<AreaTypeDTO> typeDTOList=new ArrayList<>();
+        //不限制上级分类
+        }else{
 
-        areaTypeDTOS.forEach(dto->{
+            String selfPath=type.getPath();
 
-            Long id=dto.getId();
-
-            if(parentPath.contains("/"+id)){
-
-                typeDTOList.add(dto);
+            if(type.getParentId()==0){
+                return Collections.emptyList();
             }
-        });
 
-        return typeDTOList;
+            String parentPath=selfPath.replaceAll("/"+type.getId(),"");
+
+            List<Long> parentIds=
+            Arrays.stream(parentPath.split("/")).map(Long::parseLong).collect(Collectors.toList());
+
+            AreaTypeQuery query = new AreaTypeQuery();
+
+            query.setIds(parentIds);
+
+            resultList=areaTypeService.listAreaTypePage(query);
+        }
+
+        return resultList;
     }
 }
