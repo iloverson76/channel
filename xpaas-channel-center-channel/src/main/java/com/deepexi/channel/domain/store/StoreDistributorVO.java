@@ -1,12 +1,14 @@
 package com.deepexi.channel.domain.store;
 
 import com.deepexi.util.pojo.AbstractObject;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author mumu
@@ -15,11 +17,10 @@ import java.util.Date;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ApiModel(value="门店关联经销商")
+@Api(value="门店关联经销商")
 public class StoreDistributorVO extends AbstractObject {
     @ApiModelProperty(value = "id")
     private Long id;
@@ -35,7 +36,7 @@ public class StoreDistributorVO extends AbstractObject {
     private String updatedBy;
 
     @ApiModelProperty("门店id")
-    private Long storeId;
+    private Long storeId;;
     @ApiModelProperty("经销商id")
     private Long distributorId;
     /**
@@ -53,9 +54,12 @@ public class StoreDistributorVO extends AbstractObject {
     private String parentCode;
 
     @ApiModelProperty("经销商等级体系id")
-    private Long distributorSystemGradeId;
+    private Long gradeSystemId;
     @ApiModelProperty("经销商等级体系编码")
     private String distributorGradeSystemCode;
     @ApiModelProperty("进销商等级体系名称")
     private String distributorGradeSystemName;
+
+//    @ApiModelProperty("上级经销商列表")
+//    private List<StoreDistributorVO> parentDistributor;
 }
