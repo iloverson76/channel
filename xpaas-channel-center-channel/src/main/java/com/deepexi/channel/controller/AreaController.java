@@ -127,6 +127,8 @@ public class AreaController {
         return new Payload<>( Boolean.TRUE);
     }
 
+
+
     @GetMapping("/childrenTree/{areaId}")
     @ApiOperation("根据区域ID查找所有下级树")
     public Payload<PageBean<AreaTreeVO>> listChildrenTree(@PathVariable(name = "areaId", required = true) Long areaId) {
@@ -159,6 +161,15 @@ public class AreaController {
         return new Payload<>(new PageBean<>(voList));
     }
 
+    @GetMapping("/linkedAreas/{areaTypeId}")
+    @ApiOperation("根据区域类型ID查找挂载的所有区域")
+    public Payload<PageBean<AreaDTO>> listLinkedAreasByType(@PathVariable(name = "areaTypeId", required = true) Long areaTypeId) {
+
+        List<AreaDTO> dtoList = areaBusinessService.listLinkedAreasByType(areaTypeId);
+
+        return new Payload<>(new PageBean<>(ObjectCloneUtils.convertList(dtoList,AreaDTO.class,CloneDirection.FORWARD)));
+    }
+
     @GetMapping("/parentAreaType/{areaId}")
     @ApiOperation("根据区域ID查找其上级分类")
     public Payload<PageBean<AreaTypeVO>> findParentAreaTypeByAreaId(@PathVariable(value = "areaId", required = true) Long areaId) {
@@ -168,24 +179,6 @@ public class AreaController {
         List<AreaTypeVO> voList = ObjectCloneUtils.convertList(dtoList, AreaTypeVO.class);
 
         return new Payload<>(new PageBean<>(voList));
-    }
-
-    @GetMapping("/linkedAreas/{areaTypeId}")
-    @ApiOperation("根据区域类型ID查找其挂载的所有区域")
-    public Payload<PageBean<AreaDTO>> listLinkedAreasByType(@PathVariable(name = "areaTypeId", required = true) Long areaTypeId) {
-
-        List<AreaDTO> dtoList = areaBusinessService.listLinkedAreasByType(areaTypeId);
-
-        return new Payload<>(new PageBean<>(ObjectCloneUtils.convertList(dtoList,AreaDTO.class,CloneDirection.FORWARD)));
-    }
-
-    @PutMapping("/updateToRootNode/{areaId}")
-    @ApiOperation("添加层级-修改为根节点")
-    public Payload<Boolean> updateToRootNode(@PathVariable(name = "areaId", required = true) Long areaId) {
-
-        Boolean result=areaBusinessService.updateToRootNode(areaId);
-
-        return new Payload<>((result));
     }
 
 }
