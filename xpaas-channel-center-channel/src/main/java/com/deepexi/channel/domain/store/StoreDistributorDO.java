@@ -37,9 +37,9 @@ public class StoreDistributorDO extends SuperEntity {
     @TableField(value = "`grade_system_id`")
     Long gradeSystemId;
     /**经销商编码*/
-    String distributorGradeSystemCode;
+    String gradeSystemCode;
     /**进销商等级体系名称*/
-    String distributorGradeSystemName;
+    String gradeSystemName;
     /**上级经销商*/
 //    private List<StoreDistributorDO> parentDistributor;
 }

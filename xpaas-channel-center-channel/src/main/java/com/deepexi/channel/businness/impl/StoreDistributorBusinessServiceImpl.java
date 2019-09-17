@@ -88,8 +88,8 @@ public class StoreDistributorBusinessServiceImpl implements StoreDistributorBusi
             //经销商等级信息
             DistributorGradeSystemDTO distributorGradeSystemDTO = distributorGradeSystemDTOMap.get(dd.getGradeSystemId());
             if(distributorGradeSystemDTO != null){
-                dd.setDistributorGradeSystemCode(distributorGradeSystemDTO.getGradeSystemCode());
-                dd.setDistributorGradeSystemName(distributorGradeSystemDTO.getGradeSystemName());
+                dd.setGradeSystemCode(distributorGradeSystemDTO.getGradeSystemCode());
+                dd.setGradeSystemName(distributorGradeSystemDTO.getGradeSystemName());
             }
         });
         return result;
