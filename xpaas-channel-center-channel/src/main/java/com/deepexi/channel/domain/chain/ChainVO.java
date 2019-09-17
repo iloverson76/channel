@@ -6,6 +6,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
@@ -55,18 +57,24 @@ public class ChainVO extends AbstractObject {
      * 连锁名称
      */
     @ApiModelProperty(value = "连锁名称", example = "家乐福")
+    @Pattern(regexp = "^[A-Za-z0-9\\u4e00-\\u9fa5]+$")
+    @Size(min=1,max=16)
     private String chainName;
 
     /**
      * 连锁编码
      */
     @ApiModelProperty(value = "连锁编码", example = "abcd1234")
+    @Pattern(regexp = "^[A-Za-z0-9]+$")
+    @Size(min=1,max=16)
     private String chainCode;
 
     /**
      * 连锁英文名称
      */
     @ApiModelProperty(value = "连锁英文名称", example = "jialefu")
+    @Pattern(regexp = "^[A-Za-z0-9]+$")
+    @Size(min=1,max=16)
     private String chainNameEn;
 
     /**
