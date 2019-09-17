@@ -228,7 +228,7 @@ public class ChainTypeServiceImpl implements ChainTypeService {
         return Collections.emptyList();
     }
     /**
-     * 新增节点时的上级列表
+     * 更新节点时的上级列表
      *
      * 上级与下级只能1:1
      *
