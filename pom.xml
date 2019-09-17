@@ -18,7 +18,7 @@
 	<modules>
 		<module>xpaas-channel-center-channel-api</module>
 		<module>xpaas-channel-center-channel</module>
-		<module>xpaas-channel-center-webapp-provider</module>
+		<module>xpaas-channel-center-webapp</module>
 		<module>xpaas-channel-center-common</module>
 	</modules>
 

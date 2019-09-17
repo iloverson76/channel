@@ -140,15 +140,17 @@ public class DistributorGradeServiceImpl implements DistributorGradeService {
 
         List<DistributorGradeDTO> children=listChildrenNodes(id);
 
-        children.forEach(child->{
-            child.setParentId(0L);
-        });
+        if(CollectionUtils.isNotEmpty(children)){
 
-        List<DistributorGradeDO> childrenDO=ObjectCloneUtils.convertList(children,
-                DistributorGradeDO.class,CloneDirection.FORWARD);
+            children.forEach(child->{
+                child.setParentId(0L);
+            });
 
-       distributorGradeDAO.updateBatchById(childrenDO);
+            List<DistributorGradeDO> childrenDO=ObjectCloneUtils.convertList(children,
+                    DistributorGradeDO.class,CloneDirection.FORWARD);
 
+            distributorGradeDAO.updateBatchById(childrenDO);
+       }
        return distributorGradeDAO.removeById(id);
     }
 
