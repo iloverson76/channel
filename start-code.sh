@@ -6,6 +6,14 @@ m2_cache=~/.m2                              # the local maven cache dir
 proj_home=$PWD                              # the project root dir
 img_output="deepexi/xpaas-channel-center"      # output image tag
 
+# apollo 配置中心配置
+apollo_configService="http://39.100.65.239:8081/"
+app_id="xpaas-channel-center"
+apollo_meta="http://39.100.65.239:8081"
+apollo_bootstrap_enabled="true"
+apollo_bootstrap_namespaces="application"
+apollo_env="FAT"
+
 git pull  # should use git clone https://name:pwd@xxx.git
 
 echo "use docker maven"
@@ -29,13 +37,13 @@ version=`date "+%Y%m%d%H"`
 docker run -d --restart=on-failure:5 --privileged=true \
     -w /home \
     -v $PWD/logs:/home/logs \
-    -p 8088:8088 \
+    -p 8307:8307 \
     --name xpaas-channel-center deepexi/xpaas-channel-center \
     java \
         -Djava.security.egd=file:/dev/./urandom \
         -Duser.timezone=Asia/Shanghai \
-        -Denv=DEV \
-        -Dapollo.configService=http://127.0.0.1:8080 \
+        -Denv=$apollo_env \
+        -Dapollo.configService=$apollo_configService \
         -XX:+PrintGCDateStamps \
         -XX:+PrintGCTimeStamps \
         -XX:+PrintGCDetails \
@@ -43,6 +51,8 @@ docker run -d --restart=on-failure:5 --privileged=true \
         -Xloggc:logs/gc_$version.log \
         -jar /home/demo.jar \
           --spring.profiles.active=prod \
-          --eureka.client.serviceUrl.defaultZone=http://admin:deepexi@127.0.0.1:8761/eureka/ \
-          --app.id=xpaas-channel-center \
-          --apollo.meta=http://127.0.0.1:8080
+          --eureka.client.serviceUrl.defaultZone=http://admin:deepexi@39.100.65.239:8081/eureka/ \
+          --app.id=$app_id \
+          --apollo.meta=$apollo_meta \
+          --apollo.bootstrap.enabled=$apollo_bootstrap_enabled \
+          --apollo.bootstrap.namespaces=$apollo_bootstrap_namespaces
