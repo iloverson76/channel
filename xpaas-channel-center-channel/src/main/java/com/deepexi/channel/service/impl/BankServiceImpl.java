@@ -10,8 +10,10 @@ import com.deepexi.util.pojo.ObjectCloneUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -19,38 +21,11 @@ public class BankServiceImpl implements BankService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    @Value("#{'${bank.init.bankName}'.split(',')}")
+    List<String> bankNames;
     @Autowired
     private BankDAO bankDAO;
 
-//    @Override
-//    public PageBean<CcBank> findPage(CcBank eo, Integer page, Integer size) {
-//        PageHelper.startPage(page, size);
-//        List<CcBank> pages =  bankMapper.findList(eo);
-//        return new PageBean<CcBank>(pages);
-//    }
-//
-//    @Override
-//    public List<CcBank> findAll(CcBank eo) {
-//        List<CcBank> list = bankMapper.findList(eo);
-//        return list;
-//    }
-//    @Override
-//    public CcBank detail(Integer  pk) {
-//        CcBank eo = bankMapper.selectById(pk);
-//        return eo;
-//    }
-//
-//    @Override
-//    public Boolean update(Integer  id,CcBank eo) {
-//        CcBank old = bankMapper.selectById(id);
-//        BeanPowerHelper.mapCompleteOverrider(eo,old); //部分更新
-//        int result = bankMapper.updateById(old);
-//        if (result > 0) {
-//            return true;
-//        }
-//        return false;
-//    }
-//
     @Override
     public Boolean create(BankDTO bankDTO) {
         boolean result = bankDAO.save(bankDTO.clone(BankDO.class));
@@ -78,8 +53,32 @@ public class BankServiceImpl implements BankService {
     @Override
     public List<BankDTO> listBank() {
         List<BankDO> bankDOS = bankDAO.findAll();
+        if(CollectionUtil.isEmpty(bankDOS)){
+            //银行列表为空，说明该appid下的银行列表为空，触发初始化
+            this.initBankList();
+            //初始化完再查询一次
+            bankDOS = bankDAO.findAll();
+        }
+
         List<BankDTO> bankDTOS = ObjectCloneUtils.convertList(bankDOS, BankDTO.class, CloneDirection.OPPOSITE);
         return bankDTOS;
+    }
+
+    /**
+     * @MethodName: initBankList
+     * @Description: 初始化银行列表，每个新的应用都会初始化一个列表
+     * @Param: []
+     * @Return: void
+     * @Author: mumu
+     * @Date: 2019/9/17
+    **/
+    private void initBankList() {
+        List<BankDTO> bankDTOS = new LinkedList<>();
+        bankNames.forEach(b->{
+            BankDTO bankDTO = BankDTO.builder().bankName(b).build();
+            bankDTOS.add(bankDTO);
+        });
+        this.createBatch(bankDTOS);
     }
 
     @Override
@@ -89,6 +88,15 @@ public class BankServiceImpl implements BankService {
             return null;
         }
         return ObjectCloneUtils.convertList(bankDOS, BankDTO.class, CloneDirection.OPPOSITE);
+    }
+
+    @Override
+    public Boolean createBatch(List<BankDTO> bankDTOS) {
+        if(CollectionUtil.isEmpty(bankDTOS)){
+            return false;
+        }
+        List<BankDO> list = ObjectCloneUtils.convertList(bankDTOS, BankDO.class);
+        return bankDAO.saveBatch(list);
     }
 
 }

@@ -21,4 +21,6 @@ public interface BankService {
 
 
     List<BankDTO> getBankByIds(List<Long> bankIds);
+
+    Boolean createBatch(List<BankDTO> bankDTOS);
 }
