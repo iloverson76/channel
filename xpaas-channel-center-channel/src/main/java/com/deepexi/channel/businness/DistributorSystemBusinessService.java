@@ -1,9 +1,7 @@
 package com.deepexi.channel.businness;
 
-import com.deepexi.channel.domain.distributor.DistributorGradeDTO;
-import com.deepexi.channel.domain.distributor.DistributorGradeQuery;
-import com.deepexi.channel.domain.distributor.DistributorGradeSystemDTO;
-import com.deepexi.channel.domain.distributor.DistributorGradeSystemQuery;
+import com.deepexi.channel.domain.distributor.*;
+import com.deepexi.channel.domain.store.StoreDistributorDTO;
 
 import java.util.List;
 
@@ -22,5 +20,5 @@ public interface DistributorSystemBusinessService {
      */
     DistributorGradeSystemDTO detail(Long pk);
 
-    List<DistributorGradeSystemDTO> getDistributorGradeSystemByDistributorId(long distributorId);
+    List<StoreDistributorDTO> getDistributorGradeSystemByDistributorId(long distributorId);
 }
