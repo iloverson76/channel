@@ -71,4 +71,9 @@
         order by updated_time desc
     </select>
 
+    <!--树默认展开三级-->
+    <select id="findTree" resultType="com.deepexi.channel.domain.area.AreaDO">
+         SELECT * FROM cc_area WHERE dr = 0 and path RLIKE "^/([0-9])*$|^/([0-9])*/([0-9])*$|^/([0-9])*/([0-9])*/([0-9])*$"
+    </select>
+
 </mapper>
