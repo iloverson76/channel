@@ -18,6 +18,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -55,7 +56,7 @@ public class ChainController {
 
     @PutMapping("/{id}")
     @ApiOperation(value = "根据id修改", notes = "根据id修改连锁")
-    public Payload<Boolean> update(@PathVariable(value = "id", required = true) Long id, @RequestBody ChainDetailVO vo) {
+    public Payload<Boolean> update(@Valid @PathVariable(value = "id", required = true) Long id, @RequestBody ChainDetailVO vo) {
         if(vo == null){
             return new Payload(false);
         }
@@ -72,7 +73,7 @@ public class ChainController {
 
     @PostMapping
     @ApiOperation(value = "创建连锁", notes = "创建连锁,创建成功返回id")
-    public Payload<Boolean> create(@RequestBody ChainDetailVO chainDetailVO) {
+    public Payload<Boolean> create(@Valid @RequestBody ChainDetailVO chainDetailVO) {
         if(chainDetailVO == null){
             return new Payload(false);
         }
