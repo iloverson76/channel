@@ -62,7 +62,6 @@ public class StoreTypeVO extends AbstractObject {
      */
     @ApiModelProperty(value = "门店类型英文名称")
     @Pattern(regexp = "^[A-Za-z0-9]+$")
-    @Size(min=1,max=16)
     private String storeTypeNameEn;
 
     /**

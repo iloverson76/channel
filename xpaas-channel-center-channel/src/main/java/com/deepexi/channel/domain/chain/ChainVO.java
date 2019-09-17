@@ -74,7 +74,6 @@ public class ChainVO extends AbstractObject {
      */
     @ApiModelProperty(value = "连锁英文名称", example = "jialefu")
     @Pattern(regexp = "^[A-Za-z0-9]+$")
-    @Size(min=1,max=16)
     private String chainNameEn;
 
     /**
