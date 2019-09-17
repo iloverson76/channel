@@ -37,28 +37,8 @@ public class AreaServiceImpl implements AreaService{
 
         Long newId=newNode.getId();
 
-        //路径
-        newNode.setPath("/"+String.valueOf(newId));
-
         areaDAO.updateById(newNode);
 
-  /*      //设置处理(id路径)
-
-        Long parentId=newNode.getParentId();
-
-        if (null==parentId || 0==parentId) {
-
-            newNode.setPath("/"+String.valueOf(newId));//首次创建
-
-        } else {
-
-            String parent_path=areaDAO.getById(parentId).getPath()+"/"+newId;
-
-            newNode.setPath(parent_path);
-        }
-
-        areaDAO.updateById(newNode);
-*/
         return newId;
     }
 

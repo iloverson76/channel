@@ -7,6 +7,7 @@ import com.deepexi.channel.domain.area.AreaDO;
 import com.deepexi.channel.domain.area.AreaQuery;
 import com.deepexi.channel.domain.area.AreaTypeQuery;
 import com.deepexi.channel.mapper.AreaMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.management.Query;
@@ -18,6 +19,9 @@ import java.util.List;
  **/
 @Repository
 public class AreaDAOImpl extends ServiceImpl<AreaMapper, AreaDO> implements AreaDAO {
+
+    @Autowired
+    AreaMapper areaMapper;
 
     @Override
     public List<AreaDO> listAreaPage(AreaQuery query) {
@@ -58,12 +62,6 @@ public class AreaDAOImpl extends ServiceImpl<AreaMapper, AreaDO> implements Area
     @Override
     public List<AreaDO> findTree() {
 
-        QueryWrapper<AreaDO> wp=new QueryWrapper<>();
-
-        String reg="^/([0-9])*$|^/([0-9])*/([0-9])*$|^/([0-9])*/([0-9])*/([0-9])*$";
-
-        wp.likeRight("path",reg);
-
-        return baseMapper.selectList(wp);
+        return areaMapper.findTree();
     }
 }
