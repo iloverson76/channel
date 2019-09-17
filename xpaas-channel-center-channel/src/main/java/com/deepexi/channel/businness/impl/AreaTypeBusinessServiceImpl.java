@@ -171,8 +171,16 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
 
             String parentPath=selfPath.replaceAll("/"+type.getId(),"");
 
-            List<Long> parentIds=
-            Arrays.stream(parentPath.split("/")).map(Long::parseLong).collect(Collectors.toList());
+            List<Long> parentIds=new ArrayList<>();
+
+            String[] pids=parentPath.split("/");
+
+            for (String pid:pids){
+
+                if(!pid.equalsIgnoreCase("")){
+                    parentIds.add(Long.valueOf(pid));
+                }
+            }
 
             AreaTypeQuery query = new AreaTypeQuery();
 
