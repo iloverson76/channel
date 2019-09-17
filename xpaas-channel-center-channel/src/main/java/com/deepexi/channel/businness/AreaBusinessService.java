@@ -30,8 +30,6 @@ public interface AreaBusinessService {
 
     boolean update(AreaDTO dto);
 
-    boolean updateTreeChange(Long parentId,Long id,Integer root);
-
     boolean updateToRootNode(Long areaId);
 
     boolean treeAddNode(AreaDTO clone);

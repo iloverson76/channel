@@ -5,6 +5,7 @@ import com.deepexi.channel.domain.area.*;
 import com.deepexi.channel.service.AreaService;
 import com.deepexi.channel.service.AreaTypeService;
 import com.deepexi.util.CollectionUtil;
+import com.deepexi.util.StringUtil;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +39,8 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
     @Override
     public List<AreaDTO> findPage(AreaQuery query) {
 
+        log.info("区域列表分页查询");
+
         if(null==query){
             return Collections.emptyList();
         }
@@ -62,7 +65,8 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
                     if (CollectionUtil.isNotEmpty(areaTypes)) {
 
-                        AreaTypeDTO type = areaTypes.get(0);//id是主键,只有一条记录
+                        //id是主键,只有一条记录
+                        AreaTypeDTO type = areaTypes.get(0);
 
                         area.setAreaType(type);
                     }
@@ -74,6 +78,8 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
     @Override
     public AreaDTO detail(Long pk, Long areaTypeId) {
+
+        log.info("区域详情");
 
         AreaDTO areaDTO=areaService.getAreaById(pk);
 
@@ -93,11 +99,15 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
     @Override
     public List<AreaDTO> listLinkedAreasByType(Long areaTypeId) {
 
+        log.info("根据区域类型查找所有的区域");
+
         return areaService.listLinkedAreasByType(areaTypeId);
     }
 
     @Override
     public List<AreaTreeDTO> listChildrenTree(Long areaId){
+
+        log.info("构建节点树");
 
         List<AreaDTO> areaDTOList=areaService.listChildrenAreas(areaId);
 
@@ -109,9 +119,12 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
     }
 
     @Override
-    public List<AreaTreeDTO> buildAreaTree(AreaTreeQuery query) {//默认展开三级:未完善
+    public List<AreaTreeDTO> buildAreaTree(AreaTreeQuery query) {
 
-        List<AreaDTO> areaDTOList=areaService.findPage(new AreaQuery());
+        log.info("区域树构建");
+
+        //默认展开三级
+        List<AreaDTO> areaDTOList=areaService.findTree();
 
         //区域类型
         setAreaTypeInfo(areaDTOList);
@@ -122,6 +135,8 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
     //区域类型设置
     private List<AreaDTO> setAreaTypeInfo( List<AreaDTO> areaDTOList){
+
+        log.info("设置区域类型");
 
         if(CollectionUtils.isEmpty(areaDTOList)){
 
@@ -148,8 +163,9 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
         return areaDTOList;
     }
 
-    //从根节点构建完整树
     private List<AreaTreeDTO> treeAll(List<AreaDTO> areaDTOList){
+
+        log.info("从根节点构建完整树");
 
         if(CollectionUtils.isEmpty(areaDTOList)){
 
@@ -166,7 +182,9 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
                 vo1.setChildren(new LinkedHashSet<>());
             }
-            if (0 == vo1.getParentId()) {//根节点
+
+            //根节点
+            if (0 == vo1.getParentId()&&vo1.getPath().equals("/"+vo1.getId())) {
 
                 tree.add(vo1);
             }
@@ -188,6 +206,8 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
     //从某一节点开始构建下级数
     private List<AreaTreeDTO> treeNode(List<AreaDTO> areaDTOList,Long areaId){
 
+        log.info("开始构建节点树");
+
         if(CollectionUtils.isEmpty(areaDTOList)){
 
             return Collections.emptyList();
@@ -203,7 +223,8 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
                 vo1.setChildren(new LinkedHashSet<>());
             }
-            if (vo1.getParentId().equals(areaId)) {//根节点
+            //根节点
+            if (0 == vo1.getParentId()&&vo1.getPath().equals("/"+vo1.getId())) {
 
                 tree.add(vo1);
             }
@@ -239,6 +260,8 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
     @Override
     public boolean deleteById(Long id) {
 
+        log.info("删除区域");
+
         AreaDTO dto=areaService.getAreaById(id);
 
         String parentPath=dto.getPath();
@@ -254,7 +277,7 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
             //直接下级
             if(child.getParentId()==id){
 
-                child.setParentId(-1L);
+                child.setParentId(0L);
             }
 
         });
@@ -269,6 +292,8 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
     @Override
     public boolean update(AreaDTO dto) {
 
+        log.info("更新区域");
+
         areaService.update(dto);
 
         return Boolean.TRUE;
@@ -276,6 +301,8 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
     @Override
     public boolean updateToRootNode(Long areaId) {
+
+        log.info("更改为根节点");
 
         AreaDTO self = areaService.getAreaById(areaId);
 
@@ -300,6 +327,8 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
     private void updateChildrenNodesPath(Long areaId,String updatePath,String newRootPath){
 
+        log.info("更新子节点路径");
+
         List<AreaDTO> children = areaService.listChildrenAreas(areaId);
 
         if(CollectionUtils.isNotEmpty(children)){
@@ -316,76 +345,19 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
     }
 
     @Override
-    public boolean updateTreeChange(Long newParentId,Long id,Integer root) {
-
-        //自己
-        AreaDTO self=areaService.getAreaById(id);
-
-        //根节点处理
-        if(root==1){
-            String origPath=self.getPath();
-            self.setParentId(0L);
-            String rootPath="/"+id;
-            self.setPath(rootPath);
-            areaService.update(self);
-            UpdateChildrenPath(id,origPath,rootPath);
-        }else{
-
-            //从新上级节点拼接新路径
-            AreaDTO newParentNode=areaService.getAreaById(newParentId);
-
-            String newParentPath=newParentNode.getPath();
-
-            newParentPath=newParentPath+"/"+id;
-
-            String replacepath=self.getPath();
-
-            //自己
-            self.setParentId(newParentId);
-            self.setPath(newParentPath);
-            areaService.update(self);
-
-            //子节点
-            UpdateChildrenPath(id,replacepath,newParentPath);
-        }
-
-        return Boolean.TRUE;
-    }
-
-    private void UpdateChildrenPath(Long id,String OrigParentPath,String newParentPath){
-
-        log.info("更新子节点路径");
-
-        //更改所有子节点的路径
-        List<AreaDTO> children = areaService.listChildrenAreas(id);
-
-        if(CollectionUtils.isNotEmpty(children)){
-
-            for(AreaDTO child:children){
-
-                String path=child.getPath();
-
-                child.setPath(path.replaceAll(OrigParentPath,newParentPath));
-            }
-
-            areaService.updateBatch(children);
-        }
-    }
-
-    @Override
     public boolean treeAddNode(AreaDTO dto) {
 
         log.info("新增区域树节点");
 
         Long areaId=dto.getId();
 
-        Integer root=dto.getRoot();
-
         Long newParentId=dto.getParentId();
 
         AreaDTO self = areaService.getAreaById(areaId);
 
         Long origParentId=self.getParentId();
+
+        String path=self.getPath();
 
         //首次新建(不一定是根节点)
         if(null==origParentId||origParentId==0L){
@@ -398,7 +370,7 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
         }
 
         //如果是根节点
-        if(root==1){
+        if(origParentId==0&& StringUtil.isNotEmpty(path)){
 
             updateToRootNode(areaId);
 
@@ -415,16 +387,10 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
             String updatePath=newParentPath+"/"+areaId;
 
-            String replacepath=self.getPath();
-
             //自己
             self.setParentId(newParentId);
             self.setPath(updatePath);
             areaService.update(self);
-
-            //子节点
-            UpdateChildrenPath(areaId,replacepath,updatePath);
-
         }
 
         return Boolean.TRUE;
@@ -432,13 +398,47 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
     @Override
     public boolean treeUpdateNode(AreaDTO dto) {
-        return treeAddNode(dto);
+
+        log.info("更改区域树节点");
+
+        Long id=dto.getId();
+
+        Long newParentId=dto.getParentId();
+
+        //自己
+        AreaDTO self=areaService.getAreaById(id);
+
+        Long origParentId=self.getParentId();
+
+        String path=self.getPath();
+
+        //根节点处理
+        if(origParentId==0&& StringUtil.isNotEmpty(path)){
+            updateToRootNode(id);
+        }else{
+            //从新上级节点拼接新路径
+            AreaDTO newParentNode=areaService.getAreaById(newParentId);
+
+            String newParentPath=newParentNode.getPath();
+
+            newParentPath=newParentPath+"/"+id;
+
+            String replacepath=self.getPath();
+
+            //自己
+            self.setParentId(newParentId);
+            self.setPath(newParentPath);
+            areaService.update(self);
+
+            //子节点
+            updateChildrenNodesPath(id,replacepath,newParentPath);
+        }
+
+        return Boolean.TRUE;
     }
 
     @Override
     public boolean treeDeleteNode(Long areaId) {
-
-        //如果有下级,下级的路径也要改,但是记录不能删掉
 
         log.info("删除区域树节点");
         AreaDTO self=areaService.getAreaById(areaId);
@@ -451,11 +451,11 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
         String newParentPath="";
 
-        UpdateChildrenPath(areaId,parentPath,newParentPath);
+        updateChildrenNodesPath(areaId,parentPath,newParentPath);
 
-        self.setPath("/"+areaId);
+        self.setPath("");
 
-        self.setParentId(-1L);
+        self.setParentId(0L);
 
         return areaService.update(self);
     }
