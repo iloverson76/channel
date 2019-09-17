@@ -16,4 +16,6 @@ public interface AreaDAO extends  IService<AreaDO> {
     List<AreaDO> listLinkedAreasByType(Long areaTypeId);
 
     List<AreaDO> findAllByIds(List<Long> ids);
+
+    List<AreaDO> findTree();
 }

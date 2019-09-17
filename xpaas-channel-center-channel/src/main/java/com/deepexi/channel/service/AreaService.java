@@ -29,4 +29,6 @@ public interface AreaService {
     boolean updateBatch(List<AreaDTO> dtoList);
 
     List<AreaDTO> findAllByIds(List<Long> ids);
+
+    List<AreaDTO> findTree();
 }

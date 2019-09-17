@@ -3,7 +3,6 @@ package com.deepexi.channel.controller;
 import com.deepexi.channel.businness.AreaBusinessService;
 import com.deepexi.channel.businness.AreaTypeBusinessService;
 import com.deepexi.channel.domain.area.*;
-import com.deepexi.channel.service.AreaService;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pageHelper.PageBean;
 import com.deepexi.util.pojo.CloneDirection;
@@ -31,9 +30,6 @@ public class AreaController {
     private AreaBusinessService areaBusinessService;
 
     @Autowired
-    private AreaService areaService;
-
-    @Autowired
     AreaTypeBusinessService areaTypeBusinessService;
 
     @PostMapping
@@ -52,13 +48,11 @@ public class AreaController {
 
         AreaDTO dto=areaBusinessService.detail(id,areaTypeId);
 
-        AreaTypeVO type=dto.getAreaType().clone(AreaTypeVO.class,CloneDirection.OPPOSITE);
+        AreaVO vo=null;
 
-        AreaVO vo=new AreaVO();
-
-        BeanUtils.copyProperties(dto,vo);
-
-        vo.setAreaType(type);
+        if(dto!=null){
+            dto.clone(AreaVO.class,CloneDirection.OPPOSITE);
+        }
 
         return new Payload<>(vo);
     }
@@ -91,18 +85,10 @@ public class AreaController {
 
         List<AreaVO> voList=new ArrayList<>();
 
-        dtoList.forEach(dto->{
+       if(CollectionUtils.isNotEmpty(dtoList)){
 
-            AreaTypeVO areaTypeVO=dto.getAreaType().clone(AreaTypeVO.class,CloneDirection.OPPOSITE);
-
-            AreaVO vo= new AreaVO();
-
-            BeanUtils.copyProperties(dto,vo);
-
-            vo.setAreaType(areaTypeVO);
-
-            voList.add(vo);
-        });
+           voList=ObjectCloneUtils.convertList(dtoList,AreaVO.class,CloneDirection.OPPOSITE);
+       }
 
         return new Payload<>(new PageBean<>(voList));
     }
@@ -114,17 +100,6 @@ public class AreaController {
         List<AreaTreeDTO> dtoList = areaBusinessService.buildAreaTree(query);
 
         return tree( dtoList);
-    }
-
-    @GetMapping("/treeEdit/{parentId}/{id}/{root}")
-    @ApiOperation("区域树修改保存")
-    public Payload<Boolean> editTree(@PathVariable(name = "parentId") Long parentId,
-                                                  @PathVariable(name = "id", required = true) Long id,
-                                                  @PathVariable(name = "root", required = true) Integer root) {
-
-        areaBusinessService.updateTreeChange(parentId,id,root);
-
-        return new Payload<>( Boolean.TRUE);
     }
 
     @GetMapping("/childrenTree/{areaId}")
@@ -180,7 +155,7 @@ public class AreaController {
     }
 
     @PostMapping("/tree/addNode")
-    @ApiOperation(value = "添加树节点")
+    @ApiOperation(value = "添加树节点",notes = "传parentId以及节点的id，如果parentId为0，设置为根节点")
     public Payload<Boolean> treeAddNode(@RequestBody AreaVO vo) {
 
         Boolean result= areaBusinessService.treeAddNode(vo.clone(AreaDTO.class, CloneDirection.FORWARD));
@@ -189,7 +164,7 @@ public class AreaController {
     }
 
     @PutMapping("/tree/updateNode/{id}")
-    @ApiOperation(value = "修改树节点")
+    @ApiOperation(value = "修改树节点",notes = "传parentId以及节点的id，如果parentId为0，设置为根节点,自动更新所有下级节点")
     public Payload<Boolean> treeupdateNode(@PathVariable(value = "id", required = true) Long  pk, @RequestBody AreaVO vo) {
 
         vo.setId(pk);
@@ -200,7 +175,7 @@ public class AreaController {
     }
 
     @DeleteMapping("/tree/deleteNode/{id}")
-    @ApiOperation(value = "删除树节点")
+    @ApiOperation(value = "删除树节点",notes = "传节点id")
     public Payload<Boolean> treeDeleteNode(@PathVariable(value = "id",required = true) Long pk) {
 
         boolean result= areaBusinessService.treeDeleteNode(pk);
