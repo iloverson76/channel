@@ -2,6 +2,8 @@ package com.deepexi.channel.controller;
 
 import com.deepexi.channel.businness.DistributorSystemBusinessService;
 import com.deepexi.channel.domain.distributor.*;
+import com.deepexi.channel.domain.store.StoreDistributorDTO;
+import com.deepexi.channel.domain.store.StoreDistributorVO;
 import com.deepexi.channel.service.DistributorGradeSystemService;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.config.Payload;
@@ -133,12 +135,12 @@ public class DistributorGradeSystemController {
     }
 
     @GetMapping("/distributorGradeSystem/{distributorId}")
-    @ApiOperation("根据经销商id查询经销商体系列表")
-    public  Payload<List<DistributorGradeSystemVO>> getDistributorGradeSystemByDistributorId( @PathVariable(name = "distributorId", required = true) long distributorId){
-        List<DistributorGradeSystemDTO> dtos = distributorSystemBusinessService.getDistributorGradeSystemByDistributorId(distributorId);
+    @ApiOperation("门店关联经销商中，根据经销商id查询经销商体系列表")
+    public  Payload<List<StoreDistributorVO>> getDistributorGradeSystemByDistributorId(@PathVariable(name = "distributorId", required = true) long distributorId){
+        List<StoreDistributorDTO> dtos = distributorSystemBusinessService.getDistributorGradeSystemByDistributorId(distributorId);
         if (CollectionUtil.isEmpty(dtos)){
             return new Payload<>(Collections.emptyList());
         }
-        return new Payload<>(ObjectCloneUtils.convertList(dtos, DistributorGradeSystemVO.class));
+        return new Payload<>(ObjectCloneUtils.convertList(dtos, StoreDistributorVO.class));
     }
 }
