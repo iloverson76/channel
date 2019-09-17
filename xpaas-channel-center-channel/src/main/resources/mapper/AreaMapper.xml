@@ -20,17 +20,6 @@
         <result property="remark" column="remark" />
     </resultMap>
 
-    <select id="findList" resultType="com.deepexi.channel.domain.eo.CcArea">
-        SELECT * FROM cc_area WHERE 1=1
-    </select>
-
-    <update id="deleteByIds">
-        UPDATE cc_area set dr=1 where id in
-        <foreach collection="ids" index="index" item="id" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-    </update>
-
     <select id="listAreaPage" parameterType="com.deepexi.channel.domain.area.AreaQuery"
             resultType="com.deepexi.channel.domain.area.AreaDO">
 
@@ -44,6 +33,12 @@
         <if test="ids != null">
             and id in
             <foreach collection="ids" item="tempId" index="index" open="(" close=")" separator=",">
+                #{tempId}
+            </foreach>
+        </if>
+        <if test="areatypeIds != null">
+            and area_type_id in
+            <foreach collection="areatypeIds" item="tempId" index="index" open="(" close=")" separator=",">
                 #{tempId}
             </foreach>
         </if>

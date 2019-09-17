@@ -131,4 +131,17 @@ public class DistributorGradeRelationServiceImpl implements DistributorGradeRela
 
         return ObjectCloneUtils.convertList(eoList,DistributorGradeRelationDTO.class,CloneDirection.OPPOSITE);
     }
+
+    @Override
+    public List<DistributorGradeRelationDTO> findAllByGradeIds(List<Long> gradeIds) {
+
+        List<DistributorGradeRelationDO> eoList=distributorGradeRelationDAO.findAllByGradeIds(gradeIds);
+
+        if(CollectionUtils.isEmpty(eoList)){
+            return Collections.emptyList();
+        }
+
+        return ObjectCloneUtils.convertList(eoList,DistributorGradeRelationDTO.class,CloneDirection.OPPOSITE);
+    }
+
 }

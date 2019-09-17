@@ -154,9 +154,11 @@ public class AreaController {
         return new Payload<>(new PageBean<>(voList));
     }
 
-    @PostMapping("/tree/addNode")
+    @PostMapping("/tree/addNode/{id}")
     @ApiOperation(value = "添加树节点",notes = "传parentId以及节点的id，如果parentId为0，设置为根节点")
-    public Payload<Boolean> treeAddNode(@RequestBody AreaVO vo) {
+    public Payload<Boolean> treeAddNode(@PathVariable(value ="id",required = true)Long id,@RequestBody AreaVO vo) {
+
+        vo.setId(id);
 
         Boolean result= areaBusinessService.treeAddNode(vo.clone(AreaDTO.class, CloneDirection.FORWARD));
 

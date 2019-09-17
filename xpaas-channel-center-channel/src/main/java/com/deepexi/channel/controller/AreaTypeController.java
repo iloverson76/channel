@@ -60,9 +60,9 @@ public class AreaTypeController {
     @ApiOperation(value = "批量删除区域类型")
     public Payload<Boolean> deleteAreaTypeByIds(@PathVariable(value = "ids") String ids) {//前端的列表每一个id都去拿子节点的话,性能很慢
 
-        Set<Long> idSet=Arrays.stream(ids.split(",")).map(Long::parseLong).collect(Collectors.toSet());
+        List<Long> idSet=Arrays.stream(ids.split(",")).map(Long::parseLong).collect(Collectors.toList());
 
-        Boolean result = areaTypeService.deleteAreaTypeByIds(idSet);
+        Boolean result = areaTypeBusinessService.deleteAreaTypeByIds(idSet);
 
         return new Payload<>(result);
     }

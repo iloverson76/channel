@@ -92,7 +92,7 @@ public class DistributorGradeController {
 
         List<Long> idList=Arrays.stream(ids.split(",")).map(Long::parseLong).collect(Collectors.toList());
 
-        return new Payload<>(distributorGradeService.delete(idList));
+        return new Payload<>(distributorGradeBusinessService.delete(idList));
     }
 
     @GetMapping

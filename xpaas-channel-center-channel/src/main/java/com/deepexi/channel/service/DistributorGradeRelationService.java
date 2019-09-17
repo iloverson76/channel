@@ -29,4 +29,6 @@ public interface DistributorGradeRelationService {
 
     List<DistributorGradeRelationDTO> findAllByGradeId(Long gradeId);
 
+    List<DistributorGradeRelationDTO> findAllByGradeIds(List<Long> gradeIds);
+
 }

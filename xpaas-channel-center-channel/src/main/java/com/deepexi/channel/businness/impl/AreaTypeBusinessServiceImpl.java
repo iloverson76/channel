@@ -9,6 +9,7 @@ import com.deepexi.channel.service.AreaService;
 import com.deepexi.channel.service.AreaTypeService;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.StringUtil;
+import com.deepexi.util.extension.ApplicationException;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -190,5 +191,24 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
         }
 
         return resultList;
+    }
+
+    @Override
+    public boolean deleteAreaTypeByIds(List<Long> idList) {
+
+        //挂载的区域
+        AreaQuery query=new AreaQuery();
+
+        query.setAreatypeIds(idList);
+
+        List<AreaDTO> areaList = areaService.findPage(query);
+
+        if(CollectionUtils.isNotEmpty(areaList)){
+
+           throw new ApplicationException("此分类已挂载区域,无法删除!请解除所有关联后再操作!");
+        }
+
+        //删除分类
+        return areaTypeService.deleteAreaTypeByIds(idList);
     }
 }
