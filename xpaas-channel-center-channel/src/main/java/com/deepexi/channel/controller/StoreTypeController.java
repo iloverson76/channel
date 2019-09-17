@@ -18,6 +18,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -56,7 +57,7 @@ public class StoreTypeController {
 
     @PutMapping("/{id}")
     @ApiOperation(value = "根据id修改", notes = "根据id修改门店类型")
-    public Payload update(@PathVariable(value = "id", required = true) Long id, @RequestBody StoreTypeVO vo) {
+    public Payload update(@Valid @PathVariable(value = "id", required = true) Long id, @RequestBody StoreTypeVO vo) {
          vo.setId(id);
         StoreTypeDTO dto =vo.clone(StoreTypeDTO.class);
         // 判断编码是否重复
@@ -71,7 +72,7 @@ public class StoreTypeController {
 
     @PostMapping
     @ApiOperation(value = "创建门店类型", notes = "创建门店类型")
-    public Payload<Long> create(@RequestBody StoreTypeVO vo) {
+    public Payload<Long> create(@Valid @RequestBody StoreTypeVO vo) {
         StoreTypeDTO dto =vo.clone(StoreTypeDTO.class);
         // 判断编码是否重复
         if(!storeTypeService.isCodeUnique(dto)){

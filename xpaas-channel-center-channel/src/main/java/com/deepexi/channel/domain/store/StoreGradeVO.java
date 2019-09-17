@@ -6,6 +6,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
@@ -43,18 +45,24 @@ public class StoreGradeVO extends AbstractObject {
      * 门店等级名称
      */
     @ApiModelProperty(value = "门店等级名称")
+    @Pattern(regexp = "^[A-Za-z0-9\\u4e00-\\u9fa5]+$")
+    @Size(min=1,max=16)
     private String storeGradeName;
 
     /**
      * 门店等级编码
      */
     @ApiModelProperty(value = "门店等级编码")
+    @Pattern(regexp = "^[A-Za-z0-9]+$")
+    @Size(min=1,max=16)
     private String storeGradeCode;
 
     /**
      * 门店等级英文名称
      */
     @ApiModelProperty(value = "门店等级英文名称")
+    @Pattern(regexp = "^[A-Za-z0-9]+$")
+    @Size(min=1,max=16)
     private String storeGradeNameEn;
 
     /**
