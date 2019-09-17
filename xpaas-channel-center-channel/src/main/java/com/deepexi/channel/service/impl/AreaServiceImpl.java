@@ -29,7 +29,7 @@ public class AreaServiceImpl implements AreaService{
         if(null==dto){
             return 0L;
         }
-        dto.setParentId(-1L);
+        dto.setParentId(0L);
         AreaDO newNode=dto.clone(AreaDO.class,CloneDirection.FORWARD);
 
         //save后,ado是插入数据库后返回的新数据,包括id,ado克隆要拆成两步写
@@ -185,5 +185,19 @@ public class AreaServiceImpl implements AreaService{
 
         return ObjectCloneUtils.convertList(areaList, AreaDTO.class, CloneDirection.OPPOSITE);
     }
+
+    @Override
+    public List<AreaDTO> findTree() {
+
+        List<AreaDO> areaList = areaDAO.findTree();
+
+        if(CollectionUtils.isEmpty(areaList)){
+            return Collections.emptyList();
+        }
+
+        return ObjectCloneUtils.convertList(areaList, AreaDTO.class, CloneDirection.OPPOSITE);
+
+    }
+
 
 }

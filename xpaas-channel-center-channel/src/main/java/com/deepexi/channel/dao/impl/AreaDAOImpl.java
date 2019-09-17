@@ -54,4 +54,16 @@ public class AreaDAOImpl extends ServiceImpl<AreaMapper, AreaDO> implements Area
 
         return baseMapper.selectList(wp);
     }
+
+    @Override
+    public List<AreaDO> findTree() {
+
+        QueryWrapper<AreaDO> wp=new QueryWrapper<>();
+
+        String reg="^/([0-9])*$|^/([0-9])*/([0-9])*$|^/([0-9])*/([0-9])*/([0-9])*$";
+
+        wp.likeRight("path",reg);
+
+        return baseMapper.selectList(wp);
+    }
 }
