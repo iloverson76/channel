@@ -314,7 +314,6 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
         updateChildrenNodesPath(areaId,updatePath,newRootPath);
 
         //更新自己
-        self.setRoot(1);
 
         self.setPath(newRootPath);
 
@@ -359,20 +358,15 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
         String path=self.getPath();
 
-        //首次新建(不一定是根节点)
-        if(null==origParentId||origParentId==0L){
-
-            self.setPath("/"+areaId);
-
-            areaService.update(self);
-
-            return Boolean.TRUE;
-        }
-
         //如果是根节点
-        if(origParentId==0&& StringUtil.isNotEmpty(path)){
+        if(origParentId==0&& StringUtil.isEmpty(path)&&newParentId==0){
 
-            updateToRootNode(areaId);
+           self.setParentId(0L);
+
+           self.setPath("/"+areaId);
+
+           areaService.update(self);
+
 
             return Boolean.TRUE;
         }
@@ -413,8 +407,10 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
         String path=self.getPath();
 
         //根节点处理
-        if(origParentId==0&& StringUtil.isNotEmpty(path)){
+        if(origParentId!=0&&newParentId==0&&StringUtil.isNotEmpty(path)){
+
             updateToRootNode(id);
+
         }else{
             //从新上级节点拼接新路径
             AreaDTO newParentNode=areaService.getAreaById(newParentId);
