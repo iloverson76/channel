@@ -141,7 +141,6 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
     @Override
     public List<AreaTypeDTO> findParentAreaTypeByAreaId(Long areaId) {
 
-        //要处理首次请求时的空值问题
         log.info("根据区域ID查找其上级分类");
 
         AreaDTO self = areaService.getAreaById(areaId);
