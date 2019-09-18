@@ -1,6 +1,7 @@
 package com.deepexi.channel.dao.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.deepexi.channel.dao.AreaTypeDAO;
 import com.deepexi.channel.domain.area.AreaTypeDO;
@@ -33,18 +34,8 @@ public class AreaTypeDAOImpl extends ServiceImpl<AreaTypeMapper, AreaTypeDO> imp
     }
 
     @Override
-    public AreaTypeDO getChildNode(String tenantId, String appId, Long id) {
-        return baseMapper.getChildNode(tenantId,appId,id);
-    }
-
-    @Override
-    public List<AreaTypeDO> listNotLimitedNode(String tenantId, String appId) {
-        return baseMapper.listNotLimitedNode(tenantId,appId);
-    }
-
-    @Override
-    public List<AreaTypeDO> listChildNodes(String tenantId, String appId,String idPath) {
-        return baseMapper.listChildNodes(tenantId,appId,idPath);
+    public List<AreaTypeDO> listChildNodes(String idPath) {
+        return baseMapper.listChildNodes(idPath);
     }
 
     @Override
@@ -64,5 +55,23 @@ public class AreaTypeDAOImpl extends ServiceImpl<AreaTypeMapper, AreaTypeDO> imp
     @Override
     public List<AreaTypeDO> findByAreaIdNotInLinkIdAll(List<Long> linkIdList) {
         return baseMapper.selectList(new QueryWrapper<AreaTypeDO>().lambda().notIn(AreaTypeDO::getLinkId, linkIdList));
+    }
+
+    @Override
+    public boolean update(AreaTypeDO tdo) {
+
+        UpdateWrapper<AreaTypeDO> wrapper = new UpdateWrapper<>();
+
+        wrapper.eq("id", tdo.getId());
+
+        int row = baseMapper.updateById(tdo);
+
+        boolean result=false;
+
+        if(row>0){
+            result =true;
+        }
+
+        return result;
     }
 }

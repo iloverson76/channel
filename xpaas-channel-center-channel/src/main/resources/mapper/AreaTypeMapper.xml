@@ -109,35 +109,11 @@
 
     <select id="listChildNodes" resultType="com.deepexi.channel.domain.area.AreaTypeDO">
       select a.* from cc_area_type a where a.dr=0
-        AND a.tenant_id = #{tenantId}
-        AND a.app_id = #{appId}
         <if test="idPath!=null">
             AND a.path like concat('%',#{idPath}, '%')
         </if>
     </select>
 
-    <select id="listNotLimitedNode" resultType="com.deepexi.channel.domain.area.AreaTypeDO">
-        SELECT
-            a.*
-        FROM
-            cc_area_type a
-        WHERE
-            a.dr = 0
-        AND a.tenant_id = #{tenantId}
-        AND a.app_id = #{appId}
-        and a.id not in(
-        SELECT
-            parent_id
-        FROM
-            cc_area_type b
-        WHERE
-            b.dr = 0
-        AND b.tenant_id = #{tenantId}
-        AND b.app_id = #{appId}
-        AND b.parent_id!=0
-        AND b.limit_parent=1
-        )
-    </select>
     <select id="listAreaTypeByIds" resultType="com.deepexi.channel.domain.area.AreaTypeDO">
 
         select * from cc_area_type where 1=1

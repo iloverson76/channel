@@ -1,5 +1,6 @@
 package com.deepexi.channel.service;
 
+import com.deepexi.channel.domain.area.AreaTypeDO;
 import com.deepexi.channel.domain.area.AreaTypeDTO;
 import com.deepexi.channel.domain.area.AreaTypeQuery;
 
@@ -20,19 +21,21 @@ public interface AreaTypeService {
 
     boolean updateAreaTypeById(AreaTypeDTO dto);
 
+    boolean updateAreaTypeByIds(List<AreaTypeDTO> dtoList);
+
     boolean deleteAreaTypeByIds(List<Long> idList);
 
     List<AreaTypeDTO> listAreaTypePage(AreaTypeQuery query);
 
     AreaTypeDTO getAreaTypeById(Long id);
 
-    List<AreaTypeDTO> listParentNodesForCreate();
-
-    List<AreaTypeDTO> listParentNodesForUpdate(Long id);
-
     List<AreaTypeDTO> listAreaTypeByIds(List<Long> areaTyeIdList);
 
     List<AreaTypeDTO> listLinkedAreas(long pk);
 
     List<AreaTypeDTO> findByAreaIdNotInLinkIdAll(List<Long> linkIdList);
+
+    AreaTypeDTO getById(Long id);
+
+    List<AreaTypeDTO> listChildNodes(String s);
 }

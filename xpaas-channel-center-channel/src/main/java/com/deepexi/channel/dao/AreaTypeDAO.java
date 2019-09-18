@@ -13,15 +13,13 @@ public interface AreaTypeDAO extends  IService<AreaTypeDO> {
 
     List<String> listAreaTypeCode(String tenantId, String appId);
 
-    AreaTypeDO getChildNode(String tenantId, String appId, Long id);
-
-    List<AreaTypeDO> listNotLimitedNode(String tenantId, String appId);
-
-    List<AreaTypeDO> listChildNodes(String tenantId, String appId,String idPath);
+    List<AreaTypeDO> listChildNodes(String idPath);
 
     List<AreaTypeDTO> listAreaTypeByIds(List<Long> areaTyeIdList);
 
     List<AreaTypeDO> listLinkedAreas(long pk);
 
     List<AreaTypeDO> findByAreaIdNotInLinkIdAll(List<Long> linkIdList);
+
+    boolean update(AreaTypeDO tdo);
 }

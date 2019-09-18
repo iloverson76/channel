@@ -200,7 +200,6 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
         distributorAreaRelationService.deleteBatchByDistributorIds(butorIdList);
 
         return distributorBankAccountRelationService.deleteBatchByDistributorIds(butorIdList);
-
     }
 
     @Override

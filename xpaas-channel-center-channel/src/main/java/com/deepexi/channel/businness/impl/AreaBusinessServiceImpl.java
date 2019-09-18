@@ -268,19 +268,21 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
         List<AreaDTO> children= areaService.listChildrenAreas(id);
 
-        children.forEach(child->{
+        if(CollectionUtil.isNotEmpty(children)){
 
-            String path=child.getPath();
+            children.forEach(child->{
 
-            child.setPath(path.replaceAll(parentPath,""));
+                String path=child.getPath();
 
-            //直接下级
-            if(child.getParentId()==id){
+                child.setPath(path.replaceAll(parentPath,""));
 
-                child.setParentId(0L);
-            }
+                //直接下级
+                if(child.getParentId()==id){
 
-        });
+                    child.setParentId(0L);
+                }
+            });
+        }
 
         areaService.updateBatch(children);
 

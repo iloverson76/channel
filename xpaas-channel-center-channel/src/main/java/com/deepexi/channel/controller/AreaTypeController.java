@@ -75,7 +75,7 @@ public class AreaTypeController {
 
         AreaTypeDTO dto = vo.clone(AreaTypeDTO.class, CloneDirection.FORWARD);
 
-        boolean result = areaTypeService.updateAreaTypeById(dto);
+        boolean result = areaTypeBusinessService.update(dto);
 
         return new Payload<>(result);
     }
@@ -106,7 +106,7 @@ public class AreaTypeController {
     @ApiOperation("查询未受分类限制上级-新增用")
     public Payload<PageBean<AreaTypeVO>> listParentForCreate() {
 
-        List<AreaTypeDTO> dtoList = areaTypeService.listParentNodesForCreate();
+        List<AreaTypeDTO> dtoList = areaTypeBusinessService.listParentNodesForCreate();
 
         List<AreaTypeVO> voList = ObjectCloneUtils.convertList(dtoList, AreaTypeVO.class);
 
@@ -117,7 +117,7 @@ public class AreaTypeController {
     @ApiOperation("查询未受分类限制上级-更新用")
     public Payload<PageBean<AreaTypeVO>> listParentForUpdate(@PathVariable Long id) {
 
-        List<AreaTypeDTO> dtoList = areaTypeService.listParentNodesForUpdate(id);
+        List<AreaTypeDTO> dtoList = areaTypeBusinessService.listParentNodesForUpdate(id);
 
         List<AreaTypeVO> voList = ObjectCloneUtils.convertList(dtoList, AreaTypeVO.class);
 

@@ -211,4 +211,114 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
         //删除分类
         return areaTypeService.deleteAreaTypeByIds(idList);
     }
+
+    @Override
+    public boolean update(AreaTypeDTO dto) {
+
+        Long id=dto.getId();
+
+        AreaTypeDTO self = areaTypeService.getAreaTypeById(id);
+
+        Long origParentId=self.getParentId();
+
+        Long newParentId=dto.getParentId();
+
+        //如果挂载到新等级
+        if(!newParentId.equals(origParentId)){
+
+            AreaTypeDTO newParent=areaTypeService.getAreaTypeById(newParentId);
+
+            String newParentPath =newParent.getPath();
+
+            String origSelfPath= self.getPath();
+
+            String newSelfPath=newParentPath+"/"+id;
+
+            updateChildrenPath(id,origSelfPath,newSelfPath);
+        }
+
+        return areaTypeService.updateAreaTypeById(dto);
+    }
+
+    @Override
+    public List<AreaTypeDTO> listParentNodesForCreate() {
+
+        log.info("创建区域分类接口:查询可用上级分类");
+
+
+        //没有被限制分类的节点
+        List<AreaTypeDTO> dtoList1=areaTypeService.listAreaTypePage(new AreaTypeQuery());
+
+        //首次创建处理空值
+        if(CollectionUtils.isEmpty(dtoList1)){
+
+            return Collections.emptyList();
+        }
+
+        List<AreaTypeDTO> dtoList2=ObjectCloneUtils.convertList(dtoList1,AreaTypeDTO.class,CloneDirection.FORWARD);
+
+        List<AreaTypeDTO> resultList=new ArrayList<>();
+
+        dtoList1.forEach(dto1->{
+
+            dtoList2.forEach(dto2->{
+
+                if(!dto1.getId().equals(dto2.getParentId())){
+
+                    resultList.add(dto1);
+                }
+            });
+        });
+
+        return resultList;
+    }
+
+    @Override
+    public List<AreaTypeDTO> listParentNodesForUpdate(Long id) {
+
+        log.info("更新区域分类接口:查询可用上级分类");
+
+        //没有上级的节点
+        List<AreaTypeDTO> noParentNodeList= listParentNodesForCreate();
+
+        if(CollectionUtils.isEmpty(noParentNodeList)){
+            return Collections.emptyList();
+        }
+        //加上原来自己的上级
+        AreaTypeDTO self=areaTypeService.getAreaTypeById(id);
+
+        Long parentId=self.getParentId();
+
+        if(parentId>0L){
+
+            AreaTypeDTO parent=areaTypeService.getAreaTypeById(parentId);
+
+            noParentNodeList.add(parent);
+        }
+
+        //不能选自己和自己的直接子节点
+        List<AreaTypeDTO> children=areaTypeService.listChildNodes("/"+id);
+
+        if(CollectionUtils.isNotEmpty(children)){
+
+            noParentNodeList.removeAll(children);
+        }
+
+        return ObjectCloneUtils.convertList(noParentNodeList,AreaTypeDTO.class);
+    }
+
+    private void updateChildrenPath(Long id,String replacedPath,String newPath){
+
+        List<AreaTypeDTO> children=areaTypeService.listChildNodes(id+"/");
+
+        if(CollectionUtils.isNotEmpty(children)){
+
+            children.forEach(ado->{
+                //替换新路径
+                ado.setPath(ado.getPath().replaceAll(replacedPath,newPath));
+            });
+            areaTypeService.updateAreaTypeByIds(children);
+        }
+    }
+
 }
