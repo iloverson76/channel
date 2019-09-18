@@ -33,6 +33,8 @@ public class StoreDistributorBusinessServiceImpl implements StoreDistributorBusi
     DistributorGradeRelationService distributorGradeRelationService;
     @Autowired
     StoreDistributorRelationDAO storeDistributorRelationDAO;
+    @Autowired
+    DistributorGradeService distributorGradeService;
 
 
     /**
@@ -51,21 +53,56 @@ public class StoreDistributorBusinessServiceImpl implements StoreDistributorBusi
             return Collections.emptyList();
         }
         List<StoreDistributorDTO> result = ObjectCloneUtils.convertList(storeDistributorDOS, StoreDistributorDTO.class);
+        //查询经销商、经销商等级体系、经销商等级的id集合
         Set<Long> distributorIds = new HashSet<>();
         Set<Long> gradeIds = new HashSet<>();
+        Set<Long> distributorGradeIds = new HashSet<>();
+
         //遍历得到查询的id
         for ( StoreDistributorDTO dto : result){
             distributorIds.add(dto.getDistributorId());
-            distributorIds.add(dto.getParentId());
+            //经销商没有指定上级时，他所处等级下的父等级所有经销商都是它的上级经销商
+            if(dto.getParentId() == null || dto.getParentId() == 0){
+                distributorGradeIds.add(dto.getGradeId());
+            }else{
+                distributorIds.add(dto.getParentId());
+            }
             gradeIds.add(dto.getGradeSystemId());
         }
+
+        //等级id与上级经销商的映射
+        Map<Long,List<DistributorGradeRelationDTO>> gradeIdDistributorIdsMap = new HashMap<>();
+        //查询经销商等级
+        if(CollectionUtil.isNotEmpty(distributorGradeIds)){
+            //查询所有经销商等级，获取他们的父等级
+            DistributorGradeQuery distributorGradeQuery = new DistributorGradeQuery();
+            distributorGradeQuery.setIds(new LinkedList<>(distributorGradeIds));
+            List<DistributorGradeDTO> distributorGradeDTOS = distributorGradeService.findPage(distributorGradeQuery);
+            if(CollectionUtil.isNotEmpty(distributorGradeDTOS)){
+                Set<Long> distributroGradeParentIds = distributorGradeDTOS.stream().map(DistributorGradeDTO::getParentId).collect(Collectors.toSet());
+                //用父级等级id查询所有属于上一级的经销商id
+                List<DistributorGradeRelationDTO> distributorGradeRelationDTOS = distributorGradeRelationService.findAllByGradeIds(new LinkedList<>(distributroGradeParentIds));
+                if(CollectionUtil.isNotEmpty(distributorGradeRelationDTOS)){
+                    Set distributorIds2 = distributorGradeRelationDTOS.stream().map(DistributorGradeRelationDTO::getDistributorId).collect(Collectors.toSet());
+                    distributorIds.addAll(distributorIds2);
+                    Map<Long,List<DistributorGradeRelationDTO>> parent2DistributorMap = distributorGradeRelationDTOS.stream().collect(Collectors.groupingBy(DistributorGradeRelationDTO::getGradeId));
+                    //等级id->上级经销商id列表
+                    distributorGradeDTOS.forEach(d->{
+                        List<DistributorGradeRelationDTO> parent = parent2DistributorMap.get(d.getParentId());
+                        gradeIdDistributorIdsMap.put(d.getId(),parent);
+                    });
+                }
+            }
+
+        }
+
         //查询所有经销商
         DistributorQuery distributorQuery = new DistributorQuery();
         distributorQuery.setIds(new LinkedList<>(distributorIds));
         List<DistributorDTO> distributorDTOS = distributorService.findPage(distributorQuery);
         Map<Long, DistributorDTO> distributorDTOMap = distributorDTOS.stream().collect(Collectors.toMap(DistributorDTO::getId,c->c));
 
-        //查询经销商等级
+        //查询经销商等级体系
         DistributorGradeSystemQuery distributorGradeSystemQuery = new DistributorGradeSystemQuery();
         distributorGradeSystemQuery.setIds(new LinkedList<>(gradeIds));
         List<DistributorGradeSystemDTO> distributorGradeSystemDTOS =  distributorGradeSystemService.findPage(distributorGradeSystemQuery);
@@ -83,6 +120,26 @@ public class StoreDistributorBusinessServiceImpl implements StoreDistributorBusi
                if(parent!=null) {
                    dd.setParentCode(parent.getDistributorCode());
                    dd.setParentName(parent.getDistributorName());
+               }else{
+                   List<DistributorGradeRelationDTO> parentDistributros = gradeIdDistributorIdsMap.get(dd.getGradeId());
+                   if(CollectionUtil.isEmpty(parentDistributros)){
+                       dd.setParentCode("");
+                       dd.setParentName("");
+                   }else{
+                       StringBuilder codeSb = new StringBuilder();
+                       StringBuilder nameSb = new StringBuilder();
+                       parentDistributros.forEach(p->{
+                           DistributorDTO d = distributorDTOMap.get(p.getDistributorId());
+                           codeSb.append(d.getDistributorCode());
+                           codeSb.append(",");
+                           nameSb.append(d.getDistributorName());
+                           nameSb.append(",");
+                       });
+                       if(codeSb.length()>0&&nameSb.length()>0){
+                           codeSb.deleteCharAt(codeSb.length()-1);
+                           nameSb.deleteCharAt(nameSb.length()-1);
+                       }
+                   }
                }
            }
             //经销商等级信息
@@ -149,5 +206,21 @@ public class StoreDistributorBusinessServiceImpl implements StoreDistributorBusi
     @Override
     public Boolean deleteStoreDistributor(List<Long> ids) {
         return storeDistributorRelationService.deleteByStoreIds(ids);
+    }
+
+
+    private void getParentDistributors(List<StoreDistributorDTO> result){
+        //经销商没有指定上级时，他所处等级下的父等级所有经销商都是它的上级经销商
+        //查询所有没有限制上级的等级信息
+        Set<Long> distributorIds = new HashSet<>();
+        DistributorGradeQuery distributorGradeQuery = new DistributorGradeQuery();
+        List<Long> distributorGradeIds = new LinkedList<>();
+        result.forEach(dd->{
+            if(dd.getParentId() == null || dd.getParentId() == 0){
+                distributorGradeIds.add(dd.getGradeId());
+            }
+        });
+
+
     }
 }

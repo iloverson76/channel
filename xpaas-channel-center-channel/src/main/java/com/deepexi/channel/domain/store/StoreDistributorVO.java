@@ -57,8 +57,10 @@ public class StoreDistributorVO extends AbstractObject {
     private Long gradeSystemId;
     @ApiModelProperty("经销商等级体系编码")
     private String gradeSystemCode;
-    @ApiModelProperty("进销商等级体系名称")
+    @ApiModelProperty("经销商等级体系名称")
     private String gradeSystemName;
+    @ApiModelProperty("经销商等级id")
+    private Long gradeId;
 
 //    @ApiModelProperty("上级经销商列表")
 //    private List<StoreDistributorVO> parentDistributor;

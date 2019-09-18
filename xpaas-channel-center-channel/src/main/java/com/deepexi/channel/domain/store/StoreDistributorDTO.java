@@ -39,8 +39,12 @@ public class StoreDistributorDTO extends SuperEntity {
     Long gradeSystemId;
     /**经销商编码*/
     String gradeSystemCode;
-    /**进销商等级体系名称*/
+    /**经销商等级体系名称*/
     String gradeSystemName;
+    /**经销商等级id*/
+    Long gradeId;
+
+
     /**上级经销商*/
 //    private List<StoreDistributorDTO> parentDistributor;
 }
