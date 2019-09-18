@@ -35,4 +35,6 @@ public interface DistributorGradeBusinessService {
      * 根据体系查询所有的等级
      */
     List<DistributorGradeDTO> findAllGradesBySystem(long systemId);
+
+    boolean delete(List<Long> idList);
 }

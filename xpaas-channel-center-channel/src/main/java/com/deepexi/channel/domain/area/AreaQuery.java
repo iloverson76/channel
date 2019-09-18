@@ -27,6 +27,8 @@ public class AreaQuery extends CommQuery {
 
     private List<Long> ids;
 
+    private List<Long> areatypeIds;
+
     /**
      * 区域名称
      */

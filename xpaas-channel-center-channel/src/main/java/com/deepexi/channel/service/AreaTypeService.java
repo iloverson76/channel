@@ -20,7 +20,7 @@ public interface AreaTypeService {
 
     boolean updateAreaTypeById(AreaTypeDTO dto);
 
-    boolean deleteAreaTypeByIds(Set<Long> ids);
+    boolean deleteAreaTypeByIds(List<Long> idList);
 
     List<AreaTypeDTO> listAreaTypePage(AreaTypeQuery query);
 

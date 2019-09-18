@@ -3,12 +3,16 @@ package com.deepexi.channel.businness.impl;
 import com.deepexi.channel.businness.DistributorGradeBusinessService;
 import com.deepexi.channel.dao.DistributorGradeDAO;
 import com.deepexi.channel.domain.distributor.*;
+import com.deepexi.channel.service.DistributorGradeRelationService;
 import com.deepexi.channel.service.DistributorGradeService;
 import com.deepexi.channel.service.DistributorGradeSystemService;
+import com.deepexi.channel.service.DistributorService;
 import com.deepexi.util.CollectionUtil;
+import com.deepexi.util.extension.ApplicationException;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.checkerframework.checker.units.qual.A;
 import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +29,12 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
     @Autowired
     private DistributorGradeSystemService distributorGradeSystemService;
+
+    @Autowired
+    private DistributorGradeRelationService distributorGradeRelationService;
+
+    @Autowired
+    private DistributorService distributorService;
 
     @Override
     public DistributorGradeDTO detail(Long gradeId) {
@@ -101,7 +111,8 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
                     } else {
 
-                        DistributorGradeDTO gdto = gradeDTOS.get(0);//id是主键,只有一条记录
+                        //id是主键,只有一条记录
+                        DistributorGradeDTO gdto = gradeDTOS.get(0);
 
                         grade.setParentGradeCode(gdto.getDistributorGradeCode() == null ? "" : gdto.getDistributorGradeCode());
 
@@ -200,7 +211,6 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
                 if(null==v&&grade.getGradeSystemId()==systemId){//按体系查
                     resultList.add(grade);
                 }
-
             });
         }
 
@@ -209,6 +219,8 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
     @Override
     public List<DistributorGradeDTO> findAllGradesBySystem(long systemId) {
+
+        log.info("查找经销商体系详细信息");
 
         DistributorGradeSystemDTO systemDTO = distributorGradeSystemService.detail(systemId);
 
@@ -232,5 +244,42 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
         return gradeList;
     }
 
+    @Override
+    public boolean delete(List<Long> gradeIddList) {
+
+        log.info("经销商等级删除");
+
+        //是否已挂载经销商
+        List<DistributorGradeRelationDTO> dgrList = distributorGradeRelationService.findAllByGradeIds(gradeIddList);
+
+        List<Long> distributorIds=new ArrayList<>();
+
+        if(CollectionUtil.isNotEmpty(dgrList)){
+
+           dgrList.forEach(dgr->{
+
+               Long did=dgr.getDistributorId();
+
+               if(null!=did){
+
+                   distributorIds.add(did);
+               }
+           });
+        }
+
+        DistributorQuery query=new DistributorQuery();
+
+        query.setIds(distributorIds);
+
+        List<DistributorDTO> distributorList = distributorService.findPage(query);
+
+        if(CollectionUtil.isNotEmpty(distributorList)){
+
+            throw new ApplicationException("此等级已挂载经销商,不能删除!请解除所有关联后再操作");
+        }
+
+        //删除等级
+        return distributorGradeService.delete(gradeIddList);
+    }
 
 }

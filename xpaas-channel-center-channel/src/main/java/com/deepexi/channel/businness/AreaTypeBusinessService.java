@@ -7,6 +7,7 @@ import com.deepexi.channel.domain.area.AreaTypeQuery;
 import com.deepexi.channel.domain.chain.ChainTypeDTO;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * cc_distributor_grade
@@ -20,4 +21,6 @@ public interface AreaTypeBusinessService {
     List<AreaTypeDTO> getListAreaType(List<Long> ids);
 
     List<AreaTypeDTO> findParentAreaTypeByAreaId(Long areaId);
+
+    boolean deleteAreaTypeByIds(List<Long> idList);
 }

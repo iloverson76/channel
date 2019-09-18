@@ -123,25 +123,24 @@ public class AreaTypeServiceImpl implements AreaTypeService {
 
     @Transactional
     @Override
-    public boolean deleteAreaTypeByIds(Set<Long> ids) {
+    public boolean deleteAreaTypeByIds(List<Long> idList) {
 
         log.info("批量删除区域类型");
 
-        if (CollectionUtils.isEmpty(ids)) {
+        if (CollectionUtils.isEmpty(idList)) {
             return false;
         }
+        if(idList.contains(0)){
 
-        if(ids.contains(0)){
-
-            ids.remove(0);//parent=0不能作为id=0来删除
+            //parent=0不能作为id=0来删除
+            idList.remove(0);
         }
 
-        ids.forEach(id->{
+        idList.forEach(id->{
             deleteAreaTypeById(id);
         });
 
         return Boolean.TRUE;
-       // return areaTypeDAO.removeByIds(ids);
     }
 
     @Override

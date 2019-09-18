@@ -3,4 +3,4 @@ FROM fabric8/java-jboss-openjdk8-jdk
 
 USER root
 
-COPY xpaas-channel-center-webapp-provider/target/demo.jar /home/
+COPY xpaas-channel-center-webapp/target/demo.jar /home/
