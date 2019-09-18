@@ -7,12 +7,12 @@ proj_home=$PWD                              # the project root dir
 img_output="deepexi/xpaas-channel-center"      # output image tag
 
 # apollo 配置中心配置
-apollo_configService="http://39.100.65.239:8080/"
+apollo_configService="http://39.100.65.239:8081/"
 app_id="xpaas-channel-center"
-apollo_meta="http://39.100.65.239:8080"
+apollo_meta="http://39.100.65.239:8081"
 apollo_bootstrap_enabled="true"
 apollo_bootstrap_namespaces="application"
-apollo_env="DEV"
+apollo_env="FAT"
 
 git pull  # should use git clone https://name:pwd@xxx.git
 
@@ -51,7 +51,7 @@ docker run -d --restart=on-failure:5 --privileged=true \
         -Xloggc:logs/gc_$version.log \
         -jar /home/demo.jar \
           --spring.profiles.active=prod \
-          --eureka.client.serviceUrl.defaultZone=http://admin:deepexi@39.100.65.239:8080/eureka/ \
+          --eureka.client.serviceUrl.defaultZone=http://admin:deepexi@39.100.65.239:8081/eureka/ \
           --app.id=$app_id \
           --apollo.meta=$apollo_meta \
           --apollo.bootstrap.enabled=$apollo_bootstrap_enabled \
