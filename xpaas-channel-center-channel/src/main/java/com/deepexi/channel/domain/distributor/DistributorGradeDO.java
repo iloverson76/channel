@@ -45,6 +45,11 @@ public class DistributorGradeDO extends SuperEntity {
     private String distributorGradeName;
 
     /**
+     * 经销商等级名称-英文
+     */
+    private String distributorGradeNameEn;
+
+    /**
      * 等级编码
      */
 

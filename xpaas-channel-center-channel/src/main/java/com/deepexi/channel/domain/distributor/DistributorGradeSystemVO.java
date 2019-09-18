@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 
@@ -37,12 +39,22 @@ public class DistributorGradeSystemVO extends AbstractObject {
      * 等级体系名称
      */
     @ApiModelProperty("等级体系名称")
+    @Pattern(regexp = "^[A-Za-z0-9\\u4e00-\\u9fa5]+$")
+    @Size(min=1,max=16)
     private String gradeSystemName;
+
+    /**
+     * 等级体系名称-英文
+     */
+    @ApiModelProperty("等级体系名称")
+    @Pattern(regexp = "^[A-Za-z0-9]+$")
+    private String gradeSystemNameEn;
 
     /**
      * 等级体系编码
      */
     @ApiModelProperty("等级体系编码")
+    @Pattern(regexp = "^[A-Za-z0-9]+$")
     private String gradeSystemCode;
 
 
