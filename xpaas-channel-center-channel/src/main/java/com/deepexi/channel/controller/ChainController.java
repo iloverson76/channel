@@ -66,6 +66,10 @@ public class ChainController {
         if(!chainService.isCodeUnique(dto)){
             throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
         }
+        //判断修改类型是否合法
+        if(!chainBusinessService.isChangeChainTypeLegal(dto)){
+            throw new ApplicationException(ResultEnum.CHAIN_CHANGE_TYPE_ILLEGAL);
+        }
         List<BankAccountDTO> bankAccountList = ObjectCloneUtils.convertList(vo.getBankAccountList(), BankAccountDTO.class);
         dto.setBankAccountList(bankAccountList);
          return new Payload(chainBusinessService.updateChain(dto));

@@ -11,6 +11,7 @@ import com.deepexi.channel.domain.store.StoreChainDTO;
 import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.service.*;
 import com.deepexi.util.CollectionUtil;
+import com.deepexi.util.StringUtil;
 import com.deepexi.util.extension.ApplicationException;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
@@ -475,6 +476,28 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         //path不为空的，就是在树中的节点
         query.setPath("/");
         return chainService.findPage(query);
+    }
+
+    /**
+     * @MethodName: isChangeChainTypeLegal
+     * @Description: 修改连琐的类型时，如果在树中不能修改
+     * @Param: [dto]
+     * @Return: boolean
+     * @Author: mumu
+     * @Date: 2019/9/18
+    **/
+    @Override
+    public boolean isChangeChainTypeLegal(ChainDetailDTO dto) {
+        ChainDTO historyDTO = chainService.detail(dto.getId());
+        //修改前后类型不变，合法
+        if(historyDTO.getChainTypeId().equals(historyDTO.getChainTypeId())){
+            return true;
+        }
+        //不在树中，修改合法
+        if(StringUtil.isEmpty(historyDTO.getPath())){
+            return true;
+        }
+        return false;
     }
 
 }

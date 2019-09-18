@@ -35,4 +35,5 @@ public interface ChainBusinessService {
 
     List<ChainDTO> getLegalParentChainByChainId(Long chainTypeId);
 
+    boolean isChangeChainTypeLegal(ChainDetailDTO dto);
 }
