@@ -2,20 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.deepexi.channel.mapper.DistributorGradeSystemMapper">
 
-    <resultMap type="com.deepexi.channel.domain.distributor.DistributorGradeSystemDO" id="BaseResult">
-        <result property="id" column="id" />
-        <result property="gradeSystemName" column="grade_system_name" />
-        <result property="gradeSystemCode" column="grade_system_code" />
-        <result property="description" column="description" />
-        <result property="version" column="version" />
-        <result property="remark" column="remark" />
-        <result property="dr" column="dr" />
-        <result property="createdBy" column="created_by" />
-        <result property="createdTime" column="created_time" />
-        <result property="updatedBy" column="updated_by" />
-        <result property="updatedTime" column="updated_time" />
-    </resultMap>
-
     <select id="findPage" parameterType="com.deepexi.channel.domain.distributor.DistributorGradeSystemQuery"
             resultType="com.deepexi.channel.domain.distributor.DistributorGradeSystemDO">
 
