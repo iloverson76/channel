@@ -29,7 +29,7 @@
             AND distributor_type=#{distributorType}
         </if>
         <if test="distributorCode!=null">
-            AND distributor_code =#{distributorCode}
+            AND distributor_code =LIKE concat('%',#{distributorCode},'%')
         </if>
         <if test="startTime != null">
             and created_time &gt;= #{startTime}
