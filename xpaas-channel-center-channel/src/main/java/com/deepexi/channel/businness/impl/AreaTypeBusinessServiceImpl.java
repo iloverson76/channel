@@ -155,7 +155,7 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
         List<AreaTypeDTO> resultList=new ArrayList<>();
 
         //限制上级分类
-        if(type.getLimitParent().equals(1L)&&parentTypeId!=null){
+        if(type.getLimitParent()==1){
 
             AreaTypeDTO parentType = areaTypeService.getAreaTypeById(parentTypeId);
 

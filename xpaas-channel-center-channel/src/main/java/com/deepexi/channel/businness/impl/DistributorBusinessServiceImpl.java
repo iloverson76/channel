@@ -542,7 +542,7 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
                         Integer limitedParent=dgr.getLimitedParent();
 
-                        if(limitedParent.equals(1L)){
+                        if(limitedParent==1){
 
                             DistributorDTO dis= distributorService.getById(dgr.getParentId());
 

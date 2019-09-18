@@ -380,7 +380,7 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         //查询父节点,用于后面设置path
         ChainDTO rootParent = null;
         //如果设置为根节点
-        if(chainDTO.getParentId().equals(0L)){
+        if(chainDTO.getParentId()==0){
             /**设置rootParent节点id为0，path为""，方便后面代码拼接,无需再判断是否设置为根节点*/
             rootParent = new ChainDTO();
             rootParent.setId(0L);
