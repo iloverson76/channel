@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
@@ -54,18 +56,23 @@ public class AreaVO extends AbstractObject {
      * 区域名称
      */
     @ApiModelProperty("区域名称")
+    @Pattern(regexp = "^[A-Za-z0-9\\u4e00-\\u9fa5]+$")
+    @Size(min=1,max=16)
     private String areaName;
 
     /**
      * 区域编码
      */
     @ApiModelProperty("区域编码")
+    @Pattern(regexp = "^[A-Za-z0-9]+$")
+    @Size(min=1,max=16)
     private String areaCode;
 
     /**
      * 区域英文名称
      */
-    @ApiModelProperty("区域英文名称")
+    @ApiModelProperty(value = "门店英文名称")
+    @Pattern(regexp = "^[A-Za-z0-9]+$")
     private String areaNameEn;
 
     /**
