@@ -39,7 +39,7 @@
             AND distributor_grade_name LIKE concat('%',#{distributorGradeName},'%')
         </if>
         <if test="distributorGradeCode!=null">
-            AND distributor_grade_code =#{distributorGradeCode}
+            AND distributor_grade_code =LIKE concat('%',#{distributorGradeCode},'%')
         </if>
         <if test="startTime != null">
             and created_time &gt;= #{startTime}

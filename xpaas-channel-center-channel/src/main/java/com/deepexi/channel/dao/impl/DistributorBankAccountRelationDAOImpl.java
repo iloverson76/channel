@@ -29,13 +29,20 @@ public class DistributorBankAccountRelationDAOImpl extends ServiceImpl<Distribut
     }
 
     @Override
-    public int deleteBatchByDistributorIds(List<Long> distributorIdList) {
+    public boolean deleteBatchByDistributorIds(List<Long> distributorIdList) {
 
         UpdateWrapper<DistributorBankAccountRelationDO> wp=new UpdateWrapper<>();
 
         wp.in("distributor_id",distributorIdList);
 
-        return baseMapper.delete(wp);
+        boolean result=false;
+
+        int updatedRow=baseMapper.delete(wp);
+
+        if(updatedRow>0){
+            result =true;
+        }
+        return result;
     }
 
     @Override

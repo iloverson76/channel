@@ -8,7 +8,7 @@ import com.deepexi.channel.domain.bank.BankDTO;
 import com.deepexi.channel.domain.distributor.*;
 import com.deepexi.channel.enums.DistributorTypeEnum;
 import com.deepexi.channel.service.*;
-import com.netflix.discovery.converters.Auto;
+import com.deepexi.util.extension.ApplicationException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -160,16 +160,47 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
     @Override
     public boolean delete(List<Long> butorIdList) {
 
+        DistributorQuery query = new DistributorQuery();
 
+        query.setIds(butorIdList);
+
+        List<DistributorDTO> pageList = distributorService.findPage(query);
+
+        Map<Long, DistributorDTO> pageMap =
+                pageList.stream().collect(Collectors.toMap(DistributorDTO::getId, a -> a,(k1,k2)->k1));
+
+        //是否有下级经销商
+        List<DistributorGradeRelationDTO> dgrList = distributorGradeRelationService.findAllByDistributorIds(butorIdList);
+
+        if(CollectionUtils.isNotEmpty(dgrList)){
+
+            dgrList.forEach(dgr->{
+
+                butorIdList.forEach(butorId->{
+
+                    Long parentId=dgr.getParentId();
+
+                    if(butorId.equals(parentId)){
+
+                        throw new ApplicationException("["+pageMap.get(parentId).getDistributorName()
+                                +"]已挂载下级经销商["+pageMap.get(butorId).getDistributorName()+"],无法删除!请解除关联后再操作");
+                    }
+                });
+
+            });
+
+        }
+
+
+        //删除经销商
         distributorService.deleteBatch(butorIdList);
 
         distributorGradeRelationService.deleteBatchByDistributorIds(butorIdList);
 
         distributorAreaRelationService.deleteBatchByDistributorIds(butorIdList);
 
-        distributorBankAccountRelationService.deleteBatchByDistributorIds(butorIdList);
+        return distributorBankAccountRelationService.deleteBatchByDistributorIds(butorIdList);
 
-        return Boolean.TRUE;
     }
 
     @Override
@@ -192,7 +223,6 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
                     dto.setDistributorTypeDesc(map.get("msg"));
                 }
             }
-
         });
 
        return dtoList;

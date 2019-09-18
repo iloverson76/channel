@@ -46,7 +46,7 @@
             AND area_type_name LIKE concat('%',#{areaTypeName},'%')
         </if>
         <if test="areaTypeCode!=null">
-            AND area_type_code =#{areaTypeCode}
+            AND area_type_code =LIKE concat('%',#{areaTypeCode},'%')
         </if>
         <if test="startTime != null">
             and created_time &gt;= #{startTime}
