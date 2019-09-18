@@ -9,6 +9,7 @@ import com.deepexi.channel.service.DistributorGradeService;
 import com.deepexi.channel.service.DistributorGradeSystemService;
 import com.deepexi.channel.service.DistributorService;
 import com.deepexi.util.CollectionUtil;
+import com.deepexi.util.extension.ApplicationException;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import com.netflix.discovery.converters.Auto;
 import lombok.extern.slf4j.Slf4j;
@@ -137,5 +138,35 @@ public class DistributorSystemBusinessServiceImpl implements DistributorSystemBu
             result.add(dto);
         }
         return result;
+    }
+
+    @Override
+    public boolean delete(List<Long> systemIdList) {
+
+        //已挂载等级的不能删除
+        DistributorGradeSystemQuery systemQuery=new DistributorGradeSystemQuery();
+
+        systemQuery.setIds(systemIdList);
+
+        List<DistributorGradeSystemDTO> systemList= distributorGradeSystemService.findPage(systemQuery);
+
+        systemList.forEach(system->{
+
+            Long systemId=system.getId();
+
+            DistributorGradeQuery gradeQuery = new DistributorGradeQuery();
+
+            gradeQuery.setSystemId(systemId);
+
+            List<DistributorGradeDTO> gradeList = distributorGradeService.findPage(gradeQuery);
+
+            if(CollectionUtil.isNotEmpty(gradeList)){
+
+                throw new ApplicationException("["+system.getGradeSystemName()+"]已挂载已等级,不能删除!请解除所有关联后再操作");
+            }
+        });
+
+        //删除体系
+        return distributorGradeSystemService.delete(systemIdList);
     }
 }

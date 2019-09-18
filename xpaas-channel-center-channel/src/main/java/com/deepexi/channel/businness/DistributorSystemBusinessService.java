@@ -21,4 +21,6 @@ public interface DistributorSystemBusinessService {
     DistributorGradeSystemDTO detail(Long pk);
 
     List<StoreDistributorDTO> getDistributorGradeSystemByDistributorId(long distributorId);
+
+    boolean delete(List<Long> idList);
 }

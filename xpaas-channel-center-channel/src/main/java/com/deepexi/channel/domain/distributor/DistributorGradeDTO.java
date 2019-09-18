@@ -2,8 +2,11 @@ package com.deepexi.channel.domain.distributor;
 
 import com.deepexi.channel.domain.SuperEntity;
 import com.deepexi.util.pojo.AbstractObject;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
@@ -66,6 +69,11 @@ public class DistributorGradeDTO extends AbstractObject {
      * 经销商等级名称
      */
     private String distributorGradeName;
+
+    /**
+     * 经销商等级名称-英文
+     */
+    private String distributorGradeNameEn;
 
     /**
      * 经销商等级编码

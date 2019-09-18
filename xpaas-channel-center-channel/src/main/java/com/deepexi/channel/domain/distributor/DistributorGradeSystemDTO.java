@@ -36,6 +36,11 @@ public class DistributorGradeSystemDTO extends AbstractObject {
     private String gradeSystemName;
 
     /**
+     * 等级体系名称-英文
+     */
+    private String gradeSystemNameEn;
+
+    /**
      * 等级体系编码
      */
     private String gradeSystemCode;

@@ -46,6 +46,9 @@ public class DistributorGradeQuery extends CommQuery {
     @ApiModelProperty(value = "主键", example = "123")
     private Long id;
 
+    @ApiModelProperty(value = "所属体系ID", example = "123")
+    private Long systemId;
+
     /**
      * 描述
      */

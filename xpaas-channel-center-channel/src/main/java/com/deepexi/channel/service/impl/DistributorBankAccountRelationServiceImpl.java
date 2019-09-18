@@ -35,7 +35,7 @@ public class DistributorBankAccountRelationServiceImpl implements DistributorBan
     }
 
     @Override
-    public int deleteBatchByDistributorIds(List<Long> idList) {
+    public boolean deleteBatchByDistributorIds(List<Long> idList) {
 
         return distributorBankAccountRelationDAO.deleteBatchByDistributorIds(idList);
     }

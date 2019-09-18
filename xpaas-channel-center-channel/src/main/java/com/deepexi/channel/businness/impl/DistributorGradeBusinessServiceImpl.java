@@ -172,7 +172,7 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
             resultList.add(parent);
         }
-        //不能把自己给选上
+        //不能把自己选上
         if(gdto!=null&&resultList.contains(gdto)){
             resultList.remove(gdto);
         }
@@ -249,7 +249,7 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
         log.info("经销商等级删除");
 
-        //是否已挂载经销商
+        //挂载经销商的不能删除
         List<DistributorGradeRelationDTO> dgrList = distributorGradeRelationService.findAllByGradeIds(gradeIddList);
 
         List<Long> distributorIds=new ArrayList<>();
@@ -278,6 +278,35 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
             throw new ApplicationException("此等级已挂载经销商,不能删除!请解除所有关联后再操作");
         }
 
+        //有下级的不能删除
+        DistributorGradeQuery gradeQuery = new DistributorGradeQuery();
+
+        gradeQuery.setIds(gradeIddList);
+
+        List<DistributorGradeDTO> pageList = distributorGradeService.findPage(gradeQuery);
+
+        Map<Long, DistributorGradeDTO> pageMap =
+                pageList.stream().collect(Collectors.toMap(DistributorGradeDTO::getId, a -> a,(k1,k2)->k1));
+
+
+        if(CollectionUtil.isNotEmpty(pageList)) {
+
+            pageList.forEach(page -> {
+
+                gradeIddList.forEach(id -> {
+
+                    if (page.getParentId().equals(id)) {
+
+                        String childName= pageMap.get(page.getId()).getDistributorGradeName();
+
+                        String parentName= pageMap.get(id).getDistributorGradeName();
+
+                        throw new ApplicationException("["+parentName+"]已挂载 ["+childName+"],不能删除!请解除关联后再操作");
+                    }
+                });
+
+            });
+        }
         //删除等级
         return distributorGradeService.delete(gradeIddList);
     }

@@ -29,19 +29,19 @@
             AND distributor_type=#{distributorType}
         </if>
         <if test="distributorCode!=null">
-            AND distributor_code =#{distributorCode}
+            AND distributor_code LIKE concat('%',#{distributorCode},'%')
         </if>
-        <if test="updateStartTime!=null">
-            AND DATE_FORMAT(created_time,'%Y-%m-%d') <![CDATA[ >= ]]>DATE_FORMAT(#{startTime},'%Y-%m-%d')
+        <if test="startTime != null">
+            and created_time &gt;= #{startTime}
         </if>
-        <if test="endTime!=null">
-            AND DATE_FORMAT(created_time,'%Y-%m-%d') <![CDATA[ <= ]]>DATE_FORMAT(#{endTime},'%Y-%m-%d')
+        <if test="endTime != null">
+            and created_time &lt;= #{endTime}
         </if>
-        <if test="startTime!=null">
-            AND DATE_FORMAT(updated_time,'%Y-%m-%d') <![CDATA[ >= ]]>DATE_FORMAT(#{updateStartTime},'%Y-%m-%d')
+        <if test="updateStartTime != null">
+            and updated_time &gt;= #{updateStartTime}
         </if>
-        <if test="updateEndTime!=null">
-            AND DATE_FORMAT(updated_time,'%Y-%m-%d') <![CDATA[ <= ]]>DATE_FORMAT(#{updateEndTime},'%Y-%m-%d')
+        <if test="updateEndTime != null">
+            and updated_time &lt;= #{updateEndTime}
         </if>
         order by updated_time desc
     </select>
