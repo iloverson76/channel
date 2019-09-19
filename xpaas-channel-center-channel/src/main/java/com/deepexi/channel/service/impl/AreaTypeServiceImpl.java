@@ -256,4 +256,5 @@ public class AreaTypeServiceImpl implements AreaTypeService {
 
         return dtoList;
     }
+
 }
