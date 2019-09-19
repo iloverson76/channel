@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.deepexi.channel.domain.area.AreaTypeDO;
 import com.deepexi.channel.domain.area.AreaTypeDTO;
 import com.deepexi.channel.domain.area.AreaTypeQuery;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
  * @author chp
  * @since 2019-08-23
  */
+@Mapper
 public interface AreaTypeMapper extends BaseMapper<AreaTypeDO> {
 
     List<AreaTypeDO> listAreaTypePage(AreaTypeQuery query);
