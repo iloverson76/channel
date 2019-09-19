@@ -27,6 +27,9 @@
         <if test="id != null">
             and id = #{id}
         </if>
+        <if test="storeId != null">
+            and store_id = #{storeId}
+        </if>
         <if test="storeCode!=null and storeCode!=''">
             and store_code like concat('%',#{storeCode},'%')
         </if>
