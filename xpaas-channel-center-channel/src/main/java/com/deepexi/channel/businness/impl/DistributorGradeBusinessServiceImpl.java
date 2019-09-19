@@ -1,7 +1,6 @@
 package com.deepexi.channel.businness.impl;
 
 import com.deepexi.channel.businness.DistributorGradeBusinessService;
-import com.deepexi.channel.dao.DistributorGradeDAO;
 import com.deepexi.channel.domain.distributor.*;
 import com.deepexi.channel.service.DistributorGradeRelationService;
 import com.deepexi.channel.service.DistributorGradeService;
@@ -12,10 +11,9 @@ import com.deepexi.util.extension.ApplicationException;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.units.qual.A;
-import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -35,6 +33,35 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
     @Autowired
     private DistributorService distributorService;
+
+    @Override
+    public Long create(DistributorGradeDTO dto) {
+
+        DistributorGradeQuery query = new DistributorGradeQuery();
+
+        Long systemId=dto.getGradeSystemId();
+
+        query.setSystemId(systemId);
+
+        List<DistributorGradeDTO> pageList = distributorGradeService.findPage(query);
+
+        if(CollectionUtil.isEmpty(pageList)){
+
+            //首次新建必须是根节点,因为不是根节点的话上一级是必填的
+            dto.setRoot(1);
+
+        }else{
+            pageList.forEach(grade->{
+
+                if(grade.getRoot()==1&&dto.getRoot()==1){
+                    throw new ApplicationException("一个体系只能有一个根节点"+"["+grade.getDistributorGradeName()+"]");
+                }
+                dto.setRoot(0);
+            });
+        }
+
+        return distributorGradeService.create(dto);
+    }
 
     @Override
     public DistributorGradeDTO detail(Long gradeId) {
@@ -126,34 +153,36 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
         List<Long> systemIdList=gradeList.stream().map(DistributorGradeDTO::getGradeSystemId).
                 collect(Collectors.toList());
 
-        DistributorGradeSystemQuery systemQry=new DistributorGradeSystemQuery();
+        if(CollectionUtil.isNotEmpty(systemIdList)){
 
-        systemQry.setIds(systemIdList);
+            DistributorGradeSystemQuery systemQry=new DistributorGradeSystemQuery();
 
-        List<DistributorGradeSystemDTO> systemList= distributorGradeSystemService.findPage(systemQry);
+            systemQry.setIds(systemIdList);
 
-        Map<Long, List<DistributorGradeSystemDTO>> systemMap =
+            List<DistributorGradeSystemDTO> systemList= distributorGradeSystemService.findPage(systemQry);
 
-                systemList.stream().collect(Collectors.groupingBy(DistributorGradeSystemDTO::getId));
+            Map<Long, List<DistributorGradeSystemDTO>> systemMap =
 
-        gradeList.forEach(grade -> {
+                    systemList.stream().collect(Collectors.groupingBy(DistributorGradeSystemDTO::getId));
 
-            long systemId=grade.getGradeSystemId();
+            gradeList.forEach(grade -> {
 
-            if(0!=systemId){
+                Long systemId=grade.getGradeSystemId();
 
-                // 根据id对应设置体系编码
-                List<DistributorGradeSystemDTO> systemDTOS = systemMap.get(systemId);
+                if(0!=systemId){
 
-                if (CollectionUtil.isNotEmpty(systemDTOS)) {
+                    // 根据id对应设置体系编码
+                    List<DistributorGradeSystemDTO> systemDTOS = systemMap.get(systemId);
 
-                    DistributorGradeSystemDTO sdto=systemDTOS.get(0);
+                    if (CollectionUtil.isNotEmpty(systemDTOS)) {
 
-                    grade.setSystem(sdto);
+                        DistributorGradeSystemDTO sdto=systemDTOS.get(0);
+
+                        grade.setSystem(sdto);
+                    }
                 }
-            }
-        });
-
+            });
+        }
         return gradeList;
     }
 
@@ -176,7 +205,6 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
         if(gdto!=null&&resultList.contains(gdto)){
             resultList.remove(gdto);
         }
-
         return resultList;
     }
 
@@ -190,25 +218,33 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
         //等级表数据
         DistributorGradeQuery query=new DistributorGradeQuery();
 
+        query.setSystemId(systemId);
+
         List<DistributorGradeDTO> gradeList = distributorGradeService.findPage(query);
 
         List<DistributorGradeDTO> resultList=new ArrayList<>();
+
+        if(CollectionUtil.isEmpty(gradeList)){
+            return Collections.emptyList();
+        }
 
         List<Long> parentIdList=gradeList.stream().map(DistributorGradeDTO::getParentId).collect(Collectors.toList());
 
         Map<Long, Long> parentMap =new HashMap<>();
 
-        parentIdList.forEach(pid->{
-            parentMap.put(pid,pid);
-        });
-
         if(CollectionUtil.isNotEmpty(parentIdList)){
+
+            parentIdList.forEach(pid->{
+                parentMap.put(pid,pid);
+            });
 
             gradeList.forEach(grade->{
 
-                Long v=parentMap.get(grade.getId());//没有下级的才可以挂载新子节点
+                //没有下级的才可以挂载新子节点
+                Long v=parentMap.get(grade.getId());
 
-                if(null==v&&grade.getGradeSystemId()==systemId){//按体系查
+                //按体系查
+                if(null==v&&grade.getGradeSystemId()==systemId){
                     resultList.add(grade);
                 }
             });
@@ -224,7 +260,11 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
         DistributorGradeSystemDTO systemDTO = distributorGradeSystemService.detail(systemId);
 
-        List<DistributorGradeDTO> pageList = distributorGradeService.findPage(new DistributorGradeQuery());
+        DistributorGradeQuery query = new DistributorGradeQuery();
+
+        query.setSystemId(systemId);
+
+        List<DistributorGradeDTO> pageList = distributorGradeService.findPage(query);
 
         List<DistributorGradeDTO> gradeList=new ArrayList<>();
 
@@ -242,6 +282,48 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
         }
         return gradeList;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public Boolean update(DistributorGradeDTO dto) {
+
+        long id=dto.getId();
+
+        DistributorGradeDTO origDTO=distributorGradeService.getById(id);
+
+        //根节点修改的冲突
+        if(dto.getRoot()==1){
+
+            findPage(new DistributorGradeQuery()).forEach(grade->{
+
+                if(grade.getRoot()==1){
+                    throw new ApplicationException("已存在一个根节点"+"["+dto.getDistributorGradeName()+"]");
+                }
+            });
+        }
+
+        //改变所属体系
+        long newSystemId=dto.getGradeSystemId();
+
+        long origSystemId=origDTO.getGradeSystemId();
+
+        if(origSystemId==newSystemId){
+
+            List<DistributorGradeDTO> children=distributorGradeService.listChildrenNodes(id);
+
+            children.forEach(child->{
+                child.setGradeSystemId(newSystemId);
+            });
+
+            List<DistributorGradeDO> childrenDO=ObjectCloneUtils.convertList(children,
+                    DistributorGradeDO.class,CloneDirection.FORWARD);
+
+            distributorGradeService.updateBatchById(childrenDO);
+
+        }
+
+        return distributorGradeService.update(dto);
     }
 
     @Override

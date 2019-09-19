@@ -411,14 +411,4 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
         return idList;
     }
 
-
-
-
-
-
-
-
-
-
-
 }

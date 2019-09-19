@@ -49,6 +49,11 @@ public class DistributorGradeQuery extends CommQuery {
     @ApiModelProperty(value = "所属体系ID", example = "123")
     private Long systemId;
 
+    @ApiModelProperty(value = "是否根节点 0 否 1是")
+    private Integer root;
+
+
+
     /**
      * 描述
      */

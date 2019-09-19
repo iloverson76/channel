@@ -2,7 +2,6 @@ package com.deepexi.channel.controller;
 
 import com.deepexi.channel.businness.DistributorGradeBusinessService;
 import com.deepexi.channel.domain.distributor.*;
-import com.deepexi.channel.service.DistributorGradeService;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pageHelper.PageBean;
 import com.deepexi.util.pojo.CloneDirection;
@@ -30,7 +29,7 @@ public class DistributorGradeController {
     private DistributorGradeService distributorGradeService;
 
     @Autowired
-    DistributorGradeBusinessService distributorGradeBusinessService;
+    private DistributorGradeBusinessService distributorGradeBusinessService;
 
     @PostMapping
     @ApiOperation(value = "创建经销商等级")
@@ -40,7 +39,7 @@ public class DistributorGradeController {
 
         DistributorGradeDTO dto=vo.clone(DistributorGradeDTO.class, CloneDirection.FORWARD);
 
-        Long result=distributorGradeService.create(dto);
+        Long result=distributorGradeBusinessService.create(dto);
 
         return new Payload(result);
     }
@@ -83,7 +82,7 @@ public class DistributorGradeController {
 
         DistributorGradeDTO dto= vo.clone(DistributorGradeDTO.class,CloneDirection.FORWARD);
 
-        return new Payload<>(distributorGradeService.update(dto));
+        return new Payload<>(distributorGradeBusinessService.u(dto));
     }
 
     @DeleteMapping("/{id:[0-9,]+}")

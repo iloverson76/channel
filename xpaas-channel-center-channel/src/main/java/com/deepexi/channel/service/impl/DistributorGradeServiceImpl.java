@@ -10,9 +10,8 @@ import com.deepexi.util.extension.ApplicationException;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import com.github.pagehelper.PageHelper;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,9 +21,8 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
+@Slf4j
 public class DistributorGradeServiceImpl implements DistributorGradeService {
-
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private DistributorGradeDAO distributorGradeDAO;
@@ -41,74 +39,38 @@ public class DistributorGradeServiceImpl implements DistributorGradeService {
 
         distributorGradeDAO.save(newNode);
 
-        //路径处理(id)--不维护路径,性能成本可以忽略
         long newId=newNode.getId();
 
- /*       long parentId=newNode.getParentId();
-
-        if (0==parentId) {
-
-            newNode.setPath(String.valueOf(newId));//首次创建
-
-        } else {
-
-            String parent_path=distributorGradeDAO.getById(parentId).getPath()+"/"+newId;
-
-            newNode.setPath(parent_path);
-        }
-
-        distributorGradeDAO.updateById(newNode);
-*/
         return newId;
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public Boolean update(DistributorGradeDTO dto) {
+    public Boolean updateById(DistributorGradeDTO dto) {
 
-        long id=dto.getId();
-
-        DistributorGradeDTO origDTO=getById(id);
-
-        //根节点修改的冲突
-        if(dto.getRoot()==1){
-
-            findPage(new DistributorGradeQuery()).forEach(grade->{
-
-                if(grade.getRoot()==1){
-                    throw new ApplicationException("已存在一个根节点"+"["+dto.getDistributorGradeName()+"]");
-                }
-            });
-        }
-
-        //改变所属体系
-        long newSystemId=dto.getGradeSystemId();
-
-        long origSystemId=origDTO.getGradeSystemId();
-
-        if(origSystemId==newSystemId){
-
-            List<DistributorGradeDTO> children=listChildrenNodes(id);
-
-            children.forEach(child->{
-                child.setGradeSystemId(newSystemId);
-            });
-
-            List<DistributorGradeDO> childrenDO=ObjectCloneUtils.convertList(children,
-                    DistributorGradeDO.class,CloneDirection.FORWARD);
-
-            distributorGradeDAO.updateBatchById(childrenDO);
-
+        if(dto==null){
+            return null;
         }
 
         return distributorGradeDAO.updateById(dto.clone(DistributorGradeDO.class,CloneDirection.FORWARD));
     }
 
     @Override
+    public boolean updateBatchById(List<DistributorGradeDTO> dtoList) {
+
+        if(CollectionUtils.isEmpty(dtoList)){
+            return false;
+        }
+
+        return distributorGradeDAO.updateBatchById(ObjectCloneUtils.convertList(dtoList,DistributorGradeDO.class,
+                CloneDirection.FORWARD));
+    }
+
+    @Override
     public DistributorGradeDTO getById(Long pk) {
 
         if(0==pk){
-            return new DistributorGradeDTO();
+            return null;
         }
 
         DistributorGradeDO eo=distributorGradeDAO.getById(pk);
@@ -154,20 +116,31 @@ public class DistributorGradeServiceImpl implements DistributorGradeService {
        return distributorGradeDAO.removeById(id);
     }
 
-    private List<DistributorGradeDTO> listChildrenNodes(long id){
-        //修改所有子节点的parentId=0
+    @Override
+    public List<DistributorGradeDTO> listChildrenNodes(Long id){
+
+        log.info("查找等级下的子节点");
+
+        if(id<=0){
+            return Collections.emptyList();
+        }
+
         List<DistributorGradeDTO> dtoList=findPage(new DistributorGradeQuery());
+
+        if(CollectionUtils.isEmpty(dtoList)){
+            return Collections.emptyList();
+        }
 
         List<DistributorGradeDTO> children=new ArrayList<>();
 
+        //查出所有子节点:新建的时候已经归属了某一个体系
         dtoList.forEach(dto->{
 
-            if(dto.getParentId()==id){//查出所有子节点:新建的时候已经归属了某一个体系
+            if(dto.getParentId()==id){
 
                 children.add(dto);
             }
         });
-
         return children;
     }
 
