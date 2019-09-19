@@ -2,10 +2,7 @@ package com.deepexi.channel.businness.impl;
 
 import com.deepexi.channel.businness.ChainBusinessService;
 import com.deepexi.channel.businness.StoreChainBusinessService;
-import com.deepexi.channel.domain.bank.BankAccountDTO;
-import com.deepexi.channel.domain.bank.BankAccountQuery;
-import com.deepexi.channel.domain.bank.BankDTO;
-import com.deepexi.channel.domain.bank.ChainBankDTO;
+import com.deepexi.channel.domain.bank.*;
 import com.deepexi.channel.domain.chain.*;
 import com.deepexi.channel.domain.store.StoreChainDTO;
 import com.deepexi.channel.domain.store.StoreChainQuery;
@@ -84,8 +81,9 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         List<BankAccountDTO> bankAccountDTOS = bankAccountService.findList(bankAccountQuery);
 
         //查询所有账户所属银行
-        List<Long> bankIds = bankAccountDTOS.stream().map(BankAccountDTO::getBankId).collect(Collectors.toList());
-        List<BankDTO> bankDTOS = bankService.getBankByIds(bankIds);
+        Set<Long> bankIds = bankAccountDTOS.stream().map(BankAccountDTO::getBankId).collect(Collectors.toSet());
+        BankQuery bankQuery = BankQuery.builder().ids(new LinkedList<>(bankIds)).build();
+        List<BankDTO> bankDTOS = bankService.findList(bankQuery);
 
         //拼接账户跟银行信息
         Map<Long, List<BankDTO>> bankMap =

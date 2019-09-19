@@ -3,6 +3,7 @@ package com.deepexi.channel.service.impl;
 import com.deepexi.channel.dao.BankDAO;
 import com.deepexi.channel.domain.bank.BankDO;
 import com.deepexi.channel.domain.bank.BankDTO;
+import com.deepexi.channel.domain.bank.BankQuery;
 import com.deepexi.channel.service.BankService;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.pojo.CloneDirection;
@@ -13,13 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 @Service
 public class BankServiceImpl implements BankService {
-
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Value("#{'${bank.init.bankName}'.split(',')}")
     List<String> bankNames;
@@ -31,24 +31,25 @@ public class BankServiceImpl implements BankService {
         boolean result = bankDAO.save(bankDTO.clone(BankDO.class));
         return result;
     }
-//
-//    @Override
-//    public Boolean delete(Integer  pk) {
-//        int result = bankMapper.deleteBatchIds(Arrays.asList(pk));
-//        if (result > 0) {
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    @Override
-//    public Boolean delete(Integer ...pks) {
-//        int result = bankMapper.deleteBatchIds(Arrays.asList(pks));
-//        if (result > 0) {
-//            return true;
-//        }
-//        return false;
-//    }
+
+    @Override
+    public List<BankDTO> findList(BankQuery query) {
+        List<BankDO> list = bankDAO.findList(query);
+        if(CollectionUtil.isEmpty(list)){
+            return Collections.emptyList();
+        }
+        return ObjectCloneUtils.convertList(list, BankDTO.class);
+    }
+
+    @Override
+    public Boolean delete(List<Long> ids) {
+        return bankDAO.removeByIds(ids);
+    }
+
+    @Override
+    public Boolean delete(Long id) {
+        return bankDAO.removeById(id);
+    }
 
     @Override
     public List<BankDTO> listBank() {

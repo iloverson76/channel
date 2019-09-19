@@ -1,9 +1,6 @@
 package com.deepexi.channel.controller;
 
-import com.deepexi.channel.domain.bank.BankAccountDTO;
-import com.deepexi.channel.domain.bank.BankAccountVO;
-import com.deepexi.channel.domain.bank.BankDTO;
-import com.deepexi.channel.domain.bank.BankVO;
+import com.deepexi.channel.domain.bank.*;
 import com.deepexi.channel.service.BankAccountService;
 import com.deepexi.channel.service.BankService;
 import com.deepexi.util.config.Payload;
@@ -37,7 +34,7 @@ public class BankController {
     @GetMapping()
     @ApiOperation("查询银行列表")
     public Payload<List<BankVO>> listChainPage(){
-        List<BankDTO> bankDTOS = bankService.listBank();
+        List<BankDTO> bankDTOS = bankService.findList(new BankQuery());
         return new Payload<>(ObjectCloneUtils.convertList(bankDTOS, BankVO.class, CloneDirection.OPPOSITE));
     }
 

@@ -14,6 +14,19 @@
     </resultMap>
     <select id="findList" resultType="com.deepexi.channel.domain.bank.BankDO">
         SELECT * FROM cc_bank WHERE dr=0
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="ids != null and ids.size()>0">
+            and id in
+            <foreach collection="ids" item="tempId" index="index" open="(" close=")" separator=",">
+                #{tempId}
+            </foreach>
+        </if>
+        <if test="bankName !=null and bankName != ''">
+            and bank_name like concat('%',#{bankName},'%')
+        </if>
+        order by created_time desc
     </select>
 
     <update id="deleteByIds">
