@@ -1,18 +1,25 @@
 package com.deepexi.channel.businness.impl;
 
 import com.deepexi.channel.businness.AreaBusinessService;
+import com.deepexi.channel.businness.StoreAreaBusinessService;
 import com.deepexi.channel.domain.area.*;
+import com.deepexi.channel.domain.store.StoreAreaDTO;
+import com.deepexi.channel.domain.store.StoreAreaQuery;
 import com.deepexi.channel.service.AreaService;
 import com.deepexi.channel.service.AreaTypeService;
+import com.deepexi.channel.service.StoreAreaService;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.StringUtil;
+import com.deepexi.util.extension.ApplicationException;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
+import com.netflix.discovery.converters.Auto;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.awt.geom.Area;
 import java.beans.Transient;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -26,6 +33,9 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
     @Autowired
     AreaTypeService areaTypeService;
+
+    @Autowired
+    StoreAreaService storeAreaService;
 
     @Transient
     @Override
@@ -243,6 +253,7 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
         return tree;
     }
 
+    @Transient
     @Override
     public boolean deleteBatch(List<Long> ids) {
 
@@ -250,23 +261,86 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
             return false;
         }
 
-        ids.forEach(id->{
-            deleteById(id);
-        });
+        //删除子节点关联
+        deleteChildren(ids);
 
-        return Boolean.TRUE;
+        //删除门店关联
+        deleteStore(ids);
+
+        return areaService.deleteBatch(ids);
+    }
+
+    private boolean deleteChildren(List<Long> idList){
+
+        if(CollectionUtils.isNotEmpty(idList)){
+
+            idList.forEach(id->{
+
+                deleteChild(id);
+            });
+        }
+        return true;
+    }
+
+    private boolean deleteStore(List<Long> ids){
+
+        StoreAreaQuery query = new StoreAreaQuery();
+
+        query.setAreaIds(ids);
+
+        List<StoreAreaDTO> pageList = storeAreaService.findList(query);
+
+        if(CollectionUtils.isNotEmpty(pageList)){
+
+            List<Long> storeIdList = pageList.stream().map(StoreAreaDTO::getId).collect(Collectors.toList());
+
+            return storeAreaService.removeByStoreIds(storeIdList);
+        }
+        return true;
+    }
+
+    public List<AreaDTO> getChildrenByIds(List<Long> idList){
+
+        AreaQuery areaQuery = new AreaQuery();
+
+        areaQuery.setIds(idList);
+
+        List<AreaDTO> pageList = areaService.findPage(areaQuery);
+
+        List<AreaDTO> children=new ArrayList<>();
+
+        if(CollectionUtils.isNotEmpty(pageList)){
+
+            List<Long> parentIdList=pageList.stream().map(AreaDTO::getParentId).collect(Collectors.toList());
+
+            pageList.forEach(area->{
+
+                if(!parentIdList.contains(area.getId())){
+
+                    children.add(area);
+                }
+            });
+        }
+        return  children;
     }
 
     @Override
     public boolean deleteById(Long id) {
 
-        log.info("删除区域");
+        log.info("单个删除区域");
 
-        AreaDTO dto=areaService.getAreaById(id);
+        deleteChild(id);
+
+        return areaService.deleteById(id);
+    }
+
+    private boolean deleteChild(Long parentId){
+
+        AreaDTO dto=areaService.getAreaById(parentId);
 
         String parentPath=dto.getPath();
 
-        List<AreaDTO> children= areaService.listChildrenAreas(id);
+        List<AreaDTO> children= areaService.listChildrenAreas(parentId);
 
         if(CollectionUtil.isNotEmpty(children)){
 
@@ -277,18 +351,14 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
                 child.setPath(path.replaceAll(parentPath,""));
 
                 //直接下级
-                if(child.getParentId()==id){
+                if(child.getParentId()==parentId){
 
-                    child.setParentId(0L);
+                    //父级节点被删除
+                    child.setParentId(-1L);
                 }
             });
         }
-
-        areaService.updateBatch(children);
-
-        areaService.deleteById(id);
-
-        return Boolean.TRUE;
+        return areaService.updateBatch(children);
     }
 
     @Override
@@ -316,7 +386,6 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
         updateChildrenNodesPath(areaId,updatePath,newRootPath);
 
         //更新自己
-
         self.setPath(newRootPath);
 
         self.setParentId(0L);
@@ -368,7 +437,6 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
            self.setPath("/"+areaId);
 
            areaService.update(self);
-
 
             return Boolean.TRUE;
         }
@@ -439,6 +507,13 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
     public boolean treeDeleteNode(Long areaId) {
 
         log.info("删除区域树节点");
+
+        return updateParentAndChildPath(areaId);
+
+    }
+
+    private boolean updateParentAndChildPath(Long areaId){
+
         AreaDTO self=areaService.getAreaById(areaId);
 
         Long parentId=self.getParentId();

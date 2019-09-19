@@ -6,6 +6,8 @@ import com.deepexi.channel.domain.CommQuery;
 import com.deepexi.channel.domain.SuperEntity;
 import lombok.*;
 
+import java.util.List;
+
 /**
  * @author mumu
  * @version 1.0
@@ -21,5 +23,7 @@ public class StoreDistributorRelationQuery extends CommQuery {
     private Long distributorId;
     @TableField(value = "`grade_system_id`")
     private Long gradeSystemId;
+
+    private List<Long> distributorIds;
 //
 }

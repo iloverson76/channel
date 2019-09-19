@@ -28,6 +28,12 @@
         <if test="storeId != null">
             and store_id = #{storeId}
         </if>
+        <if test="distributorIds != null">
+            and distributor_id in
+            <foreach collection="distributorIds" item="tempId" index="index" open="(" close=")" separator=",">
+                #{tempId}
+            </foreach>
+        </if>
     </select>
 
     <select id="findParentDistributorByStoreId" resultType="com.deepexi.channel.domain.store.StoreDistributorDO">

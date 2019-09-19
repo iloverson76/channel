@@ -132,7 +132,6 @@ public class AreaServiceImpl implements AreaService{
             return Collections.emptyList();
         }
 
-
         return ObjectCloneUtils.convertList(eoList,AreaDTO.class,CloneDirection.OPPOSITE);
     }
 
@@ -143,11 +142,7 @@ public class AreaServiceImpl implements AreaService{
             return false;
         }
 
-        ids.forEach(id->{
-            deleteById(id);
-        });
-
-        return true;
+        return areaDAO.removeByIds(ids);
     }
 
     @Override

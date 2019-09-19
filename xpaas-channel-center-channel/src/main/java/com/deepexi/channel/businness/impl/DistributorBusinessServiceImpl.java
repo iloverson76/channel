@@ -1,11 +1,14 @@
 package com.deepexi.channel.businness.impl;
 
 import com.deepexi.channel.businness.DistributorBusinessService;
+import com.deepexi.channel.businness.StoreDistributorBusinessService;
 import com.deepexi.channel.domain.area.AreaDTO;
 import com.deepexi.channel.domain.bank.BankAccountDTO;
 import com.deepexi.channel.domain.bank.BankAccountQuery;
 import com.deepexi.channel.domain.bank.BankDTO;
 import com.deepexi.channel.domain.distributor.*;
+import com.deepexi.channel.domain.store.StoreDistributorRelationDTO;
+import com.deepexi.channel.domain.store.StoreDistributorRelationQuery;
 import com.deepexi.channel.enums.DistributorTypeEnum;
 import com.deepexi.channel.service.*;
 import com.deepexi.util.extension.ApplicationException;
@@ -44,10 +47,13 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
     private BankAccountService bankAccountService;
 
     @Autowired
-    AreaService areaService;
+    private AreaService areaService;
 
     @Autowired
-    BankService bankService;
+    private BankService bankService;
+
+    @Autowired
+    private StoreDistributorRelationService storeDistributorRelationService;
 
 
     @Transient
@@ -160,6 +166,25 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
     @Override
     public boolean delete(List<Long> butorIdList) {
 
+        //有下级经销商不能删除
+        validateChildren(butorIdList);
+
+        //有门店不能删除
+        validateStore(butorIdList);
+
+        //等级关联
+        distributorGradeRelationService.deleteBatchByDistributorIds(butorIdList);
+        //区域关联
+        distributorAreaRelationService.deleteBatchByDistributorIds(butorIdList);
+        //银行账号关联
+        distributorBankAccountRelationService.deleteBatchByDistributorIds(butorIdList);
+        //删除经销商
+        return distributorService.deleteBatch(butorIdList);
+    }
+
+    private void validateChildren(List<Long> butorIdList){
+
+        //是否有下级经销商
         DistributorQuery query = new DistributorQuery();
 
         query.setIds(butorIdList);
@@ -169,7 +194,6 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
         Map<Long, DistributorDTO> pageMap =
                 pageList.stream().collect(Collectors.toMap(DistributorDTO::getId, a -> a,(k1,k2)->k1));
 
-        //是否有下级经销商
         List<DistributorGradeRelationDTO> dgrList = distributorGradeRelationService.findAllByDistributorIds(butorIdList);
 
         if(CollectionUtils.isNotEmpty(dgrList)){
@@ -186,21 +210,25 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
                                 +"]已挂载下级经销商["+pageMap.get(butorId).getDistributorName()+"],无法删除!请解除关联后再操作");
                     }
                 });
-
             });
-
         }
-
-
-        //删除经销商
-        distributorService.deleteBatch(butorIdList);
-
-        distributorGradeRelationService.deleteBatchByDistributorIds(butorIdList);
-
-        distributorAreaRelationService.deleteBatchByDistributorIds(butorIdList);
-
-        return distributorBankAccountRelationService.deleteBatchByDistributorIds(butorIdList);
     }
+
+    private void validateStore(List<Long> butorIdList){
+
+        StoreDistributorRelationQuery query = StoreDistributorRelationQuery.builder().
+                distributorIds(butorIdList).build();
+
+        query.setDistributorIds(butorIdList);
+
+        List<StoreDistributorRelationDTO> pageList = storeDistributorRelationService.findList(query);
+
+        if(CollectionUtils.isNotEmpty(pageList)){
+
+            throw new ApplicationException("已有门店挂载,无法删除!请解除所有关联后再操作");
+        }
+    }
+
 
     @Override
     public List<DistributorDTO> findPage(DistributorQuery query) {
