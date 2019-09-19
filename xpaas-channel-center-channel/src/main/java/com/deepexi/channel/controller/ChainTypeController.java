@@ -28,7 +28,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-
+/**
+ * 连琐类型Controller
+ * @author mumu
+ */
 @Api(value = "/连锁管理", description = "连锁管理页面")
 @RestController
 @RequestMapping("/api/v1/chainType")

@@ -53,7 +53,7 @@ public class ChainServiceImpl implements ChainService {
 
     @Override
     public Boolean update(ChainDTO dto) {
-        if (dto.getId() == null || dto.getId() == 0L) {
+        if (dto == null || dto.getId() == null || dto.getId() == 0L) {
             return false;
         }
         ChainDO chainDO = dto.clone(ChainDO.class);
@@ -88,20 +88,8 @@ public class ChainServiceImpl implements ChainService {
     **/
     @Override
     public boolean isCodeUnique(ChainDTO dto) {
-        List<ChainDO> list = chainDAO.list(new QueryWrapper<ChainDO>().lambda()
-                .eq(ChainDO::getChainCode,dto.getChainCode()));
-        if(CollectionUtil.isNotEmpty(list)){
-            //不为空，还有可能是更新时自身的编码
-            if(list.size()==1){
-                ChainDO chainDO = list.get(0);
-                //该code是本身，不属于重复
-                if(chainDO.getId().equals(dto.getId())){
-                    return true;
-                }
-            }
-            return false;
-        }
-        return true;
+        ChainQuery query = ChainQuery.builder().chainAccuracyCode(dto.getChainCode()).build();
+        return this.isUnique(query,dto);
     }
 
     /**
@@ -111,7 +99,31 @@ public class ChainServiceImpl implements ChainService {
      */
     @Override
     public boolean isNameUnique(ChainDetailDTO dto) {
-        return false;
+        ChainQuery query = ChainQuery.builder().chainAccuracyName(dto.getChainName()).build();
+        return this.isUnique(query,dto);
+    }
+    /**
+     * @MethodName: isUnique
+     * @Description: 判断某个属性是否唯一，排除自身干扰
+     * @Param: [query, dto] query是查询出某个属性重复的列表，dto是来判断是否唯一的dto
+     * @Return: boolean
+     * @Author: mumu
+     * @Date: 2019/9/10
+     **/
+    private boolean isUnique(ChainQuery query, ChainDTO dto){
+        List<ChainDO> list = chainDAO.findList(query);
+        if (CollectionUtil.isNotEmpty(list)) {
+            //不为空，还有可能是更新时自身的编码
+            if (list.size() == 1) {
+                ChainDO chainDO = list.get(0);
+                //该code是本身，不属于重复
+                if (chainDO.getId().equals(dto.getId())) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        return true;
     }
 
     @Override

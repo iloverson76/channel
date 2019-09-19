@@ -14,6 +14,7 @@ import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import com.github.pagehelper.PageHelper;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +24,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * 连琐类型Service
+ * @author mumu
+ */
+@Slf4j
 @Service
 public class ChainTypeServiceImpl implements ChainTypeService {
-
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     AppRuntimeEnv appRuntimeEnv= AppRuntimeEnv.getInstance();
     @Autowired
@@ -122,7 +126,6 @@ public class ChainTypeServiceImpl implements ChainTypeService {
     @Override
     public boolean isCodeUnique(ChainTypeDTO dto) {
         ChainTypeQuery query = ChainTypeQuery.builder().chainTypeAccuracyCode(dto.getChainTypeCode()).build();
-        query.setPage(-1);
         return this.isUnique(query, dto);
     }
 
@@ -137,7 +140,6 @@ public class ChainTypeServiceImpl implements ChainTypeService {
     @Override
     public boolean isNameUnique(ChainTypeDTO dto) {
         ChainTypeQuery query = ChainTypeQuery.builder().chainTypeAccuracyName(dto.getChainTypeName()).build();
-        query.setPage(-1);
         return this.isUnique(query, dto);
     }
     /**

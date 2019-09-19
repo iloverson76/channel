@@ -34,8 +34,14 @@
         <if test="chainCode != null and chainCode != ''">
             and chain_code like concat('%',#{chainCode},'%')
         </if>
+        <if test="chainAccuracyCode != null and chainAccuracyCode != ''">
+            and chain_code = #{chainAccuracyCode}
+        </if>
         <if test="chainName != null and chainName != ''">
             and chain_name like concat('%',#{chainName},'%')
+        </if>
+        <if test="chainAccuracyName != null and chainAccuracyName != ''">
+            and chain_name = #{chainAccuracyName}
         </if>
         <if test="chainTypeId != null and chainTypeId != ''">
             and chain_type_id = #{chainTypeId}
