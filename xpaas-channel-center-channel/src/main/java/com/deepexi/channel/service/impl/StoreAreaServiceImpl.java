@@ -3,12 +3,15 @@ package com.deepexi.channel.service.impl;
 import com.deepexi.channel.dao.StoreAreaDAO;
 import com.deepexi.channel.domain.store.StoreAreaDO;
 import com.deepexi.channel.domain.store.StoreAreaDTO;
+import com.deepexi.channel.domain.store.StoreAreaQuery;
 import com.deepexi.channel.service.StoreAreaService;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.pojo.ObjectCloneUtils;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -21,6 +24,18 @@ public class StoreAreaServiceImpl implements StoreAreaService {
 
     @Autowired
     StoreAreaDAO storeAreaDAO;
+
+    @Override
+    public List<StoreAreaDTO> findList(StoreAreaQuery query) {
+        if(query.getPage() != null && query.getPage() != -1){
+            PageHelper.startPage(query.getPage(), query.getSize());
+        }
+        List<StoreAreaDO> storeAreaDOS = storeAreaDAO.findList(query);
+        if(CollectionUtil.isEmpty(storeAreaDOS)){
+            return Collections.emptyList();
+        }
+        return ObjectCloneUtils.convertList(storeAreaDOS, StoreAreaDTO.class);
+    }
 
     @Override
     public Long save(StoreAreaDTO storeAreaDTO) {

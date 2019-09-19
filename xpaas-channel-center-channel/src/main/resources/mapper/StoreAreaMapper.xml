@@ -16,4 +16,24 @@
         <result property="appId" column="app_id" />
         <result property="tenantId" column="tenant_id" />
     </resultMap>
+    <select id="findList" resultType="com.deepexi.channel.domain.store.StoreAreaDO">
+        SELECT * FROM cc_store_area WHERE dr=0
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="storeId != null">
+            and store_id = #{storeId}
+        </if>
+        <if test="areaId != null">
+            and area_id = #{areaId}
+        </if>
+        <if test="areaIds != null and areaIds.size() > 0">
+            and area_id
+            in
+            <foreach collection="areaIds" item="tempId" index="index" open="(" close=")" separator=",">
+                #{tempId}
+            </foreach>
+        </if>
+        order by created_time desc
+    </select>
 </mapper>

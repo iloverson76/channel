@@ -4,13 +4,19 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.deepexi.channel.dao.StoreAreaDAO;
 import com.deepexi.channel.domain.store.StoreAreaDO;
+import com.deepexi.channel.domain.store.StoreAreaQuery;
 import com.deepexi.channel.mapper.StoreAreaMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class StoreAreaDAOImpl extends ServiceImpl<StoreAreaMapper, StoreAreaDO> implements StoreAreaDAO {
+
+    @Autowired
+    StoreAreaMapper storeAreaMapper;
+
     @Override
     public Boolean removeByStoreId(Long storeId) {
         QueryWrapper queryWrapper = new QueryWrapper();
@@ -30,5 +36,10 @@ public class StoreAreaDAOImpl extends ServiceImpl<StoreAreaMapper, StoreAreaDO> 
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.in("store_id",storeIds);
         return this.remove(queryWrapper);
+    }
+
+    @Override
+    public List<StoreAreaDO> findList(StoreAreaQuery query) {
+        return storeAreaMapper.findList(query);
     }
 }

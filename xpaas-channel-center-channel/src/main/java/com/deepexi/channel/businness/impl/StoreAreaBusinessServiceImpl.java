@@ -5,11 +5,13 @@ import com.deepexi.channel.businness.StoreAreaBusinessService;
 import com.deepexi.channel.domain.area.AreaDTO;
 import com.deepexi.channel.domain.area.AreaQuery;
 import com.deepexi.channel.domain.store.StoreAreaDTO;
+import com.deepexi.channel.domain.store.StoreAreaQuery;
 import com.deepexi.channel.domain.store.StoreDetailDTO;
 import com.deepexi.channel.service.AreaService;
 import com.deepexi.channel.service.StoreAreaService;
 import com.deepexi.util.CollectionUtil;
 import com.netflix.discovery.converters.Auto;
+import org.apache.catalina.Store;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,7 +62,8 @@ public class StoreAreaBusinessServiceImpl implements StoreAreaBusinessService {
     @Override
     public List<AreaDTO> getStoreAreaByStoreId(Long storeId) {
         //获取关联信息
-        List<StoreAreaDTO> storeAreaDTOS = storeAreaService.getStoreAreaByStoreId(storeId);
+        StoreAreaQuery storeAreaQuery = StoreAreaQuery.builder().storeId(storeId).build();
+        List<StoreAreaDTO> storeAreaDTOS = storeAreaService.findList(storeAreaQuery);
         if(CollectionUtil.isEmpty(storeAreaDTOS)){
             return null;
         }

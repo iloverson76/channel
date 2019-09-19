@@ -1,6 +1,7 @@
 package com.deepexi.channel.service;
 
 import com.deepexi.channel.domain.store.StoreAreaDTO;
+import com.deepexi.channel.domain.store.StoreAreaQuery;
 
 import java.util.List;
 
@@ -10,6 +11,9 @@ import java.util.List;
  * @date 2019/9/6 17:39
  */
 public interface StoreAreaService {
+
+    List<StoreAreaDTO> findList(StoreAreaQuery query);
+
     Long save(StoreAreaDTO storeAreaDTO);
 
     Boolean removeByStoreId(Long id);
