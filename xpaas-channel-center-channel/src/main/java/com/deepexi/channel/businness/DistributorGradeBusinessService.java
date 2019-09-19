@@ -39,4 +39,8 @@ public interface DistributorGradeBusinessService {
 
     Long create(DistributorGradeDTO dto);
 
+    boolean update(DistributorGradeDTO dto);
+
+
+
 }
