@@ -482,24 +482,29 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
 
     /**
      * @MethodName: isChangeChainTypeLegal
-     * @Description: 修改连琐的类型时，如果在树中不能修改
+     * @Description: 修改连琐的类型时，如果在树中不能修改，如果被门店关联也不能修改
      * @Param: [dto]
-     * @Return: boolean
+     * @Return: boolean true合法 false 非法
      * @Author: mumu
      * @Date: 2019/9/18
     **/
     @Override
     public boolean isChangeChainTypeLegal(ChainDetailDTO dto) {
         ChainDTO historyDTO = chainService.detail(dto.getId());
-        //修改前后类型不变，合法
-        if(historyDTO.getChainTypeId().equals(historyDTO.getChainTypeId())){
-            return true;
+        if(historyDTO == null){
+            return false;
         }
-        //不在树中，修改合法
-        if(StringUtil.isEmpty(historyDTO.getPath())){
-            return true;
+        //在树中，修改非法
+        if(StringUtil.isNotEmpty(historyDTO.getPath())){
+            return false;
         }
-        return false;
+        //判断是否被门店关联，关联则修改非法
+        StoreChainQuery storeChainQuery = StoreChainQuery.builder().chainId(dto.getId()).build();
+        List<StoreChainDTO> storeChainDTOS = storeChainService.findList(storeChainQuery);
+        if(CollectionUtil.isNotEmpty(storeChainDTOS)){
+            return false;
+        }
+        return true;
     }
 
 }

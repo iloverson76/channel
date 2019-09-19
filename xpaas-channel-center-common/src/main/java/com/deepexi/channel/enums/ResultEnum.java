@@ -69,7 +69,7 @@ public enum ResultEnum implements BaseEnumType {
     GRADE_SYSTEM_CODE_DUPLICATED("400","体系编码不能重复"),
     GRADE_SYSTEM_NAME_DUPLICATED("400","体系名称不能重复"),
     GRADE_NAME_DUPLICATED("400","等级名称不能重复"),
-    CHAIN_CHANGE_TYPE_ILLEGAL("400", "修改连琐类型非法，该连琐已在树中"),
+    CHAIN_CHANGE_TYPE_ILLEGAL("400", "修改连琐类型非法，该连琐已在树中或者该连琐已被门店关联"),
     CHAIN_TYPE_HAVE_CHILDREN("400","该连锁类型具有子节点，不能删除"),
     CHAIN_TYPE_HAVE_RELATION("400","该连琐类型已被关联，不能删除或修改"),
     CHAIN_TYPE_HAVE_STORE_OR_TREE_RELATION("400","该连琐类型的连琐已被连琐树或门店关联，不能删除或修改")
