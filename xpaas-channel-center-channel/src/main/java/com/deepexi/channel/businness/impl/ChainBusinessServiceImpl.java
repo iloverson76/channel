@@ -288,12 +288,12 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
 
         //获取所有树的节点，根据path获取三级
         //增量就显示三级
-        List<ChainDTO> chainDTOS = chainService.getChainTreeNode();
+//        List<ChainDTO> chainDTOS = chainService.getChainTreeNode();
         //全量需要全部数据
-//        ChainQuery query = new ChainQuery();
-//        query.setPage(-1);
-//        query.setPath("/");
-//        List<ChainDTO> chainDTOS = chainService.findPage(query);
+        ChainQuery query = new ChainQuery();
+        query.setPage(-1);
+        query.setPath("/");
+        List<ChainDTO> chainDTOS = chainService.findPage(query);
         if(CollectionUtil.isEmpty(chainDTOS)){
             return null;
         }
