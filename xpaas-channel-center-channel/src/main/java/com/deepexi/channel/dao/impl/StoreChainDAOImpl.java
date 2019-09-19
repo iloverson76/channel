@@ -4,13 +4,24 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.deepexi.channel.dao.StoreChainDAO;
 import com.deepexi.channel.domain.store.StoreChainDO;
+import com.deepexi.channel.domain.store.StoreChainQuery;
 import com.deepexi.channel.mapper.StoreChainMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class StoreChainDAOImpl extends ServiceImpl<StoreChainMapper, StoreChainDO> implements StoreChainDAO {
+
+    @Autowired
+    StoreChainMapper storeChainMapper;
+
+    @Override
+    public List<StoreChainDO> findList(StoreChainQuery query) {
+        return storeChainMapper.findList(query);
+    }
+
     @Override
     public Boolean removeByStoreId(Long storeId) {
         QueryWrapper queryWrapper = new QueryWrapper();
@@ -18,12 +29,12 @@ public class StoreChainDAOImpl extends ServiceImpl<StoreChainMapper, StoreChainD
         return this.remove(queryWrapper);
     }
 
-    @Override
-    public List<StoreChainDO> getByStoreId(Long storeId) {
-        QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("store_id", storeId);
-        return this.list(queryWrapper);
-    }
+//    @Override
+//    public List<StoreChainDO> getByStoreId(Long storeId) {
+//        QueryWrapper queryWrapper = new QueryWrapper();
+//        queryWrapper.eq("store_id", storeId);
+//        return this.list(queryWrapper);
+//    }
 
     @Override
     public Boolean removeByStoreIds(List<Long> ids) {
@@ -32,10 +43,10 @@ public class StoreChainDAOImpl extends ServiceImpl<StoreChainMapper, StoreChainD
         return this.remove(wrapper);
     }
 
-    @Override
-    public List<StoreChainDO> getByChainIds(List<Long> ids) {
-        QueryWrapper wrapper = new QueryWrapper();
-        wrapper.in("chain_id",ids);
-        return this.list(wrapper);
-    }
+//    @Override
+//    public List<StoreChainDO> getByChainIds(List<Long> ids) {
+//        QueryWrapper wrapper = new QueryWrapper();
+//        wrapper.in("chain_id",ids);
+//        return this.list(wrapper);
+//    }
 }

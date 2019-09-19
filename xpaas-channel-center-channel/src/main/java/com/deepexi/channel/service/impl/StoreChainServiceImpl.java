@@ -3,13 +3,17 @@ package com.deepexi.channel.service.impl;
 import com.deepexi.channel.dao.StoreChainDAO;
 import com.deepexi.channel.domain.store.StoreChainDO;
 import com.deepexi.channel.domain.store.StoreChainDTO;
+import com.deepexi.channel.domain.store.StoreChainQuery;
 import com.deepexi.channel.service.StoreChainService;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.pojo.ObjectCloneUtils;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,6 +26,18 @@ public class StoreChainServiceImpl implements StoreChainService {
 
     @Autowired
     StoreChainDAO storeChainDAO;
+
+    @Override
+    public List<StoreChainDTO> findList(StoreChainQuery query) {
+        if(query.getPage() != null && query.getPage() != -1){
+            PageHelper.startPage(query.getPage(), query.getSize());
+        }
+        List<StoreChainDO> list = storeChainDAO.findList(query);
+        if(CollectionUtil.isEmpty(list)){
+            return Collections.emptyList();
+        }
+        return ObjectCloneUtils.convertList(list, StoreChainDTO.class);
+    }
 
     @Override
     public Long save(StoreChainDTO storeChainDTO) {
@@ -38,15 +54,15 @@ public class StoreChainServiceImpl implements StoreChainService {
         return storeChainDAO.removeByStoreId(storeId);
     }
 
-    @Override
-    public List<StoreChainDTO> getStoreChainByStoreId(Long storeId) {
-        List<StoreChainDO> storeChainDOS = storeChainDAO.getByStoreId(storeId);
-        if(CollectionUtil.isEmpty(storeChainDOS)){
-            return null;
-        }
-        List<StoreChainDTO> storeChainDTOS = ObjectCloneUtils.convertList(storeChainDOS, StoreChainDTO.class);
-        return storeChainDTOS;
-    }
+//    @Override
+//    public List<StoreChainDTO> getStoreChainByStoreId(Long storeId) {
+//        List<StoreChainDO> storeChainDOS = storeChainDAO.getByStoreId(storeId);
+//        if(CollectionUtil.isEmpty(storeChainDOS)){
+//            return null;
+//        }
+//        List<StoreChainDTO> storeChainDTOS = ObjectCloneUtils.convertList(storeChainDOS, StoreChainDTO.class);
+//        return storeChainDTOS;
+//    }
 
     @Override
     public Boolean removeByStoreIds(List<Long> ids) {
@@ -65,21 +81,13 @@ public class StoreChainServiceImpl implements StoreChainService {
         return storeChainDAO.saveBatch(storeChainDOS);
     }
 
-    /**
-     * @MethodName: getStoreChainByChainIds
-     * @Description: 更具连琐ids获取关联信息
-     * @Param: [ids]
-     * @Return: java.util.List<com.deepexi.channel.domain.store.StoreChainDTO>
-     * @Author: mumu
-     * @Date: 2019/9/11
-     **/
-    @Override
-    public List<StoreChainDTO> getStoreChainByChainIds(List<Long> ids) {
-        List<StoreChainDO> list = storeChainDAO.getByChainIds(ids);
-        if(CollectionUtil.isEmpty(list)){
-            return null;
-        }
-        List<StoreChainDTO> result = ObjectCloneUtils.convertList(list, StoreChainDTO.class);
-        return result;
-    }
+//    @Override
+//    public List<StoreChainDTO> getStoreChainByChainIds(List<Long> ids) {
+//        List<StoreChainDO> list = storeChainDAO.getByChainIds(ids);
+//        if(CollectionUtil.isEmpty(list)){
+//            return null;
+//        }
+//        List<StoreChainDTO> result = ObjectCloneUtils.convertList(list, StoreChainDTO.class);
+//        return result;
+//    }
 }

@@ -8,6 +8,7 @@ import com.deepexi.channel.domain.bank.BankDTO;
 import com.deepexi.channel.domain.bank.ChainBankDTO;
 import com.deepexi.channel.domain.chain.*;
 import com.deepexi.channel.domain.store.StoreChainDTO;
+import com.deepexi.channel.domain.store.StoreChainQuery;
 import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.service.*;
 import com.deepexi.util.CollectionUtil;
@@ -114,7 +115,8 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
             throw new ApplicationException(ResultEnum.HAVE_CHILDREN);
         }
         // 删除的连锁是否被其他门店所关联
-        List<StoreChainDTO> storeChainDTOS = storeChainService.getStoreChainByChainIds(ids);
+        StoreChainQuery storeChainQuery = StoreChainQuery.builder().chainIds(ids).build();
+        List<StoreChainDTO> storeChainDTOS = storeChainService.findList(storeChainQuery);
         if(CollectionUtil.isNotEmpty(storeChainDTOS)){
             throw new ApplicationException(ResultEnum.HAVE_RELATION);
         }

@@ -12,6 +12,6 @@ import lombok.*;
 public class StoreTypeRelationDTO extends SuperEntity {
     @TableField(value = "`store_id`")
     private Long  storeId;
-    @TableField(value = "`store_type_Id`")
+    @TableField(value = "`store_type_id`")
     private Long  storeTypeId;
 }

@@ -22,6 +22,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.xml.transform.Result;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -65,6 +66,10 @@ public class ChainTypeController {
     public Payload<Boolean> update(@Valid @PathVariable(value = "id", required = true) Long id, @RequestBody ChainTypeVO vo) {
         vo.setId(id);
         ChainTypeDTO dto = vo.clone(ChainTypeDTO.class, CloneDirection.FORWARD);
+        //更新校验是否被门店关联、或在树形结构中
+        if(chainTypeBusinessService.haveRelation(dto)){
+            throw new ApplicationException(ResultEnum.CHAIN_TYPE_HAVE_STORE_OR_TREE_RELATION);
+        }
         //判断编码是否重复
         if (!chainTypeService.isCodeUnique(dto)) {
             throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
@@ -108,7 +113,7 @@ public class ChainTypeController {
             throw new ApplicationException(ResultEnum.HAVE_CHILDREN);
         }
         if(chainTypeBusinessService.haveChainRelation(ids)){
-            throw new ApplicationException(ResultEnum.HAVE_RELATION);
+            throw new ApplicationException(ResultEnum.CHAIN_TYPE_HAVE_RELATION);
         }
 
         return new Payload(chainTypeBusinessService.deleteChainType(ids));

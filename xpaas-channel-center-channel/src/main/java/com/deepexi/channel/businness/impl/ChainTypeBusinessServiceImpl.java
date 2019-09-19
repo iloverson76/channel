@@ -1,16 +1,21 @@
 package com.deepexi.channel.businness.impl;
 
 import com.deepexi.channel.businness.ChainTypeBusinessService;
+import com.deepexi.channel.dao.StoreChainDAO;
 import com.deepexi.channel.domain.chain.ChainDTO;
 import com.deepexi.channel.domain.chain.ChainQuery;
 import com.deepexi.channel.domain.chain.ChainTypeDTO;
 import com.deepexi.channel.domain.chain.ChainTypeQuery;
+import com.deepexi.channel.domain.store.StoreChainDTO;
+import com.deepexi.channel.domain.store.StoreChainQuery;
 import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.service.ChainService;
 import com.deepexi.channel.service.ChainTypeService;
+import com.deepexi.channel.service.StoreChainService;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.StringUtil;
 import com.deepexi.util.extension.ApplicationException;
+import com.netflix.discovery.converters.Auto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +34,8 @@ public class ChainTypeBusinessServiceImpl implements ChainTypeBusinessService {
     ChainTypeService chainTypeService;
     @Autowired
     ChainService chainService;
+    @Autowired
+    StoreChainService storeChainService;
 
     /**
      * @MethodName:
@@ -227,6 +234,37 @@ public class ChainTypeBusinessServiceImpl implements ChainTypeBusinessService {
         chainTypeQuery.setExcludeIds(idNotIn);
         List<ChainTypeDTO> chainTypeDTOS = chainTypeService.findAll(chainTypeQuery);
         return chainTypeDTOS;
+    }
+
+    /**(
+     * @MethodName: haveRelation
+     * @Description: 修改连琐类型时，若属于该连琐类型的连琐在树中或者被门店关联，则具有联系
+     * @Param: [dto]
+     * @Return: boolean
+     * @Author: mumu
+     * @Date: 2019/9/19
+    **/
+    @Override
+    public boolean haveRelation(ChainTypeDTO dto) {
+        ChainQuery chainQuery = ChainQuery.builder().chainTypeId(dto.getId()).build();
+        List<ChainDTO> chainDTOS = chainService.findPage(chainQuery);
+        if(CollectionUtil.isEmpty(chainDTOS)){
+            return false;
+        }
+        //判断属于该类型的连琐是否在树形结构中
+        for (ChainDTO c : chainDTOS) {
+            if(StringUtil.isNotEmpty(c.getPath())){
+               return true;
+            }
+        }
+        //判断该连琐类型的所有连琐是否关联了门店
+        Set<Long> chainIds = chainDTOS.stream().map(ChainDTO::getId).collect(Collectors.toSet());
+        StoreChainQuery storeChainQuery = StoreChainQuery.builder().chainIds(new LinkedList<>(chainIds)).build();
+        List<StoreChainDTO> storeChainDTOS = storeChainService.findList(storeChainQuery);
+        if(CollectionUtil.isNotEmpty(storeChainDTOS)){
+            return true;
+        }
+        return false;
     }
 
     @Override

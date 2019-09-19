@@ -3,7 +3,7 @@
 <mapper namespace="com.deepexi.channel.mapper.StoreTypeRelationMapper">
     <resultMap type="com.deepexi.channel.domain.store.StoreTypeRelationDO" id="StoreTypeRelationDOResult">
         <result property="id" column="id" />
-        <result property="storeTypeId" column="store_type_Id" />
+        <result property="storeTypeId" column="store_type_id" />
         <result property="storeId" column="store_id" />
         <result property="description" column="description" />
         <result property="version" column="version" />
@@ -22,13 +22,13 @@
             and id = #{id}
         </if>
         <if test="storeTypeId != null">
-            and store_type_Id = #{storeTypeId}
+            and store_type_id = #{storeTypeId}
         </if>
         <if test="storeId != null">
             and store_id = #{storeId}
         </if>
         <if test="storeTypeIds != null and storeTypeIds.size() > 0">
-            and store_type_Id
+            and store_type_id
             in
             <foreach collection="storeTypeIds" item="tempId" index="index" open="(" close=")" separator=",">
                 #{tempId}

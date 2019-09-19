@@ -7,10 +7,12 @@ import com.deepexi.channel.domain.chain.ChainDTO;
 import com.deepexi.channel.domain.chain.ChainDetailDTO;
 import com.deepexi.channel.domain.chain.ChainQuery;
 import com.deepexi.channel.domain.store.StoreChainDTO;
+import com.deepexi.channel.domain.store.StoreChainQuery;
 import com.deepexi.channel.domain.store.StoreDetailDTO;
 import com.deepexi.channel.service.ChainService;
 import com.deepexi.channel.service.StoreChainService;
 import com.deepexi.util.CollectionUtil;
+import org.apache.catalina.Store;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,7 +53,8 @@ public class StoreChainBusinessServiceImpl implements StoreChainBusinessService 
     @Override
     public List<ChainDetailDTO> getStoreChainByStoreId(Long storeId) {
         //获取关联信息
-        List<StoreChainDTO> storeChainDTOS = storeChainService.getStoreChainByStoreId(storeId);
+        StoreChainQuery storeChainQuery = StoreChainQuery.builder().stroeId(storeId).build();
+        List<StoreChainDTO> storeChainDTOS = storeChainService.findList(storeChainQuery);
         if(CollectionUtil.isEmpty(storeChainDTOS)){
             return null;
         }
