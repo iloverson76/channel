@@ -24,7 +24,7 @@ public class MetaObjectHandlerConfig implements MetaObjectHandler {
         Object tenantId=getFieldValByName("tenantId", metaObject);
         if(null==tenantId){
             if (StringUtil.isEmpty(appRuntimeEnv.getTenantId())){
-                setFieldValByName("tenantId", "1ab913906e6f45169557fcd74c2d4984", metaObject);
+                setFieldValByName("tenantId", "4f4ee8537e5d4b7f8230c7833cba51fc", metaObject);
             }else{
                 setFieldValByName("tenantId", appRuntimeEnv.getTenantId(), metaObject);
             }
@@ -34,7 +34,7 @@ public class MetaObjectHandlerConfig implements MetaObjectHandler {
         Object appId=getFieldValByName("appId", metaObject);
         if(null==appId){
             if(StringUtil.isEmpty(appRuntimeEnv.getAppId())){
-                setFieldValByName("appId", "104", metaObject);
+                setFieldValByName("appId", "124", metaObject);
             } else {
                 setFieldValByName("appId", appRuntimeEnv.getAppId(), metaObject);
             }

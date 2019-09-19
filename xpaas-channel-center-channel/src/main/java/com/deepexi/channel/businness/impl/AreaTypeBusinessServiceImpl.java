@@ -195,22 +195,61 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
 
     @Transient
     @Override
-    public boolean deleteAreaTypeByIds(List<Long> idList) {
+    public boolean deleteAreaTypeById(Long id){
 
-        //已挂载区域的分类不能删除
-        AreaQuery query=new AreaQuery();
+        log.info("删除区域分类");
 
-        query.setAreatypeIds(idList);
+        //有区域挂载,不能删除
+        AreaQuery query = new AreaQuery();
+
+        List<Long> typeIdList=new ArrayList<>(1);
+
+        typeIdList.add(id);
+
+        query.setAreatypeIds(typeIdList);
 
         List<AreaDTO> areaList = areaService.findPage(query);
 
-        if(CollectionUtils.isNotEmpty(areaList)){
+        if(CollectionUtil.isNotEmpty(areaList)){
 
-           throw new ApplicationException("此分类已挂载区域,无法删除!请解除所有关联后再操作!");
+           throw new ApplicationException("此分类已有区域挂载,无法删除!请解除所有关联后再操作");
+        }
+
+        //有下级,不能删除
+        List<AreaTypeDTO> children=areaTypeService.listChildNodes("/"+id);
+
+        if(CollectionUtil.isNotEmpty(children)){
+
+            throw new ApplicationException("已有下级关联,不能删除!请解除关联后再操作");
+        }
+
+        return areaTypeService.deleteAreaTypeById(id);
+    }
+
+    @Transient
+    @Override
+    public boolean deleteAreaTypeByIds(List<Long> idList) {
+
+        log.info("批量删除区域分类");
+
+        if(CollectionUtil.isEmpty(idList)){
+            return false;
+        }
+
+        //过滤没有区域关联的分类
+        listTypeWithoutArea(idList);
+
+        if(CollectionUtil.isEmpty(idList)){
+            return false;
         }
 
         //删除没有子节点的分类
-        deleteNoChildrenNodes(idList);
+        listTypeWithoutChildren(idList);
+
+        if(CollectionUtil.isNotEmpty(idList)){
+
+            return areaTypeService.deleteAreaTypeByIds(idList);
+        }
 
         return true;
     }
@@ -333,26 +372,49 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
         }
     }
 
-    private List<Long> deleteNoChildrenNodes(List<Long> idList){
+    private List<Long> listTypeWithoutChildren(List<Long> idList){
 
-        log.info("批量删除没有下级的节点");
+        log.info("过滤没有下级的分类");
 
         //查询没有下级的节点
         List<AreaTypeDTO> dtoList = listNoChildrenNodes(idList);
-
-        List<Long> unDelIdList=new ArrayList<>();
 
         if(CollectionUtil.isNotEmpty(dtoList)){
 
             List<Long> delIdList = dtoList.stream().map(AreaTypeDTO::getId).collect(Collectors.toList());
 
-            areaTypeService.deleteAreaTypeByIds(delIdList);
-
             idList.removeAll(delIdList);
         }
-
-        //返回有下级的节点
         return idList;
     }
+
+    private List<Long> listTypeWithoutArea(List<Long> idList){
+
+        log.info("过滤没有区域关联的分类");
+
+        AreaQuery query = new AreaQuery();
+
+        query.setAreatypeIds(idList);
+
+        List<AreaDTO> areaList = areaService.findPage(query);
+
+        if(CollectionUtil.isNotEmpty(areaList)){
+
+            List<Long> typeIdList = areaList.stream().map(AreaDTO::getAreaTypeId).collect(Collectors.toList());
+
+            idList.removeAll(typeIdList);
+        }
+        return idList;
+    }
+
+
+
+
+
+
+
+
+
+
 
 }

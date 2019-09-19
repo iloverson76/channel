@@ -56,6 +56,15 @@ public class AreaTypeController {
         return new Payload<>(result);
     }
 
+    @DeleteMapping("/{id:[0-9,]}")
+    @ApiOperation(value = "单条删除区域类型")
+    public Payload<Boolean> deleteAreaTypeByIds(@PathVariable(value = "id") Long id) {//前端的列表每一个id都去拿子节点的话,性能很慢
+
+        Boolean result = areaTypeBusinessService.deleteAreaTypeById(id);
+
+        return new Payload<>(result);
+    }
+
     @DeleteMapping("/{ids:[0-9,]+}")
     @ApiOperation(value = "批量删除区域类型")
     public Payload<Boolean> deleteAreaTypeByIds(@PathVariable(value = "ids") String ids) {//前端的列表每一个id都去拿子节点的话,性能很慢
@@ -131,6 +140,10 @@ public class AreaTypeController {
         List<AreaDTO> dtoList = areaTypeBusinessService.listLinkedAreas(id);
 
         List<AreaVO> voList=new ArrayList<>();
+
+        if(CollectionUtil.isEmpty(dtoList)){
+            return new Payload<>();
+        }
 
         dtoList.forEach(dto->{
 

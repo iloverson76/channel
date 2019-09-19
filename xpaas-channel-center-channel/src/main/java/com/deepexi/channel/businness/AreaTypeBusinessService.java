@@ -26,4 +26,6 @@ public interface AreaTypeBusinessService {
     List<AreaTypeDTO> listParentNodesForUpdate(Long id);
 
     List<AreaTypeDTO> listParentNodesForCreate();
+
+    boolean deleteAreaTypeById(Long id);
 }
