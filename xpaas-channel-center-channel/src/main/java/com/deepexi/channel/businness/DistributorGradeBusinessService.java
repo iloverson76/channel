@@ -2,7 +2,6 @@ package com.deepexi.channel.businness;
 
 import com.deepexi.channel.domain.distributor.DistributorGradeDTO;
 import com.deepexi.channel.domain.distributor.DistributorGradeQuery;
-import com.deepexi.channel.domain.distributor.DistributorGradeSystemDTO;
 
 import java.util.List;
 
@@ -37,4 +36,7 @@ public interface DistributorGradeBusinessService {
     List<DistributorGradeDTO> findAllGradesBySystem(long systemId);
 
     boolean delete(List<Long> idList);
+
+    Long create(DistributorGradeDTO dto);
+
 }

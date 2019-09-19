@@ -2,8 +2,6 @@ package com.deepexi.channel.service;
 
 import com.deepexi.channel.domain.distributor.DistributorGradeDTO;
 import com.deepexi.channel.domain.distributor.DistributorGradeQuery;
-import com.deepexi.channel.domain.eo.CcDistributorGrade;
-import com.deepexi.util.pageHelper.PageBean;
 
 import java.util.List;
 
@@ -24,7 +22,7 @@ public interface DistributorGradeService {
     /**
      更新经销商等级
     */
-    Boolean update(DistributorGradeDTO dto);
+    Boolean updateById(DistributorGradeDTO dto);
 
     /**
      批量删除经销商等级
@@ -42,4 +40,10 @@ public interface DistributorGradeService {
      * 查找某个体系下的所有等级
      */
     List<DistributorGradeDTO> findAllBySystem(Long systemId);
+
+    List<DistributorGradeDTO> listChildrenNodes(Long id);
+
+    boolean updateBatchById(List<DistributorGradeDTO> dtoList);
+
+
 }
