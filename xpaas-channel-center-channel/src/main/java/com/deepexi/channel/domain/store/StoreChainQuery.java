@@ -18,7 +18,7 @@ import java.util.List;
 @Builder
 @ApiModel("门店连琐关联")
 public class StoreChainQuery extends CommQuery {
-    private Long stroeId;
+    private Long storeId;
     private Long chainId;
     private List<Long> chainIds;
 

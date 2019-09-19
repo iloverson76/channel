@@ -53,7 +53,7 @@ public class StoreChainBusinessServiceImpl implements StoreChainBusinessService 
     @Override
     public List<ChainDetailDTO> getStoreChainByStoreId(Long storeId) {
         //获取关联信息
-        StoreChainQuery storeChainQuery = StoreChainQuery.builder().stroeId(storeId).build();
+        StoreChainQuery storeChainQuery = StoreChainQuery.builder().storeId(storeId).build();
         List<StoreChainDTO> storeChainDTOS = storeChainService.findList(storeChainQuery);
         if(CollectionUtil.isEmpty(storeChainDTOS)){
             return null;
