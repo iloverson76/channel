@@ -108,19 +108,9 @@ public class AreaTypeServiceImpl implements AreaTypeService {
         return areaTypeDAO.updateBatchById(eoList);
     }
 
-    private boolean deleteAreaTypeById(Long id){
+    @Override
+    public boolean deleteAreaTypeById(Long id){
 
-        //有下级不能删除
-        List<AreaTypeDTO> dtoList = listAreaTypePage(new AreaTypeQuery());
-
-        for (AreaTypeDTO dto:dtoList){
-
-            if(id.equals(dto.getParentId())){
-                throw new ApplicationException("已被下级["+dto.getAreaTypeName()+"]关联,不能删除!");
-            }
-        }
-
-        //删除区域类型
         return areaTypeDAO.removeById(id);
     }
 
@@ -134,13 +124,7 @@ public class AreaTypeServiceImpl implements AreaTypeService {
             return false;
         }
 
-        boolean result=false;
-
-        for (Long id : idList) {
-            result=deleteAreaTypeById(id);
-        }
-
-        return result;
+        return areaTypeDAO.removeByIds(idList);
     }
 
     @Override
