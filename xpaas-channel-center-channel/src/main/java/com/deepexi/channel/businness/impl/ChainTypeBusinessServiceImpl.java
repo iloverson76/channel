@@ -79,6 +79,7 @@ public class ChainTypeBusinessServiceImpl implements ChainTypeBusinessService {
     public List<ChainTypeDTO> findPage(ChainTypeQuery query) {
         if (query.getPage() != null && query.getPage() != -1) {
             List<ChainTypeDTO> chainTypeDTOS = chainTypeService.findPage(query);
+
             // 得到所有连锁类型id
             List<Long> idList = chainTypeDTOS.stream().map(ChainTypeDTO::getId).collect(Collectors.toList());
             ChainTypeQuery parentQuery = ChainTypeQuery.builder().ids(idList).build();
@@ -136,6 +137,7 @@ public class ChainTypeBusinessServiceImpl implements ChainTypeBusinessService {
     public Long  create(ChainTypeDTO dto) {
         //先保存基本信息
         Long id = chainTypeService.create(dto);
+        log.info("新增连琐类型，id= {}",id);
         dto.setId(id);
         //得到id后拼接path与rootId
         //判断是否限制上级，限制了就需要处理path
@@ -172,6 +174,7 @@ public class ChainTypeBusinessServiceImpl implements ChainTypeBusinessService {
         List<ChainTypeDTO> list = chainTypeService.findPage(query);
         //list为空，表示没有子节点，更新本身节点信息即可
         if(CollectionUtil.isEmpty(list)){
+            log.info("更新连琐类型，dto = {}",dto);
             return chainTypeService.update(dto);
         }
         //list不为空，需要更新子节点的path与rootId
