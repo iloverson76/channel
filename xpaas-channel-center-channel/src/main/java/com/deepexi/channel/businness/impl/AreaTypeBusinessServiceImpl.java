@@ -243,7 +243,7 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
             return false;
         }
 
-        //删除没有子节点的分类
+        //过滤没有子节点的分类
         listTypeWithoutChildren(idList);
 
         if(CollectionUtil.isNotEmpty(idList)){
@@ -384,6 +384,8 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
             List<Long> delIdList = dtoList.stream().map(AreaTypeDTO::getId).collect(Collectors.toList());
 
             idList.removeAll(delIdList);
+
+            throw new ApplicationException("已有下级关联,不能删除!");
         }
         return idList;
     }
@@ -403,6 +405,8 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
             List<Long> typeIdList = areaList.stream().map(AreaDTO::getAreaTypeId).collect(Collectors.toList());
 
             idList.removeAll(typeIdList);
+
+            throw new ApplicationException("分类已有区域挂载,不能删除!");
         }
         return idList;
     }
