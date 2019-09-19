@@ -286,16 +286,24 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public Boolean update(DistributorGradeDTO dto) {
+    public boolean update(DistributorGradeDTO dto) {
 
         long id=dto.getId();
 
         DistributorGradeDTO origDTO=distributorGradeService.getById(id);
 
+        long origSystemId=origDTO.getGradeSystemId();
+
         //根节点修改的冲突
         if(dto.getRoot()==1){
 
-            findPage(new DistributorGradeQuery()).forEach(grade->{
+            Long systemId=origDTO.getGradeSystemId();
+
+            DistributorGradeQuery query = new DistributorGradeQuery();
+
+            query.setSystemId(systemId);
+
+            findPage(query).forEach(grade->{
 
                 if(grade.getRoot()==1){
                     throw new ApplicationException("已存在一个根节点"+"["+dto.getDistributorGradeName()+"]");
@@ -306,8 +314,6 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
         //改变所属体系
         long newSystemId=dto.getGradeSystemId();
 
-        long origSystemId=origDTO.getGradeSystemId();
-
         if(origSystemId==newSystemId){
 
             List<DistributorGradeDTO> children=distributorGradeService.listChildrenNodes(id);
@@ -316,14 +322,10 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
                 child.setGradeSystemId(newSystemId);
             });
 
-            List<DistributorGradeDO> childrenDO=ObjectCloneUtils.convertList(children,
-                    DistributorGradeDO.class,CloneDirection.FORWARD);
-
-            distributorGradeService.updateBatchById(childrenDO);
+            distributorGradeService.updateBatchById(children);
 
         }
-
-        return distributorGradeService.update(dto);
+        return distributorGradeService.updateById(dto);
     }
 
     @Override

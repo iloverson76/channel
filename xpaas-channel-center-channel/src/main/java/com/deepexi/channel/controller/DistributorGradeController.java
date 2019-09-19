@@ -2,6 +2,7 @@ package com.deepexi.channel.controller;
 
 import com.deepexi.channel.businness.DistributorGradeBusinessService;
 import com.deepexi.channel.domain.distributor.*;
+import com.deepexi.channel.service.DistributorGradeService;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pageHelper.PageBean;
 import com.deepexi.util.pojo.CloneDirection;
@@ -82,7 +83,7 @@ public class DistributorGradeController {
 
         DistributorGradeDTO dto= vo.clone(DistributorGradeDTO.class,CloneDirection.FORWARD);
 
-        return new Payload<>(distributorGradeBusinessService.u(dto));
+        return new Payload<>(distributorGradeBusinessService.update(dto));
     }
 
     @DeleteMapping("/{id:[0-9,]+}")
