@@ -17,6 +17,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.beans.Transient;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -192,10 +193,11 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
         return resultList;
     }
 
+    @Transient
     @Override
     public boolean deleteAreaTypeByIds(List<Long> idList) {
 
-        //挂载的区域
+        //已挂载区域的分类不能删除
         AreaQuery query=new AreaQuery();
 
         query.setAreatypeIds(idList);
@@ -207,8 +209,10 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
            throw new ApplicationException("此分类已挂载区域,无法删除!请解除所有关联后再操作!");
         }
 
-        //删除分类
-        return areaTypeService.deleteAreaTypeByIds(idList);
+        //删除没有子节点的分类
+        deleteNoChildrenNodes(idList);
+
+        return true;
     }
 
     @Override
@@ -239,37 +243,46 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
         return areaTypeService.updateAreaTypeById(dto);
     }
 
+    private List<AreaTypeDTO> listNoChildrenNodes(List<Long> idList) {
+
+        log.info("查询没有下级的节点");
+
+        AreaTypeQuery query = new AreaTypeQuery();
+
+        if(CollectionUtil.isNotEmpty(idList)){
+            query.setIds(idList);
+        }
+
+        //没有被限制分类的节点
+        List<AreaTypeDTO> dtoList = areaTypeService.listAreaTypePage(query);
+
+        //首次创建处理空值
+        if (CollectionUtils.isEmpty(dtoList)) {
+
+            return Collections.emptyList();
+        }
+
+        List<Long> parentIdList = dtoList.stream().map(AreaTypeDTO::getParentId).collect(Collectors.toList());
+
+        List<AreaTypeDTO> resultList = new ArrayList<>();
+
+        dtoList.forEach(dto -> {
+
+            if (!parentIdList.contains(dto.getId())) {
+
+                resultList.add(dto);
+            }
+        });
+
+        return resultList;
+    }
+
     @Override
     public List<AreaTypeDTO> listParentNodesForCreate() {
 
         log.info("创建区域分类接口:查询可用上级分类");
 
-
-        //没有被限制分类的节点
-        List<AreaTypeDTO> dtoList1=areaTypeService.listAreaTypePage(new AreaTypeQuery());
-
-        //首次创建处理空值
-        if(CollectionUtils.isEmpty(dtoList1)){
-
-            return Collections.emptyList();
-        }
-
-        List<AreaTypeDTO> dtoList2=ObjectCloneUtils.convertList(dtoList1,AreaTypeDTO.class,CloneDirection.FORWARD);
-
-        List<AreaTypeDTO> resultList=new ArrayList<>();
-
-        dtoList1.forEach(dto1->{
-
-            dtoList2.forEach(dto2->{
-
-                if(!dto1.getId().equals(dto2.getParentId())){
-
-                    resultList.add(dto1);
-                }
-            });
-        });
-
-        return resultList;
+        return listNoChildrenNodes(null);
     }
 
     @Override
@@ -277,8 +290,8 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
 
         log.info("更新区域分类接口:查询可用上级分类");
 
-        //没有上级的节点
-        List<AreaTypeDTO> noParentNodeList= listParentNodesForCreate();
+        //没有下级的节点
+        List<AreaTypeDTO> noParentNodeList= listNoChildrenNodes(null);
 
         if(CollectionUtils.isEmpty(noParentNodeList)){
             return Collections.emptyList();
@@ -295,7 +308,7 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
             noParentNodeList.add(parent);
         }
 
-        //不能选自己和自己的直接子节点
+        //不能选自己和自己的所有子节点
         List<AreaTypeDTO> children=areaTypeService.listChildNodes("/"+id);
 
         if(CollectionUtils.isNotEmpty(children)){
@@ -318,6 +331,28 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
             });
             areaTypeService.updateAreaTypeByIds(children);
         }
+    }
+
+    private List<Long> deleteNoChildrenNodes(List<Long> idList){
+
+        log.info("批量删除没有下级的节点");
+
+        //查询没有下级的节点
+        List<AreaTypeDTO> dtoList = listNoChildrenNodes(idList);
+
+        List<Long> unDelIdList=new ArrayList<>();
+
+        if(CollectionUtil.isNotEmpty(dtoList)){
+
+            List<Long> delIdList = dtoList.stream().map(AreaTypeDTO::getId).collect(Collectors.toList());
+
+            areaTypeService.deleteAreaTypeByIds(delIdList);
+
+            idList.removeAll(delIdList);
+        }
+
+        //返回有下级的节点
+        return idList;
     }
 
 }
