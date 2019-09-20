@@ -494,7 +494,7 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
             self.setPath(newParentPath);
             areaService.update(self);
 
-            //子节点
+            //子节点及孙子节点
             updateChildrenNodesPath(id,replacepath,newParentPath);
         }
 
