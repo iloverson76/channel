@@ -16,11 +16,6 @@ public interface StoreGradeService {
     * @return
     */
     List<StoreGradeDTO> findPage(StoreGradeQuery query);
-//    /**
-//    * 获取列表
-//    * @return
-//    */
-//    List<CcStoreGrade> findAll(CcStoreGrade eo);
 
     /**
       获取详情
@@ -42,19 +37,29 @@ public interface StoreGradeService {
     */
     Long create(StoreGradeDTO dto);
 
-//    /**
-//     * 单个删除
-//    * @return
-//    */
-//    Boolean delete(Integer pk);
-
     /**
      批量删除
     * @return
     */
     Boolean delete(List<Long> ids);
 
+    /**
+     * @MethodName: isCodeUnique
+     * @Description: 判断编码是否唯一
+     * @Param: [dto]
+     * @Return: boolean
+     * @Author: mumu
+     * @Date: 2019/9/20
+    **/
     boolean isCodeUnique(StoreGradeDTO dto);
 
+    /**
+     * @MethodName: isNameUnique
+     * @Description: 判断名称是否唯一
+     * @Param: [storeGradeDTO]
+     * @Return: boolean
+     * @Author: mumu
+     * @Date: 2019/9/20
+    **/
     boolean isNameUnique(StoreGradeDTO storeGradeDTO);
 }

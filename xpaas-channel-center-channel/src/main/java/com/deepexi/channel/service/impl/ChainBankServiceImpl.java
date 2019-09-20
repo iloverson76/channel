@@ -84,5 +84,5 @@ public class ChainBankServiceImpl implements ChainBankService {
     public boolean deleteByChainId(Long id) {
         return chainBankDAO.deleteByChainId(id);
     }
-    
+
 }

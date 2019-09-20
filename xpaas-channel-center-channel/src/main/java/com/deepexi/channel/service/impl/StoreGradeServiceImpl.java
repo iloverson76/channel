@@ -52,10 +52,6 @@ public class StoreGradeServiceImpl implements StoreGradeService {
         if(dto == null){
             return false;
         }
-        //判断编码是否重复
-        if(!isCodeUnique(dto)){
-            throw new ApplicationException(ResultEnum.CODE_NOT_UNIQUE);
-        }
         StoreGradeDO storeGradeDO = dto.clone(StoreGradeDO.class);
         return storeGradeDAO.updateById(storeGradeDO);
     }
