@@ -52,6 +52,22 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
+    public Boolean update(BankDTO bankDTO) {
+        if(bankDTO == null){
+            return false;
+        }
+        return bankDAO.updateById(bankDTO.clone(BankDO.class));
+    }
+
+    /**
+     * @MethodName: listBank
+     * @Description: 查询所有的银行账户，如果该应用列表为空，则进行初始化
+     * @Param: []
+     * @Return: java.util.List<com.deepexi.channel.domain.bank.BankDTO>
+     * @Author: mumu
+     * @Date: 2019/9/20
+    **/
+    @Override
     public List<BankDTO> listBank() {
         List<BankDO> bankDOS = bankDAO.findAll();
         if(CollectionUtil.isEmpty(bankDOS)){
