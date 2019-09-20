@@ -3,15 +3,18 @@ package com.deepexi.channel.service.impl;
 import com.deepexi.channel.dao.ChainBankDAO;
 import com.deepexi.channel.domain.bank.ChainBankDO;
 import com.deepexi.channel.domain.bank.ChainBankDTO;
+import com.deepexi.channel.domain.bank.ChainBankQuery;
 import com.deepexi.channel.service.ChainBankService;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
+import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -23,19 +26,31 @@ public class ChainBankServiceImpl implements ChainBankService {
     private ChainBankDAO chainBankDAO;
 
     @Override
+    public List<ChainBankDTO> findList(ChainBankQuery query) {
+        if (query.getPage() != null && query.getPage() != -1){
+            PageHelper.startPage(query.getPage(), query.getSize());
+        }
+        List<ChainBankDO> list = chainBankDAO.findList(query);
+        if(CollectionUtil.isEmpty(list)){
+            return Collections.emptyList();
+        }
+        return ObjectCloneUtils.convertList(list, ChainBankDTO.class);
+    }
+
+    @Override
     public boolean saveBatch(List<ChainBankDTO> chainBankDTOS) {
         List<ChainBankDO> list = ObjectCloneUtils.convertList(chainBankDTOS,ChainBankDO.class);
         return chainBankDAO.saveBatch(list);
     }
 
-    @Override
-    public List<ChainBankDTO> getChainBankByChainId(Long id) {
-        List<ChainBankDO> chainBankDOS = chainBankDAO.getChainBankByChainId(id);
-        if(CollectionUtil.isEmpty(chainBankDOS)){
-            return null;
-        }
-        return ObjectCloneUtils.convertList(chainBankDOS, ChainBankDTO.class, CloneDirection.OPPOSITE);
-    }
+//    @Override
+//    public List<ChainBankDTO> getChainBankByChainId(Long id) {
+//        List<ChainBankDO> chainBankDOS = chainBankDAO.getChainBankByChainId(id);
+//        if(CollectionUtil.isEmpty(chainBankDOS)){
+//            return null;
+//        }
+//        return ObjectCloneUtils.convertList(chainBankDOS, ChainBankDTO.class, CloneDirection.OPPOSITE);
+//    }
 
     @Override
     public boolean deleteByChainId(Long id) {

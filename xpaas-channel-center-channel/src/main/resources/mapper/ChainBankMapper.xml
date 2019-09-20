@@ -17,6 +17,20 @@
         <!--SELECT * FROM cc_chain_bank WHERE 1=1-->
     <!--</select>-->
 
+    <select id="findList" resultType="com.deepexi.channel.domain.bank.ChainBankDO">
+        SELECT * FROM cc_chain_bank WHERE dr=0
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="chainId !=null and chainId != ''">
+            and chain_id = #{chainId}
+        </if>
+        <if test="bankAccountId !=null and bankAccountId != ''">
+            and bank_account_id = #{bankAccountId}
+        </if>
+        order by created_time desc
+    </select>
+
     <update id="deleteByIds">
         UPDATE cc_chain_bank set dr=1 where id in
         <foreach collection="ids" index="index" item="id" open="(" separator="," close=")">

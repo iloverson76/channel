@@ -70,7 +70,8 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
 
         //查询连锁的所有账户，获取账户信息
         //查询所有账户id
-        List<ChainBankDTO> chainBankDTOS = chainBankService.getChainBankByChainId(id);
+        ChainBankQuery chainBankQuery = ChainBankQuery.builder().chainId(id).build();
+        List<ChainBankDTO> chainBankDTOS = chainBankService.findList(chainBankQuery);
         if(CollectionUtil.isEmpty(chainBankDTOS)){
             return dto;
         }

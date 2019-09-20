@@ -32,7 +32,7 @@ public class ChainServiceImpl implements ChainService {
 
     @Override
     public List<ChainDTO> findPage(ChainQuery query) {
-        if(query.getPage() != null && query.getPage() != -1){
+        if (query.getPage() != null && query.getPage() != -1){
             PageHelper.startPage(query.getPage(), query.getSize());
         }
         List<ChainDO> chainDOS =  chainDAO.findList(query);

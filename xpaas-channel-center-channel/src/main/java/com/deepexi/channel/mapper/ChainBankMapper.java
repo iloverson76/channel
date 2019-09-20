@@ -2,6 +2,7 @@ package com.deepexi.channel.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.deepexi.channel.domain.bank.ChainBankDO;
+import com.deepexi.channel.domain.bank.ChainBankQuery;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -17,4 +18,6 @@ public interface ChainBankMapper extends BaseMapper<ChainBankDO> {
     List<ChainBankDO> getChainBankByChainId(@Param("id")Long id);
 
     boolean deleteByChainId(@Param("chainId") Long chainId);
+
+    List<ChainBankDO> findList(ChainBankQuery query);
 }
