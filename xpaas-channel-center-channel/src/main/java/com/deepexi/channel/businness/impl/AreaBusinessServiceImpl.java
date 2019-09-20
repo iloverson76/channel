@@ -523,6 +523,12 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
             areaService.updateBatch(children);
         }
-        return true;
+
+        //更新自己
+        self.setPath("");
+
+        self.setParentId(0L);
+
+        return areaService.update(self);
     }
 }
