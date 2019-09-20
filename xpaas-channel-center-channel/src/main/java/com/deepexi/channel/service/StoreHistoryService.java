@@ -37,6 +37,7 @@ public interface StoreHistoryService {
     */
     Long create(StoreHistoryDTO dto);
 
+    Boolean delete(Long id);
     /**
      批量删除
     * @return

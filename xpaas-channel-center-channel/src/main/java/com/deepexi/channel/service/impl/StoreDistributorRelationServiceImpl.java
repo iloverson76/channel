@@ -1,9 +1,7 @@
 package com.deepexi.channel.service.impl;
 
 import com.deepexi.channel.dao.StoreDistributorRelationDAO;
-import com.deepexi.channel.domain.store.StoreDistributorRelationDO;
-import com.deepexi.channel.domain.store.StoreDistributorRelationDTO;
-import com.deepexi.channel.domain.store.StoreDistributorRelationQuery;
+import com.deepexi.channel.domain.store.*;
 import com.deepexi.channel.mapper.StoreDistributorRelationMapper;
 import com.deepexi.channel.service.StoreDistributorRelationService;
 import com.deepexi.util.CollectionUtil;
@@ -23,6 +21,41 @@ public class StoreDistributorRelationServiceImpl implements StoreDistributorRela
 
     @Autowired
     StoreDistributorRelationDAO storeDistributorRelationDAO;
+
+    @Override
+    public StoreDistributorRelationDTO detail(Long id) {
+        StoreDistributorRelationDO storeDistributorRelationDO = storeDistributorRelationDAO.getById(id);
+        if(storeDistributorRelationDO == null){
+            return null;
+        }
+        return storeDistributorRelationDO.clone(StoreDistributorRelationDTO.class);
+    }
+
+    @Override
+    public Boolean save(StoreDistributorRelationDTO dto) {
+        if(dto == null){
+            return false;
+        }
+        return storeDistributorRelationDAO.save(dto.clone(StoreDistributorRelationDO.class));
+    }
+
+    @Override
+    public Boolean update(StoreDistributorRelationDTO dto) {
+        if(dto == null){
+            return false;
+        }
+        return storeDistributorRelationDAO.updateById(dto.clone(StoreDistributorRelationDO.class));
+    }
+
+    @Override
+    public Boolean delete(Long id) {
+        return storeDistributorRelationDAO.removeById(id);
+    }
+
+    @Override
+    public Boolean delete(List<Long> ids) {
+        return storeDistributorRelationDAO.removeByIds(ids);
+    }
 
     @Override
     public List<StoreDistributorRelationDTO> findList(StoreDistributorRelationQuery query) {

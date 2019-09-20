@@ -64,6 +64,11 @@ public class StoreHistoryServiceImpl implements StoreHistoryService {
     }
 
     @Override
+    public Boolean delete(Long id) {
+        return storeHistoryDAO.removeById(id);
+    }
+
+    @Override
     public Boolean delete(List<Long> ids) {
         if(CollectionUtil.isEmpty(ids)){
             return false;
