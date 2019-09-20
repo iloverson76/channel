@@ -43,6 +43,23 @@ public class DistributorGradeSystemServiceImpl implements DistributorGradeSystem
     }
 
     @Override
+    public DistributorGradeSystemDTO getById(Long id) {
+
+        if(id<=0){
+            return null;
+        }
+
+        DistributorGradeSystemDO eo = distributorGradeSystemDAO.getById(id);
+
+        if(eo==null){
+
+            return null;
+        }
+
+        return eo.clone(DistributorGradeSystemDTO.class,CloneDirection.OPPOSITE);
+    }
+
+    @Override
     public long create(DistributorGradeSystemDTO dto) {
 
         if(null==dto){
