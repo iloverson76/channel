@@ -44,6 +44,7 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
         query.setSystemId(systemId);
 
+        //按体系过滤数据
         List<DistributorGradeDTO> pageList = distributorGradeService.findPage(query);
 
         if(CollectionUtil.isEmpty(pageList)){
