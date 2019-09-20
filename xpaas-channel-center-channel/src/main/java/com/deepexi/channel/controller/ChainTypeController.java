@@ -63,7 +63,7 @@ public class ChainTypeController {
 
     @PutMapping("/{id}")
     @ApiOperation(value = "根据id修改", notes = "根据id修改连锁类型")
-    public Payload<Boolean> update(@Valid @PathVariable(value = "id", required = true) Long id, @RequestBody ChainTypeVO vo) {
+    public Payload<Boolean> update(@PathVariable(value = "id", required = true) Long id,@Valid @RequestBody ChainTypeVO vo) {
         vo.setId(id);
         ChainTypeDTO dto = vo.clone(ChainTypeDTO.class, CloneDirection.FORWARD);
         //更新校验是否被门店关联、或在树形结构中

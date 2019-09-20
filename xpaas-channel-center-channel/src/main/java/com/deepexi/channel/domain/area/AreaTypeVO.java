@@ -84,7 +84,7 @@ public class AreaTypeVO extends AbstractObject {
      * 区域类型名称
      */
     @ApiModelProperty("区域类型名称")
-    @Pattern(regexp = "^[A-Za-z0-9\\u4e00-\\u9fa5]+$")
+    @Pattern(regexp = "^[A-Za-z0-9\\u4e00-\\u9fa5]+$",message = "名称只能为中文、数字或英文")
     @Size(min=1,max=16)
     private String areaTypeName;
 
@@ -92,7 +92,7 @@ public class AreaTypeVO extends AbstractObject {
      * 区域类型编码
      */
     @ApiModelProperty("区域类型编码")
-    @Pattern(regexp = "^[A-Za-z0-9]+$")
+    @Pattern(regexp = "^[A-Za-z0-9]+$",message="编码只能为字母和数字")
     @Size(min=1,max=16)
     private String areaTypeCode;
 
@@ -100,7 +100,7 @@ public class AreaTypeVO extends AbstractObject {
      * 区域类型英文名称
      */
     @ApiModelProperty("区域类型英文名称")
-    @Pattern(regexp = "^[A-Za-z0-9]+$")
+    @Pattern(regexp = "^[A-Za-z0-9]+$",message="英文名称只能为字母和数字")
     private String areaTypeNameEn;
 
     /**
