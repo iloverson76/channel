@@ -28,4 +28,6 @@ public interface BankService {
     Boolean delete(List<Long> ids);
 
     Boolean delete(Long id);
+
+    Boolean update(BankDTO bankDTO);
 }

@@ -34,7 +34,7 @@ public class BankController {
     @GetMapping()
     @ApiOperation("查询银行列表")
     public Payload<List<BankVO>> listChainPage(){
-        List<BankDTO> bankDTOS = bankService.findList(new BankQuery());
+        List<BankDTO> bankDTOS = bankService.listBank();
         return new Payload<>(ObjectCloneUtils.convertList(bankDTOS, BankVO.class, CloneDirection.OPPOSITE));
     }
 
