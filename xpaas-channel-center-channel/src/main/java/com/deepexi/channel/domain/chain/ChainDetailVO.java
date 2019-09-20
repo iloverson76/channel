@@ -1,8 +1,6 @@
 package com.deepexi.channel.domain.chain;
 
-import com.deepexi.channel.domain.bank.BankAccountVO;
-import com.deepexi.channel.domain.chain.ChainVO;
-import io.swagger.annotations.Api;
+import com.deepexi.channel.domain.BankAccountVO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;

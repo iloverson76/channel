@@ -1,12 +1,11 @@
 package com.deepexi.channel.service.impl;
 
 import com.deepexi.channel.dao.ChainBankDAO;
-import com.deepexi.channel.domain.bank.ChainBankDO;
-import com.deepexi.channel.domain.bank.ChainBankDTO;
-import com.deepexi.channel.domain.bank.ChainBankQuery;
+import com.deepexi.channel.domain.ChainBankDO;
+import com.deepexi.channel.domain.ChainBankDTO;
+import com.deepexi.channel.domain.ChainBankQuery;
 import com.deepexi.channel.service.ChainBankService;
 import com.deepexi.util.CollectionUtil;
-import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;

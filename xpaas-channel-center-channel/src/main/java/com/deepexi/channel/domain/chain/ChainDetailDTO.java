@@ -1,6 +1,6 @@
 package com.deepexi.channel.domain.chain;
 
-import com.deepexi.channel.domain.bank.BankAccountDTO;
+import com.deepexi.channel.domain.BankAccountDTO;
 import lombok.*;
 
 import java.util.List;

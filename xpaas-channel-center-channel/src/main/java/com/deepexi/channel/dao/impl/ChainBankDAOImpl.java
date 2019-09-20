@@ -3,8 +3,8 @@ package com.deepexi.channel.dao.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.deepexi.channel.dao.ChainBankDAO;
-import com.deepexi.channel.domain.bank.ChainBankDO;
-import com.deepexi.channel.domain.bank.ChainBankQuery;
+import com.deepexi.channel.domain.ChainBankDO;
+import com.deepexi.channel.domain.ChainBankQuery;
 import com.deepexi.channel.mapper.ChainBankMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

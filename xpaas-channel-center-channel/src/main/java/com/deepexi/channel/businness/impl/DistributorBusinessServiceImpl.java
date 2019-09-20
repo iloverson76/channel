@@ -1,11 +1,10 @@
 package com.deepexi.channel.businness.impl;
 
 import com.deepexi.channel.businness.DistributorBusinessService;
-import com.deepexi.channel.businness.StoreDistributorBusinessService;
 import com.deepexi.channel.domain.area.AreaDTO;
-import com.deepexi.channel.domain.bank.BankAccountDTO;
-import com.deepexi.channel.domain.bank.BankAccountQuery;
-import com.deepexi.channel.domain.bank.BankDTO;
+import com.deepexi.channel.domain.BankAccountDTO;
+import com.deepexi.channel.domain.BankAccountQuery;
+import com.deepexi.channel.domain.BankDTO;
 import com.deepexi.channel.domain.distributor.*;
 import com.deepexi.channel.domain.store.StoreDistributorRelationDTO;
 import com.deepexi.channel.domain.store.StoreDistributorRelationQuery;

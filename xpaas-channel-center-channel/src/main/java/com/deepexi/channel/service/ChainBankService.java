@@ -1,7 +1,7 @@
 package com.deepexi.channel.service;
 
-import com.deepexi.channel.domain.bank.ChainBankDTO;
-import com.deepexi.channel.domain.bank.ChainBankQuery;
+import com.deepexi.channel.domain.ChainBankDTO;
+import com.deepexi.channel.domain.ChainBankQuery;
 
 import java.util.List;
 

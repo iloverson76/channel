@@ -1,7 +1,7 @@
 package com.deepexi.channel.businness;
 
 import com.deepexi.channel.domain.area.AreaDTO;
-import com.deepexi.channel.domain.bank.BankAccountDTO;
+import com.deepexi.channel.domain.BankAccountDTO;
 import com.deepexi.channel.domain.distributor.*;
 
 import java.util.List;

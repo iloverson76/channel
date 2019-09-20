@@ -1,7 +1,7 @@
 package com.deepexi.channel.domain.distributor;
 
 import com.deepexi.channel.domain.area.AreaDTO;
-import com.deepexi.channel.domain.bank.BankAccountDTO;
+import com.deepexi.channel.domain.BankAccountDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;

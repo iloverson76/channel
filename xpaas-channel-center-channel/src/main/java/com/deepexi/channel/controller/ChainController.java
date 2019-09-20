@@ -1,7 +1,7 @@
 package com.deepexi.channel.controller;
 
 import com.deepexi.channel.businness.ChainBusinessService;
-import com.deepexi.channel.domain.bank.BankAccountDTO;
+import com.deepexi.channel.domain.BankAccountDTO;
 import com.deepexi.channel.domain.chain.*;
 import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.service.ChainService;
@@ -12,7 +12,6 @@ import com.deepexi.util.pageHelper.PageBean;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 

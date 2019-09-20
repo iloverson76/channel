@@ -1,8 +1,8 @@
 package com.deepexi.channel.dao;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.deepexi.channel.domain.bank.ChainBankDO;
-import com.deepexi.channel.domain.bank.ChainBankQuery;
+import com.deepexi.channel.domain.ChainBankDO;
+import com.deepexi.channel.domain.ChainBankQuery;
 
 import java.util.List;
 

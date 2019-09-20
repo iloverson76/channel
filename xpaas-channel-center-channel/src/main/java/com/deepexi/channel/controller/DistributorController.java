@@ -1,16 +1,8 @@
 package com.deepexi.channel.controller;
 
 import com.deepexi.channel.businness.DistributorBusinessService;
-import com.deepexi.channel.domain.area.AreaDTO;
-import com.deepexi.channel.domain.area.AreaQuery;
-import com.deepexi.channel.domain.area.AreaTypeVO;
-import com.deepexi.channel.domain.area.AreaVO;
-import com.deepexi.channel.domain.bank.BankAccountDTO;
-import com.deepexi.channel.domain.bank.BankAccountVO;
 import com.deepexi.channel.domain.distributor.*;
 import com.deepexi.channel.enums.DistributorTypeEnum;
-import com.deepexi.channel.service.AreaService;
-import com.deepexi.channel.service.DistributorService;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pageHelper.PageBean;
 import com.deepexi.util.pojo.CloneDirection;
@@ -18,12 +10,9 @@ import com.deepexi.util.pojo.ObjectCloneUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.apache.commons.collections.CollectionUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
