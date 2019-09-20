@@ -11,6 +11,7 @@ import com.deepexi.util.extension.ApplicationException;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -329,12 +330,17 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
     }
 
     @Override
-    public boolean delete(List<Long> gradeIddList) {
+    public boolean delete(List<Long> gradeIdList) {
 
         log.info("经销商等级删除");
 
+        if (CollectionUtils.isEmpty(gradeIdList)){
+            return false;
+        }
+
         //挂载经销商的不能删除
-        List<DistributorGradeRelationDTO> dgrList = distributorGradeRelationService.findAllByGradeIds(gradeIddList);
+        log.info("查询关联经销商");
+        List<DistributorGradeRelationDTO> dgrList = distributorGradeRelationService.findAllByGradeIds(gradeIdList);
 
         List<Long> distributorIds=new ArrayList<>();
 
@@ -344,7 +350,7 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
                Long did=dgr.getDistributorId();
 
-               if(null!=did){
+               if(did>0){
 
                    distributorIds.add(did);
                }
@@ -366,9 +372,10 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
         }
 
         //有下级的不能删除
+        log.info("查询下级");
         DistributorGradeQuery gradeQuery = new DistributorGradeQuery();
 
-        gradeQuery.setIds(gradeIddList);
+        gradeQuery.setIds(gradeIdList);
 
         List<DistributorGradeDTO> pageList = distributorGradeService.findPage(gradeQuery);
 
@@ -379,7 +386,7 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
             pageList.forEach(page -> {
 
-                gradeIddList.forEach(id -> {
+                gradeIdList.forEach(id -> {
 
                     if (page.getParentId().equals(id)) {
 
@@ -393,7 +400,8 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
             });
         }
         //删除等级
-        return distributorGradeService.delete(gradeIddList);
+        log.info("开始删除等级");
+        return distributorGradeService.delete(gradeIdList);
     }
 
 }

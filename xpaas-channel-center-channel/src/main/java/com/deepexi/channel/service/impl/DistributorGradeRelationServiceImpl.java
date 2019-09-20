@@ -135,6 +135,10 @@ public class DistributorGradeRelationServiceImpl implements DistributorGradeRela
     @Override
     public List<DistributorGradeRelationDTO> findAllByGradeIds(List<Long> gradeIds) {
 
+        if(CollectionUtils.isEmpty(gradeIds)){
+            return Collections.emptyList();
+        }
+
         List<DistributorGradeRelationDO> eoList=distributorGradeRelationDAO.findAllByGradeIds(gradeIds);
 
         if(CollectionUtils.isEmpty(eoList)){
@@ -146,6 +150,10 @@ public class DistributorGradeRelationServiceImpl implements DistributorGradeRela
 
     @Override
     public List<DistributorGradeRelationDTO> findAllBySystemIds(List<Long> systemIds) {
+
+        if(CollectionUtils.isEmpty(systemIds)){
+            return Collections.emptyList();
+        }
 
         List<DistributorGradeRelationDO> eoList=distributorGradeRelationDAO.findAllBySystemIds(systemIds);
 
