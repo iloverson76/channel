@@ -55,7 +55,7 @@ public class StoreGradeController {
 
     @PutMapping("/{id}")
     @ApiOperation(value = "根据id修改", notes = "根据id修改门店等级")
-    public Payload<Boolean> update(@Valid  @PathVariable(value = "id", required = true) Long pk, @RequestBody StoreGradeVO vo) {
+    public Payload<Boolean> update(@PathVariable(value = "id", required = true) Long pk,@Valid @RequestBody StoreGradeVO vo) {
         vo.setId(pk);
         StoreGradeDTO storeGradeDTO = vo.clone(StoreGradeDTO.class);
         //判断编码是否重复

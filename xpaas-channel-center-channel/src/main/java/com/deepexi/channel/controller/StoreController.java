@@ -87,7 +87,7 @@ public class StoreController {
 
     @PutMapping("/{id}")
     @ApiOperation(value = "根据id修改", notes = "根据id修改CcStore")
-    public Payload<Boolean> update(@Valid @PathVariable(value = "id", required = true) Long pk, @RequestBody StoreDetailVO vo) {
+    public Payload<Boolean> update(@PathVariable(value = "id", required = true) Long pk,@Valid @RequestBody StoreDetailVO vo) {
         vo.setId(pk);
         StoreDetailDTO storeDetailDTO = vo.clone(StoreDetailDTO.class);
         if (vo.getStoreGradeVO() != null && vo.getStoreGradeVO().getId() != null && !vo.getStoreGradeVO().getId().equals(0)) {
