@@ -520,6 +520,8 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
                 child.setParentId(0L);
             });
+
+            areaService.updateBatch(children);
         }
         return true;
     }
