@@ -40,6 +40,25 @@ public class StoreGradeRelationServiceImpl implements StoreGradeRelationService 
     }
 
     @Override
+    public StoreGradeRelationDTO detail(Long id) {
+        StoreGradeRelationDO storeGradeRelationDO = storeGradeRelationDAO.getById(id);
+        if(storeGradeRelationDO == null){
+            return null;
+        }
+        return storeGradeRelationDO.clone(StoreGradeRelationDTO.class);
+    }
+
+    @Override
+    public boolean delete(Long id) {
+        return storeGradeRelationDAO.removeById(id);
+    }
+
+    @Override
+    public boolean delete(List<Long> ids) {
+        return storeGradeRelationDAO.removeByIds(ids);
+    }
+
+    @Override
     public StoreGradeRelationDTO getStoreGradeRelationByStoreId(Long pk) {
         StoreGradeRelationDO storeGradeRelationDO = storeGradeRelationDAO.getStoreGradeRelationByStoreId(pk);
         if(storeGradeRelationDO == null){
