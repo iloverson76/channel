@@ -57,8 +57,8 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
                 if(grade.getRoot()==1&&dto.getRoot()==1){
                     throw new ApplicationException("一个体系只能有一个根节点"+"["+grade.getDistributorGradeName()+"]");
                 }
-                dto.setRoot(0);
             });
+            dto.setRoot(0);
         }
 
         return distributorGradeService.create(dto);

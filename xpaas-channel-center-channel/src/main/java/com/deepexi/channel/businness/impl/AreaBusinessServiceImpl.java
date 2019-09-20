@@ -525,7 +525,6 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
             areaService.updateBatch(children);
         }
 
-
         //更新自己
         self.setPath("");
 
