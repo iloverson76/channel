@@ -47,6 +47,8 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
         //按体系过滤数据
         List<DistributorGradeDTO> pageList = distributorGradeService.findPage(query);
 
+        log.info("体系:"+systemId);
+
         if(CollectionUtil.isEmpty(pageList)){
 
             //首次新建必须是根节点,因为不是根节点的话上一级是必填的
