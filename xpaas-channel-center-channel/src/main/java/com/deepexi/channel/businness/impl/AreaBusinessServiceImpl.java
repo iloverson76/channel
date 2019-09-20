@@ -501,6 +501,7 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
         return Boolean.TRUE;
     }
 
+    @Transient
     @Override
     public boolean treeDeleteNode(Long areaId) {
 
