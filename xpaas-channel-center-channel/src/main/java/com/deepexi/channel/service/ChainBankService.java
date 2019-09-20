@@ -10,6 +10,14 @@ import java.util.List;
  */
 public interface ChainBankService {
 
+    ChainBankDTO detail(Long id);
+
+    boolean update(ChainBankDTO dto);
+
+    boolean delete(List<Long> ids);
+
+    boolean delete(Long id);
+
     List<ChainBankDTO> findList(ChainBankQuery chainBankQuery);
 
     boolean saveBatch(List<ChainBankDTO> chainBankDTOS);

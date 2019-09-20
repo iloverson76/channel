@@ -26,6 +26,34 @@ public class ChainBankServiceImpl implements ChainBankService {
     private ChainBankDAO chainBankDAO;
 
     @Override
+    public ChainBankDTO detail(Long id) {
+        ChainBankDO chainBankDO = chainBankDAO.getById(id);
+        if(chainBankDO == null){
+            return null;
+        }
+        return chainBankDO.clone(ChainBankDTO.class);
+    }
+
+    @Override
+    public boolean update(ChainBankDTO dto) {
+        if(dto == null){
+            return false;
+        }
+        ChainBankDO chainBankDO = dto.clone(ChainBankDO.class);
+        return chainBankDAO.updateById(chainBankDO);
+    }
+
+    @Override
+    public boolean delete(List<Long> ids) {
+        return chainBankDAO.removeByIds(ids);
+    }
+
+    @Override
+    public boolean delete(Long id) {
+        return chainBankDAO.removeById(id);
+    }
+
+    @Override
     public List<ChainBankDTO> findList(ChainBankQuery query) {
         if (query.getPage() != null && query.getPage() != -1){
             PageHelper.startPage(query.getPage(), query.getSize());
@@ -56,61 +84,5 @@ public class ChainBankServiceImpl implements ChainBankService {
     public boolean deleteByChainId(Long id) {
         return chainBankDAO.deleteByChainId(id);
     }
-
-//    @Override
-//    public PageBean<CcChainBank> findPage(CcChainBank eo, Integer page, Integer size) {
-//        PageHelper.startPage(page, size);
-//        List<CcChainBank> pages =  ccChainBankMapper.findList(eo);
-//        return new PageBean<CcChainBank>(pages);
-//    }
-//
-//    @Override
-//    public List<CcChainBank> findAll(CcChainBank eo) {
-//        List<CcChainBank> list = ccChainBankMapper.findList(eo);
-//        return list;
-//    }
-//    @Override
-//    public CcChainBank detail(Integer  pk) {
-//        CcChainBank eo = ccChainBankMapper.selectById(pk);
-//        return eo;
-//    }
-//
-//    @Override
-//    public Boolean update(Integer  id,CcChainBank eo) {
-//        CcChainBank old = ccChainBankMapper.selectById(id);
-//        BeanPowerHelper.mapCompleteOverrider(eo,old); //部分更新
-//        int result = ccChainBankMapper.updateById(old);
-//        if (result > 0) {
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    @Override
-//    public Boolean create(CcChainBank eo) {
-//        int result = ccChainBankMapper.insert(eo);
-//        if (result > 0) {
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    @Override
-//    public Boolean delete(Integer  pk) {
-//        int result = ccChainBankMapper.deleteBatchIds(Arrays.asList(pk));
-//        if (result > 0) {
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    @Override
-//    public Boolean delete(Integer ...pks) {
-//        int result = ccChainBankMapper.deleteBatchIds(Arrays.asList(pks));
-//        if (result > 0) {
-//            return true;
-//        }
-//        return false;
-//    }
-
+    
 }
