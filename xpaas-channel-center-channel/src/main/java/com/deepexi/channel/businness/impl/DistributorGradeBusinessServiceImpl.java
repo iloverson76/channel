@@ -190,23 +190,46 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
     @Override
     public List<DistributorGradeDTO> findParentNodesForUpdate(Long systemId,Long gradeId) {
 
-        List<DistributorGradeDTO> resultList= findParentNodesForCreate(systemId);
+        List<DistributorGradeDTO> resultList=new ArrayList<>();
 
-        DistributorGradeDTO gdto=distributorGradeService.getById(gradeId);
+        //原来的体系只能返回原来的上级(根节点是没有上级的)
+        DistributorGradeDTO self=distributorGradeService.getById(gradeId);
 
-        Long parentId=gdto.getParentId();
+        Long origSystemId=self.getGradeSystemId();
 
-        if(parentId>0){
+        if(systemId==origSystemId){
 
-            DistributorGradeDTO parent=distributorGradeService.getById(parentId);
+            Long parentId=self.getParentId();
 
-            resultList.add(parent);
+            if(parentId>0){
+
+                DistributorGradeDTO dto = distributorGradeService.getById(parentId);
+
+                resultList.add(dto);
+
+                return resultList;
+            }
         }
-        //不能把自己选上
-        if(gdto!=null&&resultList.contains(gdto)){
-            resultList.remove(gdto);
-        }
-        return resultList;
+
+        //新体系返回最后一个等级
+        DistributorGradeQuery query = new DistributorGradeQuery();
+
+        query.setSystemId(systemId);
+
+        List<DistributorGradeDTO> pageList = distributorGradeService.findPage(query);
+
+        List<Long> parentIdList=pageList.stream().map(DistributorGradeDTO::getParentId).collect(Collectors.toList());
+
+
+        pageList.forEach(grade->{
+
+            if(!parentIdList.contains(grade.getId())){
+
+                resultList.add(grade);
+            }
+        });
+
+        return  resultList;
     }
 
     @Override
