@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deepexi.channel.mapper.AreaTypeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.deepexi.channel.domain.AreaTypeDO">
+        <result column="id" property="id" />
+        <result column="dr" property="dr" />
+        <result column="created_time" property="createdTime" />
+        <result column="updated_time" property="updatedTime" />
+        <result column="created_by" property="createdBy" />
+        <result column="updated_by" property="updatedBy" />
+        <result column="parent_id" property="parentId" />
+        <result column="path" property="path" />
+        <result column="area_type_name" property="areaTypeName" />
+        <result column="area_type_code" property="areaTypeCode" />
+        <result column="area_type_name_en" property="areaTypeNameEn" />
+        <result column="description" property="description" />
+        <result column="version" property="version" />
+        <result column="remark" property="remark" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        tenant_id,
+        app_id,
+        dr,
+        created_time,
+        updated_time,
+        created_by,
+        updated_by
+    </sql>
+
+    <select id="listAreaTypePage" parameterType="com.deepexi.channel.domain.AreaTypeQuery"
+            resultType="com.deepexi.channel.domain.AreaTypePageDO">
+       select * from cc_area_type
+        WHERE dr=0
+        <if test="ids != null">
+            and id in
+            <foreach collection="ids" item="tempId" index="index" open="(" close=")" separator=",">
+                #{tempId}
+            </foreach>
+        </if>
+        <if test="areaTypeName!=null">
+            AND area_type_name LIKE concat('%',#{areaTypeName},'%')
+        </if>
+        <if test="areaTypeCode!=null">
+            AND area_type_code LIKE concat('%',#{areaTypeCode},'%')
+        </if>
+        <if test="startTime != null">
+            and created_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null">
+            and created_time &lt;= #{endTime}
+        </if>
+        <if test="updateStartTime != null">
+            and updated_time &gt;= #{updateStartTime}
+        </if>
+        <if test="updateEndTime != null">
+            and updated_time &lt;= #{updateEndTime}
+        </if>
+        order by updated_time desc
+    </select>
+
+    <select id="listAreaTypeCode" resultType="java.lang.String">
+        SELECT
+            a.area_type_code
+        FROM
+            cc_area_type a
+        WHERE
+            a.dr = 0
+        AND a.tenant_id = #{tenantId}
+        AND a.app_id = #{appId}
+    </select>
+
+    <select id="listNodeWithoutChildren" resultType="com.deepexi.channel.domain.AreaTypeDO">
+      SELECT
+            a.*
+        FROM
+            cc_area_type a
+        WHERE
+            a.dr = 0
+        AND a.tenant_id = #{id}
+        AND a.app_id = #{appId}
+        AND a.id NOT IN (
+            SELECT
+                b.parent_id
+            FROM
+                cc_area_type b
+            WHERE
+                b.dr = 0
+            AND b.tenant_id = #{tenant_id}
+            AND b.app_id = #{appId}
+        )
+    </select>
+
+    <select id="getChildNode" resultType="com.deepexi.channel.domain.AreaTypeDO">
+      SELECT
+            *
+        FROM
+            cc_area_type a
+        WHERE
+            a.dr = 0
+        AND a.parent_id=#{id}
+        AND a.tenant_id = #{tenantId}
+        AND a.app_id = #{appId}
+    </select>
+
+    <select id="listChildNodes" resultType="com.deepexi.channel.domain.AreaTypeDO">
+      select a.* from cc_area_type a where a.dr=0
+        <if test="idPath!=null">
+            AND a.path like concat('%',#{idPath}, '%')
+        </if>
+    </select>
+
+    <select id="listAreaTypeByIds" resultType="com.deepexi.channel.domain.AreaTypeDO">
+
+        select * from cc_area_type where 1=1
+
+        <if test="ids != null">
+            and id in
+            <foreach collection="ids" item="tempId" index="index" open="(" close=")" separator=",">
+                #{tempId}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="listLinkedAreas" resultType="com.deepexi.channel.domain.AreaTypeDO">
+
+        select * from cc_area_type where dr=0
+
+        <if test="id!= 0">
+            and id =#{id}
+        </if>
+    </select>
+
+</mapper>

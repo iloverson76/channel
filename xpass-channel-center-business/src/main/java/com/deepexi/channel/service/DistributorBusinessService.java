@@ -1,0 +1,29 @@
+package com.deepexi.channel.service;
+
+import com.deepexi.channel.domain.*;
+
+import java.util.List;
+
+/**
+ * cc_distributor_grade
+ */
+public interface DistributorBusinessService {
+
+   long create(DistributorDTO dto);
+
+   boolean delete(List<Long> idList);
+
+    List<DistributorDTO> findPage(DistributorQuery query);
+
+    boolean update(DistributorDTO clone);
+
+    List<AreaDTO> getAreaInfo(Long distributorId);
+
+    List<BankAccountDTO> getBankAccountInfo(Long distributorId);
+
+    DistributorDTO detail(Long id);
+
+    List<DistributorDTO> listParentDistributorsByGrade(Long gradeId);
+
+    List<GradeInfoDTO> getGradeInfo(Long distributorId);
+}
