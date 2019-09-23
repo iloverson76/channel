@@ -9,9 +9,12 @@ import com.deepexi.channel.domain.distributor.DistributorAreaRelationDO;
 import com.deepexi.channel.domain.distributor.DistributorAreaRelationDO;
 import com.deepexi.channel.mapper.AreaMapper;
 import com.deepexi.channel.mapper.DistributorAreaRelationMapper;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author chp
@@ -72,5 +75,38 @@ public class DistributorAreaRelationDAOImpl extends ServiceImpl<DistributorAreaR
 
         return baseMapper.selectOne(wp);
     }
+
+    @Override
+    public List<DistributorAreaRelationDO> findAllByAreaIds(List<Long> areaIdList) {
+
+        QueryWrapper<DistributorAreaRelationDO> wp=new QueryWrapper<>();
+
+        wp.in("area_id",areaIdList);
+
+        return baseMapper.selectList(wp);
+    }
+
+    @Override
+    public int deleteBatchByAreaIds(List<Long> areaIdList) {
+
+        QueryWrapper wp=new QueryWrapper();
+
+        List<DistributorAreaRelationDO> eoList = findAllByAreaIds(areaIdList);
+
+        List<Long> idList=new ArrayList<>();
+
+        if(CollectionUtils.isNotEmpty(eoList)){
+            idList=eoList.stream().map(DistributorAreaRelationDO::getId).collect(Collectors.toList());
+        }
+
+        if(CollectionUtils.isNotEmpty(idList)){
+
+           return baseMapper.deleteBatchIds(idList);
+        }
+
+        return 0;
+    }
+
+
 
 }

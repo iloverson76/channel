@@ -8,7 +8,7 @@ import com.deepexi.channel.domain.area.AreaTreeQuery;
 import java.util.List;
 
 /**
- * cc_distributor_grade
+ * 区域聚合层接口
  */
 public interface AreaBusinessService {
 
@@ -24,9 +24,19 @@ public interface AreaBusinessService {
 
     List<AreaDTO> listLinkedAreasByType(Long areaTypeId);
 
-    boolean deleteBatch(List<Long> ids);
+ boolean deleteBatchByIds(List<Long> ids,Integer forDelete);
 
-    boolean deleteById(Long id);
+    void validateHasChildren(List<Long> idList);
+
+    void validateHasDistributors(List<Long> idList);
+
+    void validateHasStores(List<Long> idList);
+
+    boolean deleteChildren(List<Long> idList);
+
+    boolean deleteDistributors(List<Long> idList);
+
+    boolean deleteStores(List<Long> idList);
 
     boolean update(AreaDTO dto);
 

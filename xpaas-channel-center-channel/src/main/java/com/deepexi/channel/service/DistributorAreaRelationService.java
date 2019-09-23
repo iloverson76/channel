@@ -14,7 +14,11 @@ public interface DistributorAreaRelationService {
 
     int deleteBatchByDistributorIds(List<Long> distributorIdList);
 
+    int deleteBatchByAreaIds(List<Long> areaIdList);
+
     List<DistributorAreaRelationDTO> findAllByDistributorId(Long butorId);
+
+    List<DistributorAreaRelationDTO> findAllByAreaIds(List<Long> areaIdList);
 
     Boolean deleteByDistributorId(Long distributorId);
 }

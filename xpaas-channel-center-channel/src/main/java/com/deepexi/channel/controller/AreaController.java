@@ -3,6 +3,7 @@ package com.deepexi.channel.controller;
 import com.deepexi.channel.businness.AreaBusinessService;
 import com.deepexi.channel.businness.AreaTypeBusinessService;
 import com.deepexi.channel.domain.area.*;
+import com.deepexi.channel.enums.ForceDeleteEnum;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pageHelper.PageBean;
 import com.deepexi.util.pojo.CloneDirection;
@@ -74,7 +75,7 @@ public class AreaController {
 
         List<Long> idList= Arrays.stream(ids.split(",")).map(Long::parseLong).collect(Collectors.toList());
 
-        return new Payload(areaBusinessService.deleteBatch(idList));
+        return new Payload(areaBusinessService.deleteBatchByIds(idList, ForceDeleteEnum.NO.getCode()));
     }
 
     @GetMapping()
