@@ -2,6 +2,9 @@ package com.deepexi.channel.controller;
 
 import com.deepexi.channel.domain.*;
 import com.deepexi.channel.enums.DistributorTypeEnum;
+import com.deepexi.channel.enums.ForceDeleteEnum;
+import com.deepexi.channel.service.AreaService;
+import com.deepexi.channel.service.DistributorService;
 import com.deepexi.channel.service.DistributorBusinessService;
 import com.deepexi.util.config.Payload;
 import com.deepexi.util.pageHelper.PageBean;
@@ -40,7 +43,7 @@ public class DistributorController {
 
         List<Long> idList = Arrays.stream(ids.split(",")).map(Long::parseLong).collect(Collectors.toList());
 
-        return new Payload<>(distributorBusinessService.delete(idList));
+        return new Payload<>(distributorBusinessService.deleteBatchByIds(idList, ForceDeleteEnum.NO.getCode()));
     }
 
     @GetMapping("/{id}")

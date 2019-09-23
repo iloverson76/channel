@@ -49,7 +49,20 @@ public class DistributorAreaRelationServiceImpl implements DistributorAreaRelati
     }
 
     @Override
+    public int deleteBatchByAreaIds(List<Long> areaIdList) {
+
+        if(CollectionUtils.isEmpty(areaIdList)){
+            return 0;
+        }
+        return distributorAreaRelationDAO.deleteBatchByAreaIds(areaIdList);
+    }
+
+    @Override
     public List<DistributorAreaRelationDTO> findAllByDistributorId(Long distributorId) {
+
+        if(distributorId<=0){
+            return Collections.emptyList();
+        }
 
         List<DistributorAreaRelationDO> eoList=distributorAreaRelationDAO.findAllByDistributorId(distributorId);
 
@@ -57,6 +70,18 @@ public class DistributorAreaRelationServiceImpl implements DistributorAreaRelati
             return Collections.emptyList();
 
         }
+
+        return ObjectCloneUtils.convertList(eoList,DistributorAreaRelationDTO.class,CloneDirection.OPPOSITE);
+    }
+
+    @Override
+    public List<DistributorAreaRelationDTO> findAllByAreaIds(List<Long> areaIdList) {
+
+        if(CollectionUtils.isEmpty(areaIdList)){
+            return Collections.emptyList();
+        }
+
+        List<DistributorAreaRelationDO> eoList=distributorAreaRelationDAO.findAllByAreaIds(areaIdList);
 
         return ObjectCloneUtils.convertList(eoList,DistributorAreaRelationDTO.class,CloneDirection.OPPOSITE);
     }

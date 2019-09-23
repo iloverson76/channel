@@ -1,5 +1,10 @@
 package com.deepexi.channel.controller;
 
+import com.deepexi.channel.businness.DistributorSystemBusinessService;
+import com.deepexi.channel.domain.distributor.*;
+import com.deepexi.channel.domain.store.StoreDistributorDTO;
+import com.deepexi.channel.domain.store.StoreDistributorVO;
+import com.deepexi.channel.enums.ForceDeleteEnum;
 import com.deepexi.channel.domain.*;
 import com.deepexi.channel.service.DistributorGradeSystemService;
 import com.deepexi.channel.service.DistributorSystemBusinessService;
@@ -94,7 +99,7 @@ public class DistributorGradeSystemController {
 
         List<Long> idList= Arrays.stream(ids.split(",")).map(Long::parseLong).collect(Collectors.toList());
 
-        return new Payload<>(distributorSystemBusinessService.delete(idList));
+        return new Payload<>(distributorSystemBusinessService.deleteBatchByIds(idList, ForceDeleteEnum.NO.getCode()));
     }
 
     @GetMapping

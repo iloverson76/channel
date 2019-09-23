@@ -16,7 +16,9 @@
                 #{tempId}
             </foreach>
         </if>
-
+        <if test="systemId != null">
+            and grade_system_id = #{systemId}
+        </if>
         <if test="distributorGradeName!=null">
             AND distributor_grade_name LIKE concat('%',#{distributorGradeName},'%')
         </if>

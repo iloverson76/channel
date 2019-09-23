@@ -1,5 +1,8 @@
 package com.deepexi.channel.controller;
 
+import com.deepexi.channel.businness.DistributorGradeBusinessService;
+import com.deepexi.channel.domain.distributor.*;
+import com.deepexi.channel.enums.ForceDeleteEnum;
 import com.deepexi.channel.domain.*;
 import com.deepexi.channel.service.DistributorGradeBusinessService;
 import com.deepexi.channel.service.DistributorGradeService;
@@ -88,11 +91,11 @@ public class DistributorGradeController {
 
     @DeleteMapping("/{id:[0-9,]+}")
     @ApiOperation(value = "根据id批量删除经销商等级")
-    public Payload<Boolean> delete(@PathVariable(value = "id") String ids) {
+    public Payload<Boolean> deleteBatchByIds(@PathVariable(value = "id") String ids) {
 
         List<Long> idList=Arrays.stream(ids.split(",")).map(Long::parseLong).collect(Collectors.toList());
 
-        return new Payload<>(distributorGradeBusinessService.delete(idList));
+        return new Payload<>(distributorGradeBusinessService.deleteBatchByIds(idList, ForceDeleteEnum.NO.getCode()));
     }
 
     @GetMapping

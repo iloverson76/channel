@@ -11,7 +11,7 @@ public interface AreaTypeDAO extends  IService<AreaTypeDO> {
 
     List<AreaTypeDO> listAreaTypePage(AreaTypeQuery query);
 
-    List<String> listAreaTypeCode(String tenantId, String appId);
+    List<String> listAreaTypeCode();
 
     List<AreaTypeDO> listChildNodes(String idPath);
 

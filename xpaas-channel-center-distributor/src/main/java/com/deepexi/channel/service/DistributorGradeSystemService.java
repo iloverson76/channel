@@ -32,6 +32,11 @@ public interface DistributorGradeSystemService {
     DistributorGradeSystemDTO detail(Long pk);
 
     /**
+     * 查询单条记录
+     */
+    DistributorGradeSystemDTO getById(Long id);
+
+    /**
      * 分页获取列表
      */
     List<DistributorGradeSystemDTO> findPage(DistributorGradeSystemQuery query);

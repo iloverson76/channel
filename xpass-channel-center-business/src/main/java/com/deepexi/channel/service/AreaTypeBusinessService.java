@@ -1,5 +1,9 @@
 package com.deepexi.channel.service;
 
+import com.deepexi.channel.domain.area.AreaDTO;
+import com.deepexi.channel.domain.area.AreaTypeDTO;
+import com.deepexi.channel.domain.area.AreaTypeQuery;
+import com.deepexi.util.CollectionUtil;
 
 import com.deepexi.channel.domain.AreaDTO;
 import com.deepexi.channel.domain.AreaTypeDTO;
@@ -20,7 +24,7 @@ public interface AreaTypeBusinessService {
 
     List<AreaTypeDTO> findParentAreaTypeByAreaId(Long areaId);
 
-    boolean deleteAreaTypeByIds(List<Long> idList);
+    boolean deleteAreaTypeByIds(List<Long> idList,Integer forceDelete);
 
     boolean update(AreaTypeDTO dto);
 
@@ -29,4 +33,10 @@ public interface AreaTypeBusinessService {
     List<AreaTypeDTO> listParentNodesForCreate();
 
     boolean deleteAreaTypeById(Long id);
+
+    List<Long> validateHasAreas(List<Long> idList);
+
+    List<Long> validateHasChildren(List<Long> idList);
+
+    Long createAreaType(AreaTypeDTO dto);
 }

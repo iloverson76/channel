@@ -1,5 +1,12 @@
 package com.deepexi.channel.service.impl;
 
+import com.deepexi.channel.businness.DistributorGradeBusinessService;
+import com.deepexi.channel.domain.distributor.*;
+import com.deepexi.channel.enums.ForceDeleteEnum;
+import com.deepexi.channel.service.DistributorGradeRelationService;
+import com.deepexi.channel.service.DistributorGradeService;
+import com.deepexi.channel.service.DistributorGradeSystemService;
+import com.deepexi.channel.service.DistributorService;
 import com.deepexi.channel.domain.*;
 import com.deepexi.channel.service.*;
 import com.deepexi.util.CollectionUtil;
@@ -38,7 +45,10 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
         query.setSystemId(systemId);
 
+        //按体系过滤数据
         List<DistributorGradeDTO> pageList = distributorGradeService.findPage(query);
+
+        log.info("体系:"+systemId);
 
         if(CollectionUtil.isEmpty(pageList)){
 
@@ -51,8 +61,8 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
                 if(grade.getRoot()==1&&dto.getRoot()==1){
                     throw new ApplicationException("一个体系只能有一个根节点"+"["+grade.getDistributorGradeName()+"]");
                 }
-                dto.setRoot(0);
             });
+            dto.setRoot(0);
         }
 
         return distributorGradeService.create(dto);
@@ -184,23 +194,46 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
     @Override
     public List<DistributorGradeDTO> findParentNodesForUpdate(Long systemId,Long gradeId) {
 
-        List<DistributorGradeDTO> resultList= findParentNodesForCreate(systemId);
+        List<DistributorGradeDTO> resultList=new ArrayList<>();
 
-        DistributorGradeDTO gdto=distributorGradeService.getById(gradeId);
+        //原来的体系只能返回原来的上级(根节点是没有上级的)
+        DistributorGradeDTO self=distributorGradeService.getById(gradeId);
 
-        Long parentId=gdto.getParentId();
+        Long origSystemId=self.getGradeSystemId();
 
-        if(parentId>0){
+        if(systemId==origSystemId){
 
-            DistributorGradeDTO parent=distributorGradeService.getById(parentId);
+            Long parentId=self.getParentId();
 
-            resultList.add(parent);
+            if(parentId>0){
+
+                DistributorGradeDTO dto = distributorGradeService.getById(parentId);
+
+                resultList.add(dto);
+
+                return resultList;
+            }
         }
-        //不能把自己选上
-        if(gdto!=null&&resultList.contains(gdto)){
-            resultList.remove(gdto);
-        }
-        return resultList;
+
+        //新体系返回最后一个等级
+        DistributorGradeQuery query = new DistributorGradeQuery();
+
+        query.setSystemId(systemId);
+
+        List<DistributorGradeDTO> pageList = distributorGradeService.findPage(query);
+
+        List<Long> parentIdList=pageList.stream().map(DistributorGradeDTO::getParentId).collect(Collectors.toList());
+
+
+        pageList.forEach(grade->{
+
+            if(!parentIdList.contains(grade.getId())){
+
+                resultList.add(grade);
+            }
+        });
+
+        return  resultList;
     }
 
     @Override
@@ -281,9 +314,9 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean update(DistributorGradeDTO dto) {
+    public Boolean update(DistributorGradeDTO dto) {
 
-        long id=dto.getId();
+        Long id=dto.getId();
 
         DistributorGradeDTO origDTO=distributorGradeService.getById(id);
 
@@ -292,11 +325,9 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
         //根节点修改的冲突
         if(dto.getRoot()==1){
 
-            Long systemId=origDTO.getGradeSystemId();
-
             DistributorGradeQuery query = new DistributorGradeQuery();
 
-            query.setSystemId(systemId);
+            query.setSystemId(origSystemId);
 
             findPage(query).forEach(grade->{
 
@@ -307,24 +338,40 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
         }
 
         //改变所属体系
-        long newSystemId=dto.getGradeSystemId();
+        Long newSystemId=dto.getGradeSystemId();
 
-        if(origSystemId==newSystemId){
+        if(origSystemId!=newSystemId){
 
             List<DistributorGradeDTO> children=distributorGradeService.listChildrenNodes(id);
 
-            children.forEach(child->{
-                child.setGradeSystemId(newSystemId);
-            });
+            if(CollectionUtils.isNotEmpty(children)){
 
-            distributorGradeService.updateBatchById(children);
+                children.forEach(child->{
+                    child.setGradeSystemId(newSystemId);
+                });
+
+                //更新等级表
+                distributorGradeService.updateBatchById(children);
+            }
+
+            //更新经销商关联表
+            List<DistributorGradeRelationDTO> dgrList = distributorGradeRelationService.findAllByGradeId(id);
+
+            if(CollectionUtils.isNotEmpty(dgrList)){
+
+                dgrList.forEach(dgr->{
+                    dgr.setSystemId(newSystemId);
+                });
+
+                distributorGradeRelationService.updateBatchById(dgrList);
+            }
 
         }
         return distributorGradeService.updateById(dto);
     }
 
     @Override
-    public boolean delete(List<Long> gradeIdList) {
+    public Boolean deleteBatchByIds(List<Long> gradeIdList,Integer forceDelete) {
 
         log.info("经销商等级删除");
 
@@ -332,7 +379,28 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
             return false;
         }
 
-        //挂载经销商的不能删除
+        ForceDeleteEnum.validateIllegalForceDeleteFlag(forceDelete);
+
+        if(forceDelete== ForceDeleteEnum.NO.getCode()){
+
+            //有下级的不能删除
+            validateHasChildren(gradeIdList);
+
+            //挂载经销商的不能删除
+            validateHasDistributors(gradeIdList);
+
+        }else if(forceDelete==ForceDeleteEnum.YES.getCode()){
+
+            deleteDistributors(gradeIdList);
+        }
+
+        log.info("开始删除等级");
+        return distributorGradeService.delete(gradeIdList);
+    }
+
+    @Override
+    public void validateHasDistributors(List<Long> gradeIdList){
+
         log.info("查询关联经销商");
         List<DistributorGradeRelationDTO> dgrList = distributorGradeRelationService.findAllByGradeIds(gradeIdList);
 
@@ -340,15 +408,15 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
         if(CollectionUtil.isNotEmpty(dgrList)){
 
-           dgrList.forEach(dgr->{
+            dgrList.forEach(dgr->{
 
-               Long did=dgr.getDistributorId();
+                Long did=dgr.getDistributorId();
 
-               if(did>0){
+                if(did>0){
 
-                   distributorIds.add(did);
-               }
-           });
+                    distributorIds.add(did);
+                }
+            });
         }
 
         if(CollectionUtil.isNotEmpty(distributorIds)){
@@ -364,8 +432,33 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
                 throw new ApplicationException("此等级已挂载经销商,不能删除!请解除所有关联后再操作");
             }
         }
+    }
 
-        //有下级的不能删除
+    @Override
+    public Boolean deleteDistributors(List<Long> gradeIdList){
+
+        List<DistributorGradeRelationDTO> dgrList = distributorGradeRelationService.findAllByGradeIds(gradeIdList);
+
+        if(CollectionUtils.isEmpty(dgrList)){
+            return true;
+        }
+
+        List<Long> distributorIdList = dgrList.stream().map(DistributorGradeRelationDTO::getDistributorId).collect(Collectors.toList());
+
+        if(CollectionUtils.isEmpty(distributorIdList)){
+            return true;
+        }
+
+       int result=distributorGradeRelationService.deleteBatchByDistributorIds(distributorIdList);
+
+        if (result>0){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void validateHasChildren(List<Long> gradeIdList){
         log.info("查询下级");
         DistributorGradeQuery gradeQuery = new DistributorGradeQuery();
 
@@ -393,9 +486,6 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
                 });
             });
         }
-        //删除等级
-        log.info("开始删除等级");
-        return distributorGradeService.delete(gradeIdList);
     }
 
 }
