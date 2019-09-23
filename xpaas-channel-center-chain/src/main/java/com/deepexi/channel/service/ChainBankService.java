@@ -6,7 +6,9 @@ import com.deepexi.channel.domain.ChainBankQuery;
 import java.util.List;
 
 /**
- * cc_chain_bank
+ * @author mumu
+ * @version 1.0
+ * @date 2019/9/19 19:55
  */
 public interface ChainBankService {
 
@@ -14,15 +16,17 @@ public interface ChainBankService {
 
     boolean update(ChainBankDTO dto);
 
+    boolean updateBatch(List<ChainBankDTO> dtos);
+
     boolean delete(List<Long> ids);
 
     boolean delete(Long id);
 
     List<ChainBankDTO> findList(ChainBankQuery chainBankQuery);
 
-    boolean saveBatch(List<ChainBankDTO> chainBankDTOS);
+    boolean save(ChainBankDTO dto);
 
-//    List<ChainBankDTO> getChainBankByChainId(Long id);
+    boolean saveBatch(List<ChainBankDTO> chainBankDTOS);
 
     boolean deleteByChainId(Long id);
 

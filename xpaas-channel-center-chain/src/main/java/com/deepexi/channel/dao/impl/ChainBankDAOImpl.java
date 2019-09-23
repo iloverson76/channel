@@ -10,7 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+/**
+ * @author mumu
+ * @version 1.0
+ * @date 2019/9/19 19:55
+ */
 @Repository
 public class ChainBankDAOImpl extends ServiceImpl<ChainBankMapper, ChainBankDO> implements ChainBankDAO {
 

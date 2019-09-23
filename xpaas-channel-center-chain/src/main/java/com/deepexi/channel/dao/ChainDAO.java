@@ -6,7 +6,11 @@ import com.deepexi.channel.domain.ChainQuery;
 
 import java.util.List;
 
-
+/**
+ * @author mumu
+ * @version 1.0
+ * @date 2019/9/19 19:55
+ */
 public interface ChainDAO extends IService<ChainDO> {
 
     List<ChainDO> findList(ChainQuery query);

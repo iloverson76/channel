@@ -20,20 +20,5 @@
             <artifactId>xpaas-channel-center-store-api</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>com.deepexi</groupId>-->
-            <!--<artifactId>xpaas-channel-center-distributor</artifactId>-->
-            <!--<version>${project.version}</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>com.deepexi</groupId>-->
-            <!--<artifactId>xpaas-channel-center-area</artifactId>-->
-            <!--<version>${project.version}</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>com.deepexi</groupId>-->
-            <!--<artifactId>xpaas-channel-center-chain</artifactId>-->
-            <!--<version>${project.version}</version>-->
-        <!--</dependency>-->
     </dependencies>
 </project>

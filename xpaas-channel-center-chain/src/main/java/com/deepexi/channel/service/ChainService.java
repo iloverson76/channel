@@ -7,7 +7,9 @@ import com.deepexi.channel.domain.ChainQuery;
 import java.util.List;
 
 /**
- * cc_chain
+ * @author mumu
+ * @version 1.0
+ * @date 2019/9/19 19:55
  */
 public interface ChainService {
 
@@ -31,12 +33,16 @@ public interface ChainService {
     */
     Boolean update(ChainDTO dto);
 
+    Boolean updateBatch(List<ChainDTO> dtos);
+
     /**
     * 创建eo
     * @param dto
     * @return
     */
     Long create(ChainDTO dto);
+
+    Boolean createBatch(List<ChainDTO> dtos);
 //
     /**
      批量删除

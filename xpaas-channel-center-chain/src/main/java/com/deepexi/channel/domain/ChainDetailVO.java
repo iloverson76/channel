@@ -6,7 +6,11 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import java.util.List;
-
+/**
+ * @author mumu
+ * @version 1.0
+ * @date 2019/9/19 19:55
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor

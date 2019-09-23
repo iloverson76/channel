@@ -11,7 +11,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Set;
-
+/**
+ * @author mumu
+ * @version 1.0
+ * @date 2019/9/19 19:55
+ */
 @Repository
 public class ChainTypeDAOImpl extends ServiceImpl<ChainTypeMapper, ChainTypeDO> implements ChainTypeDAO {
     @Autowired
