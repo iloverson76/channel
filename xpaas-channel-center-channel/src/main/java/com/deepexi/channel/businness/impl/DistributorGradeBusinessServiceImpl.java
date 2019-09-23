@@ -315,7 +315,7 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
     @Override
     public boolean update(DistributorGradeDTO dto) {
 
-        long id=dto.getId();
+        Long id=dto.getId();
 
         DistributorGradeDTO origDTO=distributorGradeService.getById(id);
 
@@ -324,11 +324,9 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
         //根节点修改的冲突
         if(dto.getRoot()==1){
 
-            Long systemId=origDTO.getGradeSystemId();
-
             DistributorGradeQuery query = new DistributorGradeQuery();
 
-            query.setSystemId(systemId);
+            query.setSystemId(origSystemId);
 
             findPage(query).forEach(grade->{
 
@@ -339,17 +337,33 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
         }
 
         //改变所属体系
-        long newSystemId=dto.getGradeSystemId();
+        Long newSystemId=dto.getGradeSystemId();
 
-        if(origSystemId==newSystemId){
+        if(origSystemId!=newSystemId){
 
             List<DistributorGradeDTO> children=distributorGradeService.listChildrenNodes(id);
 
-            children.forEach(child->{
-                child.setGradeSystemId(newSystemId);
-            });
+            if(CollectionUtils.isNotEmpty(children)){
 
-            distributorGradeService.updateBatchById(children);
+                children.forEach(child->{
+                    child.setGradeSystemId(newSystemId);
+                });
+
+                //更新等级表
+                distributorGradeService.updateBatchById(children);
+            }
+
+            //更新经销商关联表
+            List<DistributorGradeRelationDTO> dgrList = distributorGradeRelationService.findAllByGradeId(id);
+
+            if(CollectionUtils.isNotEmpty(dgrList)){
+
+                dgrList.forEach(dgr->{
+                    dgr.setSystemId(newSystemId);
+                });
+
+                distributorGradeRelationService.updateBatchById(dgrList);
+            }
 
         }
         return distributorGradeService.updateById(dto);
