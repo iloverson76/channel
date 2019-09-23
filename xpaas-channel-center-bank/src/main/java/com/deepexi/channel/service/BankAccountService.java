@@ -19,8 +19,6 @@ public interface BankAccountService {
     **/
     List<BankAccountDTO> saveBatch(List<BankAccountDTO> bankAccountDTOS);
 
-//    List<BankAccountDTO> getBankAccountByIds(List<Long> bankAccountIds);
-
     List<BankAccountDTO> findList(BankAccountQuery query);
 
     /**
