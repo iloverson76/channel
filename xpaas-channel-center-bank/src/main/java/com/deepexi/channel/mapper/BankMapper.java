@@ -8,6 +8,11 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * @author mumu
+ * @version 1.0
+ * @date 2019/9/19 17:10
+ */
 @Mapper
 public interface BankMapper extends BaseMapper<BankDO> {
 

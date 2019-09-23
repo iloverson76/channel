@@ -11,6 +11,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * @author mumu
+ * @version 1.0
+ * @date 2019/9/19 17:10
+ */
 @Repository
 public class BankDAOImpl  extends ServiceImpl<BankMapper, BankDO> implements BankDAO {
 

@@ -16,6 +16,11 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * @author mumu
+ * @version 1.0
+ * @date 2019/9/19 17:10
+ */
 @Service
 public class BankServiceImpl implements BankService {
 
@@ -26,8 +31,10 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public Boolean create(BankDTO bankDTO) {
-        boolean result = bankDAO.save(bankDTO.clone(BankDO.class));
-        return result;
+        if(null == bankDTO){
+            return false ;
+        }
+        return bankDAO.save(bankDTO.clone(BankDO.class));
     }
 
     @Override
@@ -51,7 +58,7 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public Boolean update(BankDTO bankDTO) {
-        if(bankDTO == null){
+        if(null == bankDTO){
             return false;
         }
         return bankDAO.updateById(bankDTO.clone(BankDO.class));
