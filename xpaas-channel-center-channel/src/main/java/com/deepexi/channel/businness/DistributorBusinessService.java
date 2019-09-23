@@ -13,7 +13,11 @@ public interface DistributorBusinessService {
 
    long create(DistributorDTO dto);
 
-   boolean delete(List<Long> idList);
+   boolean deleteBatchByIds(List<Long> idList,Integer forceDelete);
+
+   void validateHasChildren(List<Long> butorIdList);
+
+   void validateHasStores(List<Long> butorIdList);
 
     List<DistributorDTO> findPage(DistributorQuery query);
 

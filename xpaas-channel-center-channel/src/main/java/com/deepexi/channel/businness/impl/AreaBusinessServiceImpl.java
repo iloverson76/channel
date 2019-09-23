@@ -264,6 +264,8 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
         //删除子节点关联
         deleteChildren(ids);
 
+        //经销商也有区域关联
+
         //删除门店关联
         deleteStore(ids);
 

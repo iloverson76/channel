@@ -3,6 +3,7 @@ package com.deepexi.channel.controller;
 
 import com.deepexi.channel.businness.AreaTypeBusinessService;
 import com.deepexi.channel.domain.area.*;
+import com.deepexi.channel.enums.ForceDeleteEnum;
 import com.deepexi.channel.extension.AppRuntimeEnv;
 import com.deepexi.channel.service.AreaTypeService;
 import com.deepexi.util.CollectionUtil;
@@ -43,8 +44,6 @@ public class AreaTypeController {
     @Autowired
     AreaTypeBusinessService areaTypeBusinessService;
 
-    AppRuntimeEnv appRuntimeEnv = AppRuntimeEnv.getInstance();
-
     @PostMapping()
     @ApiOperation(value = "新增区域类型")
     public Payload<Long> saveAreaType(@RequestBody AreaTypeVO vo) {
@@ -69,9 +68,9 @@ public class AreaTypeController {
     @ApiOperation(value = "批量删除区域类型")
     public Payload<Boolean> deleteAreaTypeByIds(@PathVariable(value = "ids") String ids) {//前端的列表每一个id都去拿子节点的话,性能很慢
 
-        List<Long> idSet=Arrays.stream(ids.split(",")).map(Long::parseLong).collect(Collectors.toList());
+        List<Long> idList=Arrays.stream(ids.split(",")).map(Long::parseLong).collect(Collectors.toList());
 
-        Boolean result = areaTypeBusinessService.deleteAreaTypeByIds(idSet);
+        Boolean result = areaTypeBusinessService.deleteAreaTypeByIds(idList, ForceDeleteEnum.NO.getCode());
 
         return new Payload<>(result);
     }

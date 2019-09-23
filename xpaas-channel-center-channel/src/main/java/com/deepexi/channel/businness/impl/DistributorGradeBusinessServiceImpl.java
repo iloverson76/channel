@@ -2,6 +2,7 @@ package com.deepexi.channel.businness.impl;
 
 import com.deepexi.channel.businness.DistributorGradeBusinessService;
 import com.deepexi.channel.domain.distributor.*;
+import com.deepexi.channel.enums.ForceDeleteEnum;
 import com.deepexi.channel.service.DistributorGradeRelationService;
 import com.deepexi.channel.service.DistributorGradeService;
 import com.deepexi.channel.service.DistributorGradeSystemService;
@@ -370,7 +371,7 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
     }
 
     @Override
-    public boolean delete(List<Long> gradeIdList) {
+    public boolean deleteBatchByIds(List<Long> gradeIdList,Integer forceDelete) {
 
         log.info("经销商等级删除");
 
@@ -378,7 +379,22 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
             return false;
         }
 
-        //挂载经销商的不能删除
+        if(forceDelete== ForceDeleteEnum.NO.getCode()){
+
+            //挂载经销商的不能删除
+            validateHasDistributors(gradeIdList);
+
+            //有下级的不能删除
+            validateHasChildren(gradeIdList);
+        }
+
+        log.info("开始删除等级");
+        return distributorGradeService.delete(gradeIdList);
+    }
+
+    @Override
+    public void validateHasDistributors(List<Long> gradeIdList){
+
         log.info("查询关联经销商");
         List<DistributorGradeRelationDTO> dgrList = distributorGradeRelationService.findAllByGradeIds(gradeIdList);
 
@@ -386,15 +402,15 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
         if(CollectionUtil.isNotEmpty(dgrList)){
 
-           dgrList.forEach(dgr->{
+            dgrList.forEach(dgr->{
 
-               Long did=dgr.getDistributorId();
+                Long did=dgr.getDistributorId();
 
-               if(did>0){
+                if(did>0){
 
-                   distributorIds.add(did);
-               }
-           });
+                    distributorIds.add(did);
+                }
+            });
         }
 
         if(CollectionUtil.isNotEmpty(distributorIds)){
@@ -410,8 +426,10 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
                 throw new ApplicationException("此等级已挂载经销商,不能删除!请解除所有关联后再操作");
             }
         }
+    }
 
-        //有下级的不能删除
+    @Override
+    public void validateHasChildren(List<Long> gradeIdList){
         log.info("查询下级");
         DistributorGradeQuery gradeQuery = new DistributorGradeQuery();
 
@@ -439,9 +457,6 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
                 });
             });
         }
-        //删除等级
-        log.info("开始删除等级");
-        return distributorGradeService.delete(gradeIdList);
     }
 
 }

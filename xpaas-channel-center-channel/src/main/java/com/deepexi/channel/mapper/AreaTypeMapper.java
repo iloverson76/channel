@@ -23,11 +23,11 @@ public interface AreaTypeMapper extends BaseMapper<AreaTypeDO> {
 
     List<AreaTypeDO> listAreaTypePage(AreaTypeQuery query);
 
-    List<String> listAreaTypeCode(@Param("tenantId") String tenantId, @Param("appId") String appId);
+    List<String> listAreaTypeCode();
 
-    List<AreaTypeDO> listNodeWithoutChildren(@Param("tenantId") String tenantId, @Param("appId") String appId);
+    List<AreaTypeDO> listNodeWithoutChildren();
 
-    AreaTypeDO getChildNode(@Param("tenantId") String tenantId, @Param("appId") String appId, @Param("id") Long id);
+    AreaTypeDO getChildNode(@Param("id") Long id);
 
     List<AreaTypeDO> listChildNodes (@Param("idPath") String idPath);
 

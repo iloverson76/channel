@@ -22,5 +22,7 @@ public interface DistributorSystemBusinessService {
 
     List<StoreDistributorDTO> getDistributorGradeSystemByDistributorId(long distributorId);
 
-    boolean delete(List<Long> idList);
+    boolean deleteBatchByIds(List<Long> idList,Integer forceDelete);
+
+    void validateHasGrades(List<Long> systemIdList);
 }

@@ -35,7 +35,14 @@ public interface DistributorGradeBusinessService {
      */
     List<DistributorGradeDTO> findAllGradesBySystem(long systemId);
 
-    boolean delete(List<Long> idList);
+    /**
+     * 批量删除
+     */
+    boolean deleteBatchByIds(List<Long> idList,Integer forceDelete);
+
+    void validateHasDistributors(List<Long> gradeIdList);
+
+    void validateHasChildren(List<Long> gradeIdList);
 
     Long create(DistributorGradeDTO dto);
 

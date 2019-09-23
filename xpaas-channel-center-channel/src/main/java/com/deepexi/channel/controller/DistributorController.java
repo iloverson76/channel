@@ -9,6 +9,7 @@ import com.deepexi.channel.domain.bank.BankAccountDTO;
 import com.deepexi.channel.domain.bank.BankAccountVO;
 import com.deepexi.channel.domain.distributor.*;
 import com.deepexi.channel.enums.DistributorTypeEnum;
+import com.deepexi.channel.enums.ForceDeleteEnum;
 import com.deepexi.channel.service.AreaService;
 import com.deepexi.channel.service.DistributorService;
 import com.deepexi.util.config.Payload;
@@ -51,7 +52,7 @@ public class DistributorController {
 
         List<Long> idList = Arrays.stream(ids.split(",")).map(Long::parseLong).collect(Collectors.toList());
 
-        return new Payload<>(distributorBusinessService.delete(idList));
+        return new Payload<>(distributorBusinessService.deleteBatchByIds(idList, ForceDeleteEnum.NO.getCode()));
     }
 
     @GetMapping("/{id}")

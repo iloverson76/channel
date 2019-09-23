@@ -4,6 +4,7 @@ import com.deepexi.channel.businness.DistributorGradeBusinessService;
 import com.deepexi.channel.businness.DistributorSystemBusinessService;
 import com.deepexi.channel.domain.distributor.*;
 import com.deepexi.channel.domain.store.StoreDistributorDTO;
+import com.deepexi.channel.enums.ForceDeleteEnum;
 import com.deepexi.channel.service.DistributorGradeRelationService;
 import com.deepexi.channel.service.DistributorGradeService;
 import com.deepexi.channel.service.DistributorGradeSystemService;
@@ -13,6 +14,7 @@ import com.deepexi.util.extension.ApplicationException;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import com.netflix.discovery.converters.Auto;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -141,9 +143,23 @@ public class DistributorSystemBusinessServiceImpl implements DistributorSystemBu
     }
 
     @Override
-    public boolean delete(List<Long> systemIdList) {
+    public boolean deleteBatchByIds(List<Long> systemIdList,Integer forceDelete) {
 
-        //已挂载等级的不能删除
+        if(CollectionUtils.isEmpty(systemIdList)){
+            return false;
+        }
+
+        if(forceDelete== ForceDeleteEnum.NO.getCode()){
+
+            //已挂载等级的不能删除
+            validateHasGrades(systemIdList);
+        }
+        //删除体系
+        return distributorGradeSystemService.delete(systemIdList);
+    }
+
+    @Override
+    public void validateHasGrades(List<Long> systemIdList){
         DistributorGradeSystemQuery systemQuery=new DistributorGradeSystemQuery();
 
         systemQuery.setIds(systemIdList);
@@ -165,8 +181,5 @@ public class DistributorSystemBusinessServiceImpl implements DistributorSystemBu
                 throw new ApplicationException("["+system.getGradeSystemName()+"]已挂载已等级,不能删除!请解除所有关联后再操作");
             }
         });
-
-        //删除体系
-        return distributorGradeSystemService.delete(systemIdList);
     }
 }

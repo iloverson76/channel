@@ -10,6 +10,7 @@ import com.deepexi.channel.domain.distributor.*;
 import com.deepexi.channel.domain.store.StoreDistributorRelationDTO;
 import com.deepexi.channel.domain.store.StoreDistributorRelationQuery;
 import com.deepexi.channel.enums.DistributorTypeEnum;
+import com.deepexi.channel.enums.ForceDeleteEnum;
 import com.deepexi.channel.service.*;
 import com.deepexi.util.extension.ApplicationException;
 import lombok.extern.slf4j.Slf4j;
@@ -164,25 +165,33 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
     }
 
     @Override
-    public boolean delete(List<Long> butorIdList) {
+    public boolean deleteBatchByIds(List<Long> distributorIdList,Integer forDelete) {
 
-        //有下级经销商不能删除
-        validateChildren(butorIdList);
+        if(CollectionUtils.isEmpty(distributorIdList)){
+            return false;
+        }
 
-        //有门店不能删除
-        validateStore(butorIdList);
+        if(forDelete== ForceDeleteEnum.NO.getCode()){
+
+            //有下级经销商不能删除
+            validateHasChildren(distributorIdList);
+
+            //有门店不能删除
+            validateHasStores(distributorIdList);
+        }
 
         //等级关联
-        distributorGradeRelationService.deleteBatchByDistributorIds(butorIdList);
+        distributorGradeRelationService.deleteBatchByDistributorIds(distributorIdList);
         //区域关联
-        distributorAreaRelationService.deleteBatchByDistributorIds(butorIdList);
+        distributorAreaRelationService.deleteBatchByDistributorIds(distributorIdList);
         //银行账号关联
-        distributorBankAccountRelationService.deleteBatchByDistributorIds(butorIdList);
+        distributorBankAccountRelationService.deleteBatchByDistributorIds(distributorIdList);
         //删除经销商
-        return distributorService.deleteBatch(butorIdList);
+        return distributorService.deleteBatch(distributorIdList);
     }
 
-    private void validateChildren(List<Long> butorIdList){
+    @Override
+    public void validateHasChildren(List<Long> butorIdList){
 
         //是否有下级经销商
         DistributorQuery query = new DistributorQuery();
@@ -214,7 +223,8 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
         }
     }
 
-    private void validateStore(List<Long> butorIdList){
+    @Override
+    public void validateHasStores(List<Long> butorIdList){
 
         StoreDistributorRelationQuery query = StoreDistributorRelationQuery.builder().
                 distributorIds(butorIdList).build();

@@ -29,8 +29,8 @@ public class AreaTypeDAOImpl extends ServiceImpl<AreaTypeMapper, AreaTypeDO> imp
     }
 
     @Override
-    public List<String> listAreaTypeCode(String tenantId, String appId) {
-        return baseMapper.listAreaTypeCode(tenantId, appId);
+    public List<String> listAreaTypeCode() {
+        return baseMapper.listAreaTypeCode();
     }
 
     @Override

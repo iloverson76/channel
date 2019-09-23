@@ -5,6 +5,7 @@ import com.deepexi.channel.domain.area.AreaDTO;
 import com.deepexi.channel.domain.area.AreaQuery;
 import com.deepexi.channel.domain.area.AreaTypeDTO;
 import com.deepexi.channel.domain.area.AreaTypeQuery;
+import com.deepexi.channel.enums.ForceDeleteEnum;
 import com.deepexi.channel.service.AreaService;
 import com.deepexi.channel.service.AreaTypeService;
 import com.deepexi.util.CollectionUtil;
@@ -228,30 +229,24 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
 
     @Transient
     @Override
-    public boolean deleteAreaTypeByIds(List<Long> idList) {
+    public boolean deleteAreaTypeByIds(List<Long> idList,Integer forceDelete) {
 
         log.info("批量删除区域分类");
 
-        if(CollectionUtil.isEmpty(idList)){
-            return false;
+        //不强制删除=>走校验
+        if(forceDelete == ForceDeleteEnum.NO.getCode()){
+
+            validateHasAreas(idList);
+
+            validateHasChildren(idList);
         }
-
-        //过滤没有区域关联的分类
-        listTypeWithoutArea(idList);
-
-        if(CollectionUtil.isEmpty(idList)){
-            return false;
-        }
-
-        //过滤没有子节点的分类
-        listTypeWithoutChildren(idList);
 
         if(CollectionUtil.isNotEmpty(idList)){
 
             return areaTypeService.deleteAreaTypeByIds(idList);
         }
 
-        return true;
+        return false;
     }
 
     @Override
@@ -358,7 +353,7 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
         return ObjectCloneUtils.convertList(noParentNodeList,AreaTypeDTO.class);
     }
 
-    private void updateChildrenPath(Long id,String replacedPath,String newPath){
+    public void updateChildrenPath(Long id,String replacedPath,String newPath){
 
         List<AreaTypeDTO> children=areaTypeService.listChildNodes(id+"/");
 
@@ -372,9 +367,9 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
         }
     }
 
-    private List<Long> listTypeWithoutChildren(List<Long> idList){
+    public List<Long> validateHasChildren(List<Long> idList){
 
-        log.info("过滤没有下级的分类");
+        log.info("校验分类是否有下级");
 
         //查询没有下级的节点
         List<AreaTypeDTO> dtoList = listNoChildrenNodes(idList);
@@ -390,9 +385,9 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
         return idList;
     }
 
-    private List<Long> listTypeWithoutArea(List<Long> idList){
+    public List<Long> validateHasAreas(List<Long> idList){
 
-        log.info("过滤没有区域关联的分类");
+        log.info("校验分类是否有区域关联");
 
         AreaQuery query = new AreaQuery();
 
