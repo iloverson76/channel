@@ -1,15 +1,10 @@
 package com.deepexi.channel.service.impl;
 
-import com.deepexi.channel.businness.AreaTypeBusinessService;
-import com.deepexi.channel.domain.area.AreaDTO;
-import com.deepexi.channel.domain.area.AreaQuery;
-import com.deepexi.channel.domain.area.AreaTypeDTO;
-import com.deepexi.channel.domain.area.AreaTypeQuery;
-import com.deepexi.channel.enums.ForceDeleteEnum;
 import com.deepexi.channel.domain.AreaDTO;
 import com.deepexi.channel.domain.AreaQuery;
 import com.deepexi.channel.domain.AreaTypeDTO;
 import com.deepexi.channel.domain.AreaTypeQuery;
+import com.deepexi.channel.enums.ForceDeleteEnum;
 import com.deepexi.channel.service.AreaService;
 import com.deepexi.channel.service.AreaTypeBusinessService;
 import com.deepexi.channel.service.AreaTypeService;
@@ -131,6 +126,8 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
 
     @Override
     public List<AreaTypeDTO> findPage(AreaTypeQuery query){
+
+        log.info("区域类型分页查询");
 
         List<AreaTypeDTO> dtoList=areaTypeService.listAreaTypePage(query);
 

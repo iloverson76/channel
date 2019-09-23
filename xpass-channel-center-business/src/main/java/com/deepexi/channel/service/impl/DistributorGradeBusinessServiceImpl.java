@@ -1,13 +1,7 @@
 package com.deepexi.channel.service.impl;
 
-import com.deepexi.channel.businness.DistributorGradeBusinessService;
-import com.deepexi.channel.domain.distributor.*;
-import com.deepexi.channel.enums.ForceDeleteEnum;
-import com.deepexi.channel.service.DistributorGradeRelationService;
-import com.deepexi.channel.service.DistributorGradeService;
-import com.deepexi.channel.service.DistributorGradeSystemService;
-import com.deepexi.channel.service.DistributorService;
 import com.deepexi.channel.domain.*;
+import com.deepexi.channel.enums.ForceDeleteEnum;
 import com.deepexi.channel.service.*;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.extension.ApplicationException;
@@ -389,7 +383,7 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
             //挂载经销商的不能删除
             validateHasDistributors(gradeIdList);
 
-        }else if(forceDelete==ForceDeleteEnum.YES.getCode()){
+        }else {
 
             deleteDistributors(gradeIdList);
         }

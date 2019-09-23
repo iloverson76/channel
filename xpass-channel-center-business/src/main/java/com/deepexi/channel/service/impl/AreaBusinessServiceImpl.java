@@ -1,12 +1,11 @@
 package com.deepexi.channel.service.impl;
 
 import com.deepexi.channel.domain.*;
-import com.deepexi.channel.service.AreaBusinessService;
-import com.deepexi.channel.service.AreaService;
-import com.deepexi.channel.service.AreaTypeService;
-import com.deepexi.channel.service.StoreAreaService;
+import com.deepexi.channel.enums.ForceDeleteEnum;
+import com.deepexi.channel.service.*;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.StringUtil;
+import com.deepexi.util.extension.ApplicationException;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +29,9 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
     @Autowired
     StoreAreaService storeAreaService;
+
+    @Autowired
+    DistributorAreaRelationService distributorAreaRelationService;
 
     @Transient
     @Override
@@ -249,22 +251,47 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
     @Transient
     @Override
-    public boolean deleteBatch(List<Long> ids) {
+    public boolean deleteBatchByIds(List<Long> ids,Integer forceDelete) {
 
         if(CollectionUtils.isEmpty(ids)){
             return false;
         }
 
-        //删除子节点关联
-        deleteChildren(ids);
+        ForceDeleteEnum.validateIllegalForceDeleteFlag(forceDelete);
 
-        //删除门店关联
-        deleteStore(ids);
+        if(forceDelete==ForceDeleteEnum.NO.getCode()){
+
+            validateHasChildren(ids);
+
+            validateHasStores(ids);
+
+            validateHasDistributors(ids);
+
+        }else{
+
+            deleteChildren(ids);
+
+            deleteStores(ids);
+
+            deleteDistributors(ids);
+        }
 
         return areaService.deleteBatch(ids);
     }
 
-    private boolean deleteChildren(List<Long> idList){
+    @Override
+    public void validateHasChildren(List<Long> idList){
+
+        List<AreaDTO> children = getChildrenByIds(idList);
+
+        if(CollectionUtils.isNotEmpty(children)){
+
+            throw new ApplicationException("已有子区域关联,无法删除!请解除关联后再操作");
+        }
+    }
+
+    @Override
+    public boolean deleteChildren(List<Long> idList){
 
         if(CollectionUtils.isNotEmpty(idList)){
 
@@ -276,7 +303,52 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
         return true;
     }
 
-    private boolean deleteStore(List<Long> ids){
+    @Override
+    public void validateHasDistributors(List<Long> areaIdList){
+
+        List<DistributorAreaRelationDTO> darList = distributorAreaRelationService.findAllByAreaIds(areaIdList);
+
+        if(CollectionUtils.isNotEmpty(darList)){
+
+            throw new ApplicationException("已有经销商关联,无法删除!请解除所有关联后再操作");
+        }
+    }
+
+    @Override
+    public boolean deleteDistributors(List<Long> areaIdList){
+
+        List<DistributorAreaRelationDTO> darList = distributorAreaRelationService.findAllByAreaIds(areaIdList);
+
+        int result=0;
+
+        if(CollectionUtils.isNotEmpty(darList)){
+
+            result=distributorAreaRelationService.deleteBatchByAreaIds(areaIdList);
+        }
+
+        if(result>0){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void validateHasStores(List<Long> areaIdList){
+
+        StoreAreaQuery query = new StoreAreaQuery();
+
+        query.setAreaIds(areaIdList);
+
+        List<StoreAreaDTO> pageList = storeAreaService.findList(query);
+
+        if(CollectionUtils.isNotEmpty(pageList)){
+
+          throw new ApplicationException("已有门店关联,无法删除!请解除关联后再操作");
+        }
+    }
+
+    @Override
+    public boolean deleteStores(List<Long> ids){
 
         StoreAreaQuery query = new StoreAreaQuery();
 
@@ -316,16 +388,6 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
             });
         }
         return  children;
-    }
-
-    @Override
-    public boolean deleteById(Long id) {
-
-        log.info("单个删除区域");
-
-        deleteChild(id);
-
-        return areaService.deleteById(id);
     }
 
     private boolean deleteChild(Long parentId){

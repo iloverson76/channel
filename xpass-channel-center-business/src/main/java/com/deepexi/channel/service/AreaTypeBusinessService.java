@@ -1,10 +1,5 @@
 package com.deepexi.channel.service;
 
-import com.deepexi.channel.domain.area.AreaDTO;
-import com.deepexi.channel.domain.area.AreaTypeDTO;
-import com.deepexi.channel.domain.area.AreaTypeQuery;
-import com.deepexi.util.CollectionUtil;
-
 import com.deepexi.channel.domain.AreaDTO;
 import com.deepexi.channel.domain.AreaTypeDTO;
 import com.deepexi.channel.domain.AreaTypeQuery;

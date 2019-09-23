@@ -1,6 +1,7 @@
 package com.deepexi.channel.controller;
 
 import com.deepexi.channel.domain.*;
+import com.deepexi.channel.enums.ForceDeleteEnum;
 import com.deepexi.channel.service.AreaBusinessService;
 import com.deepexi.channel.service.AreaTypeBusinessService;
 import com.deepexi.util.config.Payload;
@@ -74,7 +75,7 @@ public class AreaController {
 
         List<Long> idList= Arrays.stream(ids.split(",")).map(Long::parseLong).collect(Collectors.toList());
 
-        return new Payload(areaBusinessService.deleteBatch(idList));
+        return new Payload(areaBusinessService.deleteBatchByIds(idList, ForceDeleteEnum.NO.getCode()));
     }
 
     @GetMapping()
@@ -109,7 +110,6 @@ public class AreaController {
         List<AreaTreeDTO> dtoList = areaBusinessService.listChildrenTree(areaId);
 
         return tree( dtoList);
-
     }
 
     private Payload<PageBean<AreaTreeVO>>  tree(List<AreaTreeDTO> dtoList){

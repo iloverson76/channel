@@ -1,15 +1,7 @@
 package com.deepexi.channel.service.impl;
 
-import com.deepexi.channel.businness.DistributorGradeBusinessService;
-import com.deepexi.channel.businness.DistributorSystemBusinessService;
-import com.deepexi.channel.domain.distributor.*;
-import com.deepexi.channel.domain.store.StoreDistributorDTO;
-import com.deepexi.channel.enums.ForceDeleteEnum;
-import com.deepexi.channel.service.DistributorGradeRelationService;
-import com.deepexi.channel.service.DistributorGradeService;
-import com.deepexi.channel.service.DistributorGradeSystemService;
-import com.deepexi.channel.service.DistributorService;
 import com.deepexi.channel.domain.*;
+import com.deepexi.channel.enums.ForceDeleteEnum;
 import com.deepexi.channel.service.*;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.extension.ApplicationException;
@@ -155,7 +147,6 @@ public class DistributorSystemBusinessServiceImpl implements DistributorSystemBu
 
             //已挂载等级的不能删除
             validateHasGrades(systemIdList);
-
         }
         //删除体系
         return distributorGradeSystemService.delete(systemIdList);

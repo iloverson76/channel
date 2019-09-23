@@ -1,11 +1,8 @@
 package com.deepexi.channel.controller;
 
 
-import com.deepexi.channel.businness.AreaTypeBusinessService;
-import com.deepexi.channel.domain.area.*;
-import com.deepexi.channel.enums.ForceDeleteEnum;
 import com.deepexi.channel.domain.*;
-import com.deepexi.channel.extension.AppRuntimeEnv;
+import com.deepexi.channel.enums.ForceDeleteEnum;
 import com.deepexi.channel.service.AreaTypeBusinessService;
 import com.deepexi.channel.service.AreaTypeService;
 import com.deepexi.util.CollectionUtil;

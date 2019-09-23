@@ -5,7 +5,6 @@ import com.deepexi.channel.domain.AreaTypeDTO;
 import com.deepexi.channel.domain.AreaTypeQuery;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * <p>
