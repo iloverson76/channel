@@ -15,7 +15,32 @@
     <dependencies>
         <dependency>
             <groupId>com.deepexi</groupId>
-            <artifactId>xpaas-channel-center-channel</artifactId>
+            <artifactId>xpaas-channel-center-store</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.deepexi</groupId>
+            <artifactId>xpaas-channel-center-area</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.deepexi</groupId>
+            <artifactId>xpaas-channel-center-chain</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.deepexi</groupId>
+            <artifactId>xpaas-channel-center-distributor</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.deepexi</groupId>
+            <artifactId>xpaas-channel-center-bank</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.deepexi</groupId>
+            <artifactId>xpass-channel-center-business</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
@@ -27,7 +52,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <!-- 指定该Main Class为全局的唯一入口 -->
-                    <mainClass>com.deepexi.channel.StartupApplication</mainClass>
+                    <mainClass>com.deepexi.com.StartupApplication</mainClass>
                     <layout>ZIP</layout>
                 </configuration>
                 <executions>

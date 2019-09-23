@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deepexi.channel.mapper.StoreMapper">
+    <resultMap type="com.deepexi.channel.domain.StoreDO" id="StoreDOResult">
+        <result property="id" column="id" />
+        <result property="storeName" column="store_name" />
+        <result property="storeCode" column="store_code" />
+        <result property="storeNameEn" column="store_name_en" />
+        <result property="clientName" column="client_name" />
+        <result property="clientCode" column="client_code" />
+        <result property="storeAddress" column="store_address" />
+        <result property="storePhone" column="store_phone" />
+        <result property="enable" column="enable" />
+        <result property="version" column="version" />
+        <result property="remark" column="remark" />
+        <result property="dr" column="dr" />
+        <result property="createdBy" column="created_by" />
+        <result property="createdTime" column="created_time" />
+        <result property="updatedBy" column="updated_by" />
+        <result property="updatedTime" column="updated_time" />
+        <result property="description" column="description" />
+    </resultMap>
+    <select id="findList" resultType="com.deepexi.channel.domain.StoreDO">
+        SELECT * FROM cc_store WHERE dr=0
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="storeCode!=null and storeCode!=''">
+            and store_code like concat('%',#{storeCode},'%')
+        </if>
+        <if test="storeAccuracyCode!=null and storeAccuracyCode!=''">
+            and store_code = #{storeAccuracyCode}
+        </if>
+        <if test="storeName!=null and storeName!=''">
+            and store_name like concat('%',#{storeName},'%')
+        </if>
+        <if test="enable!=null and enable!='' or enable ==0">
+            and enable = #{enable}
+        </if>
+        <if test="startTime != null">
+            and created_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null">
+            and created_time &lt;= #{endTime}
+        </if>
+        <if test="updateStartTime != null">
+            and updated_time &gt;= #{updateStartTime}
+        </if>
+        <if test="updateEndTime != null">
+            and updated_time &lt;= #{updateEndTime}
+        </if>
+        order by created_time desc
+    </select>
+
+</mapper>
