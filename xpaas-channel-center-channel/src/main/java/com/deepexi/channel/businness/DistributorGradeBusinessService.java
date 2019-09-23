@@ -6,7 +6,7 @@ import com.deepexi.channel.domain.distributor.DistributorGradeQuery;
 import java.util.List;
 
 /**
- * cc_distributor_grade
+ *
  */
 public interface DistributorGradeBusinessService {
 
@@ -38,15 +38,17 @@ public interface DistributorGradeBusinessService {
     /**
      * 批量删除
      */
-    boolean deleteBatchByIds(List<Long> idList,Integer forceDelete);
+    Boolean deleteBatchByIds(List<Long> idList,Integer forceDelete);
 
     void validateHasDistributors(List<Long> gradeIdList);
 
     void validateHasChildren(List<Long> gradeIdList);
 
+    Boolean deleteDistributors(List<Long> gradeIdList);
+
     Long create(DistributorGradeDTO dto);
 
-    boolean update(DistributorGradeDTO dto);
+    Boolean update(DistributorGradeDTO dto);
 
 
 

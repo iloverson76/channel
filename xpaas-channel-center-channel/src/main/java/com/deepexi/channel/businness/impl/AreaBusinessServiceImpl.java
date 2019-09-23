@@ -263,9 +263,13 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
     @Override
     public boolean deleteBatchByIds(List<Long> ids,Integer forceDelete) {
 
+        log.info("批量删除区域类型");
+
         if(CollectionUtils.isEmpty(ids)){
             return false;
         }
+
+        ForceDeleteEnum.validateIllegalForceDeleteFlag(forceDelete);
 
         if(forceDelete== ForceDeleteEnum.NO.getCode()){
 

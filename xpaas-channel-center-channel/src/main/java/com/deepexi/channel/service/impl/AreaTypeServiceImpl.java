@@ -66,7 +66,8 @@ public class AreaTypeServiceImpl implements AreaTypeService {
 
         if (0==parentId) {
 
-            newNode.setPath("/"+String.valueOf(newId));//首次创建
+            //首次创建
+            newNode.setPath("/"+newId);
 
         } else {
 
@@ -195,16 +196,12 @@ public class AreaTypeServiceImpl implements AreaTypeService {
             wp.eq("id",id);
         }
 
-        wp.eq("tenant_id",appRuntimeEnv.getTenantId());
-
-        wp.eq("app_id",appRuntimeEnv.getAppId());
-
         return wp;
     }
 
     private void ValidateAareaTypeCode(String areaTypeCode){
 
-        List<String> doList=areaTypeDAO.listAreaTypeCode(appRuntimeEnv.getTenantId(),appRuntimeEnv.getAppId());
+        List<String> doList=areaTypeDAO.listAreaTypeCode();
 
         if(CollectionUtils.isNotEmpty(doList)){
             doList.forEach(typeCode->{

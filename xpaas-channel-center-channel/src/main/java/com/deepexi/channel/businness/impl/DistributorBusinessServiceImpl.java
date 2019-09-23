@@ -165,19 +165,25 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
     }
 
     @Override
-    public boolean deleteBatchByIds(List<Long> distributorIdList,Integer forDelete) {
+    public boolean deleteBatchByIds(List<Long> distributorIdList,Integer forceDelete) {
 
         if(CollectionUtils.isEmpty(distributorIdList)){
             return false;
         }
 
-        if(forDelete== ForceDeleteEnum.NO.getCode()){
+        ForceDeleteEnum.validateIllegalForceDeleteFlag(forceDelete);
+
+        if(forceDelete== ForceDeleteEnum.NO.getCode()){
 
             //有下级经销商不能删除
             validateHasChildren(distributorIdList);
 
-            //有门店不能删除
+            //有门店挂载不能删除
             validateHasStores(distributorIdList);
+
+        }else if(forceDelete==ForceDeleteEnum.YES.getCode()){
+
+            deleteStores(distributorIdList);
         }
 
         //等级关联
@@ -237,6 +243,25 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
             throw new ApplicationException("已有门店挂载,无法删除!请解除所有关联后再操作");
         }
+    }
+
+    @Override
+    public boolean deleteStores(List<Long> distributorIdList){
+
+        StoreDistributorRelationQuery query = StoreDistributorRelationQuery.builder().
+                distributorIds(distributorIdList).build();
+
+        query.setDistributorIds(distributorIdList);
+
+        List<StoreDistributorRelationDTO> pageList = storeDistributorRelationService.findList(query);
+
+        if(CollectionUtils.isNotEmpty(pageList)){
+
+            List<Long> adrIdList = pageList.stream().map(StoreDistributorRelationDTO::getId).collect(Collectors.toList());
+
+            return storeDistributorRelationService.deleteBatchByIds(adrIdList);
+        }
+        return false;
     }
 
 

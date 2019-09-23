@@ -233,6 +233,12 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
 
         log.info("批量删除区域分类");
 
+        if(CollectionUtil.isEmpty(idList)){
+            return false;
+        }
+
+        ForceDeleteEnum.validateIllegalForceDeleteFlag(forceDelete);
+
         //不强制删除=>走校验
         if(forceDelete == ForceDeleteEnum.NO.getCode()){
 
@@ -241,12 +247,7 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
             validateHasChildren(idList);
         }
 
-        if(CollectionUtil.isNotEmpty(idList)){
-
-            return areaTypeService.deleteAreaTypeByIds(idList);
-        }
-
-        return false;
+        return areaTypeService.deleteAreaTypeByIds(idList);
     }
 
     @Override

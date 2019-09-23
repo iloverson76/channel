@@ -9,8 +9,6 @@ import com.deepexi.channel.service.DistributorGradeSystemService;
 import com.deepexi.channel.service.DistributorService;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.extension.ApplicationException;
-import com.deepexi.util.pojo.CloneDirection;
-import com.deepexi.util.pojo.ObjectCloneUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -314,7 +312,7 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean update(DistributorGradeDTO dto) {
+    public Boolean update(DistributorGradeDTO dto) {
 
         Long id=dto.getId();
 
@@ -371,7 +369,7 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
     }
 
     @Override
-    public boolean deleteBatchByIds(List<Long> gradeIdList,Integer forceDelete) {
+    public Boolean deleteBatchByIds(List<Long> gradeIdList,Integer forceDelete) {
 
         log.info("经销商等级删除");
 
@@ -379,13 +377,19 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
             return false;
         }
 
+        ForceDeleteEnum.validateIllegalForceDeleteFlag(forceDelete);
+
         if(forceDelete== ForceDeleteEnum.NO.getCode()){
+
+            //有下级的不能删除
+            validateHasChildren(gradeIdList);
 
             //挂载经销商的不能删除
             validateHasDistributors(gradeIdList);
 
-            //有下级的不能删除
-            validateHasChildren(gradeIdList);
+        }else if(forceDelete==ForceDeleteEnum.YES.getCode()){
+
+            deleteDistributors(gradeIdList);
         }
 
         log.info("开始删除等级");
@@ -426,6 +430,29 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
                 throw new ApplicationException("此等级已挂载经销商,不能删除!请解除所有关联后再操作");
             }
         }
+    }
+
+    @Override
+    public Boolean deleteDistributors(List<Long> gradeIdList){
+
+        List<DistributorGradeRelationDTO> dgrList = distributorGradeRelationService.findAllByGradeIds(gradeIdList);
+
+        if(CollectionUtils.isEmpty(dgrList)){
+            return true;
+        }
+
+        List<Long> distributorIdList = dgrList.stream().map(DistributorGradeRelationDTO::getDistributorId).collect(Collectors.toList());
+
+        if(CollectionUtils.isEmpty(distributorIdList)){
+            return true;
+        }
+
+       int result=distributorGradeRelationService.deleteBatchByDistributorIds(distributorIdList);
+
+        if (result>0){
+            return true;
+        }
+        return false;
     }
 
     @Override

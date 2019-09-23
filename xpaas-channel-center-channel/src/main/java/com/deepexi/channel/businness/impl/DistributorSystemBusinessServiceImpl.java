@@ -149,10 +149,13 @@ public class DistributorSystemBusinessServiceImpl implements DistributorSystemBu
             return false;
         }
 
+        ForceDeleteEnum.validateIllegalForceDeleteFlag(forceDelete);
+
         if(forceDelete== ForceDeleteEnum.NO.getCode()){
 
             //已挂载等级的不能删除
             validateHasGrades(systemIdList);
+
         }
         //删除体系
         return distributorGradeSystemService.delete(systemIdList);

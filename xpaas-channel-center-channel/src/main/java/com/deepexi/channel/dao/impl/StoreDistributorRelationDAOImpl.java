@@ -8,6 +8,7 @@ import com.deepexi.channel.domain.store.StoreDistributorDO;
 import com.deepexi.channel.domain.store.StoreDistributorRelationDO;
 import com.deepexi.channel.domain.store.StoreDistributorRelationQuery;
 import com.deepexi.channel.mapper.StoreDistributorRelationMapper;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,5 +51,18 @@ public class StoreDistributorRelationDAOImpl  extends ServiceImpl<StoreDistribut
             return Collections.emptyList();
         }
         return storeDistributorRelationMapper.findParentDistributorByStoreId(storeId);
+    }
+
+    @Override
+    public Boolean deleteBatchByIds(List<Long> pkList) {
+        if(CollectionUtils.isEmpty(pkList)){
+            return false;
+        }
+        int result=baseMapper.deleteBatchIds(pkList);
+
+        if(result>0){
+            return true;
+        }
+        return false;
     }
 }

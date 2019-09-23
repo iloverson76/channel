@@ -15,4 +15,6 @@ public interface StoreDistributorRelationService {
     Boolean deleteByStoreId(long id);
 
     Boolean deleteByStoreIds(List<Long> ids);
+
+    Boolean deleteBatchByIds(List<Long> pkList);
 }

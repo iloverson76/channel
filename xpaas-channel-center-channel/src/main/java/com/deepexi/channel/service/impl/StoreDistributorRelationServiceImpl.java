@@ -55,4 +55,12 @@ public class StoreDistributorRelationServiceImpl implements StoreDistributorRela
         }
         return storeDistributorRelationDAO.deleteByStoreIds(ids);
     }
+
+    @Override
+    public Boolean deleteBatchByIds(List<Long> pkList) {
+        if(CollectionUtil.isEmpty(pkList)){
+            return false;
+        }
+        return storeDistributorRelationDAO.deleteBatchByIds(pkList);
+    }
 }

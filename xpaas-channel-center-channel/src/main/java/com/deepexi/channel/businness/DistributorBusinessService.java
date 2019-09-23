@@ -19,6 +19,8 @@ public interface DistributorBusinessService {
 
    void validateHasStores(List<Long> butorIdList);
 
+    boolean deleteStores(List<Long> distributorIdList);
+
     List<DistributorDTO> findPage(DistributorQuery query);
 
     boolean update(DistributorDTO clone);

@@ -20,4 +20,6 @@ public interface StoreDistributorRelationDAO  extends IService<StoreDistributorR
     Boolean deleteByStoreIds(List<Long> ids);
 
     List<StoreDistributorDO> findParentDistributorByStoreId(Long storeId);
+
+    Boolean deleteBatchByIds(List<Long> pkList);
 }

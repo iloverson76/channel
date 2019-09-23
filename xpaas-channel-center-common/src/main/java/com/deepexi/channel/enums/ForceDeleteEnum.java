@@ -1,5 +1,6 @@
 package com.deepexi.channel.enums;
 
+import com.deepexi.util.extension.ApplicationException;
 import com.google.common.collect.Lists;
 
 import java.util.*;
@@ -62,6 +63,13 @@ public enum ForceDeleteEnum {
             set.add(Integer.valueOf(anEnum.getCode()));
         }
         return set;
+    }
+
+    public static void validateIllegalForceDeleteFlag(Integer forceDelete){
+
+        if(forceDelete!=NO.getCode()&&forceDelete!=YES.getCode()){
+            throw new ApplicationException("请填写正确的强制删除标识[0:不强制删除 1:强制删除]");
+        }
     }
 
 }
