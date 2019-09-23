@@ -33,4 +33,6 @@ public interface AreaTypeBusinessService {
     List<Long> validateHasAreas(List<Long> idList);
 
     List<Long> validateHasChildren(List<Long> idList);
+
+    Long createAreaType(AreaTypeDTO dto);
 }

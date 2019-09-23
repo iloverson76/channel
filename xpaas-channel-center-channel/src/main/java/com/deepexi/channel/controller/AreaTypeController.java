@@ -50,9 +50,9 @@ public class AreaTypeController {
 
         AreaTypeDTO dto = vo.clone(AreaTypeDTO.class, CloneDirection.FORWARD);
 
-        Long result = areaTypeService.saveAreaType(dto);
+        Long newId=areaTypeBusinessService.createAreaType(dto);
 
-        return new Payload<>(result);
+        return new Payload<>(newId);
     }
 
     @DeleteMapping("/{id:[0-9,]}")

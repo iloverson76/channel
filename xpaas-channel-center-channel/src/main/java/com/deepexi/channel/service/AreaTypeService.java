@@ -40,4 +40,6 @@ public interface AreaTypeService {
     AreaTypeDTO getById(Long id);
 
     List<AreaTypeDTO> listChildNodes(String s);
+
+    void ValidateAareaTypeCode(String areaTypeCode);
 }

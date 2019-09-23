@@ -32,6 +32,45 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
     @Autowired
     AreaTypeService areaTypeService;
 
+    @Override
+    public Long createAreaType(AreaTypeDTO dto) {
+
+        //编码不能重复
+        areaTypeService.ValidateAareaTypeCode(dto.getAreaTypeCode());
+
+        //设置处理(id路径)
+        long newId=areaTypeService.saveAreaType(dto);
+
+        long parentId=dto.getParentId();
+
+        String path="";
+
+        Long linkId=0L;
+
+        if (0==parentId) {
+            //首次创建
+            path="/"+newId;
+
+            linkId=newId;
+
+        } else {
+
+            AreaTypeDTO parent=areaTypeService.getById(parentId);
+
+           path=parent.getPath()+"/"+newId;
+
+            linkId=parent.getLinkId();
+        }
+
+        //链路
+        dto.setLinkId(linkId);
+
+        dto.setPath(path);
+
+        areaTypeService.updateAreaTypeById(dto);
+
+        return newId;
+    }
 
     @Override
     public List<AreaDTO> listLinkedAreas(long pk) {
@@ -85,7 +124,6 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
         return areaDTOList;
     }
 
-
     @Override
     public List<AreaTypeDTO> findPage(AreaTypeQuery query){
 
@@ -112,7 +150,6 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
                 }
             }
         }
-
         return childDTOList;
     }
 

@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.awt.geom.Area;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -37,8 +38,6 @@ public class AreaTypeServiceImpl implements AreaTypeService {
     @Autowired
     AreaTypeDAO areaTypeDAO;
 
-    AppRuntimeEnv appRuntimeEnv= AppRuntimeEnv.getInstance();
-
     @Transactional
     @Override
     public Long saveAreaType(AreaTypeDTO dto) {
@@ -48,42 +47,11 @@ public class AreaTypeServiceImpl implements AreaTypeService {
             return 0L;
         }
 
-        //编码不能重复
-        ValidateAareaTypeCode(dto.getAreaTypeCode());
+       AreaTypeDO eo=dto.clone(AreaTypeDO.class,CloneDirection.FORWARD);
 
-        //插入新节点
-        setCommonColumns(dto);
+        areaTypeDAO.save(eo);
 
-        AreaTypeDO newNode=dto.clone(AreaTypeDO.class,CloneDirection.FORWARD);
-
-        //save后,ado是插入数据库后返回的新数据,包括id,ado克隆要拆成两步写
-        areaTypeDAO.save(newNode);
-
-        //设置处理(id路径)
-        long newId=newNode.getId();
-
-        long parentId=newNode.getParentId();
-
-        if (0==parentId) {
-
-            //首次创建
-            newNode.setPath("/"+newId);
-
-        } else {
-
-            String parent_path=areaTypeDAO.getById(parentId).getPath()+"/"+newId;
-
-            newNode.setPath(parent_path);
-        }
-
-        //链路
-        long id=newNode.getId();
-
-        newNode.setLinkId(id);
-
-        areaTypeDAO.updateById(newNode);
-
-        return id;
+        return eo.getId();
     }
 
     @Transactional
@@ -199,7 +167,8 @@ public class AreaTypeServiceImpl implements AreaTypeService {
         return wp;
     }
 
-    private void ValidateAareaTypeCode(String areaTypeCode){
+    @Override
+    public void ValidateAareaTypeCode(String areaTypeCode){
 
         List<String> doList=areaTypeDAO.listAreaTypeCode();
 
@@ -210,10 +179,6 @@ public class AreaTypeServiceImpl implements AreaTypeService {
                 }
             });
         }
-    }
-
-    public void setCommonColumns(AreaTypeDTO dto){
-
     }
 
     @Override
