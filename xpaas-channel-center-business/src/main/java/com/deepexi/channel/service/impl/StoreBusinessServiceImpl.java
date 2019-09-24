@@ -5,6 +5,7 @@ import cn.hutool.core.date.DateTime;
 import com.deepexi.channel.domain.*;
 import com.deepexi.channel.service.*;
 import com.deepexi.util.CollectionUtil;
+import com.deepexi.util.pojo.CloneDirection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +35,8 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
     StoreHistoryService storeHistoryService;
     @Autowired
     StoreDistributorBusinessService storeDistributorBusinessService;
-
+    @Autowired
+    StoreHistoryBusinessService storeHistoryBusinessService;
 
     @Override
     @Transactional
@@ -70,14 +72,17 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
     @Transactional
     public Boolean update(StoreDetailDTO dto) {
         //查询旧的数据，并保存门店历史信息
-        StoreDTO storeDTO = storeService.detail(dto.getId());
-        if(storeDTO == null){
+        StoreDetailDTO storeDetailDTO = this.detail(dto.getId());
+        if(storeDetailDTO == null){
             return false;
         }
-        StoreHistoryDTO storeHistoryDTO = storeDTO.clone(StoreHistoryDTO.class);
+        StoreHistoryDetailDTO storeHistoryDetailDTO = storeDetailDTO.clone(StoreHistoryDetailDTO.class, CloneDirection.OPPOSITE);
+        //storeHistoryDetailDTO 转 storeHistoryDTO，对象转json string
+        StoreHistoryDTO storeHistoryDTO = storeHistoryBusinessService.storeDetailHistory2storeHistory(storeHistoryDetailDTO);
+
         storeHistoryDTO.setStoreId(dto.getId());
         //设置版本号
-        storeHistoryDTO.setVersionNumber(this.generateHistoryVersionNumber(storeDTO));
+        storeHistoryDTO.setVersionNumber(this.generateHistoryVersionNumber(storeDetailDTO));
         Long saveHistoryId = storeHistoryService.create(storeHistoryDTO);
 
         //修改门店基本信息

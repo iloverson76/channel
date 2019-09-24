@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-@Api(value = "/门店信息表")
+@Api(value = "/门店信息表",description = "门店信息管理")
 @RestController
 @RequestMapping("/api/v1/store")
 public class StoreController {
