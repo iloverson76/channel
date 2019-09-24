@@ -421,7 +421,7 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
 
                 idList.forEach(id->{
 
-                    if(id.equals(dto.getId())){
+                    if(id.equals(dto.getParentId())){
                         throw new ApplicationException("已有下级关联,不能删除!");
                     }
                 });
