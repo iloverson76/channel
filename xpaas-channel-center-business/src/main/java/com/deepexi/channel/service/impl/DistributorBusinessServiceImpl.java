@@ -276,7 +276,7 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
                     if(butorId.equals(parentId)){
 
                         throw new ApplicationException("["+pageMap.get(parentId).getDistributorName()
-                                +"]已挂载下级经销商["+pageMap.get(butorId).getDistributorName()+"],无法删除!请解除关联后再操作");
+                                +"]已挂载下级经销商["+pageMap.get(butorId).getDistributorName()+"]!请解除关联后再操作");
                     }
                 });
             });
@@ -295,7 +295,7 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
         if(CollectionUtils.isNotEmpty(pageList)){
 
-            throw new ApplicationException("已有门店挂载,无法删除!请解除所有关联后再操作");
+            throw new ApplicationException("已有门店挂载!请解除所有关联后再操作");
         }
     }
 
@@ -349,6 +349,17 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
         long distId=dto.getId();
 
+        List<Long> distributorIdList=new ArrayList<>(1);
+
+        distributorIdList.add(distId);
+
+        //有下级经销商不能修改
+        validateHasChildren(distributorIdList);
+
+        //有门店挂载不能修改
+        validateHasStores(distributorIdList);
+
+        //修改是,嵌套对象里的公共字段不会自动映射
         String createdBy=dto.getCreatedBy();
         Date createdTime=dto.getCreatedTime();
         String updatedBy=dto.getUpdatedBy();

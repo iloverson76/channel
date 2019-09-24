@@ -348,7 +348,7 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
         if(CollectionUtils.isNotEmpty(children)){
 
-            throw new ApplicationException("已有子区域关联,无法删除!请解除关联后再操作");
+            throw new ApplicationException("已有子区域关联!请解除关联后再操作");
         }
     }
 
@@ -372,7 +372,7 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
         if(CollectionUtils.isNotEmpty(darList)){
 
-            throw new ApplicationException("已有经销商关联,无法删除!请解除所有关联后再操作");
+            throw new ApplicationException("已有经销商关联!请解除所有关联后再操作");
         }
     }
 
@@ -405,7 +405,7 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
         if(CollectionUtils.isNotEmpty(pageList)){
 
-          throw new ApplicationException("已有门店关联,无法删除!请解除关联后再操作");
+          throw new ApplicationException("已有门店关联!请解除关联后再操作");
         }
     }
 
@@ -487,6 +487,18 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
     public boolean update(AreaDTO dto) {
 
         log.info("更新区域");
+
+        Long id=dto.getId();
+
+        List<Long> ids=new ArrayList<>(1);
+
+        ids.add(id);
+
+        validateHasChildren(ids);
+
+        validateHasStores(ids);
+
+        validateHasDistributors(ids);
 
         areaService.update(dto);
 

@@ -310,7 +310,6 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
                     gradeList.add(page);
                 }
             });
-
         }
         return gradeList;
     }
@@ -321,6 +320,17 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
         Long id=dto.getId();
 
+        List<Long> gradeIdList=new ArrayList<>(1);
+
+        gradeIdList.add(id);
+
+        //有下级的不能修改
+        validateHasChildren(gradeIdList);
+
+        //挂载经销商的不能修改
+        validateHasDistributors(gradeIdList);
+
+        //查询原来的数据
         DistributorGradeDTO origDTO=distributorGradeService.getById(id);
 
         long origSystemId=origDTO.getGradeSystemId();
@@ -487,7 +497,7 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
             if(CollectionUtil.isNotEmpty(distributorList)){
 
-                throw new ApplicationException("此等级已挂载经销商,不能删除!请解除所有关联后再操作");
+                throw new ApplicationException("此等级已挂载经销商!请解除所有关联后再操作");
             }
         }
     }
@@ -539,7 +549,7 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
                         String parentName= pageMap.get(id).getDistributorGradeName();
 
-                        throw new ApplicationException("["+parentName+"]已挂载 ["+childName+"],不能删除!请解除关联后再操作");
+                        throw new ApplicationException("["+parentName+"]已挂载 ["+childName+"]!请解除关联后再操作");
                     }
                 });
             });

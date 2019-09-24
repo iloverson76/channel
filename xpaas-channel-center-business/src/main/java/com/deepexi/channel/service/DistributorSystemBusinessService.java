@@ -34,4 +34,6 @@ public interface DistributorSystemBusinessService {
     void validateGradeSystemName(String systemName);
 
     void validateGradeSystemNameEn(String systemNameEn);
+
+    Boolean update(DistributorGradeSystemDTO dto);
 }
