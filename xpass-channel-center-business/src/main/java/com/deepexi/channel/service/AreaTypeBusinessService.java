@@ -29,9 +29,9 @@ public interface AreaTypeBusinessService {
 
     boolean deleteAreaTypeById(Long id);
 
-    List<Long> validateHasAreas(List<Long> idList);
+    void validateHasAreas(List<Long> idList);
 
-    List<Long> validateHasChildren(List<Long> idList);
+    void validateHasChildren(List<Long> idList);
 
     Long createAreaType(AreaTypeDTO dto);
 }

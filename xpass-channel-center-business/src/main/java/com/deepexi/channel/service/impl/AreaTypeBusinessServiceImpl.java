@@ -407,7 +407,8 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
         }
     }
 
-    public List<Long> validateHasChildren(List<Long> idList){
+    @Override
+    public void validateHasChildren(List<Long> idList){
 
         log.info("校验分类是否有下级");
 
@@ -416,16 +417,20 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
 
         if(CollectionUtil.isNotEmpty(dtoList)){
 
-            List<Long> delIdList = dtoList.stream().map(AreaTypeDTO::getId).collect(Collectors.toList());
+            dtoList.forEach(dto->{
 
-            idList.removeAll(delIdList);
+                idList.forEach(id->{
 
-            throw new ApplicationException("已有下级关联,不能删除!");
+                    if(id.equals(dto.getId())){
+                        throw new ApplicationException("已有下级关联,不能删除!");
+                    }
+                });
+            });
         }
-        return idList;
     }
 
-    public List<Long> validateHasAreas(List<Long> idList){
+    @Override
+    public void validateHasAreas(List<Long> idList){
 
         log.info("校验分类是否有区域关联");
 
@@ -437,13 +442,8 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
 
         if(CollectionUtil.isNotEmpty(areaList)){
 
-            List<Long> typeIdList = areaList.stream().map(AreaDTO::getAreaTypeId).collect(Collectors.toList());
-
-            idList.removeAll(typeIdList);
-
             throw new ApplicationException("分类已有区域挂载,不能删除!");
         }
-        return idList;
     }
 
 }

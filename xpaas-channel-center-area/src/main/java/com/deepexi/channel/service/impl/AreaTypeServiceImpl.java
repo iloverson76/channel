@@ -87,8 +87,6 @@ public class AreaTypeServiceImpl implements AreaTypeService {
     @Override
     public boolean deleteAreaTypeByIds(List<Long> idList) {
 
-        log.info("批量删除区域类型");
-
         if (CollectionUtils.isEmpty(idList)) {
             return false;
         }
