@@ -6,5 +6,7 @@ import com.deepexi.channel.domain.StoreHistoryDetailDTO;
 public interface StoreHistoryBusinessService {
     StoreHistoryDTO storeDetailHistory2storeHistory(StoreHistoryDetailDTO storeHistoryDetailDTO);
 
-    StoreHistoryDetailDTO detail(Long pk);
+    StoreHistoryDTO detail(Long pk);
+
+    StoreHistoryDetailDTO storeHistory2StoreDetailHistory(StoreHistoryDTO dto);
 }

@@ -12,6 +12,12 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StoreDetailDTO extends StoreDTO {
+
+    /**
+     * 修改历史版本号
+     */
+    private String versionNumber;
+
     private StoreTypeDTO storeTypeDTO;
 
     private StoreGradeDTO storeGradeDTO;
