@@ -32,4 +32,10 @@ public interface AreaService {
     List<AreaDTO> findAllByIds(List<Long> ids);
 
     List<AreaDTO> findTree();
+
+    List<String> listAreaCode();
+
+    List<String> listAreaName();
+
+    List<String> listAreaNameEn();
 }

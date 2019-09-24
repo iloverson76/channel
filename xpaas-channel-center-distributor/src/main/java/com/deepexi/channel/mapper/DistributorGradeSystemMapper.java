@@ -11,4 +11,10 @@ import java.util.List;
 public interface DistributorGradeSystemMapper extends BaseMapper<DistributorGradeSystemDO> {
 
     List<DistributorGradeSystemDO> findPage(DistributorGradeSystemQuery query);
+
+    List<String> listGradeSystemCode();
+
+    List<String> listGradeSystemName();
+
+    List<String> listGradeSystemNameEn();
 }

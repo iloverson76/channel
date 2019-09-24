@@ -173,5 +173,39 @@ public class AreaServiceImpl implements AreaService{
 
     }
 
+    @Override
+    public List<String> listAreaCode() {
+
+        List<String> codeList=areaDAO.listAreaCode();
+
+        if(CollectionUtils.isEmpty(codeList)){
+            return Collections.emptyList();
+        }
+
+        return codeList;
+    }
+
+    @Override
+    public List<String> listAreaName() {
+
+        List<String> nameList=areaDAO.listAreaName();
+
+        if(CollectionUtils.isEmpty(nameList)){
+            return Collections.emptyList();
+        }
+
+        return nameList;
+    }
+
+    @Override
+    public List<String> listAreaNameEn() {
+
+        List<String> nameList=areaDAO.listAreaNameEn();
+
+        if(CollectionUtils.isEmpty(nameList)){
+            return Collections.emptyList();
+        }
+        return nameList;
+    }
 
 }

@@ -37,8 +37,6 @@ public class DistributorGradeController {
     @ApiOperation(value = "创建经销商等级")
     public Payload<Long> create(@RequestBody DistributorGradeVO vo) {
 
-        distributorGradeService.validateGradeCode(vo.getDistributorGradeCode());
-
         DistributorGradeDTO dto=vo.clone(DistributorGradeDTO.class, CloneDirection.FORWARD);
 
         Long result=distributorGradeBusinessService.create(dto);

@@ -20,4 +20,10 @@ public interface DistributorService {
     boolean update(DistributorDTO dto);
 
     DistributorDTO getById(Long id);
+
+    List<String> listDistributorCode();
+
+    List<String> listDistributorName();
+
+    List<String> listDistributorNameEn();
 }

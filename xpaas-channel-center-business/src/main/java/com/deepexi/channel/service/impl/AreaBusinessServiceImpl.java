@@ -2,6 +2,7 @@ package com.deepexi.channel.service.impl;
 
 import com.deepexi.channel.domain.*;
 import com.deepexi.channel.enums.ForceDeleteEnum;
+import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.service.*;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.StringUtil;
@@ -37,9 +38,70 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
     @Override
     public long create(AreaDTO dto) {
 
-        long result= areaService.create(dto);
+        validateAreaCode(dto.getAreaCode());
+
+        validateAreaName(dto.getAreaName());
+
+        Long result= areaService.create(dto);
 
         return result;
+    }
+
+    @Override
+    public void validateAreaCode(String areaCode) {
+
+        log.info("区域编码重复校验");
+
+        List<String> codeList=areaService.listAreaCode();
+
+        if(CollectionUtils.isNotEmpty(codeList)){
+
+            codeList.forEach(code->{
+
+                if(code.equals(areaCode)){
+
+                    throw new ApplicationException(ResultEnum.AREA_CODE_DUPLICATED);
+                }
+            });
+        }
+    }
+
+    @Override
+    public void validateAreaName(String areaName) {
+
+        log.info("区域中文名称重复校验");
+
+        List<String> nameList=areaService.listAreaName();
+
+        if(CollectionUtils.isNotEmpty(nameList)){
+
+            nameList.forEach(name->{
+
+                if(name.equals(areaName)){
+
+                    throw new ApplicationException(ResultEnum.AREA_NAME_DUPLICATED);
+                }
+            });
+        }
+    }
+
+    @Override
+    public void validateAreaNameEn(String areaNameEn) {
+
+        log.info("区域英文名称重复校验");
+
+        List<String> nameEnList=areaService.listAreaNameEn();
+
+        if(CollectionUtils.isNotEmpty(nameEnList)){
+
+            nameEnList.forEach(nameEn->{
+
+                if(nameEn.equals(areaNameEn)){
+
+                    throw new ApplicationException(ResultEnum.AREA_NAME_EN_DUPLICATED);
+                }
+            });
+        }
     }
 
     @Override
@@ -371,21 +433,25 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
         areaQuery.setIds(idList);
 
-        List<AreaDTO> pageList = areaService.findPage(areaQuery);
+        List<AreaDTO> pageList1 = areaService.findPage(areaQuery);
 
         List<AreaDTO> children=new ArrayList<>();
 
-        if(CollectionUtils.isNotEmpty(pageList)){
+        if(CollectionUtils.isNotEmpty(pageList1)){
 
-            List<Long> parentIdList=pageList.stream().map(AreaDTO::getParentId).collect(Collectors.toList());
+            List<AreaDTO> pageList2=ObjectCloneUtils.convertList(pageList1,AreaDTO.class,CloneDirection.FORWARD);
 
-            pageList.forEach(area->{
+           pageList1.forEach(parent->{
 
-                if(!parentIdList.contains(area.getId())){
+               pageList2.forEach(child->{
 
-                    children.add(area);
-                }
-            });
+                   if(child.getParentId().equals(parent.getId())){
+
+                        children.add(child);
+                   }
+
+               });
+           });
         }
         return  children;
     }
@@ -587,4 +653,5 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
         return areaService.update(self);
     }
+
 }

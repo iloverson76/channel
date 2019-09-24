@@ -1,5 +1,6 @@
 package com.deepexi.channel.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.deepexi.channel.dao.DistributorDAO;
 import com.deepexi.channel.domain.DistributorDO;
 import com.deepexi.channel.domain.DistributorDTO;
@@ -76,13 +77,6 @@ public class DistributorServiceImpl implements DistributorService {
         if(dto==null){
             return false;
         }
-
-//        //只保存直接上级关系
-//        if(dto.getLimitedParent()==0){//如果不指定上级,前端传parentId=0过来.这一版无法设置路径
-//
-//            dto.setParentId(0L);
-//        }
-
         return distributorDAO.updateById(dto.clone(DistributorDO.class,CloneDirection.FORWARD));
     }
 
@@ -96,6 +90,39 @@ public class DistributorServiceImpl implements DistributorService {
         }
 
         return eo.clone(DistributorDTO.class, CloneDirection.OPPOSITE);
+    }
+
+    @Override
+    public List<String> listDistributorCode() {
+
+        List<String> codeList=distributorDAO.listDistributorCode();
+
+        if(CollectionUtils.isEmpty(codeList)){
+            return Collections.emptyList();
+        }
+        return codeList;
+    }
+
+    @Override
+    public List<String> listDistributorName() {
+
+        List<String> nameList=distributorDAO.listDistributorName();
+
+        if(CollectionUtils.isEmpty(nameList)){
+            return Collections.emptyList();
+        }
+        return nameList;
+    }
+
+    @Override
+    public List<String> listDistributorNameEn() {
+
+        List<String> nameEnList=distributorDAO.listDistributorNameEn();
+
+        if(CollectionUtils.isEmpty(nameEnList)){
+            return Collections.emptyList();
+        }
+        return nameEnList;
     }
 
 

@@ -50,4 +50,19 @@ public class DistributorGradeDAOImpl extends ServiceImpl<DistributorGradeMapper,
 
         return distributorGradeMapper.selectList(wp);
     }
+
+    @Override
+    public List<String> listDistributorGradeCode(Long systemId) {
+        return distributorGradeMapper.listDistributorGradeCode(systemId);
+    }
+
+    @Override
+    public List<String> listDistributorGradeName(Long systemId) {
+        return distributorGradeMapper.listDistributorGradeName(systemId);
+    }
+
+    @Override
+    public List<String> listDistributorGradeNameEn(Long systemId) {
+        return distributorGradeMapper.listDistributorGradeNameEn(systemId);
+    }
 }

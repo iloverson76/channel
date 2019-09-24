@@ -20,6 +20,33 @@
         <result property="remark" column="remark" />
     </resultMap>
 
+    <select id="listAreaCode" resultType="java.lang.String">
+        SELECT
+            a.area_code
+        FROM
+            cc_area a
+        WHERE
+            a.dr = 0
+    </select>
+
+    <select id="listAreaName" resultType="java.lang.String">
+        SELECT
+            a.area_name
+        FROM
+            cc_area a
+        WHERE
+            a.dr = 0
+    </select>
+
+    <select id="listAreaNameEn" resultType="java.lang.String">
+        SELECT
+            a.area_name_en
+        FROM
+            cc_area a
+        WHERE
+            a.dr = 0
+    </select>
+
     <select id="listAreaPage" parameterType="com.deepexi.channel.domain.AreaQuery"
             resultType="com.deepexi.channel.domain.AreaDO">
 

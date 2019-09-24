@@ -63,4 +63,19 @@ public class AreaDAOImpl extends ServiceImpl<AreaMapper, AreaDO> implements Area
 
         return areaMapper.findTree();
     }
+
+    @Override
+    public List<String> listAreaCode() {
+        return areaMapper.listAreaCode();
+    }
+
+    @Override
+    public List<String> listAreaName() {
+        return areaMapper.listAreaName();
+    }
+
+    @Override
+    public List<String> listAreaNameEn() {
+        return areaMapper.listAreaNameEn();
+    }
 }

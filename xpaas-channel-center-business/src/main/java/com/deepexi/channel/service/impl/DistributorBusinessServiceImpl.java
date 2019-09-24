@@ -3,6 +3,7 @@ package com.deepexi.channel.service.impl;
 import com.deepexi.channel.domain.*;
 import com.deepexi.channel.enums.DistributorTypeEnum;
 import com.deepexi.channel.enums.ForceDeleteEnum;
+import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.service.*;
 import com.deepexi.util.extension.ApplicationException;
 import lombok.extern.slf4j.Slf4j;
@@ -52,6 +53,10 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
     @Transient
     @Override
     public long create(DistributorDTO distributor) {
+
+        validateDistributorCode(distributor.getDistributorCode());
+
+        validateDistributorName(distributor.getDistributorName());
 
         //经销商信息保存
         long distId=distributorService.create(distributor);
@@ -154,6 +159,63 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
         }
 
         return distId;
+    }
+
+    @Override
+    public void validateDistributorCode(String distributorCode) {
+
+        log.info("经销商编码重复校验");
+
+        List<String> codeList=distributorService.listDistributorCode();
+
+        if(CollectionUtils.isNotEmpty(codeList)){
+
+            codeList.forEach(code->{
+
+                if(code.equals(distributorCode)){
+
+                    throw new ApplicationException(ResultEnum.DISTRIBUTOR_CODE_DUPLICATED);
+                }
+            });
+        }
+    }
+
+    @Override
+    public void validateDistributorName(String distributorName) {
+
+        log.info("经销商中文名称重复校验");
+
+        List<String> nameList=distributorService.listDistributorName();
+
+        if(CollectionUtils.isNotEmpty(nameList)){
+
+            nameList.forEach(name->{
+
+                if(name.equals(distributorName)){
+
+                    throw new ApplicationException(ResultEnum.DISTRIBUTOR_NAME_DUPLICATED);
+                }
+            });
+        }
+    }
+
+    @Override
+    public void validateDistributorNameEn(String distributorNameEn) {
+
+        log.info("经销商英文名称重复校验");
+
+        List<String> nameEnList=distributorService.listDistributorNameEn();
+
+        if(CollectionUtils.isNotEmpty(nameEnList)){
+
+            nameEnList.forEach(nameEn->{
+
+                if(nameEn.equals(distributorNameEn)){
+
+                    throw new ApplicationException(ResultEnum.DISTRIBUTOR_NAME_EN_DUPLICATED);
+                }
+            });
+        }
     }
 
     @Override

@@ -11,6 +11,8 @@ import java.util.List;
  */
 public interface DistributorSystemBusinessService {
 
+    Long create(DistributorGradeSystemDTO dto);
+
     /**
      * 分页获取列表
      */
@@ -26,4 +28,10 @@ public interface DistributorSystemBusinessService {
     boolean deleteBatchByIds(List<Long> idList,Integer forceDelete);
 
     void validateHasGrades(List<Long> systemIdList);
+
+    void validateGradeSystemCode(String systemCode);
+
+    void validateGradeSystemName(String systemName);
+
+    void validateGradeSystemNameEn(String systemNameEn);
 }

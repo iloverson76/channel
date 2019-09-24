@@ -72,6 +72,24 @@
             a.dr = 0
     </select>
 
+    <select id="listAreaTypeName" resultType="java.lang.String">
+        SELECT
+            a.area_type_name
+        FROM
+            cc_area_type a
+        WHERE
+            a.dr = 0
+    </select>
+
+    <select id="listAreaTypeNameEn" resultType="java.lang.String">
+        SELECT
+            a.area_type_name_en
+        FROM
+            cc_area_type a
+        WHERE
+            a.dr = 0
+    </select>
+
     <select id="listNodeWithoutChildren" resultType="com.deepexi.channel.domain.AreaTypeDO">
       SELECT
             a.*

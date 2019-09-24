@@ -5,6 +5,7 @@ import com.deepexi.channel.domain.AreaQuery;
 import com.deepexi.channel.domain.AreaTypeDTO;
 import com.deepexi.channel.domain.AreaTypeQuery;
 import com.deepexi.channel.enums.ForceDeleteEnum;
+import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.service.AreaService;
 import com.deepexi.channel.service.AreaTypeBusinessService;
 import com.deepexi.channel.service.AreaTypeService;
@@ -36,7 +37,10 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
     public Long createAreaType(AreaTypeDTO dto) {
 
         //编码不能重复
-        areaTypeService.ValidateAareaTypeCode(dto.getAreaTypeCode());
+        ValidateAareaTypeCode(dto.getAreaTypeCode());
+
+        //名称不能重复
+        validateAreaTypeName(dto.getAreaTypeName());
 
         //设置处理(id路径)
         long newId=areaTypeService.saveAreaType(dto);
@@ -70,6 +74,65 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
         areaTypeService.updateAreaTypeById(dto);
 
         return newId;
+    }
+
+    @Override
+    public void ValidateAareaTypeCode(String areaTypeCode){
+
+        log.info("区域类型编码重复校验");
+
+        List<String> codeList=areaTypeService.listAreaTypeCode();
+
+        if(CollectionUtils.isNotEmpty(codeList)){
+
+            codeList.forEach(typeCode->{
+
+                if(areaTypeCode.equals(typeCode)){
+
+                    throw new ApplicationException(ResultEnum.AREA_TYPE_CODE_DUPLICATED);
+                }
+            });
+        }
+    }
+
+    @Override
+    public void validateAreaTypeName(String areaTypeName) {
+
+        log.info("区域类型中文名称重复校验");
+
+        List<String> nameList=areaTypeService.listAreaTypeName();
+
+        if(CollectionUtils.isNotEmpty(nameList)){
+
+            nameList.forEach(typeName->{
+
+                if(areaTypeName.equals(typeName)){
+
+                    throw new ApplicationException(ResultEnum.AREA_TYPE_NAME_DUPLICATED);
+                }
+            });
+        }
+
+    }
+
+    @Override
+    public void validateAreaTypeNameEn(String areaTypeNameEn) {
+
+        log.info("区域类型英文名称重复校验");
+
+        List<String> nameEnList=areaTypeService.listAreaTypeNameEn();
+
+        if(CollectionUtils.isNotEmpty(nameEnList)){
+
+            nameEnList.forEach(typeNameEn->{
+
+                if(areaTypeNameEn.equals(typeNameEn)){
+
+                    throw new ApplicationException(ResultEnum.AREA_TYPE_NAME_EN_DUPLICATED);
+                }
+            });
+        }
+
     }
 
     @Override

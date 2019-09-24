@@ -11,6 +11,12 @@ public interface DistributorBusinessService {
 
    long create(DistributorDTO dto);
 
+   void validateDistributorCode(String distributorCode);
+
+   void validateDistributorName(String distributorName);
+
+   void validateDistributorNameEn(String distributorNameEn);
+
    boolean deleteBatchByIds(List<Long> idList,Integer forceDelete);
 
    void validateHasChildren(List<Long> butorIdList);
