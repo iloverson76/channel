@@ -365,7 +365,6 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
                 dgrList.forEach(dgr->{
                     dgr.setSystemId(newSystemId);
                 });
-
                 distributorGradeRelationService.updateBatchById(dgrList);
             }
         }
