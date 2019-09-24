@@ -18,6 +18,18 @@
 	<modules>
 		<module>xpaas-channel-center-webapp</module>
 		<module>xpaas-channel-center-common</module>
+		<module>xpaas-channel-center-bank</module>
+		<module>xpaas-channel-center-bank-api</module>
+		<module>xpaas-channel-center-chain</module>
+		<module>xpaas-channel-center-chain-api</module>
+		<module>xpaas-channel-center-area</module>
+		<module>xpaas-channel-center-area-api</module>
+		<module>xpaas-channel-center-distributor</module>
+		<module>xpaas-channel-center-distributor-api</module>
+		<module>xpaas-channel-center-store</module>
+		<module>xpaas-channel-center-store-api</module>
+		<module>xpass-channel-center-business</module>
+		<module>xpass-channel-center-business-api</module>
 	</modules>
 
 	<dependencies>
