@@ -38,6 +38,8 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
     @Override
     public long create(AreaDTO dto) {
 
+        log.info("创建区域");
+
         validateAreaCode(dto.getAreaCode());
 
         validateAreaName(dto.getAreaName());
@@ -315,6 +317,8 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
     @Override
     public boolean deleteBatchByIds(List<Long> ids,Integer forceDelete) {
 
+        log.info("批量删除区域");
+
         if(CollectionUtils.isEmpty(ids)){
             return false;
         }
@@ -329,6 +333,8 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
             validateHasDistributors(ids);
 
+            validateAreaOnTrea(ids);
+
         }else{
 
             deleteChildren(ids);
@@ -336,6 +342,12 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
             deleteStores(ids);
 
             deleteDistributors(ids);
+
+            //解除数路径
+            ids.forEach(id->{
+
+                treeDeleteNode(id);
+            });
         }
 
         return areaService.deleteBatch(ids);
@@ -343,6 +355,8 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
     @Override
     public void validateHasChildren(List<Long> idList){
+
+        log.info("是否有子区域关联");
 
         List<AreaDTO> children = getChildrenByIds(idList);
 
@@ -354,6 +368,8 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
     @Override
     public boolean deleteChildren(List<Long> idList){
+
+        log.info("批量删除子区域");
 
         if(CollectionUtils.isNotEmpty(idList)){
 
@@ -397,6 +413,8 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
     @Override
     public void validateHasStores(List<Long> areaIdList){
 
+        log.info("是否有门店关联");
+
         StoreAreaQuery query = new StoreAreaQuery();
 
         query.setAreaIds(areaIdList);
@@ -407,10 +425,14 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
           throw new ApplicationException("已有门店关联!请解除关联后再操作");
         }
+
+        log.info("没有门店关联");
     }
 
     @Override
     public boolean deleteStores(List<Long> ids){
+
+        log.info("删除门店关联");
 
         StoreAreaQuery query = new StoreAreaQuery();
 
@@ -427,7 +449,34 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
         return true;
     }
 
+    @Override
+    public void validateAreaOnTrea(List<Long> idList){
+
+        log.info("区域是否在挂载在树上");
+
+        AreaQuery query= new AreaQuery();
+
+        query.setIds(idList);
+
+        List<AreaDTO> pageList = areaService.findPage(query);
+
+        if(CollectionUtils.isNotEmpty(pageList)){
+
+            pageList.forEach(area->{
+
+                if(null!=area.getPath()){
+
+                    throw new ApplicationException("已挂在区域树上!请解除关联后再操作");
+                }
+            });
+        }
+
+        log.info("不在区域树上");
+    }
+
     public List<AreaDTO> getChildrenByIds(List<Long> idList){
+
+        log.info("获取子区域");
 
         AreaQuery areaQuery = new AreaQuery();
 
@@ -457,6 +506,8 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
     }
 
     private boolean deleteChild(Long parentId){
+
+        log.info("删除子区域");
 
         AreaDTO dto=areaService.getAreaById(parentId);
 
@@ -543,7 +594,6 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
                 child.setPath(newPath);
             });
-
             areaService.updateBatch(children);
         }
     }
@@ -588,7 +638,6 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
             self.setPath(updatePath);
             areaService.update(self);
         }
-
         return Boolean.TRUE;
     }
 
@@ -631,7 +680,6 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
             //子节点及孙子节点
             updateChildrenNodesPath(id,replacepath,newParentPath);
         }
-
         return Boolean.TRUE;
     }
 

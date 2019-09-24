@@ -25,13 +25,15 @@ public interface AreaBusinessService {
 
     List<AreaDTO> listLinkedAreasByType(Long areaTypeId);
 
- boolean deleteBatchByIds(List<Long> ids,Integer forDelete);
+    boolean deleteBatchByIds(List<Long> ids,Integer forDelete);
 
     void validateHasChildren(List<Long> idList);
 
     void validateHasDistributors(List<Long> idList);
 
     void validateHasStores(List<Long> idList);
+
+    void validateAreaOnTrea(List<Long> idList);
 
     void validateAreaCode(String areaCode);
 
