@@ -7,12 +7,12 @@
         <artifactId>xpaas-channel-center</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <artifactId>xpass-channel-center-business</artifactId>
+    <artifactId>xpaas-channel-center-business</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.deepexi</groupId>
-            <artifactId>xpass-channel-center-business-api</artifactId>
+            <artifactId>xpaas-channel-center-business-api</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
