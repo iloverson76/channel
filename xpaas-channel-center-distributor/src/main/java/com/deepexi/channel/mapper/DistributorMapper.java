@@ -11,4 +11,10 @@ import java.util.List;
 public interface DistributorMapper extends BaseMapper<DistributorDO> {
 
     List<DistributorDO> findPage(DistributorQuery query);
+
+    List<String> listDistributorCode();
+
+    List<String> listDistributorName();
+
+    List<String> listDistributorNameEn();
 }

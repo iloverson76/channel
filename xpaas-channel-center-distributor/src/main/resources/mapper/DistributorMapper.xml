@@ -2,6 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.deepexi.channel.mapper.DistributorMapper">
 
+    <select id="listDistributorCode" resultType="java.lang.String">
+        SELECT
+            a.distributor_code
+        FROM
+            cc_distributor a
+        WHERE
+            a.dr = 0
+    </select>
+
+    <select id="listDistributorName" resultType="java.lang.String">
+        SELECT
+            a.distributor_name
+        FROM
+            cc_distributor a
+        WHERE
+            a.dr = 0
+    </select>
+
+    <select id="listDistributorNameEn" resultType="java.lang.String">
+        SELECT
+            a.distributor_name_en
+        FROM
+            cc_distributor a
+        WHERE
+            a.dr = 0
+    </select>
 
     <select id="findPage" parameterType="com.deepexi.channel.domain.DistributorQuery"
             resultType="com.deepexi.channel.domain.DistributorDO">

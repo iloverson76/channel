@@ -32,5 +32,9 @@ public interface AreaTypeMapper extends BaseMapper<AreaTypeDO> {
 
     List<AreaTypeDO> listAreaTypeByIds(@Param("ids") List<Long> areaTyeIdList);
 
-    List<AreaTypeDO> listLinkedAreas(@Param("id") long pk);
+    List<AreaTypeDO> listLinkedAreas(@Param("id") Long pk);
+
+    List<String> listAreaTypeName();
+
+    List<String> listAreaTypeNameEn();
 }

@@ -9,4 +9,10 @@ import java.util.List;
 public interface DistributorDAO extends  IService<DistributorDO> {
 
     List<DistributorDO> findPage(DistributorQuery query);
+
+    List<String> listDistributorCode();
+
+    List<String> listDistributorName();
+
+    List<String> listDistributorNameEn();
 }

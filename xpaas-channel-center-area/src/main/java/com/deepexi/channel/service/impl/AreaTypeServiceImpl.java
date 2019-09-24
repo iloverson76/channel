@@ -166,20 +166,6 @@ public class AreaTypeServiceImpl implements AreaTypeService {
     }
 
     @Override
-    public void ValidateAareaTypeCode(String areaTypeCode){
-
-        List<String> doList=areaTypeDAO.listAreaTypeCode();
-
-        if(CollectionUtils.isNotEmpty(doList)){
-            doList.forEach(typeCode->{
-                if(areaTypeCode.equals(typeCode)){
-                    throw new ApplicationException(ResultEnum.AREA_TYPE_DUPLICATED);
-                }
-            });
-        }
-    }
-
-    @Override
     public List<AreaTypeDTO> findByAreaIdNotInLinkIdAll(List<Long> linkIdList) {
         List<AreaTypeDO> list = areaTypeDAO.findByAreaIdNotInLinkIdAll(linkIdList);
         List<AreaTypeDTO> areaTypeDTOList = ObjectCloneUtils.convertList(list, AreaTypeDTO.class, CloneDirection.OPPOSITE);
@@ -215,6 +201,39 @@ public class AreaTypeServiceImpl implements AreaTypeService {
         List<AreaTypeDTO> dtoList=ObjectCloneUtils.convertList(eoList,AreaTypeDTO.class,CloneDirection.OPPOSITE);
 
         return dtoList;
+    }
+
+    @Override
+    public List<String> listAreaTypeCode() {
+
+        List<String> codeList=areaTypeDAO.listAreaTypeCode();
+
+        if(CollectionUtils.isEmpty(codeList)){
+            return Collections.emptyList();
+        }
+        return codeList;
+    }
+
+    @Override
+    public List<String> listAreaTypeName() {
+
+        List<String> nameList=areaTypeDAO.listAreaTypeName();
+
+        if(CollectionUtils.isEmpty(nameList)){
+            return Collections.emptyList();
+        }
+        return nameList;
+    }
+
+    @Override
+    public List<String> listAreaTypeNameEn() {
+
+        List<String> nameList=areaTypeDAO.listAreaTypeNameEn();
+
+        if(CollectionUtils.isEmpty(nameList)){
+            return Collections.emptyList();
+        }
+        return nameList;
     }
 
 }

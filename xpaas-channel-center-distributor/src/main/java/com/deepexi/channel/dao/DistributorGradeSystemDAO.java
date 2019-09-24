@@ -10,4 +10,10 @@ public interface DistributorGradeSystemDAO extends  IService<DistributorGradeSys
 
     List<DistributorGradeSystemDO> findPage(DistributorGradeSystemQuery query);
 
+    List<String> listGradeSystemCode();
+
+    List<String> listGradeSystemName();
+
+    List<String> listGradeSystemNameEn();
+
 }

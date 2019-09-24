@@ -34,4 +34,10 @@ public interface AreaTypeBusinessService {
     void validateHasChildren(List<Long> idList);
 
     Long createAreaType(AreaTypeDTO dto);
+
+    void ValidateAareaTypeCode(String areaTypeCode);
+
+    void validateAreaTypeName(String areaTypeName);
+
+    void validateAreaTypeNameEn(String areaTypeNameEn);
 }

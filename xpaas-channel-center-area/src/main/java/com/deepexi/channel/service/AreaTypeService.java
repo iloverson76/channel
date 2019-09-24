@@ -40,5 +40,9 @@ public interface AreaTypeService {
 
     List<AreaTypeDTO> listChildNodes(String s);
 
-    void ValidateAareaTypeCode(String areaTypeCode);
+    List<String> listAreaTypeCode();
+
+    List<String> listAreaTypeName();
+
+    List<String> listAreaTypeNameEn();
 }
