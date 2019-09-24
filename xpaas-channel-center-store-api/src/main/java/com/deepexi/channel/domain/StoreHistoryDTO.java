@@ -70,4 +70,14 @@ public class StoreHistoryDTO extends SuperEntity {
      */
     private Integer enable;
 
+    private String storeType;
+
+    private String storeGrade;
+
+    private String area;
+
+    private String chain;
+
+    private String storeDistributor;
+
 }

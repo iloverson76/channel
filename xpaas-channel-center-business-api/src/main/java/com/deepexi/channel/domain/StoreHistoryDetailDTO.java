@@ -1,29 +1,22 @@
 package com.deepexi.channel.domain;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.deepexi.channel.domain.SuperEntity;
-import io.swagger.annotations.ApiModel;
 import lombok.*;
 
+import java.util.List;
+
 /**
- * <p>
- * 门店信息表
- * </p>
- *
- * @author jobob
- * @since 2019-08-26
+ * @author mumu
+ * @version 1.0
+ * @date 2019/9/24 16:47
  */
 @EqualsAndHashCode(callSuper = true)
-@TableName("cc_store_history")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ApiModel(value="store_history对象", description="门店修改历史表")
-public class StoreHistoryDO extends SuperEntity {
+public class StoreHistoryDetailDTO extends SuperEntity {
 
     private static final long serialVersionUID = 1L;
-
     /**
      * 原门店id
      */
@@ -71,14 +64,15 @@ public class StoreHistoryDO extends SuperEntity {
      */
     private Integer enable;
 
-    private String storeType;
+    private StoreTypeDTO storeTypeDTO;
 
-    private String storeGrade;
+    private StoreGradeDTO storeGradeDTO;
 
-    private String area;
+    private List<AreaDTO> areaDTOS;
 
-    private String chain;
+    private List<ChainDetailDTO> chainDTOS;
 
-    private String storeDistributor;
+    private List<StoreDistributorDTO> storeDistributorDTOS;
 
+    private List<StoreHistoryDTO> storeHistoryDTOS;
 }

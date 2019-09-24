@@ -21,6 +21,11 @@
         <result property="updatedBy" column="updated_by" />
         <result property="updatedTime" column="updated_time" />
         <result property="description" column="description" />
+        <result property="storeType" column="store_type" />
+        <result property="storeGrade" column="store_grade" />
+        <result property="area" column="area" />
+        <result property="chain" column="chain" />
+        <result property="storeDistributor" column="store_distributor" />
     </resultMap>
     <select id="findList" resultType="com.deepexi.channel.domain.StoreHistoryDO">
         SELECT * FROM cc_store_history WHERE dr=0
