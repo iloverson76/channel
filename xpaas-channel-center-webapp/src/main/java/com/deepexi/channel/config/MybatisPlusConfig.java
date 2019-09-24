@@ -30,7 +30,7 @@ import java.util.List;
  */
 @Configuration
 @Slf4j
-@MapperScan("com.deepexi.commodity.mapper")
+@MapperScan("com.deepexi.channel.mapper")
 public class MybatisPlusConfig {
 
     private static final String SYSTEM_TENANT_ID = "tenantId";
