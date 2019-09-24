@@ -117,7 +117,7 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
             return null;
         }
         StoreDetailDTO result = storeDTO.clone(StoreDetailDTO.class);
-        result.setVersionNumber(this.generateHistoryVersionNumber(result));
+//        result.setVersionNumber(this.generateHistoryVersionNumber(result));
 
         //获取门店等级关联
         StoreGradeDTO storeGradeDTO = storeGradeBusinessService.getStroeGradeByStoreId(pk);

@@ -34,10 +34,11 @@ public class StoreHistoryController {
     @GetMapping("/{id}")
     @ApiOperation(value = "查询门店等级详情", notes = "查询门店等级详情")
     public Payload<StoreHistoryDetailVO> detail(@PathVariable(value = "id", required = true) Long pk) {
-        StoreHistoryDTO dto = storeHistoryBusinessService.detail(pk);
+        StoreHistoryBusinessDTO dto = storeHistoryBusinessService.detail(pk);
         if(dto == null){
             return new Payload<>();
         }
+
         StoreHistoryDetailVO vo = dto.clone(StoreHistoryDetailVO.class);
         //拼接数据
         if(StringUtil.isNotEmpty(dto.getArea())){
@@ -54,6 +55,10 @@ public class StoreHistoryController {
         }
         if(StringUtil.isNotEmpty(dto.getStoreGrade())){
             vo.setStoreGradeVO(JsonUtil.json2Bean(dto.getStoreGrade(), StoreGradeVO.class));
+        }
+        //历史消息
+        if(CollectionUtil.isNotEmpty(dto.getStoreHistoryDTOS())){
+            vo.setStoreHistoryVOS(ObjectCloneUtils.convertList(dto.getStoreHistoryDTOS(),StoreHistoryVO.class,CloneDirection.OPPOSITE ));
         }
 
         return new Payload<>(vo);
