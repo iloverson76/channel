@@ -1,14 +1,18 @@
 package com.deepexi.channel.service.impl;
 
-import com.deepexi.channel.domain.StoreHistoryDTO;
-import com.deepexi.channel.domain.StoreHistoryDetailDTO;
+import com.deepexi.channel.domain.*;
 import com.deepexi.channel.service.StoreHistoryBusinessService;
+import com.deepexi.channel.service.StoreHistoryService;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.JsonUtil;
+import com.deepexi.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.session.StoreType;
 import org.springframework.stereotype.Service;
-import springfox.documentation.spring.web.json.Json;
+
+import java.util.List;
+
 
 /**
  * @author mumu
@@ -18,6 +22,9 @@ import springfox.documentation.spring.web.json.Json;
 @Service
 @Slf4j
 public class StoreHistoryBusinessServiceImpl implements StoreHistoryBusinessService {
+
+    @Autowired
+    StoreHistoryService storeHistoryService;
 
     /**
      * @MethodName: storeDetailHistory2storeHistory
@@ -52,7 +59,42 @@ public class StoreHistoryBusinessServiceImpl implements StoreHistoryBusinessServ
     }
 
     @Override
-    public StoreHistoryDetailDTO detail(Long pk) {
-        return null;
+    public StoreHistoryDTO detail(Long pk) {
+        StoreHistoryDTO dto = storeHistoryService.detail(pk);
+        return dto;
+//        StoreHistoryDetailDTO storeHistoryDetailDTO  = this.storeHistory2StoreDetailHistory(dto);
+//        return storeHistoryDetailDTO;
+    }
+
+    /**
+     * @MethodName: storeHistory2StoreDetailHistory
+     * @Description: storeHistoryDTO转storeDetailHistoryDTO
+     * @Param: [dto]
+     * @Return: com.deepexi.channel.domain.StoreHistoryDetailDTO
+     * @Author: mumu
+     * @Date: 2019/9/24
+    **/
+    @Override
+    public StoreHistoryDetailDTO storeHistory2StoreDetailHistory(StoreHistoryDTO dto) {
+        if(null == dto){
+            return null;
+        }
+        StoreHistoryDetailDTO storeHistoryDetailDTO = dto.clone(StoreHistoryDetailDTO.class);
+        if(StringUtil.isNotEmpty(dto.getArea())){
+            storeHistoryDetailDTO.setAreaDTOS(JsonUtil.json2Bean(dto.getArea(), List.class));
+        }
+        if(StringUtil.isNotEmpty(dto.getChain())){
+            storeHistoryDetailDTO.setChainDTOS(JsonUtil.json2Bean(dto.getChain(), List.class));
+        }
+        if(StringUtil.isNotEmpty(dto.getStoreDistributor())){
+            storeHistoryDetailDTO.setStoreDistributorDTOS(JsonUtil.json2Bean(dto.getStoreDistributor(), List.class));
+        }
+        if(StringUtil.isNotEmpty(dto.getStoreType())){
+            storeHistoryDetailDTO.setStoreTypeDTO(JsonUtil.json2Bean(dto.getStoreType(), StoreTypeDTO.class));
+        }
+        if(StringUtil.isNotEmpty(dto.getStoreGrade())){
+            storeHistoryDetailDTO.setStoreGradeDTO(JsonUtil.json2Bean(dto.getStoreGrade(), StoreGradeDTO.class));
+        }
+        return storeHistoryDetailDTO;
     }
 }
