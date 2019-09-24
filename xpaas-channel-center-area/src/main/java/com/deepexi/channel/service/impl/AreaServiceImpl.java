@@ -32,7 +32,6 @@ public class AreaServiceImpl implements AreaService{
         dto.setParentId(0L);
         AreaDO newNode=dto.clone(AreaDO.class,CloneDirection.FORWARD);
 
-        //save后,ado是插入数据库后返回的新数据,包括id,ado克隆要拆成两步写
         areaDAO.save(newNode);
 
         Long newId=newNode.getId();
