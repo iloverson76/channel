@@ -79,7 +79,7 @@ public class DistributorGradeSystemServiceImpl implements DistributorGradeSystem
     }
 
     @Override
-    public Boolean delete(List<Long> idList) {
+    public Boolean deleteBatchByIds(List<Long> idList) {
 
         Boolean result = distributorGradeSystemDAO.removeByIds(idList);
 

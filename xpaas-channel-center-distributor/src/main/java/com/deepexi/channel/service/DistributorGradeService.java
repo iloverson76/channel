@@ -27,7 +27,14 @@ public interface DistributorGradeService {
     /**
      批量删除经销商等级
     */
-    Boolean delete(List<Long> ids);
+    Boolean deleteBatchByIds(List<Long> ids);
+
+    /**
+     * 单条删除经销商等级
+     * @param id
+     * @return
+     */
+    Boolean deleteById(Long id);
 
     /**
      * 分页获取列表
@@ -38,8 +45,6 @@ public interface DistributorGradeService {
      * 查找某个体系下的所有等级
      */
     List<DistributorGradeDTO> findAllBySystem(Long systemId);
-
-    List<DistributorGradeDTO> listChildrenNodes(Long id);
 
     boolean updateBatchById(List<DistributorGradeDTO> dtoList);
 

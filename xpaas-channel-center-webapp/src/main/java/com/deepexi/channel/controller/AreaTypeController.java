@@ -88,10 +88,10 @@ public class AreaTypeController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation("根据id获取类目详情")
+    @ApiOperation("根据id获取区域分类详情")
     public Payload<AreaTypeVO> getAreaTypeById(@PathVariable Long id) {
 
-        AreaTypeDTO dto = areaTypeService.getAreaTypeById(id);
+        AreaTypeDTO dto = areaTypeBusinessService.detail(id);
 
         AreaTypeVO vo = dto.clone(AreaTypeVO.class, CloneDirection.OPPOSITE);
 

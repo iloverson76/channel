@@ -4,9 +4,7 @@ import com.deepexi.channel.dao.DistributorGradeDAO;
 import com.deepexi.channel.domain.DistributorGradeDO;
 import com.deepexi.channel.domain.DistributorGradeDTO;
 import com.deepexi.channel.domain.DistributorGradeQuery;
-import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.service.DistributorGradeService;
-import com.deepexi.util.extension.ApplicationException;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import com.github.pagehelper.PageHelper;
@@ -16,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -118,63 +115,25 @@ public class DistributorGradeServiceImpl implements DistributorGradeService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public Boolean delete(List<Long> ids) {
+    public Boolean deleteBatchByIds(List<Long> ids) {
 
         if(CollectionUtils.isEmpty(ids)){
             return false;
         }
 
-        ids.forEach(id->{
-            delete(id);
-        });
+        distributorGradeDAO.removeByIds(ids);
 
         return Boolean.TRUE;
     }
 
-    public boolean delete(long id) {
-
-        List<DistributorGradeDTO> children=listChildrenNodes(id);
-
-        if(CollectionUtils.isNotEmpty(children)){
-
-            children.forEach(child->{
-                child.setParentId(0L);
-            });
-
-            List<DistributorGradeDO> childrenDO=ObjectCloneUtils.convertList(children,
-                    DistributorGradeDO.class,CloneDirection.FORWARD);
-
-            distributorGradeDAO.updateBatchById(childrenDO);
-       }
-       return distributorGradeDAO.removeById(id);
-    }
-
     @Override
-    public List<DistributorGradeDTO> listChildrenNodes(Long id){
-
-        log.info("查找等级下的子节点");
+    public Boolean deleteById(Long id) {
 
         if(id<=0){
-            return Collections.emptyList();
+            return false;
         }
 
-        List<DistributorGradeDTO> dtoList=findPage(new DistributorGradeQuery());
-
-        if(CollectionUtils.isEmpty(dtoList)){
-            return Collections.emptyList();
-        }
-
-        List<DistributorGradeDTO> children=new ArrayList<>();
-
-        //查出所有子节点:新建的时候已经归属了某一个体系
-        dtoList.forEach(dto->{
-
-            if(dto.getParentId()==id){
-
-                children.add(dto);
-            }
-        });
-        return children;
+       return distributorGradeDAO.removeById(id);
     }
 
     @Override

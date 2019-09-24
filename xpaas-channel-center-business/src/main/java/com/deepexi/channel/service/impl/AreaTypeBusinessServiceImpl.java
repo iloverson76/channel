@@ -1,9 +1,6 @@
 package com.deepexi.channel.service.impl;
 
-import com.deepexi.channel.domain.AreaDTO;
-import com.deepexi.channel.domain.AreaQuery;
-import com.deepexi.channel.domain.AreaTypeDTO;
-import com.deepexi.channel.domain.AreaTypeQuery;
+import com.deepexi.channel.domain.*;
 import com.deepexi.channel.enums.ForceDeleteEnum;
 import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.service.AreaService;
@@ -516,6 +513,29 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
 
             throw new ApplicationException("分类已有区域挂载!请解除关联后再操作");
         }
+    }
+
+    @Override
+    public AreaTypeDTO detail(Long id) {
+
+        AreaTypeDTO dto=areaTypeService.getAreaTypeById(id);
+
+        if (null==dto) {
+            return new AreaTypeDTO();
+        }
+
+        long parentId=dto.getParentId();
+
+        if(parentId>0L){
+
+            AreaTypeDTO parent=areaTypeService.getAreaTypeById(id);
+
+            dto.setParentName(parent.getAreaTypeName());
+
+            dto.setParentNameEn(parent.getAreaTypeNameEn());
+        }
+
+        return dto;
     }
 
 }

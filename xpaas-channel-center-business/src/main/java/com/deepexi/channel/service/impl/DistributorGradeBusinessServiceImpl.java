@@ -6,6 +6,8 @@ import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.service.*;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.extension.ApplicationException;
+import com.deepexi.util.pojo.CloneDirection;
+import com.deepexi.util.pojo.ObjectCloneUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -355,7 +357,7 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
         if(origSystemId!=newSystemId){
 
-            List<DistributorGradeDTO> children=distributorGradeService.listChildrenNodes(id);
+            List<DistributorGradeDTO> children=listChildrenNodes(id);
 
             if(CollectionUtils.isNotEmpty(children)){
 
@@ -463,7 +465,28 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
         }
 
         log.info("开始删除等级");
-        return distributorGradeService.delete(gradeIdList);
+
+        gradeIdList.forEach(id->{
+
+            deleteById(id);
+        });
+
+        return true;
+    }
+
+    private boolean deleteById(long id) {
+
+        List<DistributorGradeDTO> children=listChildrenNodes(id);
+
+        if(CollectionUtils.isNotEmpty(children)){
+
+            children.forEach(child->{
+                child.setParentId(0L);
+            });
+
+            distributorGradeService.updateBatchById(children);
+        }
+        return distributorGradeService.deleteById(id);
     }
 
     @Override
@@ -554,6 +577,34 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
                 });
             });
         }
+    }
+
+    @Override
+    public List<DistributorGradeDTO> listChildrenNodes(Long id){
+
+        log.info("查找等级下的子节点");
+
+        if(id<=0){
+            return Collections.emptyList();
+        }
+
+        List<DistributorGradeDTO> dtoList=findPage(new DistributorGradeQuery());
+
+        if(CollectionUtils.isEmpty(dtoList)){
+            return Collections.emptyList();
+        }
+
+        List<DistributorGradeDTO> children=new ArrayList<>();
+
+        //查出所有子节点:新建的时候已经归属了某一个体系
+        dtoList.forEach(dto->{
+
+            if(dto.getParentId()==id){
+
+                children.add(dto);
+            }
+        });
+        return children;
     }
 
 }

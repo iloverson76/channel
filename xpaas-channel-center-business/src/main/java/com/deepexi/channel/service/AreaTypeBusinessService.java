@@ -40,4 +40,6 @@ public interface AreaTypeBusinessService {
     void validateAreaTypeName(String areaTypeName);
 
     void validateAreaTypeNameEn(String areaTypeNameEn);
+
+    AreaTypeDTO detail(Long id);
 }

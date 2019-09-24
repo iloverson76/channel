@@ -24,7 +24,7 @@ public interface DistributorGradeSystemService {
     /**
      批量删除
     */
-    Boolean delete(List<Long> idList);
+    Boolean deleteBatchByIds(List<Long> idList);
 
     /**
      获取详情

@@ -50,6 +50,8 @@ public interface DistributorGradeBusinessService {
 
     Boolean update(DistributorGradeDTO dto);
 
+    List<DistributorGradeDTO> listChildrenNodes(Long id);
+
     void validateDistributorGradeCode(String gradeCode,Long systemId);
 
     void validateDistributorGradeName(String gradeName,Long systemId);

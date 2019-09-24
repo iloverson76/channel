@@ -97,26 +97,17 @@ public class AreaTypeServiceImpl implements AreaTypeService {
     @Override
     public AreaTypeDTO getAreaTypeById(Long id) {
 
-        AreaTypeDO ado=areaTypeDAO.getOne(getQueryWrapper(id));
+      if(id<=0){
+          return null;
+      }
 
-        if (null==ado) {
-            return new AreaTypeDTO();
-        }
+      AreaTypeDO eo=areaTypeDAO.getAreaTypeById(id);
 
-        AreaTypeDTO node = ado.clone(AreaTypeDTO.class,CloneDirection.OPPOSITE);
+      if(null==eo){
+          return null;
+      }
 
-        long parentId=node.getParentId();
-
-        if(0!=parentId){
-
-            AreaTypeDO parent=areaTypeDAO.getOne(getQueryWrapper(parentId));
-
-            node.setParentName(parent.getAreaTypeName());
-
-            node.setParentNameEn(parent.getAreaTypeNameEn());
-        }
-
-        return node;
+      return eo.clone(AreaTypeDTO.class,CloneDirection.OPPOSITE);
     }
 
     @Override

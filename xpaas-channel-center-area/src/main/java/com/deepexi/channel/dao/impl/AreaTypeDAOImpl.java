@@ -85,4 +85,14 @@ public class AreaTypeDAOImpl extends ServiceImpl<AreaTypeMapper, AreaTypeDO> imp
     public List<String> listAreaTypeNameEn() {
         return baseMapper.listAreaTypeNameEn();
     }
+
+    @Override
+    public AreaTypeDO getAreaTypeById(Long id) {
+
+        QueryWrapper wp=new QueryWrapper();
+
+        wp.eq("id",id);
+
+        return baseMapper.selectOne(wp);
+    }
 }

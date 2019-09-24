@@ -26,4 +26,6 @@ public interface AreaTypeDAO extends  IService<AreaTypeDO> {
     List<String> listAreaTypeName();
 
     List<String> listAreaTypeNameEn();
+
+    AreaTypeDO getAreaTypeById(Long id);
 }
