@@ -161,7 +161,7 @@ public class DistributorSystemBusinessServiceImpl implements DistributorSystemBu
             validateHasGrades(systemIdList);
         }
         //删除体系
-        return distributorGradeSystemService.delete(systemIdList);
+        return distributorGradeSystemService.deleteBatchByIds(systemIdList);
     }
 
     @Override
