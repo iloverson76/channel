@@ -7,7 +7,11 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import java.util.Date;
-
+/**
+ * @author mumu
+ * @version 1.0
+ * @date 2019/9/19 17:10
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor

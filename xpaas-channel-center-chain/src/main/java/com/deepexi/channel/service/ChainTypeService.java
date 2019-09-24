@@ -4,9 +4,10 @@ import com.deepexi.channel.domain.ChainTypeDTO;
 import com.deepexi.channel.domain.ChainTypeQuery;
 
 import java.util.List;
-
 /**
- * cc_chain_type
+ * @author mumu
+ * @version 1.0
+ * @date 2019/9/19 19:55
  */
 public interface ChainTypeService {
 
@@ -43,6 +44,8 @@ public interface ChainTypeService {
     * @return
     */
     Long create(ChainTypeDTO dto);
+
+    Boolean createBatch(List<ChainTypeDTO> dtos);
 
     /**
      批量删除

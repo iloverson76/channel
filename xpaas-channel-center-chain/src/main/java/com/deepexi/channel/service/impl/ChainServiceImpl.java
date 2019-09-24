@@ -12,13 +12,19 @@ import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import com.github.pagehelper.PageHelper;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+/**
+ * @author mumu
+ * @version 1.0
+ * @date 2019/9/19 19:55
+ */
+@Slf4j
 @Service
 public class ChainServiceImpl implements ChainService {
 
@@ -60,7 +66,17 @@ public class ChainServiceImpl implements ChainService {
         boolean result = chainDAO.updateById(chainDO);
         return result;
     }
-//
+
+    @Override
+    public Boolean updateBatch(List<ChainDTO> dtos) {
+        if(CollectionUtil.isEmpty(dtos)){
+            return false;
+        }
+        List<ChainDO> list = ObjectCloneUtils.convertList(dtos, ChainDO.class);
+        return chainDAO.updateBatchById(list);
+    }
+
+    //
     @Override
     public Long create(ChainDTO dto) {
         if(dto == null){
@@ -71,6 +87,15 @@ public class ChainServiceImpl implements ChainService {
         boolean result = chainDAO.save(chainDO);
 
         return chainDO.getId();
+    }
+
+    @Override
+    public Boolean createBatch(List<ChainDTO> dtos) {
+        if(CollectionUtil.isEmpty(dtos)){
+            return false;
+        }
+        List<ChainDO> list = ObjectCloneUtils.convertList(dtos, ChainDO.class);
+        return chainDAO.saveBatch(list);
     }
 
     @Override

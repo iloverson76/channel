@@ -6,7 +6,9 @@ import com.deepexi.channel.domain.BankQuery;
 import java.util.List;
 
 /**
- * cc_bank
+ * @author mumu
+ * @version 1.0
+ * @date 2019/9/19 17:10
  */
 public interface BankService {
 

@@ -9,7 +9,7 @@ import lombok.*;
  * 银行-账户表
  * </p>
  *
- * @author jobob
+ * @author mumu
  * @since 2019-08-28
  */
 @EqualsAndHashCode(callSuper = true)

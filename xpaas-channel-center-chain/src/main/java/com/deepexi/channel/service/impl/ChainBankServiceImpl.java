@@ -8,6 +8,7 @@ import com.deepexi.channel.service.ChainBankService;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import com.github.pagehelper.PageHelper;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +16,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
-
+/**
+ * @author mumu
+ * @version 1.0
+ * @date 2019/9/19 19:55
+ */
+@Slf4j
 @Service
 public class ChainBankServiceImpl implements ChainBankService {
-
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private ChainBankDAO chainBankDAO;
@@ -40,6 +44,15 @@ public class ChainBankServiceImpl implements ChainBankService {
         }
         ChainBankDO chainBankDO = dto.clone(ChainBankDO.class);
         return chainBankDAO.updateById(chainBankDO);
+    }
+
+    @Override
+    public boolean updateBatch(List<ChainBankDTO> dtos) {
+        if(CollectionUtil.isEmpty(dtos)){
+            return false;
+        }
+        List<ChainBankDO> list = ObjectCloneUtils.convertList(dtos, ChainBankDO.class);
+        return chainBankDAO.updateBatchById(list);
     }
 
     @Override
@@ -65,19 +78,18 @@ public class ChainBankServiceImpl implements ChainBankService {
     }
 
     @Override
+    public boolean save(ChainBankDTO dto) {
+        if(null == dto){
+            return false;
+        }
+        return chainBankDAO.save(dto.clone(ChainBankDO.class));
+    }
+
+    @Override
     public boolean saveBatch(List<ChainBankDTO> chainBankDTOS) {
         List<ChainBankDO> list = ObjectCloneUtils.convertList(chainBankDTOS,ChainBankDO.class);
         return chainBankDAO.saveBatch(list);
     }
-
-//    @Override
-//    public List<ChainBankDTO> getChainBankByChainId(Long id) {
-//        List<ChainBankDO> chainBankDOS = chainBankDAO.getChainBankByChainId(id);
-//        if(CollectionUtil.isEmpty(chainBankDOS)){
-//            return null;
-//        }
-//        return ObjectCloneUtils.convertList(chainBankDOS, ChainBankDTO.class, CloneDirection.OPPOSITE);
-//    }
 
     @Override
     public boolean deleteByChainId(Long id) {

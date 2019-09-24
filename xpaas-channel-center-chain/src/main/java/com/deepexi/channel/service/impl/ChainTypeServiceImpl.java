@@ -74,6 +74,15 @@ public class ChainTypeServiceImpl implements ChainTypeService {
         return chainTypeDO.getId();
     }
 
+    @Override
+    public Boolean createBatch(List<ChainTypeDTO> dtos) {
+        if(CollectionUtil.isEmpty(dtos)){
+            return false;
+        }
+        List<ChainTypeDO> list = ObjectCloneUtils.convertList(dtos, ChainTypeDO.class);
+        return chainTypeDAO.saveBatch(list);
+    }
+
 
     @Override
     public Boolean delete(List<Long> ids) {

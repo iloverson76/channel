@@ -13,13 +13,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
-//import io.swagger.annotations.Api;
-
 
 @Api(value = "银行管理", description = "获取银行列表")
 @RestController
@@ -35,6 +31,7 @@ public class BankController {
     @GetMapping()
     @ApiOperation("查询银行列表")
     public Payload<List<BankVO>> listChainPage(){
+        //查询银行列表，若该应用没有该列表，则初始化到数据库中
         List<BankDTO> bankDTOS = bankService.listBank();
         return new Payload<>(ObjectCloneUtils.convertList(bankDTOS, BankVO.class, CloneDirection.OPPOSITE));
     }

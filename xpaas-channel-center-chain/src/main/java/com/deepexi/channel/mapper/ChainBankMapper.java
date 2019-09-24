@@ -7,7 +7,11 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-
+/**
+ * @author mumu
+ * @version 1.0
+ * @date 2019/9/19 19:55
+ */
 @Mapper
 public interface ChainBankMapper extends BaseMapper<ChainBankDO> {
 

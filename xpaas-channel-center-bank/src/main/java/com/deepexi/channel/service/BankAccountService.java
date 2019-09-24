@@ -6,7 +6,9 @@ import com.deepexi.channel.domain.BankAccountQuery;
 import java.util.List;
 
 /**
- * cc_bank_account
+ * @author mumu
+ * @version 1.0
+ * @date 2019/9/19 17:10
  */
 public interface BankAccountService {
     /**
@@ -18,8 +20,6 @@ public interface BankAccountService {
      * @Date: 2019/9/5
     **/
     List<BankAccountDTO> saveBatch(List<BankAccountDTO> bankAccountDTOS);
-
-//    List<BankAccountDTO> getBankAccountByIds(List<Long> bankAccountIds);
 
     List<BankAccountDTO> findList(BankAccountQuery query);
 
