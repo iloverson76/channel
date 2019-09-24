@@ -18,7 +18,7 @@
         </encoder>
     </appender>
 
-    <logger name="com.deepexi.com.mapper" level="debug"/>
+    <logger name="com.deepexi.channel.mapper" level="debug"/>
     <root level="${log.env.logger.level}">
         <appender-ref ref="ROLLING"/>
     </root>
