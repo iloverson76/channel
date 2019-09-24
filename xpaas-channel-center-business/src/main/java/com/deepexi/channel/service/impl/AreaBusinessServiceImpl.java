@@ -464,7 +464,7 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
             pageList.forEach(area->{
 
-                if(null!=area.getPath()){
+                if(StringUtil.isNotEmpty(area.getPath())){
 
                     throw new ApplicationException("已挂在区域树上!请解除关联后再操作");
                 }
