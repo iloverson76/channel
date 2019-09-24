@@ -50,4 +50,9 @@ public class StoreHistoryBusinessServiceImpl implements StoreHistoryBusinessServ
         }
         return dto;
     }
+
+    @Override
+    public StoreHistoryDetailDTO detail(Long pk) {
+        return null;
+    }
 }

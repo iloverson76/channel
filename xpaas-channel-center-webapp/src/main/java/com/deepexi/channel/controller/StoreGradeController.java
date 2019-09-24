@@ -39,7 +39,7 @@ public class StoreGradeController {
     public Payload<PageBean<StoreGradeVO>> findPage(@ApiParam(name = "query", required = true) StoreGradeQuery query) {
         List<StoreGradeDTO> storeGradeDTOS = storeGradeService.findPage(query);
         if (CollectionUtil.isEmpty(storeGradeDTOS)) {
-            return new Payload(null);
+            return new Payload();
         }
         List<StoreGradeVO> storeGradeVOS = ObjectCloneUtils.convertList(storeGradeDTOS, StoreGradeVO.class, CloneDirection.OPPOSITE);
         return new Payload<>(new PageBean<>(storeGradeVOS));
@@ -48,7 +48,11 @@ public class StoreGradeController {
     @GetMapping("/{id}")
     @ApiOperation(value = "查询门店等级详情", notes = "查询门店等级详情")
     public Payload<StoreGradeVO> detail(@PathVariable(value = "id", required = true) Long pk) {
-        return new Payload(storeGradeService.detail(pk));
+        StoreGradeDTO dto = storeGradeService.detail(pk);
+        if(null == dto){
+            return new Payload<>();
+        }
+        return new Payload();
 
     }
 

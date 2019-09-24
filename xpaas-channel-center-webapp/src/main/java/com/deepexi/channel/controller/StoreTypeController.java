@@ -39,7 +39,7 @@ public class StoreTypeController {
     public  Payload<PageBean<StoreTypeVO>> findPage(@ApiParam(name = "query", required = true) StoreTypeQuery query) {
         List<StoreTypeDTO> storeTypeDTOS = storeTypeService.findPage(query);
         if(CollectionUtil.isEmpty(storeTypeDTOS)){
-            return new Payload(null);
+            return new Payload();
         }
         List<StoreTypeVO> storeTypeVOS = ObjectCloneUtils.convertList(storeTypeDTOS, StoreTypeVO.class, CloneDirection.OPPOSITE);
         return new Payload<>(new PageBean<>(storeTypeVOS));

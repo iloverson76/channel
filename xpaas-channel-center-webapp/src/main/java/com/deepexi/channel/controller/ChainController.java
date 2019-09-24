@@ -45,7 +45,7 @@ public class ChainController {
     public Payload<ChainDetailVO> detail(@PathVariable(value = "id", required = true) Long id) {
         ChainDetailDTO chainDetailDTO = chainBusinessService.getChain(id);
         if(chainDetailDTO == null){
-            return new Payload(null);
+            return new Payload();
         }
         return new Payload(chainDetailDTO.clone(ChainDetailVO.class, CloneDirection.OPPOSITE));
     }
