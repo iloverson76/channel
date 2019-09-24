@@ -2,6 +2,7 @@ package com.deepexi.channel.service.impl;
 
 import com.deepexi.channel.domain.*;
 import com.deepexi.channel.enums.ForceDeleteEnum;
+import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.service.*;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.extension.ApplicationException;
@@ -28,6 +29,17 @@ public class DistributorSystemBusinessServiceImpl implements DistributorSystemBu
 
     @Autowired
     private DistributorService distributorService;
+
+
+    @Override
+    public Long create(DistributorGradeSystemDTO dto) {
+
+        validateGradeSystemCode(dto.getGradeSystemCode());
+
+        validateGradeSystemName(dto.getGradeSystemName());
+
+        return distributorGradeSystemService.create(dto);
+    }
 
     @Override
     public List<DistributorGradeSystemDTO> findPage(DistributorGradeSystemQuery query) {
@@ -175,5 +187,62 @@ public class DistributorSystemBusinessServiceImpl implements DistributorSystemBu
                 throw new ApplicationException("["+system.getGradeSystemName()+"]已挂载已等级,不能删除!请解除所有关联后再操作");
             }
         });
+    }
+
+    @Override
+    public void  validateGradeSystemCode(String systemCode) {
+
+        log.info("经销商体系编码重复校验");
+
+        List<String> codeList=distributorGradeSystemService.listGradeSystemCode();
+
+        if(CollectionUtils.isNotEmpty(codeList)){
+
+            codeList.forEach(code->{
+
+                if(code.equals(systemCode)){
+
+                    throw new ApplicationException(ResultEnum.DISTRIBUTOR_SYSTEM_CODE_DUPLICATED);
+                }
+            });
+        }
+    }
+
+    @Override
+    public void validateGradeSystemName(String systemName) {
+
+        log.info("经销商体系中文重复校验");
+
+        List<String> nameList=distributorGradeSystemService.listGradeSystemName();
+
+        if(CollectionUtils.isNotEmpty(nameList)){
+
+            nameList.forEach(name->{
+
+                if(name.equals(systemName)){
+
+                    throw new ApplicationException(ResultEnum.DISTRIBUTOR_SYSTEM_NAME_DUPLICATED);
+                }
+            });
+        }
+    }
+
+    @Override
+    public void validateGradeSystemNameEn(String systemNameEn) {
+
+        log.info("经销商体系中文重复校验");
+
+        List<String> nameEnList=distributorGradeSystemService.listGradeSystemNameEn();
+
+        if(CollectionUtils.isNotEmpty(nameEnList)){
+
+            nameEnList.forEach(nameEn->{
+
+                if(nameEn.equals(systemNameEn)){
+
+                    throw new ApplicationException(ResultEnum.DISTRIBUTOR_SYSTEM_NAME_DUPLICATED);
+                }
+            });
+        }
     }
 }

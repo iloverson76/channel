@@ -74,4 +74,15 @@ public class AreaTypeDAOImpl extends ServiceImpl<AreaTypeMapper, AreaTypeDO> imp
 
         return result;
     }
+
+    @Override
+    public List<String> listAreaTypeName() {
+
+        return baseMapper.listAreaTypeName();
+    }
+
+    @Override
+    public List<String> listAreaTypeNameEn() {
+        return baseMapper.listAreaTypeNameEn();
+    }
 }

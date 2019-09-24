@@ -34,8 +34,6 @@ public interface DistributorGradeService {
      */
     List<DistributorGradeDTO> findPage(DistributorGradeQuery query);
 
-    boolean validateGradeCode(String garedCode);
-
     /**
      * 查找某个体系下的所有等级
      */
@@ -45,5 +43,9 @@ public interface DistributorGradeService {
 
     boolean updateBatchById(List<DistributorGradeDTO> dtoList);
 
+    List<String> listDistributorGradeCode(Long systemId);
 
+    List<String> listDistributorGradeName(Long systemId);
+
+    List<String> listDistributorGradeNameEn(Long systemId);
 }

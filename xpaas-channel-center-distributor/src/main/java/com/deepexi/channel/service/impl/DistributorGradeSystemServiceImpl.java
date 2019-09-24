@@ -1,5 +1,6 @@
 package com.deepexi.channel.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.deepexi.channel.dao.DistributorGradeSystemDAO;
 import com.deepexi.channel.domain.DistributorGradeSystemDO;
 import com.deepexi.channel.domain.DistributorGradeSystemDTO;
@@ -12,6 +13,7 @@ import com.deepexi.util.extension.ApplicationException;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import com.github.pagehelper.PageHelper;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +23,11 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
+@Slf4j
 public class DistributorGradeSystemServiceImpl implements DistributorGradeSystemService {
-
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private DistributorGradeSystemDAO distributorGradeSystemDAO;
-
-    AppRuntimeEnv appRuntimeEnv= AppRuntimeEnv.getInstance();
 
     @Override
     public DistributorGradeSystemDTO detail(Long  pk) {
@@ -70,12 +69,7 @@ public class DistributorGradeSystemServiceImpl implements DistributorGradeSystem
 
         distributorGradeSystemDAO.save(eo);
 
-        long id=eo.getId();
-
-        if (id > 0) {
-            return id;
-        }
-        return 0L;
+        return  eo.getId();
     }
 
     @Override
@@ -109,24 +103,35 @@ public class DistributorGradeSystemServiceImpl implements DistributorGradeSystem
     }
 
     @Override
-    public void validateDuplicatedNameAndCode(DistributorGradeSystemDTO dto){
+    public List<String> listGradeSystemCode() {
 
-        DistributorGradeSystemQuery query=new DistributorGradeSystemQuery();
+        List<String> codeList=distributorGradeSystemDAO.listGradeSystemCode();
 
-        List<DistributorGradeSystemDTO> pageDTO= findPage(query);
+        if(CollectionUtils.isEmpty(codeList)){
+            return Collections.emptyList();
+        }
+        return codeList;
+    }
 
-        pageDTO.forEach(page->{
+    @Override
+    public List<String> listGradeSystemName() {
 
-            if(dto.getGradeSystemCode().equals(page.getGradeSystemCode())){
+        List<String> nameList=distributorGradeSystemDAO.listGradeSystemName();
 
-                throw new ApplicationException(ResultEnum.GRADE_SYSTEM_CODE_DUPLICATED);
-            }
+        if(CollectionUtils.isEmpty(nameList)){
+            return Collections.emptyList();
+        }
+        return nameList;
+    }
 
-            if(dto.getGradeSystemName().equals(page.getGradeSystemName())){
+    @Override
+    public List<String> listGradeSystemNameEn() {
 
-                throw new ApplicationException(ResultEnum.GRADE_SYSTEM_NAME_DUPLICATED);
-            }
+        List<String> nameEnList=distributorGradeSystemDAO.listGradeSystemNameEn();
 
-        });
+        if(CollectionUtils.isEmpty(nameEnList)){
+            return Collections.emptyList();
+        }
+        return nameEnList;
     }
 }

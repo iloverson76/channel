@@ -40,9 +40,7 @@ public class DistributorGradeSystemController {
 
         DistributorGradeSystemDTO dto=vo.clone(DistributorGradeSystemDTO.class, CloneDirection.FORWARD);
 
-        distributorGradeSystemService.validateDuplicatedNameAndCode(dto);
-
-        return new Payload(distributorGradeSystemService.create(dto));
+        return new Payload(distributorSystemBusinessService.create(dto));
     }
 
     @GetMapping("/{id}")

@@ -16,4 +16,10 @@ public interface DistributorGradeDAO extends  IService<DistributorGradeDO> {
     int getByCode(String garedCode);
 
     List<DistributorGradeDO> findAllBySystem(Long systemId);
+
+    List<String> listDistributorGradeCode(Long systemId);
+
+    List<String> listDistributorGradeName(Long systemId);
+
+    List<String> listDistributorGradeNameEn(Long systemId);
 }

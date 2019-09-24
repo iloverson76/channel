@@ -33,6 +33,12 @@ public interface AreaBusinessService {
 
     void validateHasStores(List<Long> idList);
 
+    void validateAreaCode(String areaCode);
+
+    void validateAreaName(String areaName);
+
+    void validateAreaNameEn(String areaNameEn);
+
     boolean deleteChildren(List<Long> idList);
 
     boolean deleteDistributors(List<Long> idList);

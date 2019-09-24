@@ -67,6 +67,39 @@ public class DistributorGradeServiceImpl implements DistributorGradeService {
     }
 
     @Override
+    public List<String> listDistributorGradeCode(Long systemId) {
+
+        List<String> codeList=distributorGradeDAO.listDistributorGradeCode(systemId);
+
+        if(CollectionUtils.isEmpty(codeList)){
+            return Collections.emptyList();
+        }
+        return codeList;
+    }
+
+    @Override
+    public List<String> listDistributorGradeName(Long systemId) {
+
+        List<String> nameList=distributorGradeDAO.listDistributorGradeName(systemId);
+
+        if(CollectionUtils.isEmpty(nameList)){
+            return Collections.emptyList();
+        }
+        return nameList;
+    }
+
+    @Override
+    public List<String> listDistributorGradeNameEn(Long systemId) {
+
+        List<String> nameEnList=distributorGradeDAO.listDistributorGradeNameEn(systemId);
+
+        if(com.baomidou.mybatisplus.core.toolkit.CollectionUtils.isEmpty(nameEnList)){
+            return Collections.emptyList();
+        }
+        return nameEnList;
+    }
+
+    @Override
     public DistributorGradeDTO getById(Long pk) {
 
         if(0==pk){
@@ -158,16 +191,6 @@ public class DistributorGradeServiceImpl implements DistributorGradeService {
         }
 
         return ObjectCloneUtils.convertList(eoList, DistributorGradeDTO.class, CloneDirection.OPPOSITE);
-    }
-
-    @Override
-    public boolean validateGradeCode(String garedCode) {
-
-        int count= distributorGradeDAO.getByCode(garedCode);
-        if(count>0){
-            throw new ApplicationException(ResultEnum.GRADE_NAME_DUPLICATED);
-        }
-        return Boolean.TRUE;
     }
 
     @Override
