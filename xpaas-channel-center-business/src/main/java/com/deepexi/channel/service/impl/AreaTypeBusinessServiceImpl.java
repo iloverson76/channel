@@ -355,8 +355,18 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
     @Override
     public boolean update(AreaTypeDTO dto) {
 
+        //校验
         Long id=dto.getId();
 
+        List<Long> idList=new ArrayList<>(1);
+
+        idList.add(id);
+
+        validateHasAreas(idList);
+
+        validateHasChildren(idList);
+
+        //查询原来的数据
         AreaTypeDTO self = areaTypeService.getAreaTypeById(id);
 
         Long origParentId=self.getParentId();
@@ -376,7 +386,6 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
 
             updateChildrenPath(id,origSelfPath,newSelfPath);
         }
-
         return areaTypeService.updateAreaTypeById(dto);
     }
 
@@ -485,7 +494,7 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
                 idList.forEach(id->{
 
                     if(id.equals(dto.getParentId())){
-                        throw new ApplicationException("已有下级关联,不能删除!");
+                        throw new ApplicationException("已有下级关联!请解除关联后再操作");
                     }
                 });
             });
@@ -505,7 +514,7 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
 
         if(CollectionUtil.isNotEmpty(areaList)){
 
-            throw new ApplicationException("分类已有区域挂载,不能删除!");
+            throw new ApplicationException("分类已有区域挂载!请解除关联后再操作");
         }
     }
 

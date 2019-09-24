@@ -184,7 +184,7 @@ public class DistributorSystemBusinessServiceImpl implements DistributorSystemBu
 
             if(CollectionUtil.isNotEmpty(gradeList)){
 
-                throw new ApplicationException("["+system.getGradeSystemName()+"]已挂载已等级,不能删除!请解除所有关联后再操作");
+                throw new ApplicationException("["+system.getGradeSystemName()+"]已挂载已等级!请解除所有关联后再操作");
             }
         });
     }
@@ -244,5 +244,22 @@ public class DistributorSystemBusinessServiceImpl implements DistributorSystemBu
                 }
             });
         }
+    }
+
+    @Override
+    public Boolean update(DistributorGradeSystemDTO dto) {
+
+        log.info("修改经销商体系");
+
+        Long id=dto.getId();
+
+        List<Long> idList=new ArrayList<>(1);
+
+        idList.add(id);
+
+        //有等级挂载的不能修改
+        validateHasGrades(idList);
+
+        return distributorGradeSystemService.update(dto);
     }
 }

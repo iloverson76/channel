@@ -84,7 +84,7 @@ public class DistributorGradeSystemController {
 
         DistributorGradeSystemDTO dto=vo.clone(DistributorGradeSystemDTO.class,CloneDirection.FORWARD);
 
-        return new Payload<>(distributorGradeSystemService.update(dto));
+        return new Payload<>(distributorSystemBusinessService.update(dto));
     }
 
     @DeleteMapping("/{id:[0-9,]+}")
