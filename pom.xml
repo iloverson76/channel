@@ -28,8 +28,8 @@
 		<module>xpaas-channel-center-distributor-api</module>
 		<module>xpaas-channel-center-store</module>
 		<module>xpaas-channel-center-store-api</module>
-		<module>xpass-channel-center-business</module>
-		<module>xpass-channel-center-business-api</module>
+		<module>xpaas-channel-center-business</module>
+		<module>xpaas-channel-center-business-api</module>
 	</modules>
 
 	<dependencies>

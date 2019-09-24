@@ -40,7 +40,7 @@
         </dependency>
         <dependency>
             <groupId>com.deepexi</groupId>
-            <artifactId>xpass-channel-center-business</artifactId>
+            <artifactId>xpaas-channel-center-business</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
