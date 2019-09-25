@@ -27,11 +27,11 @@ public class StoreHistoryServiceImpl implements StoreHistoryService {
 
     @Override
     public List<StoreHistoryDTO> findPage(StoreHistoryQuery query) {
-        if(query.getPage() != null && query.getPage() != -1){
+        if (query.getPage() != null && query.getPage() != -1) {
             PageHelper.startPage(query.getPage(), query.getSize());
         }
         List<StoreHistoryDO> storeHistoryDOS = storeHistoryDAO.findList(query);
-        if(CollectionUtil.isEmpty(storeHistoryDOS)){
+        if (CollectionUtil.isEmpty(storeHistoryDOS)) {
             return null;
         }
         return ObjectCloneUtils.convertList(storeHistoryDOS, StoreHistoryDTO.class, CloneDirection.OPPOSITE);
@@ -40,7 +40,7 @@ public class StoreHistoryServiceImpl implements StoreHistoryService {
     @Override
     public StoreHistoryDTO detail(Long pk) {
         StoreHistoryDO storeHistoryDO = storeHistoryDAO.getById(pk);
-        if(storeHistoryDO == null ){
+        if (storeHistoryDO == null) {
             return null;
         }
         return storeHistoryDO.clone(StoreHistoryDTO.class);
@@ -48,7 +48,7 @@ public class StoreHistoryServiceImpl implements StoreHistoryService {
 
     @Override
     public Boolean update(StoreHistoryDTO dto) {
-        if(dto == null){
+        if (dto == null) {
             return false;
         }
         StoreHistoryDO storeHistoryDO = dto.clone(StoreHistoryDO.class);
@@ -57,7 +57,7 @@ public class StoreHistoryServiceImpl implements StoreHistoryService {
 
     @Override
     public Long create(StoreHistoryDTO dto) {
-        if(dto == null){
+        if (dto == null) {
             return 0L;
         }
         StoreHistoryDO storeHistoryDO = dto.clone(StoreHistoryDO.class);
@@ -72,7 +72,7 @@ public class StoreHistoryServiceImpl implements StoreHistoryService {
 
     @Override
     public Boolean delete(List<Long> ids) {
-        if(CollectionUtil.isEmpty(ids)){
+        if (CollectionUtil.isEmpty(ids)) {
             return false;
         }
         return storeHistoryDAO.removeByIds(ids);
