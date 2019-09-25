@@ -4,6 +4,7 @@ import com.deepexi.channel.domain.StoreDistributorRelationDTO;
 import com.deepexi.channel.domain.StoreDistributorRelationQuery;
 
 import java.util.List;
+
 /**
  * @author mumu
  * @version 1.0
