@@ -1,6 +1,5 @@
 package com.deepexi.channel.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.deepexi.channel.dao.ChainDAO;
 import com.deepexi.channel.domain.ChainDO;
 import com.deepexi.channel.domain.ChainDTO;
@@ -19,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 /**
  * @author mumu
  * @version 1.0
@@ -38,11 +38,11 @@ public class ChainServiceImpl implements ChainService {
 
     @Override
     public List<ChainDTO> findPage(ChainQuery query) {
-        if (query.getPage() != null && query.getPage() != -1){
+        if (query.getPage() != null && query.getPage() != -1) {
             PageHelper.startPage(query.getPage(), query.getSize());
         }
-        List<ChainDO> chainDOS =  chainDAO.findList(query);
-        if(CollectionUtil.isEmpty(chainDOS)){
+        List<ChainDO> chainDOS = chainDAO.findList(query);
+        if (CollectionUtil.isEmpty(chainDOS)) {
             return null;
         }
         return ObjectCloneUtils.convertList(chainDOS, ChainDTO.class, CloneDirection.OPPOSITE);
@@ -51,10 +51,10 @@ public class ChainServiceImpl implements ChainService {
     @Override
     public ChainDTO detail(Long id) {
         ChainDO chainDO = chainDAO.getById(id);
-        if(chainDO == null){
+        if (chainDO == null) {
             return null;
         }
-        return chainDO.clone(ChainDTO.class,CloneDirection.OPPOSITE);
+        return chainDO.clone(ChainDTO.class, CloneDirection.OPPOSITE);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class ChainServiceImpl implements ChainService {
 
     @Override
     public Boolean updateBatch(List<ChainDTO> dtos) {
-        if(CollectionUtil.isEmpty(dtos)){
+        if (CollectionUtil.isEmpty(dtos)) {
             return false;
         }
         List<ChainDO> list = ObjectCloneUtils.convertList(dtos, ChainDO.class);
@@ -79,7 +79,7 @@ public class ChainServiceImpl implements ChainService {
     //
     @Override
     public Long create(ChainDTO dto) {
-        if(dto == null){
+        if (dto == null) {
             return 0L;
         }
         ChainDO chainDO = dto.clone(ChainDO.class);
@@ -91,7 +91,7 @@ public class ChainServiceImpl implements ChainService {
 
     @Override
     public Boolean createBatch(List<ChainDTO> dtos) {
-        if(CollectionUtil.isEmpty(dtos)){
+        if (CollectionUtil.isEmpty(dtos)) {
             return false;
         }
         List<ChainDO> list = ObjectCloneUtils.convertList(dtos, ChainDO.class);
@@ -110,23 +110,27 @@ public class ChainServiceImpl implements ChainService {
      * @Return: boolean
      * @Author: mumu
      * @Date: 2019/9/10
-    **/
+     **/
     @Override
     public boolean isCodeUnique(ChainDTO dto) {
+        log.info("校验编码是否重复，编码为：{}", dto.getChainCode());
         ChainQuery query = ChainQuery.builder().chainAccuracyCode(dto.getChainCode()).build();
-        return this.isUnique(query,dto);
+        return this.isUnique(query, dto);
     }
 
     /**
      * 判断名称是否重复
+     *
      * @param dto
      * @return
      */
     @Override
     public boolean isNameUnique(ChainDetailDTO dto) {
+        log.info("校验名字是否重复，名字为：{}", dto.getChainName());
         ChainQuery query = ChainQuery.builder().chainAccuracyName(dto.getChainName()).build();
-        return this.isUnique(query,dto);
+        return this.isUnique(query, dto);
     }
+
     /**
      * @MethodName: isUnique
      * @Description: 判断某个属性是否唯一，排除自身干扰
@@ -135,7 +139,7 @@ public class ChainServiceImpl implements ChainService {
      * @Author: mumu
      * @Date: 2019/9/10
      **/
-    private boolean isUnique(ChainQuery query, ChainDTO dto){
+    private boolean isUnique(ChainQuery query, ChainDTO dto) {
         List<ChainDO> list = chainDAO.findList(query);
         if (CollectionUtil.isNotEmpty(list)) {
             //不为空，还有可能是更新时自身的编码
@@ -151,17 +155,25 @@ public class ChainServiceImpl implements ChainService {
         return true;
     }
 
+    /**
+     * @MethodName: haveChildren
+     * @Description: 是否具有儿子节点，有返回true， 没有返回false
+     * @Param: [ids]
+     * @Return: boolean
+     * @Author: mumu
+     * @Date: 2019/9/25
+     **/
     @Override
     public boolean haveChildren(List<Long> ids) {
         //获得所有子节点
         List<ChainDO> chainDOS = chainDAO.findParentList(ids);
         //没有子节点
-        if(CollectionUtil.isEmpty(chainDOS)){
+        if (CollectionUtil.isEmpty(chainDOS)) {
             return false;
         }
         //判断子节点是否也被删除，如果子节点不被删除，则拒绝删除
-        for(ChainDO a : chainDOS){
-            if(!ids.contains(a.getId())){
+        for (ChainDO a : chainDOS) {
+            if (!ids.contains(a.getId())) {
                 return true;
             }
         }
@@ -176,19 +188,27 @@ public class ChainServiceImpl implements ChainService {
      * @Return: boolean
      * @Author: mumu
      * @Date: 2019/9/10
-    **/
+     **/
     @Override
     public boolean updatePathAndParentIdBatch(List<ChainDTO> chainDTOS) {
-        if(CollectionUtil.isEmpty(chainDTOS)){
+        if (CollectionUtil.isEmpty(chainDTOS)) {
             return false;
         }
         List<ChainDO> chainDOS = ObjectCloneUtils.convertList(chainDTOS, ChainDO.class);
         return chainDAO.updatePathAndParentIdBatch(chainDOS);
     }
 
+    /**
+     * @MethodName: updatePathAndParentId
+     * @Description: 更新连琐的path和parentId，修改或新增树节点用
+     * @Param: [chainDTO]
+     * @Return: java.lang.Boolean
+     * @Author: mumu
+     * @Date: 2019/9/25
+     **/
     @Override
     public Boolean updatePathAndParentId(ChainDTO chainDTO) {
-        if(chainDTO == null){
+        if (chainDTO == null) {
             return false;
         }
         ChainDO chainDO = chainDTO.clone(ChainDO.class);
@@ -202,11 +222,11 @@ public class ChainServiceImpl implements ChainService {
      * @Return: java.util.List<com.deepexi.channel.domain.chain.ChainDTO>
      * @Author: mumu
      * @Date: 2019/9/10
-    **/
+     **/
     @Override
     public List<ChainDTO> getChainTreeNode() {
         List<ChainDO> chainDOS = chainDAO.getChainTreeNode();
-        if(CollectionUtil.isEmpty(chainDOS)){
+        if (CollectionUtil.isEmpty(chainDOS)) {
             return null;
         }
         List<ChainDTO> chainDTOS = ObjectCloneUtils.convertList(chainDOS, ChainDTO.class, CloneDirection.OPPOSITE);
@@ -220,12 +240,12 @@ public class ChainServiceImpl implements ChainService {
      * @Return: java.lang.Boolean
      * @Author: mumu
      * @Date: 2019/9/10
-    **/
+     **/
     @Override
     public Boolean resetTree() {
         ChainDTO dto = new ChainDTO();
         dto.setAppId(appRuntimeEnv.getAppId());
         dto.setTenantId(appRuntimeEnv.getTenantId());
-        return chainDAO.resetTree(dto.clone(ChainDO.class)) > 0 ? true:false;
+        return chainDAO.resetTree(dto.clone(ChainDO.class)) > 0 ? true : false;
     }
 }
