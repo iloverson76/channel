@@ -8,6 +8,7 @@ import com.deepexi.channel.service.StoreChainService;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.pojo.ObjectCloneUtils;
 import com.github.pagehelper.PageHelper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ import java.util.List;
  * @version 1.0
  * @date 2019/9/6 11:20
  */
+@Slf4j
 @Service
 public class StoreChainServiceImpl implements StoreChainService {
 
@@ -52,16 +54,6 @@ public class StoreChainServiceImpl implements StoreChainService {
         return storeChainDAO.removeByStoreId(storeId);
     }
 
-//    @Override
-//    public List<StoreChainDTO> getStoreChainByStoreId(Long storeId) {
-//        List<StoreChainDO> storeChainDOS = storeChainDAO.getByStoreId(storeId);
-//        if(CollectionUtil.isEmpty(storeChainDOS)){
-//            return null;
-//        }
-//        List<StoreChainDTO> storeChainDTOS = ObjectCloneUtils.convertList(storeChainDOS, StoreChainDTO.class);
-//        return storeChainDTOS;
-//    }
-
     @Override
     public Boolean removeByStoreIds(List<Long> ids) {
         if(CollectionUtil.isEmpty(ids)){
@@ -79,13 +71,10 @@ public class StoreChainServiceImpl implements StoreChainService {
         return storeChainDAO.saveBatch(storeChainDOS);
     }
 
-//    @Override
-//    public List<StoreChainDTO> getStoreChainByChainIds(List<Long> ids) {
-//        List<StoreChainDO> list = storeChainDAO.getByChainIds(ids);
-//        if(CollectionUtil.isEmpty(list)){
-//            return null;
-//        }
-//        List<StoreChainDTO> result = ObjectCloneUtils.convertList(list, StoreChainDTO.class);
-//        return result;
-//    }
+    @Override
+    public Boolean removeByChainIds(List<Long> ids) {
+        log.info("根据连琐id列表删除门店连琐关联，ids={}",ids);
+        return storeChainDAO.removeByChainIds(ids);
+    }
+
 }

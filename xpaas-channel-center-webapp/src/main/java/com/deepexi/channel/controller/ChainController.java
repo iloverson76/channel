@@ -1,6 +1,7 @@
 package com.deepexi.channel.controller;
 
 import com.deepexi.channel.domain.*;
+import com.deepexi.channel.enums.ForceDeleteEnum;
 import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.service.ChainBusinessService;
 import com.deepexi.channel.service.ChainService;
@@ -95,11 +96,7 @@ public class ChainController {
     @ApiOperation(value = "根据id批量删除连锁", notes = "根据id删除连锁")
     public Payload<Boolean> delete(@PathVariable(value = "id") String id) {
         List<Long> ids = Arrays.stream(id.split(",")).map(Long::parseLong).collect(Collectors.toList());
-        if(chainBusinessService.deleteVerification(ids)){
-            return new Payload<>(chainBusinessService.deleteChain(ids));
-        }else{
-            return new Payload<>(false);
-        }
+        return new Payload<>(chainBusinessService.deleteChain(ids, ForceDeleteEnum.NO.getCode() ));
     }
 
     @PostMapping("/tree")

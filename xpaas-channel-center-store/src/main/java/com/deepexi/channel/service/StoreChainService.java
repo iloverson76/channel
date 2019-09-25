@@ -19,5 +19,7 @@ public interface StoreChainService {
 
     Boolean saveBatch(List<StoreChainDTO> storeChainDTOS);
 
+    Boolean removeByChainIds(List<Long> ids);
+
 //    List<StoreChainDTO> getStoreChainByChainIds(List<Long> ids);
 }

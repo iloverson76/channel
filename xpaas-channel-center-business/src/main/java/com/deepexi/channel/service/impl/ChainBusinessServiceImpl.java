@@ -1,6 +1,7 @@
 package com.deepexi.channel.service.impl;
 
 import com.deepexi.channel.domain.*;
+import com.deepexi.channel.enums.ForceDeleteEnum;
 import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.service.*;
 import com.deepexi.util.CollectionUtil;
@@ -8,6 +9,7 @@ import com.deepexi.util.StringUtil;
 import com.deepexi.util.extension.ApplicationException;
 import com.deepexi.util.pojo.CloneDirection;
 import com.deepexi.util.pojo.ObjectCloneUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +18,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class ChainBusinessServiceImpl implements ChainBusinessService {
 
     @Autowired
@@ -31,6 +34,14 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
     @Autowired
     StoreChainService storeChainService;
 
+    /**
+     * @MethodName: insertChain
+     * @Description: 新增连琐
+     * @Param: [dto]
+     * @Return: java.lang.Long
+     * @Author: mumu
+     * @Date: 2019/9/25
+    **/
     @Override
     @Transactional
     public Long insertChain(ChainDetailDTO dto) {
@@ -42,6 +53,14 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         return result;
     }
 
+    /**
+     * @MethodName: getChain
+     * @Description: 查询连琐详情，包含连琐账号信息与连琐类型信息
+     * @Param: [id]
+     * @Return: com.deepexi.channel.domain.ChainDetailDTO
+     * @Author: mumu
+     * @Date: 2019/9/25
+    **/
     @Override
     public ChainDetailDTO getChain(Long id) {
         if (id == null || id == 0L) {
@@ -49,15 +68,17 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         }
         //查询分类
         ChainDTO chainDTO = chainService.detail(id);
-        if(chainDTO == null){
+        log.info("连琐基本信息:{}", chainDTO);
+        if (chainDTO == null) {
             return null;
-        }
+        };
         //转换成详情类
         ChainDetailDTO dto = chainDTO.clone(ChainDetailDTO.class, CloneDirection.OPPOSITE);
 
         //查询连锁所属分类, 获取分类信息
         ChainTypeDTO chainTypeDTO = chainTypeService.detail(dto.getChainTypeId());
-        if(chainTypeDTO != null){
+        log.info("连琐类型信息：{}",chainTypeDTO);
+        if (chainTypeDTO != null) {
             dto.setChainTypeName(chainTypeDTO.getChainTypeName());
             dto.setLimitParent(chainTypeDTO.getLimitParent());
         }
@@ -66,7 +87,8 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         //查询所有账户id
         ChainBankQuery chainBankQuery = ChainBankQuery.builder().chainId(id).build();
         List<ChainBankDTO> chainBankDTOS = chainBankService.findList(chainBankQuery);
-        if(CollectionUtil.isEmpty(chainBankDTOS)){
+        log.info("连琐银行账号列表:{}", chainBankDTOS);
+        if (CollectionUtil.isEmpty(chainBankDTOS)) {
             return dto;
         }
         //查询所有账户详细信息
@@ -83,7 +105,7 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         //拼接账户跟银行信息
         Map<Long, List<BankDTO>> bankMap =
                 bankDTOS.stream().collect(Collectors.groupingBy(BankDTO::getId));
-        bankAccountDTOS.forEach(b ->{
+        bankAccountDTOS.forEach(b -> {
             List<BankDTO> bank = bankMap.get(b.getBankId());
             b.setBankName(bank.get(0).getBankName());
         });
@@ -94,28 +116,70 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         return dto;
     }
 
+    /**
+     * @MethodName: deleteChain
+     * @Description: 批量删除连琐，forceDelete为强制删除标记
+     * @Param: [ids, forceDelete]
+     * @Return: java.lang.Boolean
+     * @Author: mumu
+     * @Date: 2019/9/25
+    **/
     @Override
-    public Boolean deleteChain(List<Long> ids) {
-        //删除合法
-
-        return chainService.delete(ids);
+    public Boolean deleteChain(List<Long> ids, Integer forceDelete) {
+        if (CollectionUtil.isEmpty(ids)) {
+            return false;
+        }
+        //不强制删除，校验
+        if (forceDelete.equals(ForceDeleteEnum.NO.getCode())) {
+            log.info("不强制删除连琐，进行校验");
+            if (this.deleteVerification(ids)) {
+                //删除合法
+                log.info("校验通过，删除合法");
+                return chainService.delete(ids);
+            } else {
+                return false;
+            }
+        } else {
+            //删除门店连琐关联
+            Boolean storeChainDeleteResult = storeChainService.removeByChainIds(ids);
+            //删除连琐树所有子节点
+            Boolean chainTreeDelete = this.deleteTreeNodeByIds(ids);
+            //删除节点
+            return chainService.delete(ids);
+        }
     }
 
+    /**
+     * @MethodName: deleteVerification
+     * @Description: 连琐删除合法校验，合法 true ，不合法 false，在树中具有子节点以及被门店关联，删除都不合法
+     * @Param: [ids]
+     * @Return: java.lang.Boolean
+     * @Author: mumu
+     * @Date: 2019/9/25
+    **/
     @Override
     public Boolean deleteVerification(List<Long> ids) {
         //判断连锁删除是否合法,是否具有子节点
-        if(chainService.haveChildren(ids)){
+        if (chainService.haveChildren(ids)) {
             throw new ApplicationException(ResultEnum.HAVE_CHILDREN);
         }
         // 删除的连锁是否被其他门店所关联
         StoreChainQuery storeChainQuery = StoreChainQuery.builder().chainIds(ids).build();
         List<StoreChainDTO> storeChainDTOS = storeChainService.findList(storeChainQuery);
-        if(CollectionUtil.isNotEmpty(storeChainDTOS)){
+        if (CollectionUtil.isNotEmpty(storeChainDTOS)) {
             throw new ApplicationException(ResultEnum.HAVE_RELATION);
         }
         return true;
     }
 
+    /**
+     * @MethodName: updateChain
+     * @Description: 更新连琐以及连琐关联的账号信息
+     * @Param: [dto]
+     * @Return: java.lang.Boolean
+     * @Author: mumu
+     * @Date: 2019/9/25
+    **/
     @Override
     @Transactional
     public Boolean updateChain(ChainDetailDTO dto) {
@@ -127,14 +191,22 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         return chainService.update(dto);
     }
 
+    /**
+     * @MethodName: findPage
+     * @Description: 查询连琐列表，包括连琐类型信息与父节点信息
+     * @Param: [query]
+     * @Return: java.util.List<com.deepexi.channel.domain.ChainDetailDTO>
+     * @Author: mumu
+     * @Date: 2019/9/25
+    **/
     @Override
     public List<ChainDetailDTO> findPage(ChainQuery query) {
         //获得连锁基本信息
         List<ChainDTO> chainDTOS = chainService.findPage(query);
-        if(CollectionUtil.isEmpty(chainDTOS)){
+        if (CollectionUtil.isEmpty(chainDTOS)) {
             return null;
         }
-        List<ChainDetailDTO> chainDetailDTOS = ObjectCloneUtils.convertList(chainDTOS,ChainDetailDTO.class, CloneDirection.OPPOSITE);
+        List<ChainDetailDTO> chainDetailDTOS = ObjectCloneUtils.convertList(chainDTOS, ChainDetailDTO.class, CloneDirection.OPPOSITE);
         //获取连锁上一级信息
         // 得到所有连锁id
         List<Long> idList = chainDetailDTOS.stream().map(ChainDetailDTO::getId).collect(Collectors.toList());
@@ -144,7 +216,7 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         List<ChainDTO> parentChainDTOS = chainService.findPage(parentQuery);
         // id->连锁的map关系
         Map<Long, ChainDTO> parentCollect =
-                parentChainDTOS.stream().collect(Collectors.toMap(ChainDTO::getId, a -> a,(k1,k2)->k1));
+                parentChainDTOS.stream().collect(Collectors.toMap(ChainDTO::getId, a -> a, (k1, k2) -> k1));
         //获取连锁类型信息
         //得到所有连锁类型信息
         List<Long> chainTypeIds = chainDetailDTOS.stream().map(ChainDetailDTO::getChainTypeId).collect(Collectors.toList());
@@ -154,13 +226,13 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         List<ChainTypeDTO> chainTypeDTOS = chainTypeService.findPage(typeQuery);
         //chainTypeId->连锁类型的map关系
         Map<Long, ChainTypeDTO> chainTypeCollect =
-                chainTypeDTOS.stream().collect(Collectors.toMap(ChainTypeDTO::getId, a -> a,(k1,k2)->k1));
+                chainTypeDTOS.stream().collect(Collectors.toMap(ChainTypeDTO::getId, a -> a, (k1, k2) -> k1));
 
         //拼接父级节点信息、类型信息
         chainDetailDTOS.forEach(m -> {
             // 根据id对应设置父级名称字段
             ChainDTO dos = parentCollect.get(m.getParentId());
-            if ( dos == null) {
+            if (dos == null) {
                 m.setParentName("");
             } else {
                 m.setParentName(dos.getChainName() == null ? "" :
@@ -169,12 +241,12 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
             }
 
             //根据chainTypeId对应设置类型名称字段
-            ChainTypeDTO dos2 =  chainTypeCollect.get(m.getChainTypeId());
-            if(dos2 == null){
+            ChainTypeDTO dos2 = chainTypeCollect.get(m.getChainTypeId());
+            if (dos2 == null) {
                 m.setChainTypeName("");
                 m.setLimitParent(null);
             } else {
-                m.setChainTypeName(dos2.getChainTypeName() == null?"":dos2.getChainTypeName());
+                m.setChainTypeName(dos2.getChainTypeName() == null ? "" : dos2.getChainTypeName());
                 m.setLimitParent(dos2.getLimitParent());
             }
         });
@@ -189,17 +261,18 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
      * @Return: boolean
      * @Author: mumu
      * @Date: 2019/9/1
-    **/
-    private boolean saveChainAccountBrach(ChainDetailDTO dto){
+     **/
+    private boolean saveChainAccountBrach(ChainDetailDTO dto) {
         List<BankAccountDTO> bankAccountDTOS = dto.getBankAccountList();
-        if(CollectionUtil.isEmpty(bankAccountDTOS)){
+        log.info("批量保存连琐账号，先删除所有旧账号再关联新账号，保存的账号为：{}",dto.getBankAccountList());
+        if (CollectionUtil.isEmpty(bankAccountDTOS)) {
             return true;
         }
         bankAccountDTOS = bankAccountService.saveBatch(bankAccountDTOS);
 
         //批量新增账户、连锁关联信息
         List<ChainBankDTO> chainBankDTOS = new ArrayList<>();
-        for(BankAccountDTO bankAccount:bankAccountDTOS){
+        for (BankAccountDTO bankAccount : bankAccountDTOS) {
             ChainBankDTO chainBankDTO = ChainBankDTO.builder()
                     .bankAccountId(bankAccount.getId())
                     .chainId(dto.getId())
@@ -217,18 +290,18 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
      * @Return: java.util.List<com.deepexi.channel.domain.chain.ChainDTO>
      * @Author: mumu
      * @Date: 2019/9/5
-    **/
-    public List<ChainDTO> recursionTree(ChainTreeDTO dto){
+     **/
+    public List<ChainDTO> recursionTree(ChainTreeDTO dto) {
         //批量更新所有节点,根据id更新parent_id和path，返回所有孙子儿子节点
-        List<ChainDTO> saveChainDTOS =  new LinkedList<>();
+        List<ChainDTO> saveChainDTOS = new LinkedList<>();
         //遍历更新儿子节点
-        List<ChainTreeDTO>  childrenList = dto.getChildren();
-        if(CollectionUtil.isEmpty(childrenList)){
+        List<ChainTreeDTO> childrenList = dto.getChildren();
+        if (CollectionUtil.isEmpty(childrenList)) {
             return saveChainDTOS;
         }
-        childrenList.forEach(c ->{
+        childrenList.forEach(c -> {
             c.setParentId(dto.getId());
-            c.setPath(dto.getPath()+"/"+c.getId());
+            c.setPath(dto.getPath() + "/" + c.getId());
             saveChainDTOS.add(c);
             //递归，把儿子的所有节点的parent_id和path都更新
             saveChainDTOS.addAll(this.recursionTree(c));
@@ -243,10 +316,10 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
      * @Return: boolean
      * @Author: mumu
      * @Date: 2019/9/5
-    **/
+     **/
     @Override
     @Transactional
-    public Boolean saveTree(List<ChainTreeDTO> dtos){
+    public Boolean saveTree(List<ChainTreeDTO> dtos) {
         // 将所有的parentId设置为0，path设置为""
         Boolean reset = chainService.resetTree();
 
@@ -254,8 +327,8 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         List<ChainDTO> chainDTOS = new LinkedList<>();
 
         //遍历每一个根节点，获取需要更新的全部节点
-        dtos.forEach(dto ->{
-            dto.setPath("/"+dto.getId());
+        dtos.forEach(dto -> {
+            dto.setPath("/" + dto.getId());
             //根节点parentId都是0
             dto.setParentId(0L);
             //根节点加入更新列表
@@ -275,11 +348,11 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
      * @Return: java.util.List<com.deepexi.channel.domain.chain.ChainTreeDTO>
      * @Author: mumu
      * @Date: 2019/9/5
-    **/
+     **/
     @Override
     public List<ChainTreeDTO> getTree() {
         //树形结构结果，可能有多个树（多个根节点）
-        List<ChainTreeDTO> result  = new LinkedList<>();
+        List<ChainTreeDTO> result = new LinkedList<>();
 
         //获取所有树的节点，根据path获取三级
         //增量就显示三级
@@ -289,26 +362,26 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         query.setPage(-1);
         query.setPath("/");
         List<ChainDTO> chainDTOS = chainService.findPage(query);
-        if(CollectionUtil.isEmpty(chainDTOS)){
+        if (CollectionUtil.isEmpty(chainDTOS)) {
             return null;
         }
         List<ChainTreeDTO> chainTreeDTOS = ObjectCloneUtils.convertList(chainDTOS, ChainTreeDTO.class);
-        Map<Long,ChainTreeDTO> chainTreeMap = chainTreeDTOS.stream().collect(Collectors.toMap(ChainTreeDTO::getId,c->c));
+        Map<Long, ChainTreeDTO> chainTreeMap = chainTreeDTOS.stream().collect(Collectors.toMap(ChainTreeDTO::getId, c -> c));
 
         //查询得到所有连锁类型名称
         List<ChainTypeDTO> chainTypeDTOS = this.getChainTypeListByChainDTOS(chainDTOS);
-        Map<Long,ChainTypeDTO> chainTypeDTOMap = chainTypeDTOS.stream().collect(Collectors.toMap(ChainTypeDTO::getId,c->c));
+        Map<Long, ChainTypeDTO> chainTypeDTOMap = chainTypeDTOS.stream().collect(Collectors.toMap(ChainTypeDTO::getId, c -> c));
 
         //for循环拼接类型名称以及儿子节点
-        chainTreeDTOS.forEach(c ->{
+        chainTreeDTOS.forEach(c -> {
             c.setChainTypeName(chainTypeDTOMap.get(c.getChainTypeId()) == null ? "" : chainTypeDTOMap.get(c.getChainTypeId()).getChainTypeName());
             //parentId为0，那说明是根节点
-            if(c.getParentId() == 0L ){
+            if (c.getParentId() == 0L) {
                 result.add(c);
-            }else{
+            } else {
                 ChainTreeDTO parentDTO = chainTreeMap.get(c.getParentId());
-                if(parentDTO != null){
-                    if(parentDTO.getChildren() == null){
+                if (parentDTO != null) {
+                    if (parentDTO.getChildren() == null) {
                         parentDTO.setChildren(new LinkedList<>());
                     }
                     parentDTO.getChildren().add(c);
@@ -325,27 +398,27 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
      * @Return: java.util.List<com.deepexi.channel.domain.chain.ChainTreeDTO>
      * @Author: mumu
      * @Date: 2019/9/5
-    **/
+     **/
     @Override
     public List<ChainTreeDTO> getChildren(Long id) {
         ChainQuery query = new ChainQuery();
         query.setPage(-1);
         query.setParentId(id);
         //如果id为0，查询所有根节点, 根节点path不为空, 非根节点为空
-        if(id == 0L){
+        if (id == 0L) {
             query.setPath("/");
         }
         List<ChainDTO> chainDTOS = chainService.findPage(query);
-        if(CollectionUtil.isEmpty(chainDTOS)){
+        if (CollectionUtil.isEmpty(chainDTOS)) {
             return null;
         }
         List<ChainTreeDTO> chainTreeDTOS = ObjectCloneUtils.convertList(chainDTOS, ChainTreeDTO.class);
         //查询连锁类型列表
         List<ChainTypeDTO> chainTypeDTOS = this.getChainTypeListByChainDTOS(chainDTOS);
-        Map<Long,ChainTypeDTO> chainTypeDTOMap = chainTypeDTOS.stream().collect(Collectors.toMap(ChainTypeDTO::getId,c->c));
+        Map<Long, ChainTypeDTO> chainTypeDTOMap = chainTypeDTOS.stream().collect(Collectors.toMap(ChainTypeDTO::getId, c -> c));
         //拼接连锁类型到列表中
-        chainTreeDTOS.forEach(c->{
-           c.setChainTypeName(chainTypeDTOMap.get(c.getChainTypeName())==null?"":chainTypeDTOMap.get(c.getChainTypeId()).getChainTypeName());
+        chainTreeDTOS.forEach(c -> {
+            c.setChainTypeName(chainTypeDTOMap.get(c.getChainTypeName()) == null ? "" : chainTypeDTOMap.get(c.getChainTypeId()).getChainTypeName());
         });
         return chainTreeDTOS;
     }
@@ -357,8 +430,8 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
      * @Return: java.util.List<com.deepexi.channel.domain.chain.ChainTypeDTO>
      * @Author: mumu
      * @Date: 2019/9/9
-    **/
-    public List<ChainTypeDTO> getChainTypeListByChainDTOS(List<ChainDTO> chainDTOS){
+     **/
+    public List<ChainTypeDTO> getChainTypeListByChainDTOS(List<ChainDTO> chainDTOS) {
         List<Long> chainTypeIds = chainDTOS.stream().map(ChainDTO::getChainTypeId).collect(Collectors.toList());
         ChainTypeQuery query = ChainTypeQuery.builder().ids(chainTypeIds).build();
         query.setPage(-1);
@@ -366,54 +439,62 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         return chainTypeDTOS;
     }
 
+    /**
+     * @MethodName: updateTreeNode
+     * @Description: 更新树节点的path和parentId以及他的子节点的path
+     * @Param: [chainDTO]
+     * @Return: java.lang.Boolean
+     * @Author: mumu
+     * @Date: 2019/9/25
+    **/
     @Override
     @Transactional
     public Boolean updateTreeNode(ChainDTO chainDTO) {
-        if(chainDTO == null){
+        if (chainDTO == null) {
             return null;
         }
         //查询父节点,用于后面设置path
         ChainDTO rootParent = null;
         //如果设置为根节点
-        if(chainDTO.getParentId()==0){
+        if (chainDTO.getParentId() == 0) {
             /**设置rootParent节点id为0，path为""，方便后面代码拼接,无需再判断是否设置为根节点*/
             rootParent = new ChainDTO();
             rootParent.setId(0L);
             rootParent.setPath("");
-        }else{
+        } else {
             //有父级节点
-           rootParent = chainService.detail(chainDTO.getParentId());
+            rootParent = chainService.detail(chainDTO.getParentId());
         }
         //查询该节点的所有子节点
-        ChainQuery query = ChainQuery.builder().path("/"+chainDTO.getId()+"/").build();
+        ChainQuery query = ChainQuery.builder().path("/" + chainDTO.getId() + "/").build();
         query.setPage(-1);
         List<ChainDTO> children = chainService.findPage(query);
         //没有子节点,直接更新这个节点的path和parentId即可
-        if(CollectionUtil.isEmpty(children)){
+        if (CollectionUtil.isEmpty(children)) {
             //设置path
-            chainDTO.setPath(rootParent.getPath()+"/"+chainDTO.getId());
+            chainDTO.setPath(rootParent.getPath() + "/" + chainDTO.getId());
             return chainService.updatePathAndParentId(chainDTO);
         }
         //有子节点,需要更新子节点的所有path，拼接成树形结构, 加入本身节点到children中，后面更新path和parentId
         children.add(chainDTO);
         List<ChainTreeDTO> chainTreeDTOS = ObjectCloneUtils.convertList(children, ChainTreeDTO.class);
-        Map<Long,ChainTreeDTO> chainTreeMap = chainTreeDTOS.stream().collect(Collectors.toMap(ChainTreeDTO::getId,c->c));
+        Map<Long, ChainTreeDTO> chainTreeMap = chainTreeDTOS.stream().collect(Collectors.toMap(ChainTreeDTO::getId, c -> c));
 
         /**更新该节点的parentId、path以及所有儿子孙子节点parentId和path*/
         //遍历拼接成树形结构
         //根节点
         ChainTreeDTO root = null;
-        for(ChainTreeDTO c :chainTreeDTOS){
+        for (ChainTreeDTO c : chainTreeDTOS) {
             //寻找根节点
-            if( c.getId().equals(chainDTO.getId())){
+            if (c.getId().equals(chainDTO.getId())) {
                 //是否有父级已经在前面处理
                 root = c;
                 root.setParentId(rootParent.getId());
-                root.setPath(rootParent.getPath()+"/"+root.getId());
-            }else{
+                root.setPath(rootParent.getPath() + "/" + root.getId());
+            } else {
                 ChainTreeDTO parentDTO = chainTreeMap.get(c.getParentId());
-                if(parentDTO != null){
-                    if(parentDTO.getChildren() == null){
+                if (parentDTO != null) {
+                    if (parentDTO.getChildren() == null) {
                         parentDTO.setChildren(new LinkedList<>());
                     }
                     parentDTO.getChildren().add(c);
@@ -429,28 +510,85 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
         return chainService.updatePathAndParentIdBatch(recursionResult);
     }
 
+    /**
+     * @MethodName: deleteTreeNodeByIds
+     * @Description: 更具id列表删除树节点以及所有节点的儿子节点
+     * @Param: [ids]
+     * @Return: java.lang.Boolean
+     * @Author: mumu
+     * @Date: 2019/9/25
+    **/
     @Override
-    public Boolean deleteTreeNode(Long id) {
-        //获取所有子节点以及节点本身
-        ChainQuery query = ChainQuery.builder().path("/"+id).build();
+    public Boolean deleteTreeNodeByIds(List<Long> ids) {
+        log.info("批量删除ids中树中的节点包括子节点，ids={}", ids);
+        if (CollectionUtil.isEmpty(ids)) {
+            return false;
+        }
+        List<String> list = new LinkedList<>();
+        for (Long a : ids) {
+            list.add("/" + a);
+        }
+        ChainQuery query = ChainQuery.builder().pathList(list).build();
         List<ChainDTO> dtos = chainService.findPage(query);
         //批量设置path为空,parentId为0
-        for( ChainDTO c : dtos){
-            c.setPath("");
-            c.setParentId(0L);
-        }
+        this.removePathAndParentId(dtos);
         return chainService.updatePathAndParentIdBatch(dtos);
     }
 
+    /**
+     * @MethodName: deleteTreeNode
+     * @Description: 根据id删除树节点，并删除所有儿子节点
+     * @Param: [id]
+     * @Return: java.lang.Boolean
+     * @Author: mumu
+     * @Date: 2019/9/25
+    **/
+    @Override
+    public Boolean deleteTreeNode(Long id) {
+        //获取所有子节点以及节点本身
+        List<ChainDTO> dtos = new LinkedList<>();
+        ChainDTO chainDTO = chainService.detail(id);
+        if(null != dtos){
+            dtos.add(chainDTO);
+        }
+        ChainQuery query = ChainQuery.builder().path("/" + id + "/").build();
+        dtos.addAll(chainService.findPage(query));
+        //批量设置path为空,parentId为0
+        this.removePathAndParentId(dtos);
+        return chainService.updatePathAndParentIdBatch(dtos);
+    }
+
+    /**
+     * @MethodName: removePathAndParentId
+     * @Description: 批量设置path为空, parentId为0
+     * @Param: [dtos]
+     * @Return: void
+     * @Author: mumu
+     * @Date: 2019/9/25
+     **/
+    private void removePathAndParentId(List<ChainDTO> dtos) {
+        for (ChainDTO c : dtos) {
+            c.setPath("");
+            c.setParentId(0L);
+        }
+    }
+    /**
+     * @MethodName: addTreeNode
+     * @Description: 添加树节点，更新自身的path和parentId
+     * @Param: [chainDTO]
+     * @Return: java.lang.Boolean
+     * @Author: mumu
+     * @Date: 2019/9/25
+    **/
     @Override
     public Boolean addTreeNode(ChainDTO chainDTO) {
-        if(chainDTO.getParentId().equals( 0L)){
+        if (chainDTO.getParentId().equals(0L)) {
             //parentId为0，代表该节点设置为根节点
-            chainDTO.setPath("/"+chainDTO.getId());
-        }else{
+            chainDTO.setPath("/" + chainDTO.getId());
+        } else {
             //查询父节点
             ChainDTO parent = chainService.detail(chainDTO.getParentId());
-            chainDTO.setPath(parent.getPath()+"/"+chainDTO.getId());
+            chainDTO.setPath(parent.getPath() + "/" + chainDTO.getId());
         }
         return chainService.updatePathAndParentId(chainDTO);
     }
@@ -462,7 +600,7 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
      * @Return: java.util.List<com.deepexi.channel.domain.chain.ChainDTO>
      * @Author: mumu
      * @Date: 2019/9/12
-    **/
+     **/
     @Override
     public List<ChainDTO> getLegalParentChainByChainId(Long chainTypeId) {
         //查询已经在树中，类型为chainTypeId的节点
@@ -480,21 +618,21 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
      * @Return: boolean true合法 false 非法
      * @Author: mumu
      * @Date: 2019/9/18
-    **/
+     **/
     @Override
     public boolean isChangeChainTypeLegal(ChainDetailDTO dto) {
         ChainDTO historyDTO = chainService.detail(dto.getId());
-        if(historyDTO == null){
+        if (historyDTO == null) {
             return false;
         }
         //在树中，修改非法
-        if(StringUtil.isNotEmpty(historyDTO.getPath())){
+        if (StringUtil.isNotEmpty(historyDTO.getPath())) {
             return false;
         }
         //判断是否被门店关联，关联则修改非法
         StoreChainQuery storeChainQuery = StoreChainQuery.builder().chainId(dto.getId()).build();
         List<StoreChainDTO> storeChainDTOS = storeChainService.findList(storeChainQuery);
-        if(CollectionUtil.isNotEmpty(storeChainDTOS)){
+        if (CollectionUtil.isNotEmpty(storeChainDTOS)) {
             return false;
         }
         return true;

@@ -56,6 +56,8 @@ public class ChainQuery extends CommQuery {
 
     @ApiModelProperty(value = "连锁层级路径，连琐树用于判断是否是编辑还是新增，path为空就需要新增，不为空为编辑")
     private String path;
+    @ApiModelProperty(value = "连琐层级路径列表")
+    private List<String> pathList;
 
     @ApiModelProperty(value = "连锁类型id列表，前端不用理")
     private List<Long> chainTypeIdList;

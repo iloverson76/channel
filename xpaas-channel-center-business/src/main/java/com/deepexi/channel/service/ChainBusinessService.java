@@ -10,9 +10,10 @@ import java.util.List;
 
 public interface ChainBusinessService {
     Long insertChain(ChainDetailDTO chainDetailDTO);
+
     ChainDetailDTO getChain(Long id);
 
-    Boolean deleteChain(List<Long> ids);
+    Boolean deleteChain(List<Long> ids, Integer forceDelete);
 
     Boolean deleteVerification(List<Long> ids);
 
@@ -29,6 +30,7 @@ public interface ChainBusinessService {
 
     Boolean updateTreeNode(ChainDTO chainDTO);
 
+    Boolean deleteTreeNodeByIds(List<Long> ids);
 
     Boolean deleteTreeNode(Long id);
 
@@ -37,4 +39,5 @@ public interface ChainBusinessService {
     List<ChainDTO> getLegalParentChainByChainId(Long chainTypeId);
 
     boolean isChangeChainTypeLegal(ChainDetailDTO dto);
+
 }
