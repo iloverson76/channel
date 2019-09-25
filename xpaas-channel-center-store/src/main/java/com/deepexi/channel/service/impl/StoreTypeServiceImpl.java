@@ -26,11 +26,11 @@ public class StoreTypeServiceImpl implements StoreTypeService {
 
     @Override
     public List<StoreTypeDTO> findPage(StoreTypeQuery query) {
-        if(query.getPage() != null && query.getPage() != -1){
+        if (query.getPage() != null && query.getPage() != -1) {
             PageHelper.startPage(query.getPage(), query.getSize());
         }
-        List<StoreTypeDO> storeTypeDOS =  storeTypeDAO.findList(query);
-        if(CollectionUtil.isEmpty(storeTypeDOS)){
+        List<StoreTypeDO> storeTypeDOS = storeTypeDAO.findList(query);
+        if (CollectionUtil.isEmpty(storeTypeDOS)) {
             return null;
         }
         return ObjectCloneUtils.convertList(storeTypeDOS, StoreTypeDTO.class, CloneDirection.OPPOSITE);
@@ -39,7 +39,7 @@ public class StoreTypeServiceImpl implements StoreTypeService {
     @Override
     public StoreTypeDTO detail(Long pk) {
         StoreTypeDO storeTypeDO = storeTypeDAO.getById(pk);
-        if(storeTypeDO == null){
+        if (storeTypeDO == null) {
             return null;
         }
         return storeTypeDO.clone(StoreTypeDTO.class);
@@ -47,7 +47,7 @@ public class StoreTypeServiceImpl implements StoreTypeService {
 
     @Override
     public Boolean update(StoreTypeDTO dto) {
-        if(dto == null){
+        if (dto == null) {
             return false;
         }
         StoreTypeDO storeTypeDO = dto.clone(StoreTypeDO.class);
@@ -63,34 +63,18 @@ public class StoreTypeServiceImpl implements StoreTypeService {
 
     @Override
     public Boolean delete(List<Long> ids) {
-        if(CollectionUtil.isEmpty(ids)){
+        if (CollectionUtil.isEmpty(ids)) {
             return false;
         }
         return storeTypeDAO.removeByIds(ids);
     }
-
-    /**
-     * @MethodName: isCodeUnique
-     * @Description: 判断门店类型编码是否重复
-     * @Param: [code]
-     * @Return: boolean 编码唯一, true 编码唯一 ， false 编码不唯一
-     * @Author: mumu
-     * @Date: 2019/8/30
-     **/
+    
     @Override
-    public boolean isCodeUnique(StoreTypeDTO dto){
+    public boolean isCodeUnique(StoreTypeDTO dto) {
         StoreTypeQuery storeTypeQuery = StoreTypeQuery.builder().storeTypeAccuracyCode(dto.getStoreTypeCode()).build();
         return this.isUnique(storeTypeQuery, dto);
     }
 
-    /**
-     * @MethodName: isNameUnique
-     * @Description: 判断门店类型是否重复
-     * @Param: [code]
-     * @Return: boolean 名称唯一, true 名称唯一 ， false 名称不唯一
-     * @Author: mumu
-     * @Date: 2019/8/30
-     **/
     @Override
     public boolean isNameUnique(StoreTypeDTO dto) {
         StoreTypeQuery query = StoreTypeQuery.builder().storeTypeAccuracyName(dto.getStoreTypeName()).build();
@@ -105,14 +89,14 @@ public class StoreTypeServiceImpl implements StoreTypeService {
      * @Author: mumu
      * @Date: 2019/9/10
      **/
-    private boolean isUnique(StoreTypeQuery query, StoreTypeDTO dto){
+    private boolean isUnique(StoreTypeQuery query, StoreTypeDTO dto) {
         List<StoreTypeDO> list = storeTypeDAO.findList(query);
-        if(CollectionUtil.isNotEmpty(list)){
+        if (CollectionUtil.isNotEmpty(list)) {
             //不为空，还有可能是更新时自身的编码
-            if(list.size()==1){
+            if (list.size() == 1) {
                 StoreTypeDO StoreTypeDO = list.get(0);
                 //该code是本身，不属于重复
-                if(StoreTypeDO.getId().equals(dto.getId())){
+                if (StoreTypeDO.getId().equals(dto.getId())) {
                     return true;
                 }
             }
