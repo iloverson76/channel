@@ -1,6 +1,6 @@
 package com.deepexi.channel.service;
 
-import com.deepexi.channel.domain.AreaDTO;
+import com.deepexi.channel.domain.AreaBusiDTO;
 import com.deepexi.channel.domain.AreaTypeDTO;
 import com.deepexi.channel.domain.AreaTypeQuery;
 
@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface AreaTypeBusinessService {
 
-   List<AreaDTO> listLinkedAreas(long pk);
+   List<AreaBusiDTO> listLinkedAreas(Long pk);
 
    List<AreaTypeDTO> findPage(AreaTypeQuery query);
 

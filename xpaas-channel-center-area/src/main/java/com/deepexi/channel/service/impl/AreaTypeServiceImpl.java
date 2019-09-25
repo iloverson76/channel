@@ -145,17 +145,6 @@ public class AreaTypeServiceImpl implements AreaTypeService {
         return ObjectCloneUtils.convertList(eoList,AreaTypeDTO.class,CloneDirection.OPPOSITE);
     }
 
-    private QueryWrapper<AreaTypeDO> getQueryWrapper(Long id){
-
-        QueryWrapper<AreaTypeDO> wp=new QueryWrapper<>();
-
-        if(null!=id){
-            wp.eq("id",id);
-        }
-
-        return wp;
-    }
-
     @Override
     public List<AreaTypeDTO> findByAreaIdNotInLinkIdAll(List<Long> linkIdList) {
         List<AreaTypeDO> list = areaTypeDAO.findByAreaIdNotInLinkIdAll(linkIdList);

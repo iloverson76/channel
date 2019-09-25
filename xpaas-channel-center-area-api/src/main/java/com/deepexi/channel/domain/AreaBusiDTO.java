@@ -18,13 +18,15 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AreaDTO extends AbstractObject {
+public class AreaBusiDTO extends AbstractObject {
 
     private static final long serialVersionUID = 1L;
 
     private Long id;
 
     private Integer root;
+
+    private AreaTypeDTO areaType;
 
     /**
      * 父节点ID

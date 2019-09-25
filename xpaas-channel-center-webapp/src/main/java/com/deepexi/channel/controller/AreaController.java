@@ -37,7 +37,7 @@ public class AreaController {
     @ApiOperation(value = "创建区域")
     public Payload<Long> create(@RequestBody AreaBusiVO vo) {
 
-        Long result= areaBusinessService.create(vo.clone(AreaDTO.class, CloneDirection.FORWARD));
+        Long result= areaBusinessService.create(vo.clone(AreaBusiDTO.class, CloneDirection.FORWARD));
 
         return new Payload<>(result);
     }
@@ -47,7 +47,7 @@ public class AreaController {
     public Payload<AreaBusiVO> detail(@PathVariable(value = "id", required = true) Long  id,
                                    @PathVariable(value = "areaTypeId", required = true)Long areaTypeId) {
 
-        AreaDTO dto=areaBusinessService.detail(id,areaTypeId);
+        AreaBusiDTO dto=areaBusinessService.detail(id,areaTypeId);
 
         AreaBusiVO vo=null;
 
@@ -64,7 +64,7 @@ public class AreaController {
 
         vo.setId(pk);
 
-        areaBusinessService.update(vo.clone(AreaDTO.class,CloneDirection.FORWARD));
+        areaBusinessService.update(vo.clone(AreaBusiDTO.class,CloneDirection.FORWARD));
 
         return new Payload<>(Boolean.TRUE);
     }
@@ -82,7 +82,7 @@ public class AreaController {
     @ApiOperation("查询区域列表-分页查询")
     public Payload<PageBean<AreaBusiVO>> listAreaPage(@ApiParam(name = "query", required = true) AreaQuery query) {
 
-        List<AreaDTO> dtoList = areaBusinessService.findPage(query);
+        List<AreaBusiDTO> dtoList = areaBusinessService.findPage(query);
 
         List<AreaBusiVO> voList=new ArrayList<>();
 
@@ -136,11 +136,11 @@ public class AreaController {
 
     @GetMapping("/linkedAreas/{areaTypeId}")
     @ApiOperation("根据区域类型ID查找挂载的所有区域")
-    public Payload<PageBean<AreaDTO>> listLinkedAreasByType(@PathVariable(name = "areaTypeId", required = true) Long areaTypeId) {
+    public Payload<PageBean<AreaBusiDTO>> listLinkedAreasByType(@PathVariable(name = "areaTypeId", required = true) Long areaTypeId) {
 
-        List<AreaDTO> dtoList = areaBusinessService.listLinkedAreasByType(areaTypeId);
+        List<AreaBusiDTO> dtoList = areaBusinessService.listLinkedAreasByType(areaTypeId);
 
-        return new Payload<>(new PageBean<>(ObjectCloneUtils.convertList(dtoList,AreaDTO.class,CloneDirection.FORWARD)));
+        return new Payload<>(new PageBean<>(ObjectCloneUtils.convertList(dtoList,AreaBusiDTO.class,CloneDirection.FORWARD)));
     }
 
     @GetMapping("/parentAreaType/{areaId}")

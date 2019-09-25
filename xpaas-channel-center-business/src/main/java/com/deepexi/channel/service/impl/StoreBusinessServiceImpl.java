@@ -131,8 +131,8 @@ public class StoreBusinessServiceImpl implements StoreBusinessService {
         List<ChainDetailDTO> chainDTOS = storeChainBusinessService.getStoreChainByStoreId(pk);
         result.setChainDTOS(chainDTOS);
         //查询门店区域关联
-        List<AreaDTO> areaDTOS = storeAreaBusinessService.getStoreAreaByStoreId(pk);
-        result.setAreaDTOS(areaDTOS);
+        List<AreaBusiDTO> areaBusiDTOS = storeAreaBusinessService.getStoreAreaByStoreId(pk);
+        result.setAreaDTOS(areaBusiDTOS);
         //查询门店经销商关联
         List<StoreDistributorDTO> storeDistributorRelationDTOS = storeDistributorBusinessService.getStoreDistributorByStoreId(pk);
         result.setStoreDistributorDTOS(storeDistributorRelationDTOS);

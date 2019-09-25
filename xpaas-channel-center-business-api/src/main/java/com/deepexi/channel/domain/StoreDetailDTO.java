@@ -22,7 +22,7 @@ public class StoreDetailDTO extends StoreDTO {
 
     private StoreGradeDTO storeGradeDTO;
 
-    private List<AreaDTO> areaDTOS;
+    private List<AreaBusiDTO> areaDTOS;
 
     private List<ChainDetailDTO> chainDTOS;
 

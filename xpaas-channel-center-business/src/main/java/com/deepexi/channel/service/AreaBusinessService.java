@@ -1,10 +1,7 @@
 package com.deepexi.channel.service;
 
 
-import com.deepexi.channel.domain.AreaDTO;
-import com.deepexi.channel.domain.AreaQuery;
-import com.deepexi.channel.domain.AreaTreeDTO;
-import com.deepexi.channel.domain.AreaTreeQuery;
+import com.deepexi.channel.domain.*;
 
 import java.util.List;
 
@@ -13,17 +10,17 @@ import java.util.List;
  */
 public interface AreaBusinessService {
 
-   long create(AreaDTO dto);
+   long create(AreaBusiDTO dto);
 
-   List<AreaDTO> findPage(AreaQuery query);
+   List<AreaBusiDTO> findPage(AreaQuery query);
 
-    AreaDTO detail(Long pk, Long areaTypeId);
+    AreaBusiDTO detail(Long pk, Long areaTypeId);
 
     List<AreaTreeDTO> buildAreaTree(AreaTreeQuery query);
 
     List<AreaTreeDTO> listChildrenTree(Long areaId);
 
-    List<AreaDTO> listLinkedAreasByType(Long areaTypeId);
+    List<AreaBusiDTO> listLinkedAreasByType(Long areaTypeId);
 
     boolean deleteBatchByIds(List<Long> ids,Integer forDelete);
 
@@ -47,7 +44,7 @@ public interface AreaBusinessService {
 
     boolean deleteStores(List<Long> idList);
 
-    boolean update(AreaDTO dto);
+    boolean update(AreaBusiDTO dto);
 
     boolean updateToRootNode(Long areaId);
 

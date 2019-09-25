@@ -96,7 +96,7 @@ public class StoreController {
             storeDetailDTO.setChainDTOS(chainDTOS);
         }
         if (CollectionUtil.isNotEmpty(vo.getAreaBusiVOS())) {
-            List<AreaDTO> areaDTOS = ObjectCloneUtils.convertList(vo.getAreaBusiVOS(), AreaDTO.class);
+            List<AreaBusiDTO> areaDTOS = ObjectCloneUtils.convertList(vo.getAreaBusiVOS(), AreaBusiDTO.class);
             storeDetailDTO.setAreaDTOS(areaDTOS);
         }
         if(CollectionUtil.isNotEmpty(vo.getStoreDistributorVOS())){
@@ -127,7 +127,7 @@ public class StoreController {
             storeDetailDTO.setChainDTOS(chainDTOS);
         }
         if (CollectionUtil.isNotEmpty(vo.getAreaBusiVOS())) {
-            List<AreaDTO> areaDTOS = ObjectCloneUtils.convertList(vo.getAreaBusiVOS(), AreaDTO.class);
+            List<AreaBusiDTO> areaDTOS = ObjectCloneUtils.convertList(vo.getAreaBusiVOS(), AreaBusiDTO.class);
             storeDetailDTO.setAreaDTOS(areaDTOS);
         }
         if(CollectionUtil.isNotEmpty(vo.getStoreDistributorVOS())){

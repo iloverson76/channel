@@ -135,7 +135,7 @@ public class AreaTypeController {
     @ApiOperation("层级元素列表")
     public Payload<PageBean<AreaBusiVO>> listTypeAreas(@PathVariable Long id) {
 
-        List<AreaDTO> dtoList = areaTypeBusinessService.listLinkedAreas(id);
+        List<AreaBusiDTO> dtoList = areaTypeBusinessService.listLinkedAreas(id);
 
         List<AreaBusiVO> voList=new ArrayList<>();
 

@@ -1,10 +1,6 @@
 package com.deepexi.channel.service.impl;
 
-import com.deepexi.channel.domain.AreaDTO;
-import com.deepexi.channel.domain.AreaQuery;
-import com.deepexi.channel.domain.StoreAreaDTO;
-import com.deepexi.channel.domain.StoreAreaQuery;
-import com.deepexi.channel.domain.StoreDetailDTO;
+import com.deepexi.channel.domain.*;
 import com.deepexi.channel.service.AreaBusinessService;
 import com.deepexi.channel.service.AreaService;
 import com.deepexi.channel.service.StoreAreaBusinessService;
@@ -34,7 +30,7 @@ public class StoreAreaBusinessServiceImpl implements StoreAreaBusinessService {
 
     @Override
     public Boolean saveStoreAreaRelation(StoreDetailDTO dto) {
-        List<AreaDTO> areaDTOS = dto.getAreaDTOS();
+        List<AreaBusiDTO> areaDTOS = dto.getAreaDTOS();
         List<StoreAreaDTO> list = new LinkedList<>();
         areaDTOS.forEach(a->{
             StoreAreaDTO storeAreaDTO = StoreAreaDTO.builder().storeId(dto.getId()).areaId(a.getId()).build();
@@ -57,7 +53,7 @@ public class StoreAreaBusinessServiceImpl implements StoreAreaBusinessService {
     }
 
     @Override
-    public List<AreaDTO> getStoreAreaByStoreId(Long storeId) {
+    public List<AreaBusiDTO> getStoreAreaByStoreId(Long storeId) {
         //获取关联信息
         StoreAreaQuery storeAreaQuery = StoreAreaQuery.builder().storeId(storeId).build();
         List<StoreAreaDTO> storeAreaDTOS = storeAreaService.findList(storeAreaQuery);
@@ -68,10 +64,10 @@ public class StoreAreaBusinessServiceImpl implements StoreAreaBusinessService {
         //获取区域
         AreaQuery areaQuery = new AreaQuery();
         areaQuery.setIds(ids);
-        List<AreaDTO> areaDTOList = areaBusinessService.findPage(areaQuery);
-        if(CollectionUtil.isEmpty(areaDTOList)){
+        List<AreaBusiDTO> areaBusiDTOList = areaBusinessService.findPage(areaQuery);
+        if(CollectionUtil.isEmpty(areaBusiDTOList)){
             return null;
         }
-        return areaDTOList;
+        return areaBusiDTOList;
     }
 }

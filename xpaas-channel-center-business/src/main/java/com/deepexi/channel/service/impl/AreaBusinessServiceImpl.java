@@ -36,15 +36,15 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
     @Transient
     @Override
-    public long create(AreaDTO dto) {
+    public long create(AreaBusiDTO busi) {
 
         log.info("创建区域");
 
-        validateAreaCode(dto.getAreaCode());
+        validateAreaCode(busi.getAreaCode());
 
-        validateAreaName(dto.getAreaName());
+        validateAreaName(busi.getAreaName());
 
-        Long result= areaService.create(dto);
+        Long result= areaService.create(busi.clone(AreaDTO.class,CloneDirection.FORWARD));
 
         return result;
     }
@@ -107,7 +107,7 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
     }
 
     @Override
-    public List<AreaDTO> findPage(AreaQuery query) {
+    public List<AreaBusiDTO> findPage(AreaQuery query) {
 
         log.info("区域列表分页查询");
 
@@ -115,7 +115,15 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
             return Collections.emptyList();
         }
 
-         List<AreaDTO> areaDTOList=areaService.findPage(query);
+        //分页查询
+        List<AreaDTO> areaDTOList=areaService.findPage(query);
+
+        if(CollectionUtils.isEmpty(areaDTOList)){
+            return Collections.emptyList();
+        }
+
+        //转业务层DTO
+        List<AreaBusiDTO> areaBusiDTOList=ObjectCloneUtils.convertList(areaDTOList,AreaBusiDTO.class,CloneDirection.FORWARD);
 
         //区域类型信息
         List<Long> areaTyeIdList=areaDTOList.stream().map(AreaDTO::getAreaTypeId).collect(Collectors.toList());
@@ -129,7 +137,7 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
                 Map<Long, List<AreaTypeDTO>> areaTypeMap =
                         AreaTypeList.stream().collect(Collectors.groupingBy(AreaTypeDTO::getId));
 
-                areaDTOList.forEach(area->{
+                areaBusiDTOList.forEach(area->{
 
                     List<AreaTypeDTO> areaTypes=areaTypeMap.get(area.getAreaTypeId());
 
@@ -143,35 +151,43 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
                 });
             }
         }
-        return areaDTOList;
+        return areaBusiDTOList;
     }
 
     @Override
-    public AreaDTO detail(Long pk, Long areaTypeId) {
+    public AreaBusiDTO detail(Long pk, Long areaTypeId) {
 
         log.info("区域详情");
 
         AreaDTO areaDTO=areaService.getAreaById(pk);
 
         if(null==areaDTO){
-            return new AreaDTO();
+            return new AreaBusiDTO();
         }
+
+        AreaBusiDTO areaBusiDTO=areaDTO.clone(AreaBusiDTO.class,CloneDirection.FORWARD);
 
         AreaTypeDTO typeDTO=areaTypeService.getAreaTypeById(areaTypeId);
 
         if(null!=typeDTO){
-            areaDTO.setAreaType(typeDTO);
+            areaBusiDTO.setAreaType(typeDTO);
         }
 
-        return areaDTO;
+        return areaBusiDTO;
     }
 
     @Override
-    public List<AreaDTO> listLinkedAreasByType(Long areaTypeId) {
+    public List<AreaBusiDTO> listLinkedAreasByType(Long areaTypeId) {
 
         log.info("根据区域类型查找所有的区域");
 
-        return areaService.listLinkedAreasByType(areaTypeId);
+        List<AreaDTO> areaDTOList = areaService.listLinkedAreasByType(areaTypeId);
+
+        if(CollectionUtils.isEmpty(areaDTOList)){
+            return Collections.emptyList();
+        }
+
+        return ObjectCloneUtils.convertList(areaDTOList, AreaBusiDTO.class, CloneDirection.FORWARD);
     }
 
     @Override
@@ -179,13 +195,19 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
         log.info("构建节点树");
 
-        List<AreaDTO> areaDTOList=areaService.listChildrenAreas(areaId);
+        List<AreaDTO> areaList=areaService.listChildrenAreas(areaId);
+
+        if(CollectionUtils.isEmpty(areaList)){
+            return Collections.emptyList();
+        }
+
+        List<AreaBusiDTO> busiList=ObjectCloneUtils.convertList(areaList,AreaBusiDTO.class,CloneDirection.FORWARD);
 
         //区域类型
-        setAreaTypeInfo(areaDTOList);
+        setAreaTypeInfo(busiList);
 
         //树构建
-        return treeNode(areaDTOList,areaId);
+        return treeNode(busiList,areaId);
     }
 
     @Override
@@ -194,21 +216,27 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
         log.info("区域树构建");
 
         //默认展开三级
-        List<AreaDTO> areaDTOList=areaService.findTree();
+        List<AreaDTO> areaList=areaService.findTree();
+
+        if(CollectionUtils.isEmpty(areaList)){
+            return Collections.emptyList();
+        }
+
+        List<AreaBusiDTO> busiList=ObjectCloneUtils.convertList(areaList,AreaBusiDTO.class,CloneDirection.FORWARD);
 
         //区域类型
-        setAreaTypeInfo(areaDTOList);
+        setAreaTypeInfo(busiList);
 
         //树构建
-        return treeAll(areaDTOList);
+        return treeAll(busiList);
     }
 
     //区域类型设置
-    private List<AreaDTO> setAreaTypeInfo( List<AreaDTO> areaDTOList){
+    private List<AreaBusiDTO> setAreaTypeInfo( List<AreaBusiDTO> busiList){
 
         log.info("设置区域类型");
 
-        if(CollectionUtils.isEmpty(areaDTOList)){
+        if(CollectionUtils.isEmpty(busiList)){
 
             return Collections.emptyList();
         }
@@ -219,30 +247,29 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
             Map<Long,AreaTypeDTO> typeDTOMap=typeDTOS.stream().collect(Collectors.toMap(AreaTypeDTO::getId,c->c));
 
-            areaDTOList.forEach(area->{
+            busiList.forEach(area->{
 
                 AreaTypeDTO typeDTO = typeDTOMap.get(area.getAreaTypeId());
 
-                if(typeDTO!=null){
+                if(null!=typeDTO){
 
                     area.setAreaType(typeDTO);
                 }
             });
         }
-
-        return areaDTOList;
+        return busiList;
     }
 
-    private List<AreaTreeDTO> treeAll(List<AreaDTO> areaDTOList){
+    private List<AreaTreeDTO> treeAll(List<AreaBusiDTO> busiList){
 
         log.info("从根节点构建完整树");
 
-        if(CollectionUtils.isEmpty(areaDTOList)){
+        if(CollectionUtils.isEmpty(busiList)){
 
             return Collections.emptyList();
         }
 
-        List<AreaTreeDTO> list = ObjectCloneUtils.convertList(areaDTOList, AreaTreeDTO.class, CloneDirection.OPPOSITE);
+        List<AreaTreeDTO> list = ObjectCloneUtils.convertList(busiList, AreaTreeDTO.class, CloneDirection.OPPOSITE);
 
         List<AreaTreeDTO> tree = new ArrayList<>();
 
@@ -274,16 +301,16 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
     }
 
     //从某一节点开始构建下级数
-    private List<AreaTreeDTO> treeNode(List<AreaDTO> areaDTOList,Long areaId){
+    private List<AreaTreeDTO> treeNode(List<AreaBusiDTO> areaBusiDTOList,Long areaId){
 
         log.info("开始构建节点树");
 
-        if(CollectionUtils.isEmpty(areaDTOList)){
+        if(CollectionUtils.isEmpty(areaBusiDTOList)){
 
             return Collections.emptyList();
         }
 
-        List<AreaTreeDTO> list = ObjectCloneUtils.convertList(areaDTOList, AreaTreeDTO.class, CloneDirection.OPPOSITE);
+        List<AreaTreeDTO> list = ObjectCloneUtils.convertList(areaBusiDTOList, AreaTreeDTO.class, CloneDirection.OPPOSITE);
 
         List<AreaTreeDTO> tree = new ArrayList<>();
 
@@ -349,7 +376,6 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
                 treeDeleteNode(id);
             });
         }
-
         return areaService.deleteBatch(ids);
     }
 
@@ -362,7 +388,7 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
         if(CollectionUtils.isNotEmpty(children)){
 
-            throw new ApplicationException("已有子区域关联!请解除关联后再操作");
+            throw new ApplicationException("已有子区域挂载!请解除关联后再操作");
         }
     }
 
@@ -470,7 +496,6 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
                 }
             });
         }
-
         log.info("不在区域树上");
     }
 
@@ -535,22 +560,30 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
     }
 
     @Override
-    public boolean update(AreaDTO dto) {
+    public boolean update(AreaBusiDTO busi) {
 
         log.info("更新区域");
 
-        Long id=dto.getId();
+        if(null==busi){
+            return false;
+        }
+
+        AreaDTO dto = busi.clone(AreaDTO.class, CloneDirection.FORWARD);
+
+        Long id=busi.getId();
 
         List<Long> ids=new ArrayList<>(1);
 
         ids.add(id);
 
+        //校验关联
         validateHasChildren(ids);
 
         validateHasStores(ids);
 
         validateHasDistributors(ids);
 
+        //更新
         areaService.update(dto);
 
         return Boolean.TRUE;

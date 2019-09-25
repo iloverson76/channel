@@ -133,7 +133,7 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
     }
 
     @Override
-    public List<AreaDTO> listLinkedAreas(long pk) {
+    public List<AreaBusiDTO> listLinkedAreas(Long pk) {
 
         //pk=0选全部
         if(pk<0){
@@ -155,21 +155,24 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
             return Collections.emptyList();
         }
 
+        List<AreaBusiDTO> areaBusiList=
+                ObjectCloneUtils.convertList(areaDTOList,AreaBusiDTO.class,CloneDirection.FORWARD);
+
         Map<Long, List<AreaTypeDTO>> typeListMap =
                 typeList.stream().collect(Collectors.groupingBy(AreaTypeDTO::getId));
 
          //过滤
         if(pk>0){
-            List<AreaDTO> filterAreaDTOList=new ArrayList<>();
-            areaDTOList.forEach(orig->{
+            List<AreaBusiDTO> filterAreaDTOList=new ArrayList<>();
+            areaBusiList.forEach(orig->{
                 if(pk==orig.getAreaTypeId()){
                     filterAreaDTOList.add(orig);
                 }
             });
-            areaDTOList=filterAreaDTOList;
+            areaBusiList=filterAreaDTOList;
         }
 
-        areaDTOList.forEach(filter->{
+        areaBusiList.forEach(filter->{
 
             long typeId=filter.getAreaTypeId();
 
@@ -181,7 +184,7 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
             }
         });
 
-        return areaDTOList;
+        return areaBusiList;
     }
 
     @Override
