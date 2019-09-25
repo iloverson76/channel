@@ -13,7 +13,7 @@ import java.util.List;
 public interface StoreGradeRelationService {
 
     /**
-     * 根据条件查询门店等级关联关系列表
+     * 根据条件分页查询门店等级关联关系列表
      *
      * @param query 查询条件
      * @return

@@ -16,6 +16,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * @author mumu
+ * @version 1.0
+ * @date 2019/9/6 17:39
+ */
 @Service
 public class StoreGradeServiceImpl implements StoreGradeService {
 
@@ -26,20 +31,20 @@ public class StoreGradeServiceImpl implements StoreGradeService {
 
     @Override
     public List<StoreGradeDTO> findPage(StoreGradeQuery query) {
-        if(query.getPage() != null && query.getPage() != -1){
+        if (query.getPage() != null && query.getPage() != -1) {
             PageHelper.startPage(query.getPage(), query.getSize());
         }
-        List<StoreGradeDO> storeGradeDOS =  storeGradeDAO.findList(query);
-        if(CollectionUtil.isEmpty(storeGradeDOS)){
+        List<StoreGradeDO> storeGradeDOS = storeGradeDAO.findList(query);
+        if (CollectionUtil.isEmpty(storeGradeDOS)) {
             return null;
         }
         return ObjectCloneUtils.convertList(storeGradeDOS, StoreGradeDTO.class, CloneDirection.OPPOSITE);
     }
 
     @Override
-    public StoreGradeDTO detail(Long  pk) {
+    public StoreGradeDTO detail(Long pk) {
         StoreGradeDO storeGradeDO = storeGradeDAO.getById(pk);
-        if(storeGradeDO == null ){
+        if (storeGradeDO == null) {
             return null;
         }
         return storeGradeDO.clone(StoreGradeDTO.class);
@@ -47,12 +52,13 @@ public class StoreGradeServiceImpl implements StoreGradeService {
 
     @Override
     public Boolean update(StoreGradeDTO dto) {
-        if(dto == null){
+        if (dto == null) {
             return false;
         }
         StoreGradeDO storeGradeDO = dto.clone(StoreGradeDO.class);
         return storeGradeDAO.updateById(storeGradeDO);
     }
+
     @Override
     public Long create(StoreGradeDTO dto) {
         StoreGradeDO storeGradeDO = dto.clone(StoreGradeDO.class);
@@ -62,37 +68,20 @@ public class StoreGradeServiceImpl implements StoreGradeService {
 
     @Override
     public Boolean delete(List<Long> ids) {
-        if(CollectionUtil.isEmpty(ids)){
+        if (CollectionUtil.isEmpty(ids)) {
             return false;
         }
         return storeGradeDAO.removeByIds(ids);
     }
 
-
-    /**
-     * @MethodName: isCodeUnique
-     * @Description: 判断门店等级编码是否重复
-     * @Param: [code]
-     * @Return: boolean 编码唯一, true 编码唯一 ， false 编码不唯一
-     * @Author: mumu
-     * @Date: 2019/8/30
-     **/
     @Override
-    public boolean isCodeUnique(StoreGradeDTO dto){
+    public boolean isCodeUnique(StoreGradeDTO dto) {
         StoreGradeQuery query = StoreGradeQuery.builder()
                 .storeGradeAccuracyCode(dto.getStoreGradeCode())
                 .build();
         return this.isUnique(query, dto);
     }
 
-    /**
-     * @MethodName: isNameUnique
-     * @Description: 名字是否唯一校验
-     * @Param: [storeGradeDTO]
-     * @Return: boolean
-     * @Author: mumu
-     * @Date: 2019/9/11
-    **/
     @Override
     public boolean isNameUnique(StoreGradeDTO storeGradeDTO) {
         StoreGradeQuery query = StoreGradeQuery.builder()
@@ -101,14 +90,14 @@ public class StoreGradeServiceImpl implements StoreGradeService {
         return this.isUnique(query, storeGradeDTO);
     }
 
-    private boolean isUnique(StoreGradeQuery query, StoreGradeDTO dto){
+    private boolean isUnique(StoreGradeQuery query, StoreGradeDTO dto) {
         List<StoreGradeDO> list = storeGradeDAO.findList(query);
-        if(CollectionUtil.isNotEmpty(list)){
+        if (CollectionUtil.isNotEmpty(list)) {
             //不为空，还有可能是更新时自身的编码
-            if(list.size()==1){
+            if (list.size() == 1) {
                 StoreGradeDO StoreGradeDO = list.get(0);
                 //该code是本身，不属于重复
-                if(StoreGradeDO.getId().equals(dto.getId())){
+                if (StoreGradeDO.getId().equals(dto.getId())) {
                     return true;
                 }
             }

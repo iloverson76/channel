@@ -53,7 +53,7 @@ public interface StoreDistributorRelationService {
     Boolean delete(List<Long> ids);
 
     /**
-     * 根据条件查询门店经销商关联列表
+     * 根据条件分页查询门店经销商关联列表
      *
      * @param query 查询条件
      * @return
