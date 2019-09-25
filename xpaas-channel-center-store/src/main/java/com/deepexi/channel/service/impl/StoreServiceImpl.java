@@ -14,6 +14,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * @author mumu
+ * @date 2019/9/6 17:39
+ */
 @Service
 public class StoreServiceImpl implements StoreService {
 
@@ -22,11 +26,11 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public List<StoreDTO> findPage(StoreQuery query) {
-        if(query.getPage() != null && query.getPage() != -1){
+        if (query.getPage() != null && query.getPage() != -1) {
             PageHelper.startPage(query.getPage(), query.getSize());
         }
-        List<StoreDO> storeDOS =  storeDAO.findList(query);
-        if(CollectionUtil.isEmpty(storeDOS)){
+        List<StoreDO> storeDOS = storeDAO.findList(query);
+        if (CollectionUtil.isEmpty(storeDOS)) {
             return null;
         }
         return ObjectCloneUtils.convertList(storeDOS, StoreDTO.class, CloneDirection.OPPOSITE);
@@ -35,7 +39,7 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public StoreDTO detail(Long pk) {
         StoreDO storeDO = storeDAO.getById(pk);
-        if(storeDO == null ){
+        if (storeDO == null) {
             return null;
         }
         return storeDO.clone(StoreDTO.class);
@@ -43,15 +47,16 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public Boolean update(StoreDTO dto) {
-        if(dto == null){
+        if (dto == null) {
             return false;
         }
         StoreDO storeDO = dto.clone(StoreDO.class);
         return storeDAO.updateById(storeDO);
     }
+
     @Override
     public Long create(StoreDTO dto) {
-        if(dto == null){
+        if (dto == null) {
             return 0L;
         }
         StoreDO storeDO = dto.clone(StoreDO.class);
@@ -61,7 +66,7 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public Boolean delete(List<Long> ids) {
-        if(CollectionUtil.isEmpty(ids)){
+        if (CollectionUtil.isEmpty(ids)) {
             return false;
         }
         return storeDAO.removeByIds(ids);
@@ -71,16 +76,17 @@ public class StoreServiceImpl implements StoreService {
     public boolean isCodeUnique(StoreDTO dto) {
         StoreQuery storeQuery = StoreQuery.builder().storeAccuracyCode(dto.getStoreCode()).build();
         List<StoreDO> list = storeDAO.findList(storeQuery);
-        if(CollectionUtil.isNotEmpty(list)){
+        if (CollectionUtil.isNotEmpty(list)) {
             //不为空，还有可能是更新时自身的编码 ，当然，前端不能调皮新增时传id过来
-            if(list.size()==1){
+            if (list.size() == 1) {
                 StoreDO storeDO = list.get(0);
                 //该code是本身，不属于重复
-                if(storeDO.getId().equals(dto.getId())){
+                if (storeDO.getId().equals(dto.getId())) {
                     return true;
                 }
+            }else{
+                return false;
             }
-            return false;
         }
         return true;
     }
