@@ -35,7 +35,7 @@ public class AreaController {
 
     @PostMapping
     @ApiOperation(value = "创建区域")
-    public Payload<Long> create(@RequestBody AreaVO vo) {
+    public Payload<Long> create(@RequestBody AreaBusiVO vo) {
 
         Long result= areaBusinessService.create(vo.clone(AreaDTO.class, CloneDirection.FORWARD));
 
@@ -44,15 +44,15 @@ public class AreaController {
 
     @GetMapping("/{id}/{areaTypeId}")
     @ApiOperation(value="根据id和分类id查看区域详情")
-    public Payload<AreaVO> detail(@PathVariable(value = "id", required = true) Long  id,
+    public Payload<AreaBusiVO> detail(@PathVariable(value = "id", required = true) Long  id,
                                    @PathVariable(value = "areaTypeId", required = true)Long areaTypeId) {
 
         AreaDTO dto=areaBusinessService.detail(id,areaTypeId);
 
-        AreaVO vo=null;
+        AreaBusiVO vo=null;
 
         if(dto!=null){
-            dto.clone(AreaVO.class,CloneDirection.OPPOSITE);
+            dto.clone(AreaBusiVO.class,CloneDirection.OPPOSITE);
         }
 
         return new Payload<>(vo);
@@ -60,7 +60,7 @@ public class AreaController {
 
     @PutMapping("/{id}")
     @ApiOperation(value = "根据id修改")
-    public Payload<Boolean> update(@PathVariable(value = "id", required = true) Long  pk, @RequestBody AreaVO vo) {
+    public Payload<Boolean> update(@PathVariable(value = "id", required = true) Long  pk, @RequestBody AreaBusiVO vo) {
 
         vo.setId(pk);
 
@@ -80,15 +80,15 @@ public class AreaController {
 
     @GetMapping()
     @ApiOperation("查询区域列表-分页查询")
-    public Payload<PageBean<AreaVO>> listAreaPage(@ApiParam(name = "query", required = true) AreaQuery query) {
+    public Payload<PageBean<AreaBusiVO>> listAreaPage(@ApiParam(name = "query", required = true) AreaQuery query) {
 
         List<AreaDTO> dtoList = areaBusinessService.findPage(query);
 
-        List<AreaVO> voList=new ArrayList<>();
+        List<AreaBusiVO> voList=new ArrayList<>();
 
        if(CollectionUtils.isNotEmpty(dtoList)){
 
-           voList=ObjectCloneUtils.convertList(dtoList,AreaVO.class,CloneDirection.OPPOSITE);
+           voList=ObjectCloneUtils.convertList(dtoList,AreaBusiVO.class,CloneDirection.OPPOSITE);
        }
 
         return new Payload<>(new PageBean<>(voList));
@@ -156,7 +156,7 @@ public class AreaController {
 
     @PostMapping("/tree/addNode/{id}")
     @ApiOperation(value = "添加树节点",notes = "传parentId以及节点的id，如果parentId为0，设置为根节点")
-    public Payload<Boolean> treeAddNode(@PathVariable(value ="id",required = true)Long id,@RequestBody AreaVO vo) {
+    public Payload<Boolean> treeAddNode(@PathVariable(value ="id",required = true)Long id,@RequestBody AreaBusiVO vo) {
 
         vo.setId(id);
 
@@ -167,7 +167,7 @@ public class AreaController {
 
     @PutMapping("/tree/updateNode/{id}")
     @ApiOperation(value = "修改树节点",notes = "传parentId以及节点的id，如果parentId为0，设置为根节点,自动更新所有下级节点")
-    public Payload<Boolean> treeupdateNode(@PathVariable(value = "id", required = true) Long  pk, @RequestBody AreaVO vo) {
+    public Payload<Boolean> treeupdateNode(@PathVariable(value = "id", required = true) Long  pk, @RequestBody AreaBusiVO vo) {
 
         vo.setId(pk);
 

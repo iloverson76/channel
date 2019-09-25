@@ -133,11 +133,11 @@ public class AreaTypeController {
 
     @GetMapping("/typeArea/{id:[0-9,]+}")
     @ApiOperation("层级元素列表")
-    public Payload<PageBean<AreaVO>> listTypeAreas(@PathVariable Long id) {
+    public Payload<PageBean<AreaBusiVO>> listTypeAreas(@PathVariable Long id) {
 
         List<AreaDTO> dtoList = areaTypeBusinessService.listLinkedAreas(id);
 
-        List<AreaVO> voList=new ArrayList<>();
+        List<AreaBusiVO> voList=new ArrayList<>();
 
         if(CollectionUtil.isEmpty(dtoList)){
             return new Payload<>();
@@ -147,7 +147,7 @@ public class AreaTypeController {
 
             AreaTypeVO areaTypeVO=dto.getAreaType().clone(AreaTypeVO.class,CloneDirection.OPPOSITE);
 
-            AreaVO vo= new AreaVO();
+            AreaBusiVO vo= new AreaBusiVO();
 
             BeanUtils.copyProperties(dto,vo);
 

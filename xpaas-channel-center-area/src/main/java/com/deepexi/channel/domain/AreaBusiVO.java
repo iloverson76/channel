@@ -23,7 +23,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @ApiModel("区域")
-public class AreaVO extends AbstractObject {
+public class AreaBusiVO extends AbstractObject {
 
     private static final long serialVersionUID = 1L;
 

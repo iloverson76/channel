@@ -104,7 +104,7 @@ public class StoreHistoryDetailVO extends AbstractObject {
     private StoreGradeVO storeGradeVO;
 
     @ApiModelProperty(value = "区域信息", notes = "更新、新增时只需传对应id给后端，而查询时会返回完整信息")
-    private List<AreaVO> areaVOS;
+    private List<AreaBusiVO> AreaBusiVOS;
 
     @ApiModelProperty(value = "连锁信息", notes = "更新、新增时只需传对应id给后端，而查询时会返回完整信息")
     private List<ChainDetailVO> chainVOS;

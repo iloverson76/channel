@@ -1,6 +1,5 @@
 package com.deepexi.channel.domain;
 
-import com.deepexi.channel.domain.AreaVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -29,7 +28,7 @@ public class StoreDetailVO extends StoreVO {
     private StoreGradeVO storeGradeVO;
 
     @ApiModelProperty(value = "区域信息", notes = "更新、新增时只需传对应id给后端，而查询时会返回完整信息")
-    private List<AreaVO> areaVOS;
+    private List<AreaBusiVO> AreaBusiVOS;
 
     @ApiModelProperty(value = "连锁信息", notes = "更新、新增时只需传对应id给后端，而查询时会返回完整信息")
     private List<ChainDetailVO> chainVOS;
