@@ -6,7 +6,9 @@ import com.deepexi.channel.domain.StoreGradeQuery;
 import java.util.List;
 
 /**
- * cc_store_grade
+ * @author mumu
+ * @version 1.0
+ * @date 2019/9/6 17:39
  */
 public interface StoreGradeService {
 
