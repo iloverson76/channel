@@ -59,11 +59,17 @@ public class StoreHistoryBusinessServiceImpl implements StoreHistoryBusinessServ
     }
 
     @Override
-    public StoreHistoryDTO detail(Long pk) {
+    public StoreHistoryBusinessDTO detail(Long pk) {
         StoreHistoryDTO dto = storeHistoryService.detail(pk);
-        return dto;
-//        StoreHistoryDetailDTO storeHistoryDetailDTO  = this.storeHistory2StoreDetailHistory(dto);
-//        return storeHistoryDetailDTO;
+        if(null == dto){
+            return null;
+        }
+        StoreHistoryBusinessDTO businessDTO = dto.clone(StoreHistoryBusinessDTO.class);
+        //查询门店修改历史
+        StoreHistoryQuery query = StoreHistoryQuery.builder().storeId(dto.getStoreId()).build();
+        List<StoreHistoryDTO> storeHistoryDTOS = storeHistoryService.findPage(query);
+        businessDTO.setStoreHistoryDTOS(storeHistoryDTOS);
+        return businessDTO;
     }
 
     /**
