@@ -40,26 +40,27 @@ public class StoreTypeApiImpl implements StoreTypeApi {
 
     @Override
     public Boolean update(@PathVariable(value = "id") Long id, StoreTypeDTO dto) {
-        return null;
+        dto.setId(id);
+        return storeTypeService.update(dto);
     }
 
     @Override
     public Long create(StoreTypeDTO dto) {
-        return null;
+        return storeTypeService.create(dto);
     }
 
     @Override
     public Boolean delete(List<Long> ids) {
-        return null;
+        return storeTypeService.delete(ids);
     }
 
     @Override
     public boolean isCodeUnique(StoreTypeDTO dto) {
-        return false;
+        return storeTypeService.isCodeUnique(dto);
     }
 
     @Override
     public boolean isNameUnique(StoreTypeDTO dto) {
-        return false;
+        return storeTypeService.isNameUnique(dto);
     }
 }
