@@ -8,6 +8,7 @@ import com.deepexi.util.pageHelper.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -45,12 +46,12 @@ public class StoreTypeApiImpl implements StoreTypeApi {
     }
 
     @Override
-    public Long create(StoreTypeDTO dto) {
+    public Long create(@RequestBody StoreTypeDTO dto) {
         return storeTypeService.create(dto);
     }
 
     @Override
-    public Boolean delete(List<Long> ids) {
+    public Boolean delete(@RequestBody List<Long> ids) {
         return storeTypeService.delete(ids);
     }
 
