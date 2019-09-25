@@ -61,7 +61,7 @@ public class ChainTypeController {
 
     @PutMapping("/{id}")
     @ApiOperation(value = "根据id修改", notes = "根据id修改连锁类型")
-    public Payload<Boolean> update(@PathVariable(value = "id", required = true) Long id,@Valid @RequestBody ChainTypeVO vo) {
+    public Payload<Boolean> update(@PathVariable(value = "id", required = true) Long id,@RequestBody ChainTypeVO vo) {
         vo.setId(id);
         ChainTypeDTO dto = vo.clone(ChainTypeDTO.class, CloneDirection.FORWARD);
         //更新校验是否被门店关联、或在树形结构中
@@ -85,7 +85,7 @@ public class ChainTypeController {
 
     @PostMapping
     @ApiOperation(value = "创建连锁类型", notes = "创建连锁类型，创建成功返回id")
-    public Payload<Long> create(@Valid @RequestBody  ChainTypeVO vo) {
+    public Payload<Long> create(@RequestBody  ChainTypeVO vo) {
         ChainTypeDTO dto = vo.clone(ChainTypeDTO.class, CloneDirection.FORWARD);
         //新增校验,编码不能重复
         if (!chainTypeService.isCodeUnique(dto)) {

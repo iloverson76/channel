@@ -63,23 +63,18 @@ public class ChainTypeVO extends AbstractObject {
      * 连锁分类名称
      */
     @ApiModelProperty("连锁分类名称")
-    @Pattern(regexp = "^[A-Za-z0-9\\u4e00-\\u9fa5]+$",message = "名称只能为中文、数字或英文")
-    @Size(min=1,max=16)
     private String chainTypeName;
 
     /**
      * 连锁分类编码
      */
     @ApiModelProperty("连锁分类编码")
-    @Pattern(regexp = "^[A-Za-z0-9]+$",message="编码只能为字母和数字")
-    @Size(min=1,max=16)
     private String chainTypeCode;
 
     /**
      * 连锁分类英文名称
      */
     @ApiModelProperty("连锁分类英文名称")
-    @Pattern(regexp = "^[A-Za-z0-9]+$",message="英文名称只能为字母和数字")
     private String chainTypeNameEn;
 
     /**

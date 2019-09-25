@@ -80,7 +80,7 @@ public class StoreController {
 
     @PutMapping("/{id}")
     @ApiOperation(value = "根据id修改", notes = "根据id修改CcStore")
-    public Payload<Boolean> update(@PathVariable(value = "id", required = true) Long pk,@Valid @RequestBody StoreDetailVO vo) {
+    public Payload<Boolean> update(@PathVariable(value = "id", required = true) Long pk,@RequestBody StoreDetailVO vo) {
         vo.setId(pk);
         StoreDetailDTO storeDetailDTO = vo.clone(StoreDetailDTO.class);
         if (vo.getStoreGradeVO() != null && vo.getStoreGradeVO().getId() != null && !vo.getStoreGradeVO().getId().equals(0)) {
@@ -112,7 +112,7 @@ public class StoreController {
 
     @PostMapping
     @ApiOperation(value = "创建门店", notes = "创建门店")
-    public Payload<Long> create(@Valid @RequestBody StoreDetailVO vo) {
+    public Payload<Long> create(@RequestBody StoreDetailVO vo) {
         StoreDetailDTO storeDetailDTO = vo.clone(StoreDetailDTO.class, CloneDirection.OPPOSITE);
         if (vo.getStoreGradeVO() != null && vo.getStoreGradeVO().getId() != null && !vo.getStoreGradeVO().getId().equals(0)) {
             StoreGradeDTO storeGradeDTO = vo.getStoreGradeVO().clone(StoreGradeDTO.class);
