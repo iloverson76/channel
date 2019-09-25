@@ -51,7 +51,7 @@ public interface StoreTypeApi {
      * @return
      */
     @PutMapping("/{id}")
-    Boolean update(@PathVariable(value = "id") Long id, StoreTypeDTO dto);
+    Boolean update(@PathVariable(value = "id") Long id, @RequestBody StoreTypeDTO dto);
 
     /**
      * 创建门店类型

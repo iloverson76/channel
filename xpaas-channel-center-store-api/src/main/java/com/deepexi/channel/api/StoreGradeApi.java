@@ -52,7 +52,7 @@ public interface StoreGradeApi {
      * @return
      */
     @PutMapping("/{id}")
-    Boolean update(@PathVariable(value = "id") Long id, StoreGradeDTO dto);
+    Boolean update(@PathVariable(value = "id") Long id, @RequestBody StoreGradeDTO dto);
 
     /**
      * 创建门店等级
