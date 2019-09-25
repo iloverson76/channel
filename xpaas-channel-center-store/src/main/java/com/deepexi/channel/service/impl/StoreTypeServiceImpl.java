@@ -19,8 +19,6 @@ import java.util.List;
 @Service
 public class StoreTypeServiceImpl implements StoreTypeService {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
     @Autowired
     private StoreTypeDAO storeTypeDAO;
 

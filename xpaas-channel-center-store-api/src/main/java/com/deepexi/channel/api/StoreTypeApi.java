@@ -1,16 +1,21 @@
-package com.deepexi.channel.service;
+package com.deepexi.channel.api;
 
 import com.deepexi.channel.domain.StoreTypeDTO;
 import com.deepexi.channel.domain.StoreTypeQuery;
+import com.deepexi.util.pageHelper.PageBean;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 /**
+ * 门店类型接口
+ *
  * @author mumu
  * @version 1.0
  * @date 2019/9/6 17:39
  */
-public interface StoreTypeService {
+@RequestMapping("/channel/storeType")
+public interface StoreTypeApi {
 
     /**
      * 分页获取门店类型列表
@@ -18,7 +23,11 @@ public interface StoreTypeService {
      * @param query 查询条件
      * @return
      */
-    List<StoreTypeDTO> findPage(StoreTypeQuery query);
+    @GetMapping
+    List<StoreTypeDTO> listStoreType(StoreTypeQuery query);
+
+    @GetMapping("/page")
+    PageBean<StoreTypeDTO> listStoreTypePage(StoreTypeQuery query);
 
     /**
      * 获取门店类型详情
@@ -26,6 +35,7 @@ public interface StoreTypeService {
      * @param pk 门店类型id
      * @return
      */
+    @GetMapping("/{id:[0-9,]+}")
     StoreTypeDTO detail(Long pk);
 
     /**
@@ -34,7 +44,8 @@ public interface StoreTypeService {
      * @param dto 门店类型dto
      * @return
      */
-    Boolean update(StoreTypeDTO dto);
+    @PutMapping("/{id}")
+    Boolean update(Long id, StoreTypeDTO dto);
 
     /**
      * 创建门店类型
@@ -42,6 +53,7 @@ public interface StoreTypeService {
      * @param dto 门店类型dto
      * @return
      */
+    @PostMapping
     Long create(StoreTypeDTO dto);
 
     /**
@@ -50,21 +62,24 @@ public interface StoreTypeService {
      * @param ids 门店类型id列表
      * @return
      */
+    @DeleteMapping
     Boolean delete(List<Long> ids);
 
     /**
      * 判断门店类型是否
      *
-     * @param dto 门店类型
+     * @param dto 门店类型,需要id与code，新增的类型id传0
      * @return
      */
+    @GetMapping("/isCodeUnique")
     boolean isCodeUnique(StoreTypeDTO dto);
 
     /**
      * 判断名字是否唯一
      *
-     * @param dto 门店类型
+     * @param dto 门店类型，需要id与name，新增的类型id传0
      * @return
      */
+    @GetMapping("/isNameUnique")
     boolean isNameUnique(StoreTypeDTO dto);
 }

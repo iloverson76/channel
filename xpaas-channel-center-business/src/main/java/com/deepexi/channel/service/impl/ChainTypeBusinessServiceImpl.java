@@ -196,14 +196,17 @@ public class ChainTypeBusinessServiceImpl implements ChainTypeBusinessService {
     @Override
     public List<ChainTypeDTO> parentChainType(Long chainTypeId) {
         ChainTypeDTO chainTypeDTO = chainTypeService.detail(chainTypeId);
-        if(chainTypeDTO == null){
-            return Collections.emptyList();
+        if(null == chainTypeDTO){
+            return null;
         }
         log.info("根据连锁类型id获取详情",chainTypeDTO);
         //如果该分类限制上级，则上级只有他的父亲
         if(chainTypeDTO.getLimitParent() == 1){
             ChainTypeDTO parent = chainTypeService.detail(chainTypeDTO.getParentId());
             log.info("连锁类型被限制上级",parent);
+            if(null == parent){
+                return null;
+            }
             List<ChainTypeDTO> result = new LinkedList<>();
             result.add(parent);
             return result;
