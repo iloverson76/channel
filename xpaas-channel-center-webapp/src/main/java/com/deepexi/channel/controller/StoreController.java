@@ -64,7 +64,7 @@ public class StoreController {
         }
         //设置区域
         if (CollectionUtil.isNotEmpty(storeDetailDTO.getAreaDTOS())) {
-            storeDetailVO.setAreaBusiVOS(ObjectCloneUtils.convertList(storeDetailDTO.getAreaDTOS(), AreaBusiVO.class));
+            storeDetailVO.setAreaVOS(ObjectCloneUtils.convertList(storeDetailDTO.getAreaDTOS(), AreaBusiVO.class));
         }
         //设置修改历史
         if(CollectionUtil.isNotEmpty(storeDetailDTO.getStoreHistoryDTOS())){
@@ -95,8 +95,8 @@ public class StoreController {
             List<ChainDetailDTO> chainDTOS = ObjectCloneUtils.convertList(vo.getChainVOS(), ChainDetailDTO.class);
             storeDetailDTO.setChainDTOS(chainDTOS);
         }
-        if (CollectionUtil.isNotEmpty(vo.getAreaBusiVOS())) {
-            List<AreaBusiDTO> areaDTOS = ObjectCloneUtils.convertList(vo.getAreaBusiVOS(), AreaBusiDTO.class);
+        if (CollectionUtil.isNotEmpty(vo.getAreaVOS())) {
+            List<AreaBusiDTO> areaDTOS = ObjectCloneUtils.convertList(vo.getAreaVOS(), AreaBusiDTO.class);
             storeDetailDTO.setAreaDTOS(areaDTOS);
         }
         if(CollectionUtil.isNotEmpty(vo.getStoreDistributorVOS())){
@@ -126,8 +126,8 @@ public class StoreController {
             List<ChainDetailDTO> chainDTOS = ObjectCloneUtils.convertList(vo.getChainVOS(), ChainDetailDTO.class);
             storeDetailDTO.setChainDTOS(chainDTOS);
         }
-        if (CollectionUtil.isNotEmpty(vo.getAreaBusiVOS())) {
-            List<AreaBusiDTO> areaDTOS = ObjectCloneUtils.convertList(vo.getAreaBusiVOS(), AreaBusiDTO.class);
+        if (CollectionUtil.isNotEmpty(vo.getAreaVOS())) {
+            List<AreaBusiDTO> areaDTOS = ObjectCloneUtils.convertList(vo.getAreaVOS(), AreaBusiDTO.class);
             storeDetailDTO.setAreaDTOS(areaDTOS);
         }
         if(CollectionUtil.isNotEmpty(vo.getStoreDistributorVOS())){

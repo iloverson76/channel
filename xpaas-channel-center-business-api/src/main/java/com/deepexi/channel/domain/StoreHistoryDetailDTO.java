@@ -68,7 +68,7 @@ public class StoreHistoryDetailDTO extends SuperEntity {
 
     private StoreGradeDTO storeGradeDTO;
 
-    private List<AreaDTO> areaDTOS;
+    private List<AreaBusiDTO> areaDTOS;
 
     private List<ChainDetailDTO> chainDTOS;
 

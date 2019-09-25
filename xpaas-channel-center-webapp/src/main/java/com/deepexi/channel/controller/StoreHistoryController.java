@@ -42,7 +42,7 @@ public class StoreHistoryController {
         StoreHistoryDetailVO vo = dto.clone(StoreHistoryDetailVO.class);
         //拼接数据
         if(StringUtil.isNotEmpty(dto.getArea())){
-            vo.setAreaBusiVOS(JsonUtil.json2Bean(dto.getArea(),List.class));
+            vo.setAreaVOS(JsonUtil.json2Bean(dto.getArea(),List.class));
         }
         if(StringUtil.isNotEmpty(dto.getChain())){
             vo.setChainVOS(JsonUtil.json2Bean(dto.getChain(),List.class));
