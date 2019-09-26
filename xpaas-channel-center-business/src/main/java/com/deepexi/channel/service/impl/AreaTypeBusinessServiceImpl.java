@@ -467,7 +467,7 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
         //移除所有子节点
         List<AreaTypeDTO> children=areaTypeService.listChildNodes("/"+id+"/");
 
-        if(CollectionUtils.isNotEmpty(children)&&CollectionUtils.isNotEmpty ( removeList )) resultList.forEach ( type -> {
+        if(CollectionUtils.isNotEmpty(children)&&CollectionUtils.isNotEmpty ( resultList )) resultList.forEach ( type -> {
 
             children.stream ().filter ( child -> child.getId () == type.getId () ).map ( child -> type ).forEach ( removeList::add );
 
