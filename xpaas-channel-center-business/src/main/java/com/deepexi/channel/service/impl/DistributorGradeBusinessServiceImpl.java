@@ -550,12 +550,10 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
     @Override
     public void validateHasChildren(List<Long> gradeIdList){
+
         log.info("查询下级");
-        DistributorGradeQuery gradeQuery = new DistributorGradeQuery();
 
-        gradeQuery.setIds(gradeIdList);
-
-        List<DistributorGradeDTO> pageList = distributorGradeService.findPage(gradeQuery);
+        List<DistributorGradeDTO> pageList = distributorGradeService.findPage(new DistributorGradeQuery());
 
         if(CollectionUtil.isNotEmpty(pageList)) {
 
@@ -564,16 +562,13 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
             pageList.forEach(page -> {
 
-                gradeIdList.forEach(id -> {
+                gradeIdList.stream().filter(id -> page.getParentId().equals(id)).forEach(id -> {
 
-                    if (page.getParentId().equals(id)) {
+                    String childName = pageMap.get(page.getId()).getDistributorGradeName();
 
-                        String childName= pageMap.get(page.getId()).getDistributorGradeName();
+                    String parentName = pageMap.get(id).getDistributorGradeName();
 
-                        String parentName= pageMap.get(id).getDistributorGradeName();
-
-                        throw new ApplicationException("["+parentName+"]已挂载 ["+childName+"]!请解除关联后再操作");
-                    }
+                    throw new ApplicationException("[" + parentName + "]已挂载 [" + childName + "]!请解除关联后再操作");
                 });
             });
         }

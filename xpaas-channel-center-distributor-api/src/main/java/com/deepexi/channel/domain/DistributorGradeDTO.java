@@ -47,11 +47,6 @@ public class DistributorGradeDTO extends AbstractObject {
     private String parentGradeName;
 
     /**
-     * 路径
-     */
-    private String path;
-
-    /**
      * 父级分类ID
      */
     private Long parentId;

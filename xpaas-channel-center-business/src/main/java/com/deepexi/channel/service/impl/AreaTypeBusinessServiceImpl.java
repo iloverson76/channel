@@ -455,7 +455,7 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
         }
 
         //不能选自己和自己的所有子节点
-        List<AreaTypeDTO> children=areaTypeService.listChildNodes("/"+id);
+        List<AreaTypeDTO> children=areaTypeService.listChildNodes("/"+id+"/");
 
         if(CollectionUtils.isNotEmpty(children)){
 

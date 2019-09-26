@@ -67,7 +67,7 @@
         <if test="updateEndTime != null">
             and updated_time &lt;= #{updateEndTime}
         </if>
-        order by updated_time desc
+        order by created_time desc
     </select>
 
     <select id="listParentNodesForCreate" resultType="com.deepexi.channel.domain.DistributorGradeDO">

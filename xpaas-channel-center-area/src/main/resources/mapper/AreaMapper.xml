@@ -72,7 +72,7 @@
         <if test="updateEndTime != null">
             and updated_time &lt;= #{updateEndTime}
         </if>
-        order by updated_time desc
+        order by created_time desc
     </select>
 
     <!--树默认展开三级-->
