@@ -12,6 +12,7 @@ import java.util.List;
  * @version 1.0
  * @date 2019/9/25 20:29
  */
+@RequestMapping("/channel/store")
 public interface StoreApi {
 
     /**

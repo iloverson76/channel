@@ -41,6 +41,7 @@ public class StoreApiImpl implements StoreApi {
 
     @Override
     public Boolean update(@PathVariable(value = "id") Long id, @RequestBody StoreDTO dto) {
+        dto.setId(id);
         return storeService.update(dto);
     }
 

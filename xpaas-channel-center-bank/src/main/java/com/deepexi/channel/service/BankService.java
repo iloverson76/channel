@@ -13,14 +13,6 @@ import java.util.List;
 public interface BankService {
 
     /**
-     * 创建银行
-     *
-     * @param bankDTO 银行dto
-     * @return
-     */
-    Boolean create(BankDTO bankDTO);
-
-    /**
      * 分页查询银行
      *
      * @param query 查询条件
@@ -42,6 +34,22 @@ public interface BankService {
      * @return
      */
     List<BankDTO> getBankByIds(List<Long> bankIds);
+
+    /**
+     * 根据id获取银行
+     *
+     * @param id
+     * @return
+     */
+    BankDTO detail(Long id);
+
+    /**
+     * 创建银行
+     *
+     * @param bankDTO 银行dto
+     * @return
+     */
+    Boolean create(BankDTO bankDTO);
 
     /**
      * 批量创建银行

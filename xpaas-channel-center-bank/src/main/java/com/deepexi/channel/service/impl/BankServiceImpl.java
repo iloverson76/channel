@@ -114,6 +114,15 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
+    public BankDTO detail(Long id) {
+        BankDO bankDO = bankDAO.getById(id);
+        if(bankDO == null){
+            return null;
+        }
+        return bankDO.clone(BankDTO.class);
+    }
+
+    @Override
     public Boolean createBatch(List<BankDTO> bankDTOS) {
         if (CollectionUtil.isEmpty(bankDTOS)) {
             return false;
