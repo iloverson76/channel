@@ -11,13 +11,7 @@ import java.util.List;
  * @date 2019/9/19 17:10
  */
 public interface BankAccountService {
-    /**
-     * 批量新增银行账户
-     *
-     * @param bankAccountDTOS 银行账户列表
-     * @return
-     */
-    List<BankAccountDTO> saveBatch(List<BankAccountDTO> bankAccountDTOS);
+
 
     /**
      * 分页查询银行账户列表
@@ -44,12 +38,29 @@ public interface BankAccountService {
     Long create(BankAccountDTO dto);
 
     /**
+     * 批量新增银行账户
+     *
+     * @param bankAccountDTOS 银行账户列表
+     * @return
+     */
+    List<BankAccountDTO> saveBatch(List<BankAccountDTO> bankAccountDTOS);
+
+
+    /**
      * 更新银行账户
      *
      * @param dto 银行账户dto
      * @return
      */
     Boolean update(BankAccountDTO dto);
+
+    /**
+     * 批量更新银行账户
+     *
+     * @param dtos 银行账户列表
+     * @return
+     */
+    Boolean updateBatch(List<BankAccountDTO> dtos);
 
     /**
      * 批量删除银行账号
