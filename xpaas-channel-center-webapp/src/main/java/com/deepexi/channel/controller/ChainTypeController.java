@@ -117,15 +117,15 @@ public class ChainTypeController {
         return new Payload(chainTypeBusinessService.deleteChainType(ids));
     }
 
-    @GetMapping("/parentChainType/{id}")
-    @ApiOperation(value = "修改分类时，根据类型的id获取合法父级类型列表",notes = "根据类型的id获取合法父级类型列表")
-    public Payload<List<ChainTypeVO>> getLegalParentChainType(@PathVariable(value = "id", required = true) Long id){
-        List<ChainTypeDTO> list = chainTypeBusinessService.getLegalParentChainType(id);
-        if(CollectionUtil.isEmpty(list)){
-            return new Payload<>(null);
-        }
-        return new Payload<>(ObjectCloneUtils.convertList(list, ChainTypeVO.class));
-    }
+//    @GetMapping("/parentChainType/{id}")
+//    @ApiOperation(value = "修改分类时，根据类型的id获取合法父级类型列表",notes = "根据类型的id获取合法父级类型列表")
+//    public Payload<List<ChainTypeVO>> getLegalParentChainType(@PathVariable(value = "id", required = true) Long id){
+//        List<ChainTypeDTO> list = chainTypeBusinessService.getLegalParentChainType(id);
+//        if(CollectionUtil.isEmpty(list)){
+//            return new Payload<>(null);
+//        }
+//        return new Payload<>(ObjectCloneUtils.convertList(list, ChainTypeVO.class));
+//    }
 
     @GetMapping("/linkIdNotIn")
     @ApiOperation("查询是否已经关联")
