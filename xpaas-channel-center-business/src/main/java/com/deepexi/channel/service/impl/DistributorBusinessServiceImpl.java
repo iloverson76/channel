@@ -611,9 +611,9 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
         List<DistributorGradeRelationDTO> relationList=
                 distributorGradeRelationService.findAllByDistributorIds(butorIds);
 
-        List<Long> gradeIdList=new ArrayList<>();
+        List<Long> gradeIdList;
 
-        List<Long> systemIdList=new ArrayList<>();
+        List<Long> systemIdList;
 
         List<GradeInfoDTO> gradeInfos=new ArrayList<>();
 
@@ -679,8 +679,9 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
                             gif.setParentDistributorName(dis.getDistributorName());
 
                             gif.setLimitedParent(limitedParent);
+                        }else{
+                            gif.setLimitedParent(0);
                         }
-
                         gradeInfos.add(gif);
                     }
                 }
