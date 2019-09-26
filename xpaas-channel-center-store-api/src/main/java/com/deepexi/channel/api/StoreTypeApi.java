@@ -55,6 +55,15 @@ public interface StoreTypeApi {
     Boolean update(@PathVariable(value = "id") Long id, @RequestBody StoreTypeDTO dto);
 
     /**
+     * 批量更新门店类型
+     *
+     * @param dtos 门店类型dto列表
+     * @return
+     */
+    @PutMapping("/updateBatch")
+    Boolean updateBatch(@RequestBody List<StoreTypeDTO> dtos);
+
+    /**
      * 创建门店类型
      *
      * @param dto 门店类型dto
@@ -62,6 +71,15 @@ public interface StoreTypeApi {
      */
     @PostMapping
     Long create(@RequestBody StoreTypeDTO dto);
+
+    /**
+     * 批量创建门店类型
+     *
+     * @param dtos 门店类型列表
+     * @return
+     */
+    @PostMapping("/createBatch")
+    Boolean createBatch(@RequestBody List<StoreTypeDTO> dtos);
 
     /**
      * 批量删除

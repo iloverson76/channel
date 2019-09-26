@@ -46,8 +46,18 @@ public class StoreTypeApiImpl implements StoreTypeApi {
     }
 
     @Override
+    public Boolean updateBatch(@RequestBody List<StoreTypeDTO> dtos) {
+        return storeTypeService.updateBatch(dtos);
+    }
+
+    @Override
     public Long create(@RequestBody StoreTypeDTO dto) {
         return storeTypeService.create(dto);
+    }
+
+    @Override
+    public Boolean createBatch(List<StoreTypeDTO> dtos) {
+        return storeTypeService.createBatch(dtos);
     }
 
     @Override

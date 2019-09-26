@@ -53,10 +53,26 @@ public class StoreTypeServiceImpl implements StoreTypeService {
     }
 
     @Override
+    public Boolean updateBatch(List<StoreTypeDTO> dtos) {
+        if (CollectionUtil.isEmpty(dtos)) {
+            return false;
+        }
+        return storeTypeDAO.updateBatchById(ObjectCloneUtils.convertList(dtos, StoreTypeDO.class));
+    }
+
+    @Override
     public Long create(StoreTypeDTO dto) {
         StoreTypeDO storeTypeDO = dto.clone(StoreTypeDO.class);
         storeTypeDAO.save(storeTypeDO);
         return dto.getId();
+    }
+
+    @Override
+    public Boolean createBatch(List<StoreTypeDTO> dtos) {
+        if (CollectionUtil.isEmpty(dtos)) {
+            return false;
+        }
+        return storeTypeDAO.saveBatch(ObjectCloneUtils.convertList(dtos, StoreTypeDO.class));
     }
 
     @Override
@@ -66,7 +82,7 @@ public class StoreTypeServiceImpl implements StoreTypeService {
         }
         return storeTypeDAO.removeByIds(ids);
     }
-    
+
     @Override
     public boolean isCodeUnique(StoreTypeDTO dto) {
         StoreTypeQuery storeTypeQuery = StoreTypeQuery.builder().storeTypeAccuracyCode(dto.getStoreTypeCode()).build();
