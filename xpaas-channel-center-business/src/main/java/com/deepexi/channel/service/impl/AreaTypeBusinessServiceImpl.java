@@ -439,11 +439,19 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
         log.info("更新区域分类接口:查询可用上级分类");
 
         //没有下级的节点
-        List<AreaTypeDTO> noParentNodeList= listNoChildrenNodes(null);
+        List<AreaTypeDTO> noChildrenList= listNoChildrenNodes(null);
 
-        if(CollectionUtils.isEmpty(noParentNodeList)){
+        if(CollectionUtils.isEmpty(noChildrenList)){
             return Collections.emptyList();
         }
+
+        List<AreaTypeDTO> resultList=ObjectCloneUtils.convertList ( noChildrenList,AreaTypeDTO.class,CloneDirection.FORWARD );
+
+        //移除自己
+        List<AreaTypeDTO> removeList= resultList.stream ().filter ( type -> type.getId () == id ).collect ( Collectors.toList () );
+
+        resultList.removeAll ( removeList );
+
         //加上原来自己的上级
         AreaTypeDTO self=areaTypeService.getAreaTypeById(id);
 
@@ -453,18 +461,21 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
 
             AreaTypeDTO parent=areaTypeService.getAreaTypeById(parentId);
 
-            noParentNodeList.add(parent);
+            resultList.add(parent);
         }
 
-        //不能选自己和自己的所有子节点
+        //移除所有子节点
         List<AreaTypeDTO> children=areaTypeService.listChildNodes("/"+id+"/");
 
-        if(CollectionUtils.isNotEmpty(children)){
+        if(CollectionUtils.isNotEmpty(children)) resultList.forEach ( type -> {
 
-            noParentNodeList.removeAll(children);
-        }
+            children.stream ().filter ( child -> child.getId () == type.getId () ).map ( child -> type ).forEach ( removeList::add );
 
-        return ObjectCloneUtils.convertList(noParentNodeList,AreaTypeDTO.class);
+        } );
+
+        resultList.removeAll ( removeList );
+
+        return ObjectCloneUtils.convertList(resultList,AreaTypeDTO.class);
     }
 
     public void updateChildrenPath(Long id,String replacedPath,String newPath){
