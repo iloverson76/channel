@@ -19,7 +19,7 @@ public interface StoreApi {
      * 获取门店列表
      *
      * @param query 查询条件
-     * @return
+     * @return 门店列表
      */
     @GetMapping
     List<StoreDTO> listStore(StoreQuery query);
@@ -28,7 +28,7 @@ public interface StoreApi {
      * 分页获取门店列表
      *
      * @param query
-     * @return
+     * @return 门店列表
      */
     @GetMapping("/page")
     PageBean<StoreDTO> listStorePage(StoreQuery query);
@@ -37,7 +37,7 @@ public interface StoreApi {
      * 获取详情
      *
      * @param pk 门店id
-     * @return
+     * @return 门店详情
      */
     @GetMapping("/{id}")
     StoreDTO detail(@PathVariable(value = "id") Long pk);
@@ -47,7 +47,7 @@ public interface StoreApi {
      *
      * @param id  门店id
      * @param dto 门店dto
-     * @return
+     * @return 更新结果Boolean
      */
     @PutMapping("/{id}")
     Boolean update(@PathVariable(value = "id") Long id, @RequestBody StoreDTO dto);
@@ -56,7 +56,7 @@ public interface StoreApi {
      * 批量更新门店
      *
      * @param dtos
-     * @return
+     * @return 更新结果Boolean
      */
     @PutMapping("/updateBatch")
     Boolean updateBatch(@RequestBody List<StoreDTO> dtos);
@@ -65,7 +65,7 @@ public interface StoreApi {
      * 创建门店
      *
      * @param dto 门店dto
-     * @return
+     * @return 新增结果id
      */
     @PostMapping
     Long create(@RequestBody StoreDTO dto);
@@ -75,7 +75,7 @@ public interface StoreApi {
      * 批量新建门店
      *
      * @param dtos
-     * @return
+     * @return 新增结果Boolean
      */
     @PostMapping("/createBatch")
     Boolean createBatch(@RequestBody List<StoreDTO> dtos);
@@ -84,7 +84,7 @@ public interface StoreApi {
      * 批量删除
      *
      * @param ids 门店id列表
-     * @return
+     * @return 删除结果Boolean
      */
     @DeleteMapping
     Boolean delete(@RequestBody List<Long> ids);
@@ -93,7 +93,7 @@ public interface StoreApi {
      * 判断门店编码是否唯一，需要id与name，新增的类型id传0
      *
      * @param dto 门店dto
-     * @return
+     * @return 编码唯一true，编码不唯一false
      */
     @GetMapping("/isCodeUnique")
     boolean isCodeUnique(StoreDTO dto);

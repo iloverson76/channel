@@ -16,7 +16,7 @@ public interface StoreTypeService {
      * 分页获取门店类型列表
      *
      * @param query 查询条件
-     * @return
+     * @return 门店类型列表
      */
     List<StoreTypeDTO> findPage(StoreTypeQuery query);
 
@@ -24,7 +24,7 @@ public interface StoreTypeService {
      * 获取门店类型详情
      *
      * @param pk 门店类型id
-     * @return
+     * @return 店类型详情
      */
     StoreTypeDTO detail(Long pk);
 
@@ -32,7 +32,7 @@ public interface StoreTypeService {
      * 更新门店类型
      *
      * @param dto 门店类型dto
-     * @return
+     * @return 更新结果boolean
      */
     Boolean update(StoreTypeDTO dto);
 
@@ -40,7 +40,7 @@ public interface StoreTypeService {
      * 批量更新门店类型
      *
      * @param dtos 门店类型dto列表
-     * @return
+     * @return 更新结果boolean
      */
     Boolean updateBatch(List<StoreTypeDTO> dtos);
 
@@ -48,7 +48,7 @@ public interface StoreTypeService {
      * 创建门店类型
      *
      * @param dto 门店类型dto
-     * @return
+     * @return 新建门店类型id
      */
     Long create(StoreTypeDTO dto);
 
@@ -56,7 +56,7 @@ public interface StoreTypeService {
      * 批量创建门店类型
      *
      * @param dtos 门店类型列表
-     * @return
+     * @return  新建结果boolean
      */
     Boolean createBatch(List<StoreTypeDTO> dtos);
 
@@ -64,7 +64,7 @@ public interface StoreTypeService {
      * 批量删除
      *
      * @param ids 门店类型id列表
-     * @return
+     * @return 删除结果boolean
      */
     Boolean delete(List<Long> ids);
 
@@ -72,7 +72,7 @@ public interface StoreTypeService {
      * 判断门店类型是否
      *
      * @param dto 门店类型
-     * @return
+     * @return 编码唯一true，编码不唯一false
      */
     boolean isCodeUnique(StoreTypeDTO dto);
 
@@ -80,7 +80,7 @@ public interface StoreTypeService {
      * 判断名字是否唯一
      *
      * @param dto 门店类型
-     * @return
+     * @return 名字唯一true，名字不唯一false
      */
     boolean isNameUnique(StoreTypeDTO dto);
 }

@@ -17,7 +17,7 @@ public interface BankAccountService {
      * 分页查询银行账户列表
      *
      * @param query 查询条件
-     * @return
+     * @return 银行账户列表
      */
     List<BankAccountDTO> findList(BankAccountQuery query);
 
@@ -25,7 +25,7 @@ public interface BankAccountService {
      * 批量删除
      *
      * @param ids 银行账户id列表
-     * @return
+     * @return 删除结果Boolean
      */
     Boolean delete(List<Long> ids);
 
@@ -33,7 +33,7 @@ public interface BankAccountService {
      * 创建银行账户
      *
      * @param dto 银行账户dto
-     * @return
+     * @return 新增银行账户id
      */
     Long create(BankAccountDTO dto);
 
@@ -41,7 +41,7 @@ public interface BankAccountService {
      * 批量新增银行账户
      *
      * @param bankAccountDTOS 银行账户列表
-     * @return
+     * @return 新增结果Boolean
      */
     List<BankAccountDTO> saveBatch(List<BankAccountDTO> bankAccountDTOS);
 
@@ -50,7 +50,7 @@ public interface BankAccountService {
      * 更新银行账户
      *
      * @param dto 银行账户dto
-     * @return
+     * @return 更新结果Boolean
      */
     Boolean update(BankAccountDTO dto);
 
@@ -58,7 +58,7 @@ public interface BankAccountService {
      * 批量更新银行账户
      *
      * @param dtos 银行账户列表
-     * @return
+     * @return 更新结果Boolean
      */
     Boolean updateBatch(List<BankAccountDTO> dtos);
 
@@ -66,7 +66,7 @@ public interface BankAccountService {
      * 批量删除银行账号
      *
      * @param ids 银行账户列表
-     * @return
+     * @return 删除结果Boolean
      */
     Boolean deleteBankAccounts(List<Long> ids);
 }

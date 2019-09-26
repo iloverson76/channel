@@ -21,7 +21,7 @@ public interface StoreTypeApi {
      * 分页获取门店类型列表
      *
      * @param query 查询条件
-     * @return
+     * @return 门店类型列表
      */
     @GetMapping
     List<StoreTypeDTO> listStoreType(StoreTypeQuery query);
@@ -29,8 +29,8 @@ public interface StoreTypeApi {
     /**
      * 分页获取门店类型列表
      *
-     * @param query
-     * @return
+     * @param query 查询条件
+     * @return 门店类型列表
      */
     @GetMapping("/page")
     PageBean<StoreTypeDTO> listStoreTypePage(StoreTypeQuery query);
@@ -39,7 +39,7 @@ public interface StoreTypeApi {
      * 获取门店类型详情
      *
      * @param pk 门店类型id
-     * @return
+     * @return 店类型详情
      */
     @GetMapping("/{id}")
     StoreTypeDTO detail(@PathVariable(value = "id") Long pk);
@@ -49,7 +49,7 @@ public interface StoreTypeApi {
      *
      * @param id  门店类型id
      * @param dto 门店类型dto
-     * @return
+     * @return 更新结果boolean
      */
     @PutMapping("/{id}")
     Boolean update(@PathVariable(value = "id") Long id, @RequestBody StoreTypeDTO dto);
@@ -58,7 +58,7 @@ public interface StoreTypeApi {
      * 批量更新门店类型
      *
      * @param dtos 门店类型dto列表
-     * @return
+     * @return 更新结果boolean
      */
     @PutMapping("/updateBatch")
     Boolean updateBatch(@RequestBody List<StoreTypeDTO> dtos);
@@ -67,7 +67,7 @@ public interface StoreTypeApi {
      * 创建门店类型
      *
      * @param dto 门店类型dto
-     * @return
+     * @return 新建门店类型id
      */
     @PostMapping
     Long create(@RequestBody StoreTypeDTO dto);
@@ -76,7 +76,7 @@ public interface StoreTypeApi {
      * 批量创建门店类型
      *
      * @param dtos 门店类型列表
-     * @return
+     * @return 新建结果boolean
      */
     @PostMapping("/createBatch")
     Boolean createBatch(@RequestBody List<StoreTypeDTO> dtos);
@@ -85,7 +85,7 @@ public interface StoreTypeApi {
      * 批量删除
      *
      * @param ids 门店类型id列表
-     * @return
+     * @return 删除结果boolean
      */
     @DeleteMapping
     Boolean delete(@RequestBody List<Long> ids);
@@ -94,7 +94,7 @@ public interface StoreTypeApi {
      * 判断门店类型是否
      *
      * @param dto 门店类型,需要id与code，新增的类型id传0
-     * @return
+     * @return 编码唯一true，编码不唯一false
      */
     @GetMapping("/isCodeUnique")
     boolean isCodeUnique(StoreTypeDTO dto);
@@ -103,7 +103,7 @@ public interface StoreTypeApi {
      * 判断名字是否唯一
      *
      * @param dto 门店类型，需要id与name，新增的类型id传0
-     * @return
+     * @return 名字唯一true，名字不唯一false
      */
     @GetMapping("/isNameUnique")
     boolean isNameUnique(StoreTypeDTO dto);

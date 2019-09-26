@@ -21,7 +21,7 @@ public interface StoreGradeApi {
      * 分页获取门店等级列表
      *
      * @param query 查询条件
-     * @return
+     * @return 门店等级列表
      */
     @GetMapping
     List<StoreGradeDTO> listStoreGrade(StoreGradeQuery query);
@@ -31,7 +31,7 @@ public interface StoreGradeApi {
      * 分页获取门店等级列表
      *
      * @param query
-     * @return
+     * @return 门店等级列表
      */
     @GetMapping("/page")
     PageBean<StoreGradeDTO> listStoreGradePage(StoreGradeQuery query);
@@ -40,7 +40,7 @@ public interface StoreGradeApi {
      * 获取门店等级详情
      *
      * @param pk 门店等级id
-     * @return
+     * @return 门店等级详情
      */
     @GetMapping("/{id}")
     StoreGradeDTO detail(@PathVariable(value = "id") Long pk);
@@ -50,7 +50,7 @@ public interface StoreGradeApi {
      *
      * @param id  门店等级id
      * @param dto 门店等级dto
-     * @return
+     * @return 更新结果boolean
      */
     @PutMapping("/{id}")
     Boolean update(@PathVariable(value = "id") Long id, @RequestBody StoreGradeDTO dto);
@@ -59,7 +59,7 @@ public interface StoreGradeApi {
      * 批量更新门店等级
      *
      * @param dtos 门店等级dto列表
-     * @return
+     * @return 更新结果boolean
      */
     @PutMapping("/updateBatch")
     Boolean updateBatch(@RequestBody List<StoreGradeDTO> dtos);
@@ -68,7 +68,7 @@ public interface StoreGradeApi {
      * 创建门店等级
      *
      * @param dto 门店等级dto
-     * @return
+     * @return 创建结果id
      */
     @PostMapping
     Long create(@RequestBody StoreGradeDTO dto);
@@ -77,7 +77,7 @@ public interface StoreGradeApi {
      * 批量创建门店等级
      *
      * @param dtos 门店等级列表
-     * @return
+     * @return 创建结果boolean
      */
     @PostMapping("/createBatch")
     Boolean createBatch(List<StoreGradeDTO> dtos);
@@ -86,7 +86,7 @@ public interface StoreGradeApi {
      * 批量删除
      *
      * @param ids 门店等级id列表
-     * @return
+     * @return 删除结果boolean
      */
     @DeleteMapping
     Boolean delete(@RequestBody List<Long> ids);
@@ -95,7 +95,7 @@ public interface StoreGradeApi {
      * 判断编码是否唯一
      *
      * @param dto 门店等级dto
-     * @return
+     * @return 编码唯一true，编码不唯一false
      */
     @GetMapping("/isCodeUnique")
     boolean isCodeUnique(StoreGradeDTO dto);
@@ -104,7 +104,7 @@ public interface StoreGradeApi {
      * 判断名称是否唯一
      *
      * @param dto 门店等级dto
-     * @return
+     * @return 名称唯一true，名称不唯一false
      */
     @GetMapping("/isNameUnique")
     boolean isNameUnique(StoreGradeDTO dto);

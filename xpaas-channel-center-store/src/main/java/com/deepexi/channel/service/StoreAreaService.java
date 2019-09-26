@@ -16,7 +16,7 @@ public interface StoreAreaService {
      * 分页查询门店区域关联表
      *
      * @param query 查询条件
-     * @return
+     * @return 门店区域关联表
      */
     List<StoreAreaDTO> findList(StoreAreaQuery query);
 
@@ -24,7 +24,7 @@ public interface StoreAreaService {
      * 新增门店区域关联关系
      *
      * @param storeAreaDTO 门店区域关联dto
-     * @return
+     * @return 新增门店区域关联id
      */
     Long save(StoreAreaDTO storeAreaDTO);
 
@@ -32,7 +32,7 @@ public interface StoreAreaService {
      * 根据门店id删除门店区域关联关系
      *
      * @param id 门店id
-     * @return
+     * @return 删除结果boolean
      */
     Boolean removeByStoreId(Long id);
 
@@ -40,7 +40,7 @@ public interface StoreAreaService {
      * 根据门店id获取门店区域关联关系列表
      *
      * @param storeId 门店id
-     * @return
+     * @return 门店区域关联关系列表
      */
     List<StoreAreaDTO> getStoreAreaByStoreId(Long storeId);
 
@@ -48,8 +48,8 @@ public interface StoreAreaService {
     /**
      * 根据门店id列表删除门店区域关联关系
      *
-     * @param ids
-     * @return
+     * @param ids 门店id列表
+     * @return 删除结果boolean
      */
     Boolean removeByStoreIds(List<Long> ids);
 
@@ -57,7 +57,7 @@ public interface StoreAreaService {
      * 批量新增门店区域关联关系
      *
      * @param list 门店区域关联关系列表
-     * @return
+     * @return 保存结果boolean
      */
     Boolean saveBatch(List<StoreAreaDTO> list);
 }
