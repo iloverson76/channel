@@ -1,4 +1,4 @@
-package com.deepexi.channel.api;
+package com.deepexi.channel.domain.api;
 
 import com.deepexi.channel.domain.DistributorDTO;
 import com.deepexi.channel.domain.DistributorQuery;
