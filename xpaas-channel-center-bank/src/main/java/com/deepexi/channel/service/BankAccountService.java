@@ -12,26 +12,50 @@ import java.util.List;
  */
 public interface BankAccountService {
     /**
-     * @MethodName: saveBatch
-     * @Description: 批量新增银行账户
-     * @Param: [bankAccountDTOS]
-     * @Return: java.util.List<com.deepexi.channel.domain.BankAccountDTO>
-     * @Author: mumu
-     * @Date: 2019/9/5
-    **/
+     * 批量新增银行账户
+     *
+     * @param bankAccountDTOS 银行账户列表
+     * @return
+     */
     List<BankAccountDTO> saveBatch(List<BankAccountDTO> bankAccountDTOS);
 
+    /**
+     * 分页查询银行账户列表
+     *
+     * @param query 查询条件
+     * @return
+     */
     List<BankAccountDTO> findList(BankAccountQuery query);
 
     /**
-     批量删除
-    * @return
-    */
+     * 批量删除
+     *
+     * @param ids 银行账户id列表
+     * @return
+     */
     Boolean delete(List<Long> ids);
 
-    Long create(BankAccountDTO clone);
+    /**
+     * 创建银行账户
+     *
+     * @param dto 银行账户dto
+     * @return
+     */
+    Long create(BankAccountDTO dto);
 
+    /**
+     * 更新银行账户
+     *
+     * @param dto 银行账户dto
+     * @return
+     */
     Boolean update(BankAccountDTO dto);
 
+    /**
+     * 批量删除银行账号
+     *
+     * @param ids 银行账户列表
+     * @return
+     */
     Boolean deleteBankAccounts(List<Long> ids);
 }
