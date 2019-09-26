@@ -56,6 +56,14 @@ public class StoreHistoryServiceImpl implements StoreHistoryService {
     }
 
     @Override
+    public Boolean updateBatch(List<StoreHistoryDTO> dtos) {
+        if (CollectionUtil.isEmpty(dtos)) {
+            return false;
+        }
+        return storeHistoryDAO.updateBatchById(ObjectCloneUtils.convertList(dtos, StoreHistoryDO.class));
+    }
+
+    @Override
     public Long create(StoreHistoryDTO dto) {
         if (dto == null) {
             return 0L;
@@ -63,6 +71,14 @@ public class StoreHistoryServiceImpl implements StoreHistoryService {
         StoreHistoryDO storeHistoryDO = dto.clone(StoreHistoryDO.class);
         storeHistoryDAO.save(storeHistoryDO);
         return storeHistoryDO.getId();
+    }
+
+    @Override
+    public Boolean createBatch(List<StoreHistoryDTO> dtos) {
+        if (CollectionUtil.isEmpty(dtos)) {
+            return false;
+        }
+        return storeHistoryDAO.saveBatch(ObjectCloneUtils.convertList(dtos, StoreHistoryDO.class));
     }
 
     @Override

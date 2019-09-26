@@ -45,8 +45,18 @@ public class StoreHistoryApiImpl implements StoreHistoryApi {
     }
 
     @Override
+    public Boolean updateBatch(@RequestBody List<StoreHistoryDTO> dtos) {
+        return storeHistoryService.updateBatch(dtos);
+    }
+
+    @Override
     public Long create(@RequestBody StoreHistoryDTO dto) {
         return storeHistoryService.create(dto);
+    }
+
+    @Override
+    public Boolean createBatch(@RequestBody List<StoreHistoryDTO> dtos) {
+        return storeHistoryService.createBatch(dtos);
     }
 
     @Override

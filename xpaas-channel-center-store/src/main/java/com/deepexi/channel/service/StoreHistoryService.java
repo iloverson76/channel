@@ -37,6 +37,14 @@ public interface StoreHistoryService {
     Boolean update(StoreHistoryDTO dto);
 
     /**
+     * 批量更新门店历史
+     *
+     * @param dtos 门店历史列表
+     * @return
+     */
+    Boolean updateBatch(List<StoreHistoryDTO> dtos);
+
+    /**
      * 新增门店历史
      *
      * @param dto 门店历史dto
@@ -44,6 +52,13 @@ public interface StoreHistoryService {
      */
     Long create(StoreHistoryDTO dto);
 
+    /**
+     * 批量创建门店历史
+     *
+     * @param dtos 门店历史列表
+     * @return
+     */
+    Boolean createBatch(List<StoreHistoryDTO> dtos);
     /**
      * 根据id删除门店历史
      *

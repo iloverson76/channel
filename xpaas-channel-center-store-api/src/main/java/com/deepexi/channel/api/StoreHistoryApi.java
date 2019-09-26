@@ -52,6 +52,15 @@ public interface StoreHistoryApi {
     Boolean update(@PathVariable(value = "id") Long id, @RequestBody StoreHistoryDTO dto);
 
     /**
+     * 批量更新门店历史
+     *
+     * @param dtos 门店历史列表
+     * @return
+     */
+    @PutMapping("/updateBatch")
+    Boolean updateBatch(@RequestBody List<StoreHistoryDTO> dtos);
+
+    /**
      * 新增门店历史
      *
      * @param dto 门店历史dto
@@ -59,6 +68,15 @@ public interface StoreHistoryApi {
      */
     @PostMapping
     Long create(@RequestBody StoreHistoryDTO dto);
+
+    /**
+     * 批量创建门店历史
+     *
+     * @param dtos 门店历史列表
+     * @return
+     */
+    @PostMapping("/createBatch")
+    Boolean createBatch(@RequestBody List<StoreHistoryDTO> dtos);
 
     /**
      * 批量删除门店历史
