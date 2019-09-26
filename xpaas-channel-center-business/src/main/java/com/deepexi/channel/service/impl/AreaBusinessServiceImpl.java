@@ -560,7 +560,7 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
     }
 
     @Override
-    public boolean update(AreaBusiDTO busi) {
+    public boolean update(Long id,AreaBusiDTO busi) {
 
         log.info("更新区域");
 
@@ -569,8 +569,6 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
         }
 
         AreaDTO dto = busi.clone(AreaDTO.class, CloneDirection.FORWARD);
-
-        Long id=busi.getId();
 
         List<Long> ids=new ArrayList<>(1);
 
@@ -584,6 +582,7 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
         validateHasDistributors(ids);
 
         //更新
+        dto.setId ( id );
         areaService.update(dto);
 
         return Boolean.TRUE;

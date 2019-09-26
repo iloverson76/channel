@@ -1,6 +1,6 @@
-package com.deepexi.channel.api.impl;
+package com.deepexi.channel.api.impl.impl;
 
-import com.deepexi.channel.api.StoreHistoryApi;
+import com.deepexi.channel.api.impl.StoreHistoryApi;
 import com.deepexi.channel.domain.StoreHistoryDTO;
 import com.deepexi.channel.domain.StoreHistoryQuery;
 import com.deepexi.channel.service.StoreHistoryService;

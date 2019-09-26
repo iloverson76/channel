@@ -1,6 +1,6 @@
-package com.deepexi.channel.api.impl;
+package com.deepexi.channel.api.impl.impl;
 
-import com.deepexi.channel.api.StoreGradeApi;
+import com.deepexi.channel.api.impl.StoreGradeApi;
 import com.deepexi.channel.domain.StoreGradeDTO;
 import com.deepexi.channel.domain.StoreGradeQuery;
 import com.deepexi.channel.service.StoreGradeService;

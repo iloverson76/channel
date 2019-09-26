@@ -64,7 +64,7 @@ public class AreaController {
 
         vo.setId(pk);
 
-        areaBusinessService.update(vo.clone(AreaBusiDTO.class,CloneDirection.FORWARD));
+        areaBusinessService.update(pk,vo.clone(AreaBusiDTO.class,CloneDirection.FORWARD));
 
         return new Payload<>(Boolean.TRUE);
     }

@@ -1,4 +1,4 @@
-package com.deepexi.channel.api;
+package com.deepexi.channel.api.impl;
 
 import com.deepexi.channel.domain.BankDTO;
 import com.deepexi.channel.domain.BankQuery;
