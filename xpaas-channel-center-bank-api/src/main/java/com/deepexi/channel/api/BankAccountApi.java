@@ -19,7 +19,7 @@ public interface BankAccountApi {
      * 分页查询银行账户列表
      *
      * @param query 查询条件
-     * @return
+     * @return 银行账户列表
      */
     @GetMapping
     List<BankAccountDTO> findList(BankAccountQuery query);
@@ -28,7 +28,7 @@ public interface BankAccountApi {
      * 分页查询银行账户列表
      *
      * @param query 查询条件
-     * @return
+     * @return 银行账户列表
      */
     @GetMapping("/page")
     PageBean<BankAccountDTO> listBankAccountPage(BankAccountQuery query);
@@ -37,7 +37,7 @@ public interface BankAccountApi {
      * 批量删除
      *
      * @param ids 银行账户id列表
-     * @return
+     * @return 删除结果Boolean
      */
     @DeleteMapping
     Boolean delete(@RequestBody List<Long> ids);
@@ -46,7 +46,7 @@ public interface BankAccountApi {
      * 创建银行账户
      *
      * @param dto 银行账户dto
-     * @return
+     * @return 新增银行账户id
      */
     @PostMapping
     Long create(@RequestBody BankAccountDTO dto);
@@ -55,7 +55,7 @@ public interface BankAccountApi {
      * 批量新增银行账户
      *
      * @param bankAccountDTOS 银行账户列表
-     * @return
+     * @return 新增结果Boolean
      */
     @PostMapping("/createBatch")
     List<BankAccountDTO> saveBatch(@RequestBody List<BankAccountDTO> bankAccountDTOS);
@@ -65,7 +65,7 @@ public interface BankAccountApi {
      *
      * @param id  银行账户id
      * @param dto 银行账户dto
-     * @return
+     * @return 更新结果Boolean
      */
     @PutMapping("/{id}")
     Boolean update(@PathVariable(value = "id") Long id,@RequestBody BankAccountDTO dto);
@@ -74,7 +74,7 @@ public interface BankAccountApi {
      * 批量更新银行账户
      *
      * @param dtos 银行账户列表
-     * @return
+     * @return 更新结果Boolean
      */
     @PutMapping("/updateBatch")
     Boolean updateBatch(@RequestBody List<BankAccountDTO> dtos);
