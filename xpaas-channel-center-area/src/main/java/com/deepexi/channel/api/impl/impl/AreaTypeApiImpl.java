@@ -1,4 +1,4 @@
-package com.deepexi.channel.api.impl;
+package com.deepexi.channel.api.impl.impl;
 
 import api.AreaTypeApi;
 import com.deepexi.channel.domain.AreaTypeDTO;

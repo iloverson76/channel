@@ -670,6 +670,8 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
                         Integer limitedParent=dgr.getLimitedParent();
 
+                        gif.setLimitedParent(limitedParent);
+
                         if(limitedParent==1){
 
                             DistributorDTO dis= distributorService.getById(dgr.getParentId());
@@ -677,10 +679,6 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
                             gif.setParentId(dis.getId());
 
                             gif.setParentDistributorName(dis.getDistributorName());
-
-                            gif.setLimitedParent(limitedParent);
-                        }else{
-                            gif.setLimitedParent(0);
                         }
                         gradeInfos.add(gif);
                     }

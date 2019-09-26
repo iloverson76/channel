@@ -1,11 +1,10 @@
-package com.deepexi.channel.api.impl;
+package com.deepexi.channel.api.impl.impl;
 
-import com.deepexi.channel.api.BankApi;
+import com.deepexi.channel.api.impl.BankApi;
 import com.deepexi.channel.domain.BankDTO;
 import com.deepexi.channel.domain.BankQuery;
 import com.deepexi.channel.service.BankService;
 import com.deepexi.util.pageHelper.PageBean;
-import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
