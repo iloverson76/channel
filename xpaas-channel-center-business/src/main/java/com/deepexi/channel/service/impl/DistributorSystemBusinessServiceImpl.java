@@ -184,7 +184,7 @@ public class DistributorSystemBusinessServiceImpl implements DistributorSystemBu
 
             if(CollectionUtil.isNotEmpty(gradeList)){
 
-                throw new ApplicationException("["+system.getGradeSystemName()+"]已挂载已等级!请解除所有关联后再操作");
+                throw new ApplicationException("["+system.getGradeSystemName()+"]已挂载次等级!请解除所有关联后再操作");
             }
         });
     }

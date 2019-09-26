@@ -10,12 +10,9 @@ import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
- * <p>
- * 区域表
- * </p>
- *
- * @author jobob
- * @since 2019-08-23
+ * @author chp
+ * @version 1.0
+ * @date 2019-09-26 15:39
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
