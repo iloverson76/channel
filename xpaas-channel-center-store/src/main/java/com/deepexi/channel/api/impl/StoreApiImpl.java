@@ -45,8 +45,18 @@ public class StoreApiImpl implements StoreApi {
     }
 
     @Override
+    public Boolean updateBatch(@RequestBody List<StoreDTO> dtos) {
+        return storeService.updateBatch(dtos);
+    }
+
+    @Override
     public Long create(@RequestBody StoreDTO dto) {
         return storeService.create(dto);
+    }
+
+    @Override
+    public Boolean createBatch(List<StoreDTO> dtos) {
+        return storeService.createBatch(dtos);
     }
 
     @Override
