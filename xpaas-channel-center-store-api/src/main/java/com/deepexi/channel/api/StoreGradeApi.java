@@ -1,16 +1,21 @@
-package com.deepexi.channel.service;
+package com.deepexi.channel.api;
 
 import com.deepexi.channel.domain.StoreGradeDTO;
 import com.deepexi.channel.domain.StoreGradeQuery;
+import com.deepexi.util.pageHelper.PageBean;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 /**
+ * 门店等级接口
+ *
  * @author mumu
  * @version 1.0
- * @date 2019/9/6 17:39
+ * @date 2019/9/25 19:57
  */
-public interface StoreGradeService {
+@RequestMapping("/channel/storeGrade")
+public interface StoreGradeApi {
 
     /**
      * 分页获取门店等级列表
@@ -18,7 +23,18 @@ public interface StoreGradeService {
      * @param query 查询条件
      * @return
      */
-    List<StoreGradeDTO> findPage(StoreGradeQuery query);
+    @GetMapping
+    List<StoreGradeDTO> listStoreGrade(StoreGradeQuery query);
+
+
+    /**
+     * 分页获取门店等级列表
+     *
+     * @param query
+     * @return
+     */
+    @GetMapping("/page")
+    PageBean<StoreGradeDTO> listStoreGradePage(StoreGradeQuery query);
 
     /**
      * 获取门店等级详情
@@ -26,15 +42,18 @@ public interface StoreGradeService {
      * @param pk 门店等级id
      * @return
      */
-    StoreGradeDTO detail(Long pk);
+    @GetMapping("/{id}")
+    StoreGradeDTO detail(@PathVariable(value = "id") Long pk);
 
     /**
      * 更新门店等级
      *
+     * @param id  门店等级id
      * @param dto 门店等级dto
      * @return
      */
-    Boolean update(StoreGradeDTO dto);
+    @PutMapping("/{id}")
+    Boolean update(@PathVariable(value = "id") Long id, @RequestBody StoreGradeDTO dto);
 
     /**
      * 批量更新门店等级
@@ -42,7 +61,8 @@ public interface StoreGradeService {
      * @param dtos 门店等级dto列表
      * @return
      */
-    Boolean updateBatch(List<StoreGradeDTO> dtos);
+    @PutMapping("/updateBatch")
+    Boolean updateBatch(@RequestBody List<StoreGradeDTO> dtos);
 
     /**
      * 创建门店等级
@@ -50,7 +70,8 @@ public interface StoreGradeService {
      * @param dto 门店等级dto
      * @return
      */
-    Long create(StoreGradeDTO dto);
+    @PostMapping
+    Long create(@RequestBody StoreGradeDTO dto);
 
     /**
      * 批量创建门店等级
@@ -58,6 +79,7 @@ public interface StoreGradeService {
      * @param dtos 门店等级列表
      * @return
      */
+    @PostMapping("/createBatch")
     Boolean createBatch(List<StoreGradeDTO> dtos);
 
     /**
@@ -66,7 +88,8 @@ public interface StoreGradeService {
      * @param ids 门店等级id列表
      * @return
      */
-    Boolean delete(List<Long> ids);
+    @DeleteMapping
+    Boolean delete(@RequestBody List<Long> ids);
 
     /**
      * 判断编码是否唯一
@@ -74,6 +97,7 @@ public interface StoreGradeService {
      * @param dto 门店等级dto
      * @return
      */
+    @GetMapping("/isCodeUnique")
     boolean isCodeUnique(StoreGradeDTO dto);
 
     /**
@@ -82,5 +106,6 @@ public interface StoreGradeService {
      * @param dto 门店等级dto
      * @return
      */
+    @GetMapping("/isNameUnique")
     boolean isNameUnique(StoreGradeDTO dto);
 }

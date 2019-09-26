@@ -33,8 +33,8 @@ public class BankAccountServiceImpl implements BankAccountService {
     private BankAccountDAO bankAccountDAO;
 
     @Override
-    public List<BankAccountDTO>  saveBatch(List<BankAccountDTO> bankAccountDTOS) {
-        if(CollectionUtil.isEmpty(bankAccountDTOS)){
+    public List<BankAccountDTO> saveBatch(List<BankAccountDTO> bankAccountDTOS) {
+        if (CollectionUtil.isEmpty(bankAccountDTOS)) {
             return Collections.emptyList();
         }
         List<BankAccountDO> bankAccountDOS = ObjectCloneUtils.convertList(bankAccountDTOS, BankAccountDO.class);
@@ -45,16 +45,17 @@ public class BankAccountServiceImpl implements BankAccountService {
 
     @Override
     public List<BankAccountDTO> findList(BankAccountQuery query) {
-        if(query.getPage()!=null && query.getPage()!=-1){
+        if (query.getPage() != null && query.getPage() != -1) {
             PageHelper.startPage(query.getPage(), query.getSize());
         }
         List<BankAccountDO> bankAccountDOS = bankAccountDAO.findList(query);
-        if(null == bankAccountDOS){
+        if (null == bankAccountDOS) {
             return null;
         }
         return ObjectCloneUtils.convertList(bankAccountDOS, BankAccountDTO.class);
     }
-//
+
+    //
     @Override
     public Boolean delete(List<Long> ids) {
         return bankAccountDAO.removeByIds(ids);
@@ -63,7 +64,7 @@ public class BankAccountServiceImpl implements BankAccountService {
     @Override
     public Long create(BankAccountDTO dto) {
 
-        BankAccountDO eo=dto.clone(BankAccountDO.class,CloneDirection.FORWARD);
+        BankAccountDO eo = dto.clone(BankAccountDO.class, CloneDirection.FORWARD);
 
         bankAccountDAO.save(eo);
 
@@ -74,11 +75,11 @@ public class BankAccountServiceImpl implements BankAccountService {
     @Override
     public Boolean update(BankAccountDTO dto) {
 
-        if(null==dto){
+        if (null == dto) {
             return false;
         }
 
-        BankAccountDO eo=dto.clone(BankAccountDO.class,CloneDirection.FORWARD);
+        BankAccountDO eo = dto.clone(BankAccountDO.class, CloneDirection.FORWARD);
 
         return bankAccountDAO.updateById(eo);
     }
@@ -86,7 +87,7 @@ public class BankAccountServiceImpl implements BankAccountService {
     @Override
     public Boolean deleteBankAccounts(List<Long> ids) {
 
-        if(CollectionUtils.isEmpty(ids)){
+        if (CollectionUtils.isEmpty(ids)) {
             return false;
         }
 

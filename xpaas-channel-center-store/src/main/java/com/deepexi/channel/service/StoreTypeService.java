@@ -37,12 +37,28 @@ public interface StoreTypeService {
     Boolean update(StoreTypeDTO dto);
 
     /**
+     * 批量更新门店类型
+     *
+     * @param dtos 门店类型dto列表
+     * @return
+     */
+    Boolean updateBatch(List<StoreTypeDTO> dtos);
+
+    /**
      * 创建门店类型
      *
      * @param dto 门店类型dto
      * @return
      */
     Long create(StoreTypeDTO dto);
+
+    /**
+     * 批量创建门店类型
+     *
+     * @param dtos 门店类型列表
+     * @return
+     */
+    Boolean createBatch(List<StoreTypeDTO> dtos);
 
     /**
      * 批量删除

@@ -26,6 +26,12 @@ public interface StoreTypeApi {
     @GetMapping
     List<StoreTypeDTO> listStoreType(StoreTypeQuery query);
 
+    /**
+     * 分页获取门店类型列表
+     *
+     * @param query
+     * @return
+     */
     @GetMapping("/page")
     PageBean<StoreTypeDTO> listStoreTypePage(StoreTypeQuery query);
 
@@ -35,17 +41,27 @@ public interface StoreTypeApi {
      * @param pk 门店类型id
      * @return
      */
-    @GetMapping("/{id:[0-9,]+}")
-    StoreTypeDTO detail(Long pk);
+    @GetMapping("/{id}")
+    StoreTypeDTO detail(@PathVariable(value = "id") Long pk);
 
     /**
      * 更新门店类型
      *
+     * @param id  门店类型id
      * @param dto 门店类型dto
      * @return
      */
     @PutMapping("/{id}")
-    Boolean update(Long id, StoreTypeDTO dto);
+    Boolean update(@PathVariable(value = "id") Long id, @RequestBody StoreTypeDTO dto);
+
+    /**
+     * 批量更新门店类型
+     *
+     * @param dtos 门店类型dto列表
+     * @return
+     */
+    @PutMapping("/updateBatch")
+    Boolean updateBatch(@RequestBody List<StoreTypeDTO> dtos);
 
     /**
      * 创建门店类型
@@ -54,7 +70,16 @@ public interface StoreTypeApi {
      * @return
      */
     @PostMapping
-    Long create(StoreTypeDTO dto);
+    Long create(@RequestBody StoreTypeDTO dto);
+
+    /**
+     * 批量创建门店类型
+     *
+     * @param dtos 门店类型列表
+     * @return
+     */
+    @PostMapping("/createBatch")
+    Boolean createBatch(@RequestBody List<StoreTypeDTO> dtos);
 
     /**
      * 批量删除
@@ -63,7 +88,7 @@ public interface StoreTypeApi {
      * @return
      */
     @DeleteMapping
-    Boolean delete(List<Long> ids);
+    Boolean delete(@RequestBody List<Long> ids);
 
     /**
      * 判断门店类型是否

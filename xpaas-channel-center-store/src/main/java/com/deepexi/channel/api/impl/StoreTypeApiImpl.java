@@ -8,6 +8,7 @@ import com.deepexi.util.pageHelper.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -40,26 +41,37 @@ public class StoreTypeApiImpl implements StoreTypeApi {
 
     @Override
     public Boolean update(@PathVariable(value = "id") Long id, StoreTypeDTO dto) {
-        return null;
+        dto.setId(id);
+        return storeTypeService.update(dto);
     }
 
     @Override
-    public Long create(StoreTypeDTO dto) {
-        return null;
+    public Boolean updateBatch(@RequestBody List<StoreTypeDTO> dtos) {
+        return storeTypeService.updateBatch(dtos);
     }
 
     @Override
-    public Boolean delete(List<Long> ids) {
-        return null;
+    public Long create(@RequestBody StoreTypeDTO dto) {
+        return storeTypeService.create(dto);
+    }
+
+    @Override
+    public Boolean createBatch(@RequestBody List<StoreTypeDTO> dtos) {
+        return storeTypeService.createBatch(dtos);
+    }
+
+    @Override
+    public Boolean delete(@RequestBody List<Long> ids) {
+        return storeTypeService.delete(ids);
     }
 
     @Override
     public boolean isCodeUnique(StoreTypeDTO dto) {
-        return false;
+        return storeTypeService.isCodeUnique(dto);
     }
 
     @Override
     public boolean isNameUnique(StoreTypeDTO dto) {
-        return false;
+        return storeTypeService.isNameUnique(dto);
     }
 }
