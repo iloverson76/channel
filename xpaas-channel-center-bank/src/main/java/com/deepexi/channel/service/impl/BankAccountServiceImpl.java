@@ -85,6 +85,14 @@ public class BankAccountServiceImpl implements BankAccountService {
     }
 
     @Override
+    public Boolean updateBatch(List<BankAccountDTO> dtos) {
+        if (CollectionUtil.isEmpty(dtos)) {
+            return false;
+        }
+        return bankAccountDAO.updateBatchById(ObjectCloneUtils.convertList(dtos, BankAccountDO.class));
+    }
+
+    @Override
     public Boolean deleteBankAccounts(List<Long> ids) {
 
         if (CollectionUtils.isEmpty(ids)) {

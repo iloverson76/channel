@@ -19,7 +19,7 @@ public interface BankApi {
      * 分页查询银行
      *
      * @param query 查询条件
-     * @return
+     * @return 银行列表
      */
     @GetMapping
     List<BankDTO> listBank(BankQuery query);
@@ -28,7 +28,7 @@ public interface BankApi {
      * 分页查询银行
      *
      * @param query 查询条件
-     * @return
+     * @return 银行列表
      */
     @GetMapping("/page")
     PageBean<BankDTO> listBankPage(BankQuery query);
@@ -36,7 +36,7 @@ public interface BankApi {
     /**
      * 查询该应用下所有银行，如果库中未有数据，则初始化
      *
-     * @return
+     * @return 银行列表
      */
     @GetMapping("/listBankAndInit")
     List<BankDTO> listBank();
@@ -45,7 +45,7 @@ public interface BankApi {
      * 根据id获取银行
      *
      * @param id
-     * @return
+     * @return 银行详情
      */
     @GetMapping("/{id}")
     BankDTO detail(@PathVariable(value = "id") Long id);
@@ -54,7 +54,7 @@ public interface BankApi {
      * 创建银行
      *
      * @param bankDTO 银行dto
-     * @return
+     * @return 新增结果Boolean
      */
     @PostMapping
     Boolean create(@RequestBody BankDTO bankDTO);
@@ -63,7 +63,7 @@ public interface BankApi {
      * 批量创建银行
      *
      * @param bankDTOS 银行列表
-     * @return
+     * @return 新增结果Boolean
      */
     @PostMapping("/createBatch")
     Boolean createBatch(@RequestBody List<BankDTO> bankDTOS);
@@ -72,7 +72,7 @@ public interface BankApi {
      * 根据id列表批量删除银行
      *
      * @param ids id列表
-     * @return
+     * @return 删除结果Boolean
      */
     @DeleteMapping
     Boolean delete(@RequestBody List<Long> ids);
@@ -82,7 +82,7 @@ public interface BankApi {
      *
      * @param id
      * @param bankDTO 银行dto
-     * @return
+     * @return 更新结果Boolean
      */
     @PutMapping("/{id}")
     Boolean update(@PathVariable(value = "id") Long id, @RequestBody BankDTO bankDTO);
@@ -91,7 +91,7 @@ public interface BankApi {
      * 批量更新银行
      *
      * @param bankDTOS 银行dto列表
-     * @return
+     * @return 更新结果Boolean
      */
     @PutMapping("/updateBatch")
     Boolean updateBatch(@RequestBody List<BankDTO> bankDTOS);

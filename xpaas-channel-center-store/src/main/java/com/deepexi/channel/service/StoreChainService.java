@@ -16,15 +16,15 @@ public interface StoreChainService {
      * 分页获取门店连琐关联列表
      *
      * @param query 查询参数
-     * @return
+     * @return 门店连琐关联列表
      */
     List<StoreChainDTO> findList(StoreChainQuery query);
 
     /**
-     * 保存门店连琐关联关系
+     * 新增门店连琐关联关系
      *
      * @param storeChainDTO 保存的门店连琐关联dto
-     * @return
+     * @return 新增门店连琐关联id
      */
     Long save(StoreChainDTO storeChainDTO);
 
@@ -32,7 +32,7 @@ public interface StoreChainService {
      * 根据门店id删除门店连琐关联关系
      *
      * @param id 门店id
-     * @return
+     * @return 删除结果boolean
      */
     Boolean removeByStoreId(Long id);
 
@@ -40,7 +40,7 @@ public interface StoreChainService {
      * 根据门店id列表删除门店连琐关联关系
      *
      * @param ids 门店id列表
-     * @return
+     * @return 删除结果boolean
      */
     Boolean removeByStoreIds(List<Long> ids);
 
@@ -48,7 +48,7 @@ public interface StoreChainService {
      * 批量新增门店连锁
      *
      * @param storeChainDTOS 门店连琐关联dto列表
-     * @return
+     * @return 保存结果boolean
      */
     Boolean saveBatch(List<StoreChainDTO> storeChainDTOS);
 
@@ -56,7 +56,7 @@ public interface StoreChainService {
      * 根据连琐id列表批量删除门店连琐id列表
      *
      * @param ids
-     * @return
+     * @return 删除结果boolean
      */
     Boolean removeByChainIds(List<Long> ids);
 

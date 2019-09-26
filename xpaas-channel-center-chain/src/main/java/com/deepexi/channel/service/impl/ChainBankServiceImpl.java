@@ -61,11 +61,6 @@ public class ChainBankServiceImpl implements ChainBankService {
     }
 
     @Override
-    public boolean delete(Long id) {
-        return chainBankDAO.removeById(id);
-    }
-
-    @Override
     public List<ChainBankDTO> findList(ChainBankQuery query) {
         if (query.getPage() != null && query.getPage() != -1){
             PageHelper.startPage(query.getPage(), query.getSize());

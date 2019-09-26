@@ -16,7 +16,7 @@ public interface StoreHistoryService {
      * 分页获取门店历史列表
      *
      * @param query 查询条件
-     * @return
+     * @return 门店历史列表
      */
     List<StoreHistoryDTO> findPage(StoreHistoryQuery query);
 
@@ -24,7 +24,7 @@ public interface StoreHistoryService {
      * 根据id获取门店历史详情
      *
      * @param pk 门店历史id
-     * @return
+     * @return 门店历史详情
      */
     StoreHistoryDTO detail(Long pk);
 
@@ -32,7 +32,7 @@ public interface StoreHistoryService {
      * 更新门店历史
      *
      * @param dto 门店历史dto
-     * @return
+     * @return 更新结果boolean
      */
     Boolean update(StoreHistoryDTO dto);
 
@@ -40,7 +40,7 @@ public interface StoreHistoryService {
      * 批量更新门店历史
      *
      * @param dtos 门店历史列表
-     * @return
+     * @return 更新结果boolean
      */
     Boolean updateBatch(List<StoreHistoryDTO> dtos);
 
@@ -48,7 +48,7 @@ public interface StoreHistoryService {
      * 新增门店历史
      *
      * @param dto 门店历史dto
-     * @return
+     * @return 新建结果id
      */
     Long create(StoreHistoryDTO dto);
 
@@ -56,14 +56,14 @@ public interface StoreHistoryService {
      * 批量创建门店历史
      *
      * @param dtos 门店历史列表
-     * @return
+     * @return 新建结果boolean
      */
     Boolean createBatch(List<StoreHistoryDTO> dtos);
     /**
      * 根据id删除门店历史
      *
      * @param id 门店历史id
-     * @return
+     * @return 删除结果boolean
      */
     Boolean delete(Long id);
 
@@ -71,7 +71,7 @@ public interface StoreHistoryService {
      * 批量删除门店历史
      *
      * @param ids 门店历史id列表
-     * @return
+     * @return 删除结果boolean
      */
     Boolean delete(List<Long> ids);
 
@@ -79,7 +79,7 @@ public interface StoreHistoryService {
      * 根据门店id获取当前门店历史数量
      *
      * @param storeId 门店id
-     * @return
+     * @return 当前门店历史数量
      */
     Integer getStoreHistoryCountByStoreId(Long storeId);
 }

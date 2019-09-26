@@ -15,7 +15,7 @@ public interface StoreTypeRelationService {
      * 保存门店类型关联关系
      *
      * @param storeTypeRelationDTO 门店类型关联dto
-     * @return
+     * @return 新增门店型关联关系id
      */
     Long save(StoreTypeRelationDTO storeTypeRelationDTO);
 
@@ -23,7 +23,7 @@ public interface StoreTypeRelationService {
      * 根据门店id获取门店类型关联关系
      *
      * @param pk 门店id
-     * @return
+     * @return 门店类型关联关系详情
      */
     StoreTypeRelationDTO getStoreTypeRelationByStoreId(Long pk);
 
@@ -31,7 +31,7 @@ public interface StoreTypeRelationService {
      * 根据条件查询门店类型关联关系列表
      *
      * @param storeGradeRelationQuery 查询条件
-     * @return
+     * @return 门店类型关联关系列表
      */
     List<StoreTypeRelationDTO> findAll(StoreTypeRelationQuery storeGradeRelationQuery);
 
@@ -39,7 +39,7 @@ public interface StoreTypeRelationService {
      * 根据门店id删除门店类型关联关系
      *
      * @param id 门店id
-     * @return
+     * @return 删除结果boolean
      */
     Boolean removeByStoreId(Long id);
 
@@ -47,7 +47,7 @@ public interface StoreTypeRelationService {
      * 根据门店id列表删除门店类型关联关系
      *
      * @param storeIds 门店id列表
-     * @return
+     * @return 删除结果boolean
      */
     Boolean removeByStoreIds(List<Long> storeIds);
 }

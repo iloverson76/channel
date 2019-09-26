@@ -14,7 +14,7 @@ public interface ChainTypeBusinessService {
 
     List<ChainTypeDTO> findPage(ChainTypeQuery query);
 
-    List<ChainTypeDTO> getLegalParentChainType(Long id);
+//    List<ChainTypeDTO> getLegalParentChainType(Long id);
 
     Long create(ChainTypeDTO dto);
 
