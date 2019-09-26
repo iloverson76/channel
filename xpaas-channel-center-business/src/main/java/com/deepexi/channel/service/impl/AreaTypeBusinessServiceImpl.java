@@ -64,9 +64,11 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
         }
 
         //链路
-        dto.setLinkId(linkId);
+        dto.setId (newId);
 
-        dto.setPath(path);
+        dto.setLinkId ( linkId );
+
+        dto.setPath ( path );
 
         areaTypeService.updateAreaTypeById(dto);
 
