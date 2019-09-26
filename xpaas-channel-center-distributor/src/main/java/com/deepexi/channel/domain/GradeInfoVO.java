@@ -36,7 +36,7 @@ public class GradeInfoVO extends AbstractObject {
 
     private Integer limitedParent;
 
-    private Long parentDistributorId;
+    private Long parentId;
 
     private String parentDistributorName;
 

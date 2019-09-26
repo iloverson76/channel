@@ -674,7 +674,7 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
                             DistributorDTO dis= distributorService.getById(dgr.getParentId());
 
-                            gif.setParentDistributorId(dis.getId());
+                            gif.setParentId(dis.getId());
 
                             gif.setParentDistributorName(dis.getDistributorName());
 

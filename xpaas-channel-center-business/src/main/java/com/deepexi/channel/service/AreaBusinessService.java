@@ -128,10 +128,11 @@ public interface AreaBusinessService {
 
     /**
      * 更新区域
+     * @param id 区域ID
      * @param dto 更新实体
      * @return 是否成功
      */
-    boolean update(AreaBusiDTO dto);
+    boolean update(Long id,AreaBusiDTO dto);
 
     /**
      * 修改树节点为根节点

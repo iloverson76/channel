@@ -4,6 +4,7 @@ import com.deepexi.channel.domain.AreaDTO;
 import com.deepexi.channel.domain.AreaQuery;
 import com.deepexi.channel.domain.AreaTreeDTO;
 import com.deepexi.channel.domain.AreaTypeDTO;
+import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,100 +18,109 @@ public interface AreaApi {
 
     /**
      * 创建区域
-     * @param dto 新增内容
-     * @return 新增记录ID
+     * @param dto 新增的区域实体
+     * @return 新纪录ID
      */
     @PostMapping
     Long create(@RequestBody AreaDTO dto);
 
     /**
-     * 查看区域详情
-     * @param id 区域ID
-     * @param areaTypeId 区域所属分类ID
-     * @return 区域详情实体
-     */
-    @GetMapping("/{id}/{areaTypeId}")
-    AreaDTO detail(@RequestParam("id") Long id,@RequestParam("areaTypeId")Long areaTypeId);
-
-    /**
-     *
-     * @param pk 区域ID
-     * @param dto 更新内容
+     * 更新区域
+     * @param dto 更新的区域实体
      * @return 是否成功
      */
-    @PutMapping("/{id}")
-    boolean update(@RequestParam("id") Long  pk, @RequestBody AreaDTO dto);
+    @PutMapping()
+    boolean update(@RequestBody AreaDTO dto);
 
     /**
-     *根据id批量删除区域
-     * @param idList 区域ID列表
-     * @param forceDelete 是否强制删除与区域关联的关系
-     * @return 是否成功
-     */
-    @DeleteMapping("/{ids:[0-9,]+}")
-    boolean deleteBatchByIds(@RequestBody List<Long> idList, @RequestParam("forceDelete") Integer forceDelete);
-
-    /**
-     * 查询区域列表-分页查询
+     * 区域列表查询
      * @param query 查询条件
-     * @return 分页列表
+     * @return 区域集合
      */
     @GetMapping()
-    List<AreaDTO> findPage(@RequestBody AreaQuery query);
+    List<AreaDTO> findPage(@ApiParam(name = "query", required = true) AreaQuery query);
 
     /**
-     *查找所有的区域树
-     * @param query 查询条件
-     * @return
+     * 根据ID获取区域实体
+     * @param pk 主键
+     * @return 区域
      */
-    @GetMapping("/tree")
-    List<AreaTreeDTO> buildAreaTree(@RequestBody AreaQuery query);
+    @GetMapping("/{id}")
+    AreaDTO getAreaById(@PathVariable(value = "id") Long pk);
 
     /**
-     * 根据区域ID查找所有下级树
+     *批量删除区域实体
+     * @param ids 区域ID集合
+     * @return 是否成功
+     */
+    @DeleteMapping("/{ids}")
+    boolean deleteBatch(@RequestBody List<Long> ids);
+
+    /**
+     * 单次删除区域实体
+     * @param id 主键
+     * @return 是否成功
+     */
+    @DeleteMapping("/{id}")
+    boolean deleteById(@PathVariable(value = "id") Long id);
+
+    /**
+     * 根据区域ID获取子区域
      * @param areaId 区域ID
-     * @return 节点树
+     * @return 区域集合
      */
-    @GetMapping("/childrenTree/{areaId}")
-    List<AreaTreeDTO> listChildrenTree(@RequestParam("areaId") Long areaId);
+    @GetMapping("/listChildrenAreas/{areaId}")
+    List<AreaDTO> listChildrenAreas(@PathVariable(value = "areaId") Long areaId);
 
     /**
-     * 根据区域类型ID查找挂载的所有区域
-     * @param areaTypeId 区域类型ID
-     * @return 区域实体列表
+     * 根据区域分类ID获取区域挂载的所有区域
+     * @param areaTypeId 区域分类ID
+     * @return 区域集合
      */
-    @GetMapping("/linkedAreas/{areaTypeId}")
-    List<AreaDTO> listLinkedAreasByType(@RequestParam("areaTypeId") Long areaTypeId);
+    @GetMapping("/listLinkedAreasByType/{areaTypeId}")
+    List<AreaDTO> listLinkedAreasByType(@PathVariable(value = "areaTypeId") Long areaTypeId);
 
     /**
-     * 根据区域ID查找其上级分类
-     * @param areaId 区域ID
-     * @return 区域分类列表
-     */
-    @GetMapping("/parentAreaType/{areaId}")
-    List<AreaTypeDTO> findParentAreaTypeByAreaId(@RequestParam("areaId") Long areaId);
-
-    /**
-     * 添加树节点
-     * @param dto 添加的区域节点
+     * 批量更新区域实体
+     * @param dtoList 区域实体列表
      * @return 是否成功
      */
-    @PostMapping("/tree/addNode/{id}")
-    Boolean treeAddNode(@RequestBody AreaDTO dto);
+    @PutMapping("/updateBatch")
+    boolean updateBatch(@RequestBody List<AreaDTO> dtoList);
 
     /**
-     * 修改树节点
-     * @param dto 更新的区域节点
-     * @return 是否成功
+     * 根据ID集合获取所有区域实体
+     * @param ids 区域ID集合
+     * @return 区域集合
      */
-    @PutMapping("/tree/updateNode/{id}")
-    boolean treeUpdateNode(@RequestBody AreaDTO dto);
+    @GetMapping("/findAllByIds")
+    List<AreaDTO> findAllByIds(@RequestBody List<Long> ids);
 
     /**
-     * 删除树节点
-     * @param pk 区域ID
-     * @return 是否成功
+     * 查找区域区域树
+     * @return 区域树集合
      */
-    @DeleteMapping("/tree/deleteNode/{id}")
-    boolean treeDeleteNode(@RequestParam("id") Long pk);
+    @GetMapping("/findTree")
+    List<AreaDTO> findTree();
+
+    /**
+     * 获取所有的区域编码
+     * @return 区域编码集合
+     */
+    @GetMapping("/listAreaCode")
+    List<String> listAreaCode();
+
+    /**
+     * 获取所有的区域名称
+     * @return 区域中文名集合
+     */
+    @GetMapping("/listAreaName")
+    List<String> listAreaName();
+
+    /**
+     * 获取所有的区域英文名称
+     * @return 区域英文名集合
+     */
+    @GetMapping("/listAreaNameEn")
+    List<String> listAreaNameEn();
 }

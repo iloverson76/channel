@@ -36,7 +36,7 @@ public class GradeInfoDTO extends AbstractObject implements Serializable {
 
     private Integer limitedParent;
 
-    private Long parentDistributorId;
+    private Long parentId;
 
     private String parentDistributorName;
 
