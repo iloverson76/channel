@@ -44,6 +44,7 @@ public interface StoreApi {
     /**
      * 更新门店
      *
+     * @param id  门店id
      * @param dto 门店dto
      * @return
      */

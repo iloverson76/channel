@@ -43,11 +43,12 @@ public interface StoreGradeApi {
      * @return
      */
     @GetMapping("/{id}")
-    StoreGradeDTO detail(@PathVariable(value = "id")  Long pk);
+    StoreGradeDTO detail(@PathVariable(value = "id") Long pk);
 
     /**
      * 更新门店等级
      *
+     * @param id  门店等级id
      * @param dto 门店等级dto
      * @return
      */

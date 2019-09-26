@@ -47,6 +47,7 @@ public interface StoreTypeApi {
     /**
      * 更新门店类型
      *
+     * @param id  门店类型id
      * @param dto 门店类型dto
      * @return
      */
