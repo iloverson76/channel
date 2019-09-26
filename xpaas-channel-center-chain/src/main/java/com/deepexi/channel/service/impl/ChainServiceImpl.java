@@ -103,14 +103,6 @@ public class ChainServiceImpl implements ChainService {
         return chainDAO.removeByIds(ids);
     }
 
-    /**
-     * @MethodName: isCodeUnique
-     * @Description: 编码是否唯一，更新时会排除本身
-     * @Param: [dto]
-     * @Return: boolean
-     * @Author: mumu
-     * @Date: 2019/9/10
-     **/
     @Override
     public boolean isCodeUnique(ChainDTO dto) {
         log.info("校验编码是否重复，编码为：{}", dto.getChainCode());
@@ -118,12 +110,6 @@ public class ChainServiceImpl implements ChainService {
         return this.isUnique(query, dto);
     }
 
-    /**
-     * 判断名称是否重复
-     *
-     * @param dto
-     * @return
-     */
     @Override
     public boolean isNameUnique(ChainDetailDTO dto) {
         log.info("校验名字是否重复，名字为：{}", dto.getChainName());
@@ -155,14 +141,6 @@ public class ChainServiceImpl implements ChainService {
         return true;
     }
 
-    /**
-     * @MethodName: haveChildren
-     * @Description: 是否具有儿子节点，有返回true， 没有返回false
-     * @Param: [ids]
-     * @Return: boolean
-     * @Author: mumu
-     * @Date: 2019/9/25
-     **/
     @Override
     public boolean haveChildren(List<Long> ids) {
         //获得所有子节点
@@ -181,14 +159,6 @@ public class ChainServiceImpl implements ChainService {
         return false;
     }
 
-    /**
-     * @MethodName: updatePathAndParentIdBatch
-     * @Description: 批量更新path 和parentId，用于连琐树形结构用
-     * @Param: [chainDTOS]
-     * @Return: boolean
-     * @Author: mumu
-     * @Date: 2019/9/10
-     **/
     @Override
     public boolean updatePathAndParentIdBatch(List<ChainDTO> chainDTOS) {
         if (CollectionUtil.isEmpty(chainDTOS)) {
@@ -198,14 +168,6 @@ public class ChainServiceImpl implements ChainService {
         return chainDAO.updatePathAndParentIdBatch(chainDOS);
     }
 
-    /**
-     * @MethodName: updatePathAndParentId
-     * @Description: 更新连琐的path和parentId，修改或新增树节点用
-     * @Param: [chainDTO]
-     * @Return: java.lang.Boolean
-     * @Author: mumu
-     * @Date: 2019/9/25
-     **/
     @Override
     public Boolean updatePathAndParentId(ChainDTO chainDTO) {
         if (chainDTO == null) {
@@ -215,14 +177,6 @@ public class ChainServiceImpl implements ChainService {
         return chainDAO.updatePathAndParentId(chainDO);
     }
 
-    /**
-     * @MethodName: getChainTreeNode
-     * @Description: 获取展示三层的整棵树节点
-     * @Param: []
-     * @Return: java.util.List<com.deepexi.channel.domain.chain.ChainDTO>
-     * @Author: mumu
-     * @Date: 2019/9/10
-     **/
     @Override
     public List<ChainDTO> getChainTreeNode() {
         List<ChainDO> chainDOS = chainDAO.getChainTreeNode();
@@ -233,14 +187,7 @@ public class ChainServiceImpl implements ChainService {
         return chainDTOS;
     }
 
-    /**
-     * @MethodName: resetTree
-     * @Description: 重置整一棵树
-     * @Param: []
-     * @Return: java.lang.Boolean
-     * @Author: mumu
-     * @Date: 2019/9/10
-     **/
+
     @Override
     public Boolean resetTree() {
         ChainDTO dto = new ChainDTO();
