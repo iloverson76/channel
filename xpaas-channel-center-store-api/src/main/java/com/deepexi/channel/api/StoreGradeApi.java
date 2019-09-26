@@ -56,6 +56,15 @@ public interface StoreGradeApi {
     Boolean update(@PathVariable(value = "id") Long id, @RequestBody StoreGradeDTO dto);
 
     /**
+     * 批量更新门店等级
+     *
+     * @param dtos 门店等级dto列表
+     * @return
+     */
+    @PutMapping("/updateBatch")
+    Boolean updateBatch(@RequestBody List<StoreGradeDTO> dtos);
+
+    /**
      * 创建门店等级
      *
      * @param dto 门店等级dto
@@ -63,6 +72,15 @@ public interface StoreGradeApi {
      */
     @PostMapping
     Long create(@RequestBody StoreGradeDTO dto);
+
+    /**
+     * 批量创建门店等级
+     *
+     * @param dtos 门店等级列表
+     * @return
+     */
+    @PostMapping("/createBatch")
+    Boolean createBatch(List<StoreGradeDTO> dtos);
 
     /**
      * 批量删除

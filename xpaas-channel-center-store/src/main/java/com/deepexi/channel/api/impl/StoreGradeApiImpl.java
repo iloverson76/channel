@@ -46,8 +46,18 @@ public class StoreGradeApiImpl implements StoreGradeApi {
     }
 
     @Override
+    public Boolean updateBatch(@RequestBody List<StoreGradeDTO> dtos) {
+        return storeGradeService.updateBatch(dtos);
+    }
+
+    @Override
     public Long create(@RequestBody StoreGradeDTO dto) {
         return storeGradeService.create(dto);
+    }
+
+    @Override
+    public Boolean createBatch(@RequestBody List<StoreGradeDTO> dtos) {
+        return storeGradeService.createBatch(dtos);
     }
 
     @Override

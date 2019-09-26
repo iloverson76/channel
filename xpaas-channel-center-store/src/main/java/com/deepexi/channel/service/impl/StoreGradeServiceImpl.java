@@ -60,10 +60,26 @@ public class StoreGradeServiceImpl implements StoreGradeService {
     }
 
     @Override
+    public Boolean updateBatch(List<StoreGradeDTO> dtos) {
+        if (CollectionUtil.isEmpty(dtos)) {
+            return false;
+        }
+        return storeGradeDAO.updateBatchById(ObjectCloneUtils.convertList(dtos, StoreGradeDO.class));
+    }
+
+    @Override
     public Long create(StoreGradeDTO dto) {
         StoreGradeDO storeGradeDO = dto.clone(StoreGradeDO.class);
         storeGradeDAO.save(storeGradeDO);
         return storeGradeDO.getId();
+    }
+
+    @Override
+    public Boolean createBatch(List<StoreGradeDTO> dtos) {
+        if (CollectionUtil.isEmpty(dtos)) {
+            return false;
+        }
+        return storeGradeDAO.saveBatch(ObjectCloneUtils.convertList(dtos, StoreGradeDO.class));
     }
 
     @Override
