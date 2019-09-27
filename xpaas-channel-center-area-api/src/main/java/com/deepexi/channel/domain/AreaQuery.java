@@ -30,11 +30,6 @@ public class AreaQuery extends CommQuery {
     private List<Long> areatypeIds;
 
     /**
-     * 默认展开层级
-     */
-    private Long defalutLevel;
-
-    /**
      * 区域名称
      */
     @ApiModelProperty("区域名称")
