@@ -13,7 +13,7 @@ public interface AreaMapper extends BaseMapper<AreaDO> {
 
     List<AreaDO> listAreaPage(AreaQuery query);
 
-    List<AreaDO> findTree();
+    List<AreaDO> findTree(Integer level);
 
     List<String> listAreaCode();
 

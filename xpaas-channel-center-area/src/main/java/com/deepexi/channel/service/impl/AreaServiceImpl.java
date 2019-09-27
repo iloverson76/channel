@@ -161,9 +161,9 @@ public class AreaServiceImpl implements AreaService{
     }
 
     @Override
-    public List<AreaDTO> findTree() {
+    public List<AreaDTO> findTree(Integer level) {
 
-        List<AreaDO> areaList = areaDAO.findTree();
+        List<AreaDO> areaList = areaDAO.findTree(level);
 
         if(CollectionUtils.isEmpty(areaList)){
             return Collections.emptyList();

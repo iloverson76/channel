@@ -59,9 +59,9 @@ public class AreaDAOImpl extends ServiceImpl<AreaMapper, AreaDO> implements Area
     }
 
     @Override
-    public List<AreaDO> findTree() {
+    public List<AreaDO> findTree(Integer level) {
 
-        return areaMapper.findTree();
+        return areaMapper.findTree(level);
     }
 
     @Override

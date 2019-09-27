@@ -216,7 +216,10 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
         log.info("区域树构建");
 
         //默认展开三级
-        List<AreaDTO> areaList=areaService.findTree();
+
+        Integer level=query.getLevel ()==null? 3 :query.getLevel ();
+
+        List<AreaDTO> areaList=areaService.findTree(level);
 
         if(CollectionUtils.isEmpty(areaList)){
             return Collections.emptyList();

@@ -25,8 +25,10 @@ public class AreaTreeQuery extends CommQuery {
     private static final long serialVersionUID = 1L;
 
     /**
-     *
+     * 树展开层级
      */
+    private Integer level;
+
     private List<Long> areaTypeIds;
 
     private Long areaId;

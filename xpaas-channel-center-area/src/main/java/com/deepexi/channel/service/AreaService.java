@@ -85,9 +85,10 @@ public interface AreaService {
 
     /**
      * 查找区域区域树
+     * @param level 展开层级
      * @return 区域树集合
      */
-    List<AreaDTO> findTree();
+    List<AreaDTO> findTree(Integer level);
 
     /**
      * 获取所有的区域编码
