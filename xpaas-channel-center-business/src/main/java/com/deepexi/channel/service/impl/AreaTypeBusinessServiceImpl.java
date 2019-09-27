@@ -137,6 +137,8 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
     @Override
     public List<AreaBusiDTO> listLinkedAreas(Long pk) {
 
+        log.info ( "层级元素列表查询" );
+
         //pk=0选全部
         if(pk<0){
             return Collections.emptyList();
@@ -186,7 +188,31 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
             }
         });
 
+        setParentTypeId(areaBusiList);
+
         return areaBusiList;
+    }
+
+    /**
+     * 设置父级分类ID
+     */
+    private void setParentTypeId(List<AreaBusiDTO> areaBusiDTOList){
+
+        Map<Long,AreaBusiDTO> areaMap=areaBusiDTOList.stream().collect(Collectors.toMap(AreaBusiDTO::getId, c->c));
+
+        areaBusiDTOList.forEach ( area->{
+
+            Long parentId=area.getParentId ();
+
+            //如果有上级,则设置上级分类的ID
+            if(parentId>0){
+
+                Long parentTypeId=areaMap.get ( parentId ).getAreaTypeId ();
+
+                area.setParentTypeId ( parentTypeId );
+            }
+
+        } );
     }
 
     @Override
@@ -222,7 +248,7 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
 
     @Override
     public List<AreaTypeDTO> getListAreaType(List<Long> ids) {
-        AreaTypeQuery query = new AreaTypeQuery();
+        AreaTypeQuery query = AreaTypeQuery.builder ().build ();
         if (CollectionUtil.isEmpty(ids)){
             List<AreaTypeDTO> list = areaTypeService.listAreaTypePage(query);
             return list;
@@ -288,9 +314,7 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
                 }
             }
 
-            AreaTypeQuery query = new AreaTypeQuery();
-
-            query.setIds(parentIds);
+            AreaTypeQuery query =AreaTypeQuery.builder ().ids ( parentIds ).build ();
 
             resultList=areaTypeService.listAreaTypePage(query);
         }
@@ -394,7 +418,7 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
 
         log.info("查询没有下级的节点");
 
-        AreaTypeQuery query = new AreaTypeQuery();
+        AreaTypeQuery query = AreaTypeQuery.builder ().build ();
 
         if(CollectionUtil.isNotEmpty(idList)){
             query.setIds(idList);

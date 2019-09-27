@@ -3,6 +3,7 @@ package com.deepexi.channel.domain;
 import com.deepexi.channel.domain.CommQuery;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -18,6 +19,7 @@ import java.util.List;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@Builder
 @ApiModel("区域类型查询")
 public class AreaTypeQuery extends CommQuery {
 

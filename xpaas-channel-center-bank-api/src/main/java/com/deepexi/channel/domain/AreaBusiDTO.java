@@ -29,6 +29,11 @@ public class AreaBusiDTO extends AbstractObject {
     private AreaTypeDTO areaType;
 
     /**
+     * 父级分类ID
+     */
+    private Long ParentTypeId;
+
+    /**
      * 父节点ID
      */
     private Long parentId;
