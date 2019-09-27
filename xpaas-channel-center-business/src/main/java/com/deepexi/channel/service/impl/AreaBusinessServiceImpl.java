@@ -241,7 +241,9 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
             return Collections.emptyList();
         }
 
-        List<AreaTypeDTO> typeDTOS = areaTypeService.listAreaTypePage(AreaTypeQuery.builder ().build ());
+        AreaTypeQuery query = new AreaTypeQuery ();
+
+        List<AreaTypeDTO> typeDTOS = areaTypeService.listAreaTypePage(query);
 
         if(CollectionUtils.isNotEmpty(typeDTOS)){
 

@@ -19,7 +19,6 @@ import java.util.List;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Builder
 @ApiModel("区域类型查询")
 public class AreaTypeQuery extends CommQuery {
 

@@ -248,7 +248,7 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
 
     @Override
     public List<AreaTypeDTO> getListAreaType(List<Long> ids) {
-        AreaTypeQuery query = AreaTypeQuery.builder ().build ();
+        AreaTypeQuery query = new AreaTypeQuery();
         if (CollectionUtil.isEmpty(ids)){
             List<AreaTypeDTO> list = areaTypeService.listAreaTypePage(query);
             return list;
@@ -314,7 +314,9 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
                 }
             }
 
-            AreaTypeQuery query =AreaTypeQuery.builder ().ids ( parentIds ).build ();
+            AreaTypeQuery query =new AreaTypeQuery();
+
+            query.setIds (parentIds);
 
             resultList=areaTypeService.listAreaTypePage(query);
         }
@@ -418,7 +420,7 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
 
         log.info("查询没有下级的节点");
 
-        AreaTypeQuery query = AreaTypeQuery.builder ().build ();
+        AreaTypeQuery query = new AreaTypeQuery ();
 
         if(CollectionUtil.isNotEmpty(idList)){
             query.setIds(idList);
