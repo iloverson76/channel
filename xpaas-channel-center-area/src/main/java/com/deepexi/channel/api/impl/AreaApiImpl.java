@@ -71,8 +71,8 @@ public class AreaApiImpl implements AreaApi {
     }
 
     @Override
-    public List<AreaDTO> findTree() {
-        return areaService.findTree ();
+    public List<AreaDTO> findTree(Integer level) {
+        return areaService.findTree (level);
     }
 
     @Override

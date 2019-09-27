@@ -101,7 +101,7 @@ public interface AreaApi {
      * @return 区域树集合
      */
     @GetMapping("/area/findTree")
-    List<AreaDTO> findTree();
+    List<AreaDTO> findTree(Integer level);
 
     /**
      * 获取所有的区域编码
