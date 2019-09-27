@@ -56,7 +56,7 @@ public class ChainController {
 
     @PutMapping("/{id}")
     @ApiOperation(value = "根据id修改", notes = "根据id修改连锁")
-    public Payload<Boolean> update(@PathVariable(value = "id", required = true) Long id,@RequestBody ChainDetailVO vo) {
+    public Payload<Boolean> update(@PathVariable(value = "id", required = true) Long id,@Valid @RequestBody ChainDetailVO vo) {
         if(vo == null){
             return new Payload(false);
         }
