@@ -161,4 +161,10 @@ public interface AreaBusinessService {
      * @return 是否成功
      */
     boolean treeDeleteNode(Long pk);
+
+    /**
+     * 设置父级分类ID
+     * @param areaBusiList
+     */
+    void setParentTypeId(List<AreaBusiDTO> areaBusiList);
 }

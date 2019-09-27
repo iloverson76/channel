@@ -3,6 +3,7 @@ package com.deepexi.channel.service.impl;
 import com.deepexi.channel.domain.*;
 import com.deepexi.channel.enums.ForceDeleteEnum;
 import com.deepexi.channel.enums.ResultEnum;
+import com.deepexi.channel.service.AreaBusinessService;
 import com.deepexi.channel.service.AreaService;
 import com.deepexi.channel.service.AreaTypeBusinessService;
 import com.deepexi.channel.service.AreaTypeService;
@@ -29,6 +30,9 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
 
     @Autowired
     AreaTypeService areaTypeService;
+
+    @Autowired
+    AreaBusinessService areaBusinessService;
 
     @Override
     public Long createAreaType(AreaTypeDTO dto) {
@@ -188,40 +192,9 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
             }
         });
 
-        setParentTypeId(areaBusiList);
+        areaBusinessService.setParentTypeId(areaBusiList);
 
         return areaBusiList;
-    }
-
-    /**
-     * 设置父级分类ID
-     */
-    private void setParentTypeId(List<AreaBusiDTO> areaBusiDTOList){
-
-        log.info ( "设置父级分类ID" );
-
-        //必须查全表数据
-        List<AreaDTO> pageList=areaService.findPage(new AreaQuery (  ));
-
-        if(CollectionUtils.isEmpty ( pageList )){
-            return;
-        }
-
-        Map<Long,AreaDTO> areaMap=pageList.stream().collect(Collectors.toMap(AreaDTO::getId, c->c));
-
-        areaBusiDTOList.forEach ( area->{
-
-            Long parentId=area.getParentId ();
-
-            //如果有上级,则设置上级分类的ID
-            if(parentId>0){
-
-                Long parentTypeId=areaMap.get ( parentId ).getAreaTypeId ();
-
-                area.setParentTypeId ( parentTypeId );
-            }
-
-        } );
     }
 
     @Override

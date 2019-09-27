@@ -160,18 +160,21 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
     /**
      * 设置父级分类ID
      */
-    private void setParentTypeId(List<AreaBusiDTO> areaBusiDTOList){
+    @Override
+    public void setParentTypeId(List<AreaBusiDTO> areaBusiDTOList){
 
         log.info ( "设置父级分类ID" );
 
         //必须查全表数据
-       List<AreaDTO> pageList=areaService.findPage(new AreaQuery (  ));
+     //  List<AreaDTO> pageList=areaService.findPage(new AreaQuery (  ));
+
+       List<AreaTypeDTO> pageList=areaTypeService.listAreaTypePage ( new AreaTypeQuery () );
 
         if(CollectionUtils.isEmpty ( pageList )){
             return;
         }
 
-        Map<Long,AreaDTO> areaMap=pageList.stream().collect(Collectors.toMap(AreaDTO::getId, c->c));
+        Map<Long,AreaTypeDTO> areaMap=pageList.stream().collect(Collectors.toMap(AreaTypeDTO::getId, c->c));
 
         areaBusiDTOList.forEach ( area->{
 
@@ -180,9 +183,14 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
             //如果有上级,则设置上级分类的ID
             if(parentId>0){
 
-                Long parentTypeId=areaMap.get ( parentId ).getAreaTypeId ();
+                Long parentTypeId=area.getAreaTypeId ();
 
-                area.setParentTypeId ( parentTypeId );
+                if(parentTypeId>0){
+
+                    Long upperTypeId=areaMap.get ( parentTypeId ).getId ();
+
+                    area.setParentTypeId ( upperTypeId );
+                }
             }
 
         } );
