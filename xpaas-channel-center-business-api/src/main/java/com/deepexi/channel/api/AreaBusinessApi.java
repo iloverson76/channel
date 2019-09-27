@@ -184,4 +184,11 @@ public interface AreaBusinessApi {
      */
     @DeleteMapping("/areaBusi/treeDeleteNode/{id}")
     boolean treeDeleteNode(@PathVariable(value = "id") Long pk);
+
+    /**
+     * 设置父级分类ID
+     * @param areaBusiList
+     */
+    @GetMapping("/setParentTypeId")
+    void setParentTypeId(@RequestBody List<AreaBusiDTO> areaBusiList);
 }

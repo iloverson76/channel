@@ -128,4 +128,9 @@ public class AreaBusiessApiImpl implements AreaBusinessApi {
     public boolean treeDeleteNode(Long pk) {
         return areaBusinessService.treeDeleteNode ( pk );
     }
+
+    @Override
+    public void setParentTypeId(List<AreaBusiDTO> areaBusiList) {
+        areaBusinessService.setParentTypeId ( areaBusiList );
+    }
 }
