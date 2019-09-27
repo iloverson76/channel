@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -42,6 +43,7 @@ public class BankAccountVO extends AbstractObject {
     /**
      * 银行id
      */
+    @NotNull(message = "银行账号必须选择所属银行")
     @ApiModelProperty(value = "银行id")
     private Long bankId;
 
@@ -54,6 +56,7 @@ public class BankAccountVO extends AbstractObject {
     /**
      * 银行账号
      */
+    @NotNull(message = "银行账号不能为空")
     @ApiModelProperty(value = "银行账号")
     private String accountNo;
 

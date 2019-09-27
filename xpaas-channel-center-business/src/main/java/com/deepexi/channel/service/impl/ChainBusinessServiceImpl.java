@@ -304,7 +304,10 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
             c.setPath(dto.getPath() + "/" + c.getId());
             saveChainDTOS.add(c);
             //递归，把儿子的所有节点的parent_id和path都更新
-            saveChainDTOS.addAll(this.recursionTree(c));
+            List<ChainDTO> recursionList = this.recursionTree(c);
+            if(CollectionUtil.isNotEmpty(recursionList)){
+                saveChainDTOS.addAll(recursionList);
+            }
         });
         return saveChainDTOS;
     }
@@ -334,7 +337,10 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
             //根节点加入更新列表
             chainDTOS.add(dto);
             //根节点的所有子节点加入更新列表
-            chainDTOS.addAll(this.recursionTree(dto));
+            List<ChainDTO> recursionList = this.recursionTree(dto);
+            if(CollectionUtil.isNotEmpty(recursionList)){
+                chainDTOS.addAll(recursionList);
+            }
         });
 
         //批量更新所有节点的parentId与path
@@ -552,7 +558,10 @@ public class ChainBusinessServiceImpl implements ChainBusinessService {
             dtos.add(chainDTO);
         }
         ChainQuery query = ChainQuery.builder().path("/" + id + "/").build();
-        dtos.addAll(chainService.findPage(query));
+        List<ChainDTO> children = chainService.findPage(query);
+        if(CollectionUtil.isNotEmpty(children)){
+            dtos.addAll(children);
+        }
         //批量设置path为空,parentId为0
         this.removePathAndParentId(dtos);
         return chainService.updatePathAndParentIdBatch(dtos);

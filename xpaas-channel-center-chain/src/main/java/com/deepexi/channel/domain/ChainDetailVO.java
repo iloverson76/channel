@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.Valid;
 import java.util.List;
 /**
  * @author mumu
@@ -18,6 +19,7 @@ import java.util.List;
 @ApiModel("连锁详情")
 public class ChainDetailVO extends ChainVO {
     @ApiModelProperty("银行账号列表")
+    @Valid
     private List<BankAccountVO> bankAccountList;
 
     /**

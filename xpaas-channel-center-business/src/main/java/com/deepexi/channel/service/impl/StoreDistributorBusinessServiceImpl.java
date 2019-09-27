@@ -80,7 +80,9 @@ public class StoreDistributorBusinessServiceImpl implements StoreDistributorBusi
                 List<DistributorGradeRelationDTO> distributorGradeRelationDTOS = distributorGradeRelationService.findAllByGradeIds(new LinkedList<>(distributroGradeParentIds));
                 if(CollectionUtil.isNotEmpty(distributorGradeRelationDTOS)){
                     Set distributorIds2 = distributorGradeRelationDTOS.stream().map(DistributorGradeRelationDTO::getDistributorId).collect(Collectors.toSet());
-                    distributorIds.addAll(distributorIds2);
+                    if(CollectionUtil.isNotEmpty(distributorIds2)){
+                        distributorIds.addAll(distributorIds2);
+                    }
                     Map<Long,List<DistributorGradeRelationDTO>> parent2DistributorMap = distributorGradeRelationDTOS.stream().collect(Collectors.groupingBy(DistributorGradeRelationDTO::getGradeId));
                     //等级id->上级经销商id列表
                     distributorGradeDTOS.forEach(d->{
