@@ -80,7 +80,7 @@ public class AreaController {
 
     @GetMapping()
     @ApiOperation("查询区域列表-分页查询")
-    public Payload<PageBean<AreaBusiVO>> listAreaPage(@ApiParam(name = "query", required = true) AreaQuery query) {
+    public Payload<PageBean<AreaBusiVO>> findPage(@ApiParam(name = "query", required = true) AreaQuery query) {
 
         List<AreaBusiDTO> dtoList = areaBusinessService.findPage(query);
 

@@ -198,6 +198,8 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
      */
     private void setParentTypeId(List<AreaBusiDTO> areaBusiDTOList){
 
+        log.info ( "设置父级分类ID" );
+
         Map<Long,AreaBusiDTO> areaMap=areaBusiDTOList.stream().collect(Collectors.toMap(AreaBusiDTO::getId, c->c));
 
         areaBusiDTOList.forEach ( area->{

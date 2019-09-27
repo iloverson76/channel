@@ -151,7 +151,34 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
                 });
             }
         }
+
+        setParentTypeId(areaBusiDTOList);
+
         return areaBusiDTOList;
+    }
+
+    /**
+     * 设置父级分类ID
+     */
+    private void setParentTypeId(List<AreaBusiDTO> areaBusiDTOList){
+
+        log.info ( "设置父级分类ID" );
+
+        Map<Long,AreaBusiDTO> areaMap=areaBusiDTOList.stream().collect(Collectors.toMap(AreaBusiDTO::getId, c->c));
+
+        areaBusiDTOList.forEach ( area->{
+
+            Long parentId=area.getParentId ();
+
+            //如果有上级,则设置上级分类的ID
+            if(parentId>0){
+
+                Long parentTypeId=areaMap.get ( parentId ).getAreaTypeId ();
+
+                area.setParentTypeId ( parentTypeId );
+            }
+
+        } );
     }
 
     @Override
