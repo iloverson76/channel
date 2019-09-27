@@ -1,7 +1,7 @@
 package com.deepexi.channel.api;
 
 import com.deepexi.channel.domain.AreaBusiDTO;
-import com.deepexi.channel.domain.AreaTypeDTO;
+import com.deepexi.channel.domain.AreaTypeBusiDTO;
 import com.deepexi.channel.domain.AreaTypeQuery;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +28,7 @@ public interface AreaTypeBusinessApi {
      * @return 区域分类集合
      */
     @GetMapping("/areaTypeBusi/page")
-    List<AreaTypeDTO> findPage(@RequestBody AreaTypeQuery query);
+    List<AreaTypeBusiDTO> findPage(@RequestBody AreaTypeQuery query);
 
     /**
      * 获取分类链路集合
@@ -36,7 +36,7 @@ public interface AreaTypeBusinessApi {
      * @return 分类集合
      */
     @GetMapping("/areaTypeBusi/getListAreaType")
-    List<AreaTypeDTO> getListAreaType(@RequestBody List<Long> ids);
+    List<AreaTypeBusiDTO> getListAreaType(@RequestBody List<Long> ids);
 
     /**
      * 获取所有上级分类
@@ -44,7 +44,7 @@ public interface AreaTypeBusinessApi {
      * @return 区域分类集合
      */
     @GetMapping("/areaTypeBusi/findParentAreaTypeByAreaId/{areaId}")
-    List<AreaTypeDTO> findParentAreaTypeByAreaId(@PathVariable(value = "areaId") Long areaId);
+    List<AreaTypeBusiDTO> findParentAreaTypeByAreaId(@PathVariable(value = "areaId") Long areaId);
 
     /**
      *批量删除区域分类
@@ -61,7 +61,7 @@ public interface AreaTypeBusinessApi {
      * @return 是否成功
      */
     @PutMapping("/areaTypeBusi")
-    boolean update(@RequestBody AreaTypeDTO dto);
+    boolean update(@RequestBody AreaTypeBusiDTO dto);
 
     /**
      * 更新分类时获取可用的上级
@@ -69,14 +69,14 @@ public interface AreaTypeBusinessApi {
      * @return 分类集合
      */
     @GetMapping("/areaTypeBusi/listParentNodesForUpdate/{id}")
-    List<AreaTypeDTO> listParentNodesForUpdate(@PathVariable(value = "id") Long id);
+    List<AreaTypeBusiDTO> listParentNodesForUpdate(@PathVariable(value = "id") Long id);
 
     /**
      * 新建分类时获取可用的上级
      * @return 分类集合
      */
     @GetMapping("/areaTypeBusi/listParentNodesForCreate")
-    List<AreaTypeDTO> listParentNodesForCreate();
+    List<AreaTypeBusiDTO> listParentNodesForCreate();
 
     /**
      * 删除分类
@@ -106,7 +106,7 @@ public interface AreaTypeBusinessApi {
      * @return 新增记录ID
      */
     @PostMapping("/areaTypeBusi")
-    Long createAreaType(@RequestBody AreaTypeDTO dto);
+    Long createAreaType(@RequestBody AreaTypeBusiDTO dto);
 
     /**
      * 校验分类编码是否重复
@@ -135,5 +135,5 @@ public interface AreaTypeBusinessApi {
      * @return
      */
     @GetMapping("/areaTypeBusi/detail/{id}")
-    AreaTypeDTO detail(@PathVariable(value = "id") Long id);
+    AreaTypeBusiDTO detail(@PathVariable(value = "id") Long id);
 }

@@ -45,9 +45,9 @@ public class AreaTypeController {
 
     @PostMapping()
     @ApiOperation(value = "新增区域类型")
-    public Payload<Long> saveAreaType(@RequestBody AreaTypeVO vo) {
+    public Payload<Long> saveAreaType(@RequestBody AreaTypeBusiVO vo) {
 
-        AreaTypeDTO dto = vo.clone(AreaTypeDTO.class, CloneDirection.FORWARD);
+        AreaTypeBusiDTO dto = vo.clone(AreaTypeBusiDTO.class, CloneDirection.FORWARD);
 
         Long newId=areaTypeBusinessService.createAreaType(dto);
 
@@ -76,11 +76,11 @@ public class AreaTypeController {
 
     @PutMapping("/{id}")
     @ApiOperation(value = "修改区域类型")
-    public Payload<Boolean> updateAreaTypeById(@PathVariable(value = "id", required = true) Long pk,@RequestBody AreaTypeVO vo) {
+    public Payload<Boolean> updateAreaTypeById(@PathVariable(value = "id", required = true) Long pk,@RequestBody AreaTypeBusiVO vo) {
 
         vo.setId(pk);
 
-        AreaTypeDTO dto = vo.clone(AreaTypeDTO.class, CloneDirection.FORWARD);
+        AreaTypeBusiDTO dto = vo.clone(AreaTypeBusiDTO.class, CloneDirection.FORWARD);
 
         boolean result = areaTypeBusinessService.update(dto);
 
@@ -89,44 +89,44 @@ public class AreaTypeController {
 
     @GetMapping("/{id}")
     @ApiOperation("根据id获取区域分类详情")
-    public Payload<AreaTypeVO> getAreaTypeById(@PathVariable Long id) {
+    public Payload<AreaTypeBusiVO> getAreaTypeById(@PathVariable Long id) {
 
-        AreaTypeDTO dto = areaTypeBusinessService.detail(id);
+        AreaTypeBusiDTO dto = areaTypeBusinessService.detail(id);
 
-        AreaTypeVO vo = dto.clone(AreaTypeVO.class, CloneDirection.OPPOSITE);
+        AreaTypeBusiVO vo = dto.clone(AreaTypeBusiVO.class, CloneDirection.OPPOSITE);
 
         return new Payload<>(vo);
     }
 
     @GetMapping()
     @ApiOperation("查询区域类型列表")
-    public Payload<PageBean<AreaTypeVO>> listAreaTypePage(@ApiParam(name = "query", required = true) AreaTypeQuery query) {
+    public Payload<PageBean<AreaTypeBusiVO>> listAreaTypePage(@ApiParam(name = "query", required = true) AreaTypeQuery query) {
 
-        List<AreaTypeDTO> dtoList = areaTypeBusinessService.findPage(query);
+        List<AreaTypeBusiDTO> dtoList = areaTypeBusinessService.findPage(query);
 
-        List<AreaTypeVO> voList = ObjectCloneUtils.convertList(dtoList, AreaTypeVO.class);
+        List<AreaTypeBusiVO> voList = ObjectCloneUtils.convertList(dtoList, AreaTypeBusiVO.class);
 
         return new Payload<>(new PageBean<>(voList));
     }
 
     @GetMapping("/limitedCreate")
     @ApiOperation("查询未受分类限制上级-新增用")
-    public Payload<PageBean<AreaTypeVO>> listParentForCreate() {
+    public Payload<PageBean<AreaTypeBusiVO>> listParentForCreate() {
 
-        List<AreaTypeDTO> dtoList = areaTypeBusinessService.listParentNodesForCreate();
+        List<AreaTypeBusiDTO> dtoList = areaTypeBusinessService.listParentNodesForCreate();
 
-        List<AreaTypeVO> voList = ObjectCloneUtils.convertList(dtoList, AreaTypeVO.class);
+        List<AreaTypeBusiVO> voList = ObjectCloneUtils.convertList(dtoList, AreaTypeBusiVO.class);
 
         return new Payload<>(new PageBean<>(voList));
     }
 
     @GetMapping("/limitedUpdaTe/{id:[0-9,]+}")
     @ApiOperation("查询未受分类限制上级-更新用")
-    public Payload<PageBean<AreaTypeVO>> listParentForUpdate(@PathVariable Long id) {
+    public Payload<PageBean<AreaTypeBusiVO>> listParentForUpdate(@PathVariable Long id) {
 
-        List<AreaTypeDTO> dtoList = areaTypeBusinessService.listParentNodesForUpdate(id);
+        List<AreaTypeBusiDTO> dtoList = areaTypeBusinessService.listParentNodesForUpdate(id);
 
-        List<AreaTypeVO> voList = ObjectCloneUtils.convertList(dtoList, AreaTypeVO.class);
+        List<AreaTypeBusiVO> voList = ObjectCloneUtils.convertList(dtoList, AreaTypeBusiVO.class);
 
         return new Payload<>(new PageBean<>(voList));
     }
@@ -145,13 +145,13 @@ public class AreaTypeController {
 
         dtoList.forEach(dto->{
 
-            AreaTypeVO areaTypeVO=dto.getAreaType().clone(AreaTypeVO.class,CloneDirection.OPPOSITE);
+            AreaTypeBusiVO areaTypeBusiVO=dto.getAreaType().clone(AreaTypeBusiVO.class,CloneDirection.OPPOSITE);
 
             AreaBusiVO vo= new AreaBusiVO();
 
             BeanUtils.copyProperties(dto,vo);
 
-            vo.setAreaType(areaTypeVO);
+            vo.setAreaType(areaTypeBusiVO);
 
             voList.add(vo);
         });
@@ -166,15 +166,15 @@ public class AreaTypeController {
         if (StringUtil.isNotEmpty(linkIds)){
             ids = Arrays.stream(linkIds.split(",")).map(Long::parseLong).collect(Collectors.toList());
         }
-        List<AreaTypeDTO> listAreaType = areaTypeBusinessService.getListAreaType(ids);
-        List<AreaTypeVO> areaTypeVOList = ObjectCloneUtils.convertList(listAreaType, AreaTypeVO.class, CloneDirection.OPPOSITE);
-        if (CollectionUtil.isEmpty(areaTypeVOList)){
+        List<AreaTypeBusiDTO> listAreaType = areaTypeBusinessService.getListAreaType(ids);
+        List<AreaTypeBusiVO> areaTypeBusiVOList = ObjectCloneUtils.convertList(listAreaType, AreaTypeBusiVO.class, CloneDirection.OPPOSITE);
+        if (CollectionUtil.isEmpty(areaTypeBusiVOList)){
             return new Payload<>();
         }
         AreaTypeListLinkVO vo = new AreaTypeListLinkVO();
-        Set<Long> setMap = areaTypeVOList.stream().filter(s->null!=s.getLinkId()).map(AreaTypeVO::getLinkId).collect(Collectors.toSet());
+        Set<Long> setMap = areaTypeBusiVOList.stream().filter(s->null!=s.getLinkId()).map(AreaTypeBusiVO::getLinkId).collect(Collectors.toSet());
         vo.setLinkType(setMap.size());
-        vo.setAreaType(areaTypeVOList);
+        vo.setAreaType(areaTypeBusiVOList);
         return new Payload<>(vo);
     }
 

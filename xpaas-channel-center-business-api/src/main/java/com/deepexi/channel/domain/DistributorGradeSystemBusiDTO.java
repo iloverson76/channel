@@ -1,63 +1,49 @@
 package com.deepexi.channel.domain;
 
 import com.deepexi.util.pojo.AbstractObject;
-import io.swagger.annotations.ApiModel;
 import lombok.*;
 
-import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 /**
  * <p>
- * 区域表
+ * 等级体系表
  * </p>
  *
- * @author jobob
- * @since 2019-08-23
+ * @author chp
+ * @since 2019-08-26
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ApiModel(value="区域树")
-public class AreaTreeVO extends AbstractObject implements Serializable {
+public class DistributorGradeSystemBusiDTO extends AbstractObject {
 
     private static final long serialVersionUID = 1L;
 
     private Long id;
 
-    private String path;
-
-    private Set<AreaTreeVO> children;
-
-    private AreaTypeBusiVO areaType;
+    /**
+     * 挂载的等级
+     */
+    private List<DistributorGradeDTO> grades;
 
     /**
-     * 父节点ID
+     * 等级体系名称
      */
-    private Long parentId;
+    private String gradeSystemName;
 
     /**
-     * 区域分类ID
+     * 等级体系名称-英文
      */
-    private Long areaTypeId;
+    private String gradeSystemNameEn;
 
     /**
-     * 区域名称
+     * 等级体系编码
      */
-    private String areaName;
-
-    /**
-     * 区域编码
-     */
-    private String areaCode;
-
-    /**
-     * 区域英文名称
-     */
-    private String areaNameEn;
+    private String gradeSystemCode;
 
     /**
      * 描述

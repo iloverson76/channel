@@ -1,7 +1,7 @@
 package com.deepexi.channel.api.impl;
 
 import com.deepexi.channel.api.DistributorGradeBusinessApi;
-import com.deepexi.channel.domain.DistributorGradeDTO;
+import com.deepexi.channel.domain.DistributorGradeBusiDTO;
 import com.deepexi.channel.domain.DistributorGradeQuery;
 import com.deepexi.channel.service.DistributorGradeBusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,27 +21,27 @@ public class DistributorGradeBusinessApiImpl implements DistributorGradeBusiness
     DistributorGradeBusinessService distributorGradeBusinessService;
 
     @Override
-    public DistributorGradeDTO detail(Long gradeId) {
+    public DistributorGradeBusiDTO detail(Long gradeId) {
         return distributorGradeBusinessService.detail ( gradeId );
     }
 
     @Override
-    public List<DistributorGradeDTO> findPage(DistributorGradeQuery query) {
+    public List<DistributorGradeBusiDTO> findPage(DistributorGradeQuery query) {
         return distributorGradeBusinessService.findPage ( query );
     }
 
     @Override
-    public List<DistributorGradeDTO> findParentNodesForUpdate(Long systemId, Long gradeId) {
+    public List<DistributorGradeBusiDTO> findParentNodesForUpdate(Long systemId, Long gradeId) {
         return distributorGradeBusinessService.findParentNodesForUpdate ( systemId,gradeId );
     }
 
     @Override
-    public List<DistributorGradeDTO> findParentNodesForCreate(Long systemId) {
+    public List<DistributorGradeBusiDTO> findParentNodesForCreate(Long systemId) {
         return distributorGradeBusinessService.findParentNodesForCreate ( systemId );
     }
 
     @Override
-    public List<DistributorGradeDTO> findAllGradesBySystem(long systemId) {
+    public List<DistributorGradeBusiDTO> findAllGradesBySystem(long systemId) {
         return distributorGradeBusinessService.findAllGradesBySystem ( systemId );
     }
 
@@ -66,17 +66,17 @@ public class DistributorGradeBusinessApiImpl implements DistributorGradeBusiness
     }
 
     @Override
-    public Long create(DistributorGradeDTO dto) {
+    public Long create(DistributorGradeBusiDTO dto) {
         return distributorGradeBusinessService.create ( dto );
     }
 
     @Override
-    public Boolean update(DistributorGradeDTO dto) {
+    public Boolean update(DistributorGradeBusiDTO dto) {
         return distributorGradeBusinessService.update ( dto );
     }
 
     @Override
-    public List<DistributorGradeDTO> listChildrenNodes(Long id) {
+    public List<DistributorGradeBusiDTO> listChildrenNodes(Long id) {
         return distributorGradeBusinessService.listChildrenNodes ( id );
     }
 

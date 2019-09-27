@@ -1,6 +1,6 @@
 package com.deepexi.channel.service;
 
-import com.deepexi.channel.domain.DistributorGradeDTO;
+import com.deepexi.channel.domain.DistributorGradeBusiDTO;
 import com.deepexi.channel.domain.DistributorGradeQuery;
 
 import java.util.List;
@@ -17,14 +17,14 @@ public interface DistributorGradeBusinessService {
      * @param gradeId 等级ID
      * @return
      */
-    DistributorGradeDTO detail(Long gradeId);
+    DistributorGradeBusiDTO detail(Long gradeId);
 
     /**
      * 等级分页查询
      * @param query 查询条件
      * @return 等级集合
      */
-    List<DistributorGradeDTO> findPage(DistributorGradeQuery query);
+    List<DistributorGradeBusiDTO> findPage(DistributorGradeQuery query);
 
     /**
      * 更新等级时查询可用的上级
@@ -32,21 +32,21 @@ public interface DistributorGradeBusinessService {
      * @param gradeId 等级ID
      * @return 等级集合
      */
-    List<DistributorGradeDTO> findParentNodesForUpdate(Long systemId,Long gradeId);
+    List<DistributorGradeBusiDTO> findParentNodesForUpdate(Long systemId,Long gradeId);
 
     /**
      * 新增等级时查询可用的上级
      * @param systemId 体系ID
      * @return 等级集合
      */
-    List<DistributorGradeDTO> findParentNodesForCreate(Long systemId);
+    List<DistributorGradeBusiDTO> findParentNodesForCreate(Long systemId);
 
     /**
      * 根据体系查询所有的等级
      * @param systemId 体系ID
      * @return 等级集合
      */
-    List<DistributorGradeDTO> findAllGradesBySystem(long systemId);
+    List<DistributorGradeBusiDTO> findAllGradesBySystem(long systemId);
 
     /**
      * 批量删除等级
@@ -80,21 +80,21 @@ public interface DistributorGradeBusinessService {
      * @param dto 新增实体
      * @return 新增记录的ID
      */
-    Long create(DistributorGradeDTO dto);
+    Long create(DistributorGradeBusiDTO dto);
 
     /**
      * 更新等级
      * @param dto 更新实体
      * @return 是否成功
      */
-    Boolean update(DistributorGradeDTO dto);
+    Boolean update(DistributorGradeBusiDTO dto);
 
     /**
      * 获取所有下级
      * @param id 等级ID
      * @return 等级集合
      */
-    List<DistributorGradeDTO> listChildrenNodes(Long id);
+    List<DistributorGradeBusiDTO> listChildrenNodes(Long id);
 
     /**
      * 校验等级编码是否重复

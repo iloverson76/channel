@@ -32,9 +32,9 @@ public class DistributorController {
 
     @PostMapping
     @ApiOperation(value = "创建经销商")
-    public Payload<Boolean> create(@RequestBody DistributorVO vo) {
+    public Payload<Boolean> create(@RequestBody DistributorBusiVO vo) {
 
-        return new Payload(distributorBusinessService.create(vo.clone(DistributorDTO.class,CloneDirection.OPPOSITE)));
+        return new Payload(distributorBusinessService.create(vo.clone(DistributorBusiDTO.class,CloneDirection.OPPOSITE)));
     }
 
     @DeleteMapping("/{id:[0-9,]+}")
@@ -48,33 +48,33 @@ public class DistributorController {
 
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id查看经销商详情")
-    public Payload<DistributorVO> detail(@PathVariable(value = "id", required = true) Long id) {
+    public Payload<DistributorBusiVO> detail(@PathVariable(value = "id", required = true) Long id) {
 
-        DistributorDTO dto = distributorBusinessService.detail(id);
+        DistributorBusiDTO dto = distributorBusinessService.detail(id);
 
-        DistributorVO vo=dto.clone(DistributorVO.class,CloneDirection.OPPOSITE);
+        DistributorBusiVO vo=dto.clone(DistributorBusiVO.class,CloneDirection.OPPOSITE);
 
         return new Payload<>(vo);
     }
 
     @PutMapping("/{id}")
     @ApiOperation(value = "根据id修改")
-    public Payload<Boolean> update(@PathVariable(value = "id", required = true) Long pk, @RequestBody DistributorVO vo) {
+    public Payload<Boolean> update(@PathVariable(value = "id", required = true) Long pk, @RequestBody DistributorBusiVO vo) {
 
         vo.setId(pk);
 
-        distributorBusinessService.update(vo.clone(DistributorDTO.class, CloneDirection.FORWARD));
+        distributorBusinessService.update(vo.clone(DistributorBusiDTO.class, CloneDirection.FORWARD));
 
         return new Payload<>(Boolean.TRUE);
     }
 
     @GetMapping()
     @ApiOperation("查询经销商列表-分页查询")
-    public Payload<PageBean<DistributorVO>> listAreaPage(@ApiParam(name = "query", required = true) DistributorQuery query) {
+    public Payload<PageBean<DistributorBusiVO>> listAreaPage(@ApiParam(name = "query", required = true) DistributorQuery query) {
 
-        List<DistributorDTO> dtoList = distributorBusinessService.findPage(query);
+        List<DistributorBusiDTO> dtoList = distributorBusinessService.findPage(query);
 
-        List<DistributorVO> voList = ObjectCloneUtils.convertList(dtoList,DistributorVO.class,CloneDirection.FORWARD);
+        List<DistributorBusiVO> voList = ObjectCloneUtils.convertList(dtoList,DistributorBusiVO.class,CloneDirection.FORWARD);
 
         return new Payload<>(new PageBean<>(voList));
     }
@@ -90,13 +90,13 @@ public class DistributorController {
 
     @GetMapping("/parent/{gradeId}")
     @ApiOperation("按等级查询上级经销商")
-    public Payload<PageBean<DistributorVO>> listParentDistributorsByGrade(
+    public Payload<PageBean<DistributorBusiVO>> listParentDistributorsByGrade(
             @PathVariable(name = "gradeId", required = true) long gradeId) {
 
-        List<DistributorDTO> dtoList=
+        List<DistributorBusiDTO> dtoList=
         distributorBusinessService.listParentDistributorsByGrade(gradeId);
 
-        List<DistributorVO> voList= ObjectCloneUtils.convertList(dtoList,DistributorVO.class,
+        List<DistributorBusiVO> voList= ObjectCloneUtils.convertList(dtoList,DistributorBusiVO.class,
                 CloneDirection.OPPOSITE);
 
         return new Payload<>(new PageBean<>(voList));

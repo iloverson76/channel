@@ -6,6 +6,8 @@ import com.deepexi.channel.enums.ForceDeleteEnum;
 import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.service.*;
 import com.deepexi.util.extension.ApplicationException;
+import com.deepexi.util.pojo.CloneDirection;
+import com.deepexi.util.pojo.ObjectCloneUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,14 +54,14 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
     @Transient
     @Override
-    public long create(DistributorDTO distributor) {
+    public long create(DistributorBusiDTO distributor) {
 
         validateDistributorCode(distributor.getDistributorCode());
 
         validateDistributorName(distributor.getDistributorName());
 
         //经销商信息保存
-        long distId=distributorService.create(distributor);
+        long distId=distributorService.create(distributor.clone ( DistributorDTO.class,CloneDirection.FORWARD ));
 
         String createdBy=distributor.getCreatedBy();
         Date createdTime=distributor.getCreatedTime();
@@ -323,7 +325,7 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
 
     @Override
-    public List<DistributorDTO> findPage(DistributorQuery query) {
+    public List<DistributorBusiDTO> findPage(DistributorQuery query) {
 
         List<DistributorDTO> dtoList=distributorService.findPage(query);
 
@@ -331,9 +333,11 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
             return Collections.emptyList();
         }
 
+        List<DistributorBusiDTO> dtoBusiList = ObjectCloneUtils.convertList ( dtoList, DistributorBusiDTO.class, CloneDirection.FORWARD );
+
         List<Map<String, String>> list = DistributorTypeEnum.getTypeList();
 
-        dtoList.forEach(dto->{
+        dtoBusiList.forEach(dto->{
 
             for (Map<String, String> map : list) {
 
@@ -344,11 +348,11 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
             }
         });
 
-       return dtoList;
+       return dtoBusiList;
     }
 
     @Override
-    public boolean update(DistributorDTO dto) {
+    public boolean update(DistributorBusiDTO dto) {
 
         long distId=dto.getId();
 
@@ -443,15 +447,21 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
             distributorBankAccountRelationService.batchCreate(bankAccountInsertList);
         }
 
-        distributorService.update(dto);
+        distributorService.update(dto.clone ( DistributorDTO.class,CloneDirection.FORWARD ));
 
         return Boolean.TRUE;
     }
 
     @Override
-    public DistributorDTO detail(Long distributorId) {
+    public DistributorBusiDTO detail(Long distributorId) {
 
         DistributorDTO distributor = distributorService.getById(distributorId);
+
+        if(null==distributor){
+            return new DistributorBusiDTO();
+        }
+
+        DistributorBusiDTO busi = distributor.clone ( DistributorBusiDTO.class, CloneDirection.FORWARD );
 
         List<GradeInfoDTO> grades=getGradeInfo(distributorId);
 
@@ -462,19 +472,19 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
         //区域信息(查到根节点)
         if(CollectionUtils.isNotEmpty(areas)){
 
-            distributor.setArea(areas);
+            busi.setArea(areas);
         }
 
         //等级信息-经销商:等级:体系=1:1:N
         if(CollectionUtils.isNotEmpty(grades)){
 
-            distributor.setGradeInfo(grades);
+            busi.setGradeInfo(grades);
         }
 
         //银行账号信息
         if(CollectionUtils.isNotEmpty(bankAccounts)){
 
-            distributor.setBankAccount(bankAccounts);
+            busi.setBankAccount(bankAccounts);
         }
 
         //经销商类型中文描述
@@ -482,17 +492,17 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
         for (Map<String, String> map : list) {
 
-            if (distributor.getDistributorType() == Integer.valueOf(map.get("code"))) {
+            if (busi.getDistributorType() == Integer.valueOf(map.get("code"))) {
 
-                distributor.setDistributorTypeDesc(map.get("msg"));
+                busi.setDistributorTypeDesc(map.get("msg"));
             }
         }
 
-        return distributor;
+        return busi;
     }
 
     @Override
-    public List<DistributorDTO> listParentDistributorsByGrade(Long gradeId) {
+    public List<DistributorBusiDTO> listParentDistributorsByGrade(Long gradeId) {
 
         DistributorGradeDTO gradeDTO=distributorGradeService.getById(gradeId);
 
@@ -517,7 +527,7 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
         List<Long> distriburotIdList=new ArrayList<>(dgrDTOList.size());
 
-        List<DistributorDTO> DistributorDTOList=new ArrayList<>();
+        List<DistributorBusiDTO> busiLIst=new ArrayList<>();
 
         if(CollectionUtils.isNotEmpty(dgrDTOList)){
 
@@ -533,10 +543,14 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
             query.setIds(distriburotIdList);
 
-            DistributorDTOList = distributorService.findPage(query);
+            List<DistributorDTO> dtoList = distributorService.findPage ( query );
+
+            if(CollectionUtils.isNotEmpty( dtoList )){
+                busiLIst=ObjectCloneUtils.convertList ( dtoList,DistributorBusiDTO.class,CloneDirection.FORWARD );
+            }
         }
 
-        return DistributorDTOList;
+        return busiLIst;
     }
 
     @Override

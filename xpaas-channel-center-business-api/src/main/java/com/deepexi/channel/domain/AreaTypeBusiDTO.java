@@ -1,12 +1,8 @@
 package com.deepexi.channel.domain;
 
 import com.deepexi.util.pojo.AbstractObject;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 
@@ -23,86 +19,66 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ApiModel("区域类型")
-public class AreaTypeVO extends AbstractObject {
+public class AreaTypeBusiDTO extends AbstractObject {
 
     private static final long serialVersionUID = 1L;
 
     private Long id;
 
-    /**
-     * 链路ID
-     */
-    @ApiModelProperty("链路ID")
     private Long linkId;
+
 
     /**
      * 挂载的区域
      */
-    @ApiModelProperty("挂载的区域")
-    private List<AreaDO> areas;
+    private List<AreaBusiDTO> areas;
 
     /**
-     * 父级类型ID
+     * 父级分类ID
      */
-    @ApiModelProperty("父级类型ID")
     private Long parentId;
 
     /**
      * 上级是否限制分类 0 不限制 1 限制
      */
-    @ApiModelProperty("是否限制上级 0 不限制 1 限制")
     private Integer limitParent;
-
-    /**
-     * 层级路径
-     */
-    @ApiModelProperty("层级路径")
-    private String path;
 
     /**
      * 上级名称
      */
-    @ApiModelProperty("上级名称-中文")
     private String parentName;
 
     /**
      * 上级名称
      */
-    @ApiModelProperty("上级名称-英文")
     private String parentNameEn;
 
-    /**
-     * 上级编码
-     */
-    @ApiModelProperty("上级编码")
     private String parentCode;
 
+    /**
+     * 层级路径
+     */
+    private String path;
 
     /**
-     * 区域类型名称
+     * 区域分类名称
      */
-    @ApiModelProperty("区域类型名称")
     private String areaTypeName;
 
     /**
-     * 区域类型编码
+     * 区域分类编码
      */
-    @ApiModelProperty("区域类型编码")
     private String areaTypeCode;
 
     /**
-     * 区域类型英文名称
+     * 区域分类英文名称
      */
-    @ApiModelProperty("区域类型英文名称")
     private String areaTypeNameEn;
 
     /**
      * 描述
      */
-    @ApiModelProperty("描述")
     private String description;
-
     /**
      * 创建人
      */
@@ -122,5 +98,6 @@ public class AreaTypeVO extends AbstractObject {
      * 更新时间
      */
     private Date updatedTime;
+
 
 }

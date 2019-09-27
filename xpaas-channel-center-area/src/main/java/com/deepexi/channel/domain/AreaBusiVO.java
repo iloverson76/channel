@@ -31,7 +31,7 @@ public class AreaBusiVO extends AbstractObject {
     @ApiModelProperty(value = "是否根节点 0否 1是")
     private Integer root;
 
-    private AreaTypeVO areaType;
+    private AreaTypeBusiVO areaType;
 
     /**
      * 父级分类ID

@@ -2,7 +2,7 @@ package com.deepexi.channel.api.impl;
 
 import com.deepexi.channel.api.AreaTypeBusinessApi;
 import com.deepexi.channel.domain.AreaBusiDTO;
-import com.deepexi.channel.domain.AreaTypeDTO;
+import com.deepexi.channel.domain.AreaTypeBusiDTO;
 import com.deepexi.channel.domain.AreaTypeQuery;
 import com.deepexi.channel.service.AreaTypeBusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,17 +27,17 @@ public class AreaTypeBusinessApiImpl implements AreaTypeBusinessApi {
     }
 
     @Override
-    public List<AreaTypeDTO> findPage(AreaTypeQuery query) {
+    public List<AreaTypeBusiDTO> findPage(AreaTypeQuery query) {
         return areaTypeBusinessService.findPage ( query );
     }
 
     @Override
-    public List<AreaTypeDTO> getListAreaType(List<Long> ids) {
+    public List<AreaTypeBusiDTO> getListAreaType(List<Long> ids) {
         return areaTypeBusinessService.getListAreaType ( ids );
     }
 
     @Override
-    public List<AreaTypeDTO> findParentAreaTypeByAreaId(Long areaId) {
+    public List<AreaTypeBusiDTO> findParentAreaTypeByAreaId(Long areaId) {
         return areaTypeBusinessService.findParentAreaTypeByAreaId ( areaId );
     }
 
@@ -47,17 +47,17 @@ public class AreaTypeBusinessApiImpl implements AreaTypeBusinessApi {
     }
 
     @Override
-    public boolean update(AreaTypeDTO dto) {
+    public boolean update(AreaTypeBusiDTO dto) {
         return areaTypeBusinessService.update ( dto );
     }
 
     @Override
-    public List<AreaTypeDTO> listParentNodesForUpdate(Long id) {
+    public List<AreaTypeBusiDTO> listParentNodesForUpdate(Long id) {
         return areaTypeBusinessService.listParentNodesForUpdate ( id );
     }
 
     @Override
-    public List<AreaTypeDTO> listParentNodesForCreate() {
+    public List<AreaTypeBusiDTO> listParentNodesForCreate() {
         return areaTypeBusinessService.listParentNodesForCreate (  );
     }
 
@@ -77,7 +77,7 @@ public class AreaTypeBusinessApiImpl implements AreaTypeBusinessApi {
     }
 
     @Override
-    public Long createAreaType(AreaTypeDTO dto) {
+    public Long createAreaType(AreaTypeBusiDTO dto) {
         return areaTypeBusinessService.createAreaType ( dto );
     }
 
@@ -97,7 +97,7 @@ public class AreaTypeBusinessApiImpl implements AreaTypeBusinessApi {
     }
 
     @Override
-    public AreaTypeDTO detail(Long id) {
+    public AreaTypeBusiDTO detail(Long id) {
         return areaTypeBusinessService.detail(id);
     }
 }

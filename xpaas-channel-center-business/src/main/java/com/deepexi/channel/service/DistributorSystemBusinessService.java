@@ -1,6 +1,6 @@
 package com.deepexi.channel.service;
 
-import com.deepexi.channel.domain.DistributorGradeSystemDTO;
+import com.deepexi.channel.domain.DistributorGradeSystemBusiDTO;
 import com.deepexi.channel.domain.DistributorGradeSystemQuery;
 import com.deepexi.channel.domain.StoreDistributorDTO;
 
@@ -18,21 +18,21 @@ public interface DistributorSystemBusinessService {
      * @param dto 新增实体
      * @return 新增记录的ID
      */
-    Long create(DistributorGradeSystemDTO dto);
+    Long create(DistributorGradeSystemBusiDTO dto);
 
     /**
      * 分页查询
      * @param query 查询条件
      * @return 体系集合
      */
-    List<DistributorGradeSystemDTO> findPage(DistributorGradeSystemQuery query);
+    List<DistributorGradeSystemBusiDTO> findPage(DistributorGradeSystemQuery query);
 
     /**
      * 获取详情
      * @param pk 体系ID
      * @return 体系实体
      */
-    DistributorGradeSystemDTO detail(Long pk);
+    DistributorGradeSystemBusiDTO detail(Long pk);
 
     /**
      * 根据经销商id获取所属所有等级体系
@@ -78,5 +78,5 @@ public interface DistributorSystemBusinessService {
      * @param dto 更新实体
      * @return 是否成功
      */
-    Boolean update(DistributorGradeSystemDTO dto);
+    Boolean update(DistributorGradeSystemBusiDTO dto);
 }

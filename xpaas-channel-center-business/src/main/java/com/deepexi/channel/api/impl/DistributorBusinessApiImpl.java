@@ -20,7 +20,7 @@ public class DistributorBusinessApiImpl implements DistributorBusinessApi {
     DistributorBusinessService distributorBusinessService;
 
     @Override
-    public long create(DistributorDTO dto) {
+    public long create(DistributorBusiDTO dto) {
         return distributorBusinessService.create ( dto );
     }
 
@@ -60,12 +60,12 @@ public class DistributorBusinessApiImpl implements DistributorBusinessApi {
     }
 
     @Override
-    public List<DistributorDTO> findPage(DistributorQuery query) {
+    public List<DistributorBusiDTO> findPage(DistributorQuery query) {
         return distributorBusinessService.findPage ( query );
     }
 
     @Override
-    public boolean update(DistributorDTO dto) {
+    public boolean update(DistributorBusiDTO dto) {
         return distributorBusinessService.update ( dto );
     }
 
@@ -80,12 +80,12 @@ public class DistributorBusinessApiImpl implements DistributorBusinessApi {
     }
 
     @Override
-    public DistributorDTO detail(Long id) {
+    public DistributorBusiDTO detail(Long id) {
         return distributorBusinessService.detail ( id );
     }
 
     @Override
-    public List<DistributorDTO> listParentDistributorsByGrade(Long gradeId) {
+    public List<DistributorBusiDTO> listParentDistributorsByGrade(Long gradeId) {
         return distributorBusinessService.listParentDistributorsByGrade ( gradeId );
     }
 

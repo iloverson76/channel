@@ -1,7 +1,7 @@
 package com.deepexi.channel.service;
 
 import com.deepexi.channel.domain.AreaBusiDTO;
-import com.deepexi.channel.domain.AreaTypeDTO;
+import com.deepexi.channel.domain.AreaTypeBusiDTO;
 import com.deepexi.channel.domain.AreaTypeQuery;
 
 import java.util.List;
@@ -25,21 +25,21 @@ public interface AreaTypeBusinessService {
      * @param query 查询条件
      * @return 区域分类集合
      */
-    List<AreaTypeDTO> findPage(AreaTypeQuery query);
+    List<AreaTypeBusiDTO> findPage(AreaTypeQuery query);
 
     /**
      * 获取分类链路集合
      * @param ids 分类ID集合
      * @return 分类集合
      */
-    List<AreaTypeDTO> getListAreaType(List<Long> ids);
+    List<AreaTypeBusiDTO> getListAreaType(List<Long> ids);
 
     /**
      * 获取所有上级分类
      * @param areaId 区域ID
      * @return 区域分类集合
      */
-    List<AreaTypeDTO> findParentAreaTypeByAreaId(Long areaId);
+    List<AreaTypeBusiDTO> findParentAreaTypeByAreaId(Long areaId);
 
     /**
      *批量删除区域分类
@@ -54,20 +54,20 @@ public interface AreaTypeBusinessService {
      * @param dto 更新实体
      * @return 是否成功
      */
-    boolean update(AreaTypeDTO dto);
+    boolean update(AreaTypeBusiDTO dto);
 
     /**
      * 更新分类时获取可用的上级
      * @param id 分类ID
      * @return 分类集合
      */
-    List<AreaTypeDTO> listParentNodesForUpdate(Long id);
+    List<AreaTypeBusiDTO> listParentNodesForUpdate(Long id);
 
     /**
      * 新建分类时获取可用的上级
      * @return 分类集合
      */
-    List<AreaTypeDTO> listParentNodesForCreate();
+    List<AreaTypeBusiDTO> listParentNodesForCreate();
 
     /**
      * 删除分类
@@ -93,7 +93,7 @@ public interface AreaTypeBusinessService {
      * @param dto 新增实体
      * @return 新增记录ID
      */
-    Long createAreaType(AreaTypeDTO dto);
+    Long createAreaType(AreaTypeBusiDTO dto);
 
     /**
      * 校验分类编码是否重复
@@ -118,5 +118,5 @@ public interface AreaTypeBusinessService {
      * @param id 分类ID
      * @return
      */
-    AreaTypeDTO detail(Long id);
+    AreaTypeBusiDTO detail(Long id);
 }

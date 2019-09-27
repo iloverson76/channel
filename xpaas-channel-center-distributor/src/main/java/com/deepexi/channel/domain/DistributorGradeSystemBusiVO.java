@@ -5,8 +5,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +22,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @ApiModel("经销商等级体系")
-public class DistributorGradeSystemVO extends AbstractObject {
+public class DistributorGradeSystemBusiVO extends AbstractObject {
 
     private static final long serialVersionUID = 1L;
 
@@ -33,7 +31,7 @@ public class DistributorGradeSystemVO extends AbstractObject {
     /**
      * 挂载的等级
      */
-    private List<DistributorGradeVO> grades;
+    private List<DistributorGradeBusiVO> grades;
 
     /**
      * 等级体系名称

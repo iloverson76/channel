@@ -1,12 +1,9 @@
 package com.deepexi.channel.domain;
 
 import com.deepexi.util.pojo.AbstractObject;
-import io.swagger.annotations.ApiModel;
 import lombok.*;
 
-import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 
 /**
  * <p>
@@ -21,23 +18,27 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ApiModel(value="区域树")
-public class AreaTreeVO extends AbstractObject implements Serializable {
+public class AreaBusiDTO extends AbstractObject {
 
     private static final long serialVersionUID = 1L;
 
     private Long id;
 
-    private String path;
+    private Integer root;
 
-    private Set<AreaTreeVO> children;
+    private AreaTypeDTO areaType;
 
-    private AreaTypeBusiVO areaType;
+    private Long parentTypeId;
 
     /**
      * 父节点ID
      */
     private Long parentId;
+
+    /**
+     * 路径
+     */
+    private String path;
 
     /**
      * 区域分类ID
@@ -83,4 +84,5 @@ public class AreaTreeVO extends AbstractObject implements Serializable {
      * 更新时间
      */
     private Date updatedTime;
+
 }

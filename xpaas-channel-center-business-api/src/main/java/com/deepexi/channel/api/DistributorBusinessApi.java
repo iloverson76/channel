@@ -1,5 +1,6 @@
 package com.deepexi.channel.api;
 
+
 import com.deepexi.channel.domain.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,7 @@ public interface DistributorBusinessApi {
      * @return 新增记录的ID
      */
     @PostMapping("/butorBusi")
-   long create(@RequestBody DistributorDTO dto);
+   long create(@RequestBody DistributorBusiDTO dto);
 
     /**
      * 校验经销商编码是否重复
@@ -78,7 +79,7 @@ public interface DistributorBusinessApi {
      * @return 经销商集合
      */
     @GetMapping("/butorBusi/page")
-    List<DistributorDTO> findPage(@RequestBody DistributorQuery query);
+    List<DistributorBusiDTO> findPage(@RequestBody DistributorQuery query);
 
     /**
      * 更新经销商
@@ -86,7 +87,7 @@ public interface DistributorBusinessApi {
      * @return 是否成功
      */
     @PutMapping("/butorBusi")
-    boolean update(@RequestBody DistributorDTO dto);
+    boolean update(@RequestBody DistributorBusiDTO dto);
 
     /**
      * 获取关联的区域信息
@@ -110,7 +111,7 @@ public interface DistributorBusinessApi {
      * @return 经销商实体
      */
     @GetMapping("/butorBusi/{id}")
-    DistributorDTO detail(@PathVariable(value = "id") Long id);
+    DistributorBusiDTO detail(@PathVariable(value = "id") Long id);
 
     /**
      * 获取上级经销商
@@ -118,7 +119,7 @@ public interface DistributorBusinessApi {
      * @return 经销商集合
      */
     @GetMapping("/butorBusi/listParentByGrade/{gradeId}")
-    List<DistributorDTO> listParentDistributorsByGrade(@PathVariable(value = "gradeId") Long gradeId);
+    List<DistributorBusiDTO> listParentDistributorsByGrade(@PathVariable(value = "gradeId") Long gradeId);
 
     /**
      * 获取关联的等级信息

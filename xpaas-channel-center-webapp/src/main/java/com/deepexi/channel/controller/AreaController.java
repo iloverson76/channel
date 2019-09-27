@@ -120,13 +120,13 @@ public class AreaController {
 
             dtoList.forEach(dto->{
 
-                AreaTypeVO areaTypeVO=dto.getAreaType().clone(AreaTypeVO.class,CloneDirection.OPPOSITE);
+                AreaTypeBusiVO AreaTypeBusiVO=dto.getAreaType().clone(AreaTypeBusiVO.class,CloneDirection.OPPOSITE);
 
                 AreaTreeVO vo= new AreaTreeVO();
 
                 BeanUtils.copyProperties(dto,vo);
 
-                vo.setAreaType(areaTypeVO);
+                vo.setAreaType(AreaTypeBusiVO);
 
                 voList.add(vo);
             });
@@ -145,11 +145,11 @@ public class AreaController {
 
     @GetMapping("/parentAreaType/{areaId}")
     @ApiOperation("根据区域ID查找其上级分类")
-    public Payload<PageBean<AreaTypeVO>> findParentAreaTypeByAreaId(@PathVariable(value = "areaId", required = true) Long areaId) {
+    public Payload<PageBean<AreaTypeBusiVO>> findParentAreaTypeByAreaId(@PathVariable(value = "areaId", required = true) Long areaId) {
 
-        List<AreaTypeDTO> dtoList = areaTypeBusinessService.findParentAreaTypeByAreaId(areaId);
+        List<AreaTypeBusiDTO> dtoList = areaTypeBusinessService.findParentAreaTypeByAreaId(areaId);
 
-        List<AreaTypeVO> voList = ObjectCloneUtils.convertList(dtoList, AreaTypeVO.class);
+        List<AreaTypeBusiVO> voList = ObjectCloneUtils.convertList(dtoList, AreaTypeBusiVO.class);
 
         return new Payload<>(new PageBean<>(voList));
     }

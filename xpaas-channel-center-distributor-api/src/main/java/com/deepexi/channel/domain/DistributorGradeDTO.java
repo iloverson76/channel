@@ -24,17 +24,6 @@ public class DistributorGradeDTO extends AbstractObject {
 
     private Long id;
 
-
-    /**
-     * 所属体系
-     */
-    private DistributorGradeSystemDTO system;
-
-    /**
-     * 直接父级
-     */
-    private DistributorGradeDTO parent;
-
     /**
      * 上级经销商等级编码
      */

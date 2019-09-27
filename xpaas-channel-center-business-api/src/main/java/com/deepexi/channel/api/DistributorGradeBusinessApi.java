@@ -1,6 +1,6 @@
 package com.deepexi.channel.api;
 
-import com.deepexi.channel.domain.DistributorGradeDTO;
+import com.deepexi.channel.domain.DistributorGradeBusiDTO;
 import com.deepexi.channel.domain.DistributorGradeQuery;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +19,7 @@ public interface DistributorGradeBusinessApi {
      * @return
      */
     @GetMapping("/gradeBusi/detail/{gradeId}")
-    DistributorGradeDTO detail(@PathVariable(value = "gradeId") Long gradeId);
+    DistributorGradeBusiDTO detail(@PathVariable(value = "gradeId") Long gradeId);
 
     /**
      * 等级分页查询
@@ -27,7 +27,7 @@ public interface DistributorGradeBusinessApi {
      * @return 等级集合
      */
     @GetMapping("/gradeBusi/page")
-    List<DistributorGradeDTO> findPage(@RequestBody DistributorGradeQuery query);
+    List<DistributorGradeBusiDTO> findPage(@RequestBody DistributorGradeQuery query);
 
     /**
      * 更新等级时查询可用的上级
@@ -36,7 +36,7 @@ public interface DistributorGradeBusinessApi {
      * @return 等级集合
      */
     @GetMapping("/gradeBusi/findParentNodesForUpdate/{systemId}/{gradeId}")
-    List<DistributorGradeDTO> findParentNodesForUpdate(@PathVariable(value = "systemId") Long systemId,
+    List<DistributorGradeBusiDTO> findParentNodesForUpdate(@PathVariable(value = "systemId") Long systemId,
                                                        @PathVariable(value = "gradeId")Long gradeId);
 
     /**
@@ -45,7 +45,7 @@ public interface DistributorGradeBusinessApi {
      * @return 等级集合
      */
     @GetMapping("/gradeBusi/findParentNodesForCreate/{systemId}")
-    List<DistributorGradeDTO> findParentNodesForCreate(@PathVariable(value = "systemId") Long systemId);
+    List<DistributorGradeBusiDTO> findParentNodesForCreate(@PathVariable(value = "systemId") Long systemId);
 
     /**
      * 根据体系查询所有的等级
@@ -53,7 +53,7 @@ public interface DistributorGradeBusinessApi {
      * @return 等级集合
      */
     @GetMapping("/gradeBusi/findAllGradesBySystem/{systemId}")
-    List<DistributorGradeDTO> findAllGradesBySystem(@PathVariable(value = "systemId") long systemId);
+    List<DistributorGradeBusiDTO> findAllGradesBySystem(@PathVariable(value = "systemId") long systemId);
 
     /**
      * 批量删除等级
@@ -93,7 +93,7 @@ public interface DistributorGradeBusinessApi {
      * @return 新增记录的ID
      */
     @PostMapping("/gradeBusi")
-    Long create(@RequestBody DistributorGradeDTO dto);
+    Long create(@RequestBody DistributorGradeBusiDTO dto);
 
     /**
      * 更新等级
@@ -101,7 +101,7 @@ public interface DistributorGradeBusinessApi {
      * @return 是否成功
      */
     @PutMapping("/gradeBusi")
-    Boolean update(@RequestBody DistributorGradeDTO dto);
+    Boolean update(@RequestBody DistributorGradeBusiDTO dto);
 
     /**
      * 获取所有下级
@@ -109,7 +109,7 @@ public interface DistributorGradeBusinessApi {
      * @return 等级集合
      */
     @GetMapping("/gradeBusi/listChildrenNodes/{id}")
-    List<DistributorGradeDTO> listChildrenNodes(@PathVariable(value = "id") Long id);
+    List<DistributorGradeBusiDTO> listChildrenNodes(@PathVariable(value = "id") Long id);
 
     /**
      * 校验等级编码是否重复

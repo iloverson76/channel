@@ -35,7 +35,7 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
     AreaBusinessService areaBusinessService;
 
     @Override
-    public Long createAreaType(AreaTypeDTO dto) {
+    public Long createAreaType(AreaTypeBusiDTO dto) {
 
         //编码不能重复
         ValidateAareaTypeCode(dto.getAreaTypeCode());
@@ -44,7 +44,7 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
         validateAreaTypeName(dto.getAreaTypeName());
 
         //设置处理(id路径)
-        long newId=areaTypeService.saveAreaType(dto);
+        long newId=areaTypeService.saveAreaType(dto.clone ( AreaTypeDTO.class,CloneDirection.FORWARD ));
 
         long parentId=dto.getParentId();
 
@@ -74,7 +74,7 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
 
         dto.setPath ( path );
 
-        areaTypeService.updateAreaTypeById(dto);
+        areaTypeService.updateAreaTypeById(dto.clone ( AreaTypeDTO.class,CloneDirection.FORWARD ));
 
         return newId;
     }
@@ -154,6 +154,8 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
             return Collections.emptyList();
         }
 
+        List<AreaTypeBusiDTO> typeBusiList = ObjectCloneUtils.convertList ( typeList, AreaTypeBusiDTO.class, CloneDirection.FORWARD );
+
         //区域信息(全部选回来再过滤)
         AreaQuery areaQuery=new AreaQuery();
 
@@ -166,8 +168,8 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
         List<AreaBusiDTO> areaBusiList=
                 ObjectCloneUtils.convertList(areaDTOList,AreaBusiDTO.class,CloneDirection.FORWARD);
 
-        Map<Long, List<AreaTypeDTO>> typeListMap =
-                typeList.stream().collect(Collectors.groupingBy(AreaTypeDTO::getId));
+        Map<Long, List<AreaTypeBusiDTO>> typeListBusiMap =
+                typeBusiList.stream().collect(Collectors.groupingBy(AreaTypeBusiDTO::getId));
 
          //过滤
         if(pk>0){
@@ -184,11 +186,11 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
 
             long typeId=filter.getAreaTypeId();
 
-            List<AreaTypeDTO> types=typeListMap.get(typeId);
+            List<AreaTypeBusiDTO> types=typeListBusiMap.get(typeId);
 
             if(CollectionUtils.isNotEmpty(types)){
 
-                filter.setAreaType(types.get(0));
+                filter.setAreaType(types.get(0).clone ( AreaTypeDTO.class,CloneDirection.FORWARD ));
             }
         });
 
@@ -198,7 +200,7 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
     }
 
     @Override
-    public List<AreaTypeDTO> findPage(AreaTypeQuery query){
+    public List<AreaTypeBusiDTO> findPage(AreaTypeQuery query){
 
         log.info("区域类型分页查询");
 
@@ -209,11 +211,14 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
             return Collections.emptyList();
         }
 
-        List<AreaTypeDTO> childDTOList=ObjectCloneUtils.convertList(dtoList,AreaTypeDTO.class,CloneDirection.FORWARD);
+        List<AreaTypeBusiDTO> dtoBusiList =
+                ObjectCloneUtils.convertList ( dtoList, AreaTypeBusiDTO.class, CloneDirection.FORWARD );
 
-        for(AreaTypeDTO parent:dtoList){
+        List<AreaTypeBusiDTO> childDTOList=ObjectCloneUtils.convertList(dtoList,AreaTypeBusiDTO.class,CloneDirection.FORWARD);
 
-            for (AreaTypeDTO child:childDTOList){
+        for(AreaTypeBusiDTO parent:dtoBusiList){
+
+            for (AreaTypeBusiDTO child:childDTOList){
 
                 if(parent.getId().equals(child.getParentId())){
 
@@ -229,31 +234,40 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
     }
 
     @Override
-    public List<AreaTypeDTO> getListAreaType(List<Long> ids) {
+    public List<AreaTypeBusiDTO> getListAreaType(List<Long> ids) {
         AreaTypeQuery query = new AreaTypeQuery();
         if (CollectionUtil.isEmpty(ids)){
             List<AreaTypeDTO> list = areaTypeService.listAreaTypePage(query);
-            return list;
+            return ObjectCloneUtils.convertList ( list,AreaTypeBusiDTO.class,CloneDirection.FORWARD );
         }
         query.setIds(ids);
         List<AreaTypeDTO> list = areaTypeService.listAreaTypePage(query);
         log.info("区域链路",list);
         if (CollectionUtil.isEmpty(list)){
-            return new ArrayList<>();
+            return Collections.emptyList ();
         }
+
+        List<AreaTypeBusiDTO> listBusi=
+        ObjectCloneUtils.convertList ( list, AreaTypeBusiDTO.class,CloneDirection.FORWARD );
+
         Set<Long> set = new HashSet<>();
-        for (AreaTypeDTO areaTypeDTO : list) {
-            String path = areaTypeDTO.getPath();
+        for (AreaTypeBusiDTO AreaTypeBusiDTO : listBusi) {
+            String path = AreaTypeBusiDTO.getPath();
             List<Long> idList = Arrays.stream(path.split("/")).filter(StringUtil::isNotEmpty).map(Long::parseLong).collect(Collectors.toList());
             set.add(idList.get(0));
         }
         List<Long> linkIdList = new ArrayList<>(set);
-        List<AreaTypeDTO> areaTypeDTO = areaTypeService.findByAreaIdNotInLinkIdAll(linkIdList);
-        return areaTypeDTO;
+        List<AreaTypeDTO> areaTypeList = areaTypeService.findByAreaIdNotInLinkIdAll(linkIdList);
+
+        if(CollectionUtils.isEmpty ( areaTypeList )){
+            return Collections.emptyList ();
+        }
+
+        return ObjectCloneUtils.convertList ( areaTypeList,AreaTypeBusiDTO.class,CloneDirection.FORWARD );
     }
 
     @Override
-    public List<AreaTypeDTO> findParentAreaTypeByAreaId(Long areaId) {
+    public List<AreaTypeBusiDTO> findParentAreaTypeByAreaId(Long areaId) {
 
         log.info("根据区域ID查找其上级分类");
 
@@ -263,16 +277,20 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
 
         AreaTypeDTO type = areaTypeService.getAreaTypeById(areaTypeId);
 
+        if(null==type){
+            return Collections.emptyList ();
+        }
+
         Long parentTypeId=type.getParentId();
 
-        List<AreaTypeDTO> resultList=new ArrayList<>();
+        List<AreaTypeBusiDTO> resultList=new ArrayList<>();
 
         //限制上级分类
         if(type.getLimitParent()==1){
 
             AreaTypeDTO parentType = areaTypeService.getAreaTypeById(parentTypeId);
 
-            resultList.add(parentType);
+            resultList.add(parentType.clone ( AreaTypeBusiDTO.class,CloneDirection.FORWARD ));
 
         //不限制上级分类
         }else{
@@ -300,7 +318,12 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
 
             query.setIds (parentIds);
 
-            resultList=areaTypeService.listAreaTypePage(query);
+            List<AreaTypeDTO> typeList = areaTypeService.listAreaTypePage ( query );
+
+            if(CollectionUtils.isNotEmpty ( typeList )){
+
+                resultList=ObjectCloneUtils.convertList ( typeList,AreaTypeBusiDTO.class,CloneDirection.FORWARD );
+            }
         }
         return resultList;
     }
@@ -362,7 +385,7 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
     }
 
     @Override
-    public boolean update(AreaTypeDTO dto) {
+    public boolean update(AreaTypeBusiDTO dto) {
 
         //校验
         Long id=dto.getId();
@@ -395,10 +418,10 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
 
             updateChildrenPath(id,origSelfPath,newSelfPath);
         }
-        return areaTypeService.updateAreaTypeById(dto);
+        return areaTypeService.updateAreaTypeById(dto.clone ( AreaTypeDTO.class,CloneDirection.FORWARD ));
     }
 
-    private List<AreaTypeDTO> listNoChildrenNodes(List<Long> idList) {
+    private List<AreaTypeBusiDTO> listNoChildrenNodes(List<Long> idList) {
 
         log.info("查询没有下级的节点");
 
@@ -419,13 +442,13 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
 
         List<Long> parentIdList = dtoList.stream().map(AreaTypeDTO::getParentId).collect(Collectors.toList());
 
-        List<AreaTypeDTO> resultList = new ArrayList<>();
+        List<AreaTypeBusiDTO> resultList = new ArrayList<>();
 
         dtoList.forEach(dto -> {
 
             if (!parentIdList.contains(dto.getId())) {
 
-                resultList.add(dto);
+                resultList.add(dto.clone ( AreaTypeBusiDTO.class,CloneDirection.FORWARD ));
             }
         });
 
@@ -433,7 +456,7 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
     }
 
     @Override
-    public List<AreaTypeDTO> listParentNodesForCreate() {
+    public List<AreaTypeBusiDTO> listParentNodesForCreate() {
 
         log.info("创建区域分类接口:查询可用上级分类");
 
@@ -441,21 +464,21 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
     }
 
     @Override
-    public List<AreaTypeDTO> listParentNodesForUpdate(Long id) {
+    public List<AreaTypeBusiDTO> listParentNodesForUpdate(Long id) {
 
         log.info("更新区域分类接口:查询可用上级分类");
 
         //没有下级的节点
-        List<AreaTypeDTO> noChildrenList= listNoChildrenNodes(null);
+        List<AreaTypeBusiDTO> noChildrenList= listNoChildrenNodes(null);
 
         if(CollectionUtils.isEmpty(noChildrenList)){
             return Collections.emptyList();
         }
 
-        List<AreaTypeDTO> resultList=ObjectCloneUtils.convertList ( noChildrenList,AreaTypeDTO.class,CloneDirection.FORWARD );
+        List<AreaTypeBusiDTO> resultList=ObjectCloneUtils.convertList ( noChildrenList,AreaTypeBusiDTO.class,CloneDirection.FORWARD );
 
         //移除自己
-        List<AreaTypeDTO> removeList= resultList.stream ().filter ( type -> type.getId () == id ).collect ( Collectors.toList () );
+        List<AreaTypeBusiDTO> removeList= resultList.stream ().filter ( type -> type.getId () == id ).collect ( Collectors.toList () );
 
         resultList.removeAll ( removeList );
 
@@ -468,7 +491,7 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
 
             AreaTypeDTO parent=areaTypeService.getAreaTypeById(parentId);
 
-            resultList.add(parent);
+            resultList.add(parent.clone (AreaTypeBusiDTO.class,CloneDirection.FORWARD ));
         }
 
         //移除所有子节点
@@ -486,7 +509,7 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
             return Collections.emptyList ();
         }
 
-        return ObjectCloneUtils.convertList(resultList,AreaTypeDTO.class);
+        return ObjectCloneUtils.convertList(resultList,AreaTypeBusiDTO.class);
     }
 
     public void updateChildrenPath(Long id,String replacedPath,String newPath){
@@ -509,7 +532,7 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
         log.info("校验分类是否有下级");
 
         //查询没有下级的节点
-        List<AreaTypeDTO> dtoList = listNoChildrenNodes(idList);
+        List<AreaTypeBusiDTO> dtoList = listNoChildrenNodes(idList);
 
         if(CollectionUtil.isNotEmpty(dtoList)){
 
@@ -543,12 +566,12 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
     }
 
     @Override
-    public AreaTypeDTO detail(Long id) {
+    public AreaTypeBusiDTO detail(Long id) {
 
         AreaTypeDTO dto=areaTypeService.getAreaTypeById(id);
 
         if (null==dto) {
-            return new AreaTypeDTO();
+            return new AreaTypeBusiDTO();
         }
 
         long parentId=dto.getParentId();
@@ -562,7 +585,7 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
             dto.setParentNameEn(parent.getAreaTypeNameEn());
         }
 
-        return dto;
+        return dto.clone ( AreaTypeBusiDTO.class,CloneDirection.FORWARD );
     }
 
 }

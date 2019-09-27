@@ -36,9 +36,9 @@ public class DistributorGradeSystemController {
 
     @PostMapping()
     @ApiOperation(value = "创建经销商体系")
-    public Payload<Long> create(@RequestBody DistributorGradeSystemVO vo) {
+    public Payload<Long> create(@RequestBody DistributorGradeSystemBusiVO vo) {
 
-        DistributorGradeSystemDTO dto=vo.clone(DistributorGradeSystemDTO.class, CloneDirection.FORWARD);
+        DistributorGradeSystemBusiDTO dto=vo.clone(DistributorGradeSystemBusiDTO.class, CloneDirection.FORWARD);
 
         return new Payload(distributorSystemBusinessService.create(dto));
     }
@@ -47,9 +47,9 @@ public class DistributorGradeSystemController {
     @ApiOperation(value = "根据id查看详情")
     public Payload detail(@PathVariable(value = "id", required = true) long  pk) {
 
-        DistributorGradeSystemDTO dto=distributorSystemBusinessService.detail(pk);
+        DistributorGradeSystemBusiDTO dto=distributorSystemBusinessService.detail(pk);
 
-        DistributorGradeSystemVO vo=new DistributorGradeSystemVO();
+        DistributorGradeSystemBusiVO vo=new DistributorGradeSystemBusiVO();
 
         BeanUtils.copyProperties(dto,vo);
 
@@ -59,13 +59,13 @@ public class DistributorGradeSystemController {
 
             if(CollectionUtils.isNotEmpty(gradeDTOList)){
 
-                List<DistributorGradeVO> gradeVOList=new ArrayList<>();
+                List<DistributorGradeBusiVO> gradeVOList=new ArrayList<>();
 
                 if(CollectionUtils.isNotEmpty(gradeVOList)){
 
                     gradeDTOList.forEach(gradeDTO->{
 
-                        DistributorGradeVO gradeVo=gradeDTO.clone(DistributorGradeVO.class,CloneDirection.OPPOSITE);
+                        DistributorGradeBusiVO gradeVo=gradeDTO.clone(DistributorGradeBusiVO.class,CloneDirection.OPPOSITE);
 
                         gradeVOList.add(gradeVo);
                     });
@@ -78,11 +78,11 @@ public class DistributorGradeSystemController {
 
     @PutMapping("/{id:[0-9,]+}")
     @ApiOperation(value = "根据id修改")
-    public Payload<Boolean> update(@PathVariable(value = "id")long pk,@RequestBody DistributorGradeSystemVO vo) {
+    public Payload<Boolean> update(@PathVariable(value = "id")long pk,@RequestBody DistributorGradeSystemBusiVO vo) {
 
         vo.setId(pk);
 
-        DistributorGradeSystemDTO dto=vo.clone(DistributorGradeSystemDTO.class,CloneDirection.FORWARD);
+        DistributorGradeSystemBusiDTO dto=vo.clone(DistributorGradeSystemBusiDTO.class,CloneDirection.FORWARD);
 
         return new Payload<>(distributorSystemBusinessService.update(dto));
     }
@@ -98,11 +98,11 @@ public class DistributorGradeSystemController {
 
     @GetMapping
     @ApiOperation(value = "经销商体系列表-分页查询")
-    public  Payload<PageBean<DistributorGradeSystemVO>> findPage(@ApiParam(name = "query", required = true) DistributorGradeSystemQuery query) {
+    public  Payload<PageBean<DistributorGradeSystemBusiVO>> findPage(@ApiParam(name = "query", required = true) DistributorGradeSystemQuery query) {
 
-        List<DistributorGradeSystemDTO> dtoList=distributorSystemBusinessService.findPage(query);
+        List<DistributorGradeSystemBusiDTO> dtoList=distributorSystemBusinessService.findPage(query);
 
-        List<DistributorGradeSystemVO> voList=new ArrayList<>();
+        List<DistributorGradeSystemBusiVO> voList=new ArrayList<>();
 
         if(CollectionUtils.isNotEmpty(dtoList)){
 
@@ -110,19 +110,19 @@ public class DistributorGradeSystemController {
 
                 List<DistributorGradeDTO> grades=dto.getGrades();
 
-                DistributorGradeSystemVO vo=new DistributorGradeSystemVO();
+                DistributorGradeSystemBusiVO vo=new DistributorGradeSystemBusiVO();
 
                 if(CollectionUtils.isNotEmpty(grades)){
 
-                    List<DistributorGradeVO> gradeVOList=
-                            ObjectCloneUtils.convertList(grades,DistributorGradeVO.class,CloneDirection.OPPOSITE);
+                    List<DistributorGradeBusiVO> gradeVOList=
+                            ObjectCloneUtils.convertList(grades,DistributorGradeBusiVO.class,CloneDirection.OPPOSITE);
 
                     BeanUtils.copyProperties(dto,vo);
 
                     vo.setGrades(gradeVOList);
 
                 }else{
-                    vo=dto.clone(DistributorGradeSystemVO.class,CloneDirection.OPPOSITE);
+                    vo=dto.clone(DistributorGradeSystemBusiVO.class,CloneDirection.OPPOSITE);
                 }
                 voList.add(vo);
             });

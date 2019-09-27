@@ -25,7 +25,7 @@ public class AreaTypeListLinkVO extends AbstractObject {
 
     private static final long serialVersionUID = 1L;
     @ApiModelProperty("区域list")
-    List<AreaTypeVO> areaType;
+    List<AreaTypeBusiVO> areaType;
 
     @ApiModelProperty("区域链路数")
     private Integer linkType;

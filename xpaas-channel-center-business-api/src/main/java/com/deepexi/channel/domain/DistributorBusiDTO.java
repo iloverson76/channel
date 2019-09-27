@@ -22,10 +22,10 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @ApiModel(value="Distributor对象", description="经销商实体表")
-public class DistributorDTO extends AbstractObject {
+public class DistributorBusiDTO extends AbstractObject {
 
     private static final long serialVersionUID = 1L;
-/*
+
     //新增
     @ApiModelProperty("新增-所属等级")
     private List<DistributorGradeRelationDTO> distributorGradeRelation;
@@ -57,7 +57,7 @@ public class DistributorDTO extends AbstractObject {
 
     @ApiModelProperty("删除-银行账号ID")
     private List<Long> bankAccountIds;
-*/
+
     /**
      * 主键
      */

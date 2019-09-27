@@ -6,6 +6,8 @@ import com.deepexi.channel.enums.ResultEnum;
 import com.deepexi.channel.service.*;
 import com.deepexi.util.CollectionUtil;
 import com.deepexi.util.extension.ApplicationException;
+import com.deepexi.util.pojo.CloneDirection;
+import com.deepexi.util.pojo.ObjectCloneUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,25 +32,30 @@ public class DistributorSystemBusinessServiceImpl implements DistributorSystemBu
     @Autowired
     private DistributorService distributorService;
 
-
     @Override
-    public Long create(DistributorGradeSystemDTO dto) {
+    public Long create(DistributorGradeSystemBusiDTO dto) {
 
         validateGradeSystemCode(dto.getGradeSystemCode());
 
         validateGradeSystemName(dto.getGradeSystemName());
 
-        return distributorGradeSystemService.create(dto);
+        return distributorGradeSystemService.create(dto.clone ( DistributorGradeSystemDTO.class, CloneDirection.FORWARD ));
     }
 
     @Override
-    public List<DistributorGradeSystemDTO> findPage(DistributorGradeSystemQuery query) {
+    public List<DistributorGradeSystemBusiDTO> findPage(DistributorGradeSystemQuery query) {
 
         List<DistributorGradeSystemDTO> systemList=distributorGradeSystemService.findPage(query);
 
+        if(CollectionUtils.isEmpty ( systemList )){
+            return Collections.emptyList ();
+        }
+
+        List<DistributorGradeSystemBusiDTO> systemBusiList=ObjectCloneUtils.convertList ( systemList, DistributorGradeSystemBusiDTO.class,CloneDirection.FORWARD);
+
         List<DistributorGradeDTO> gradeList=distributorGradeService.findPage(new DistributorGradeQuery());
 
-        systemList.forEach(system->{
+        systemBusiList.forEach(system->{
 
             long systemId=system.getId();
 
@@ -67,27 +74,28 @@ public class DistributorSystemBusinessServiceImpl implements DistributorSystemBu
                 });
             }
         });
-
-        return systemList;
+        return ObjectCloneUtils.convertList ( systemList,DistributorGradeSystemBusiDTO.class,CloneDirection.FORWARD );
     }
 
     @Override
-    public DistributorGradeSystemDTO detail(Long pk) {
+    public DistributorGradeSystemBusiDTO detail(Long pk) {
 
         DistributorGradeSystemDTO system=distributorGradeSystemService.detail(pk);
 
         if(null==system){
-            return new DistributorGradeSystemDTO();
+            return new DistributorGradeSystemBusiDTO();
         }
+
+        DistributorGradeSystemBusiDTO systemBusi=system.clone ( DistributorGradeSystemBusiDTO.class,CloneDirection.FORWARD );
 
         List<DistributorGradeDTO> grades=distributorGradeService.findAllBySystem(pk);
 
         if(CollectionUtil.isNotEmpty(grades)){
 
-            system.setGrades(grades);
+            systemBusi.setGrades(grades);
         }
 
-        return system;
+        return systemBusi;
     }
 
     /**
@@ -108,9 +116,17 @@ public class DistributorSystemBusinessServiceImpl implements DistributorSystemBu
         List<Long> systemIds = list.stream().map(DistributorGradeRelationDTO::getSystemId).collect(Collectors.toList());
         DistributorGradeSystemQuery query = new DistributorGradeSystemQuery();
         query.setIds(systemIds);
-        List<DistributorGradeSystemDTO> distributorGradeSystemDTOS = distributorGradeSystemService.findPage(query);
-        Map<Long,DistributorGradeSystemDTO> distributorGradeSystemDTOMap = distributorGradeSystemDTOS.stream().collect(Collectors.toMap(DistributorGradeSystemDTO::getId,d->d));
-        if(CollectionUtil.isEmpty(distributorGradeSystemDTOS)){
+        List<DistributorGradeSystemDTO> systemList = distributorGradeSystemService.findPage(query);
+
+        if(CollectionUtils.isEmpty ( systemList )){
+            return Collections.emptyList ();
+        }
+
+        List<DistributorGradeSystemBusiDTO> systemBusiList=ObjectCloneUtils.convertList (systemList ,DistributorGradeSystemBusiDTO.class,
+                CloneDirection.FORWARD);
+
+        Map<Long,DistributorGradeSystemBusiDTO> DistributorGradeSystemBusiDTOMap = systemBusiList.stream().collect(Collectors.toMap(DistributorGradeSystemBusiDTO::getId,d->d));
+        if(CollectionUtil.isEmpty(systemBusiList)){
             return Collections.emptyList();
         }
 
@@ -125,7 +141,7 @@ public class DistributorSystemBusinessServiceImpl implements DistributorSystemBu
         for(DistributorGradeRelationDTO d : list){
             StoreDistributorDTO dto = new StoreDistributorDTO();
             //拼接等级体系信息
-            DistributorGradeSystemDTO gradeSystemDTO = distributorGradeSystemDTOMap.get(d.getSystemId());
+            DistributorGradeSystemBusiDTO gradeSystemDTO = DistributorGradeSystemBusiDTOMap.get(d.getSystemId());
             if(gradeSystemDTO != null){
                 dto.setGradeSystemName(gradeSystemDTO.getGradeSystemName());
                 dto.setGradeSystemCode(gradeSystemDTO.getGradeSystemCode());
@@ -171,6 +187,10 @@ public class DistributorSystemBusinessServiceImpl implements DistributorSystemBu
         systemQuery.setIds(systemIdList);
 
         List<DistributorGradeSystemDTO> systemList= distributorGradeSystemService.findPage(systemQuery);
+
+        if(CollectionUtils.isEmpty ( systemIdList )){
+            return;
+        }
 
         systemList.forEach(system->{
 
@@ -247,7 +267,7 @@ public class DistributorSystemBusinessServiceImpl implements DistributorSystemBu
     }
 
     @Override
-    public Boolean update(DistributorGradeSystemDTO dto) {
+    public Boolean update(DistributorGradeSystemBusiDTO dto) {
 
         log.info("修改经销商体系");
 
@@ -260,6 +280,6 @@ public class DistributorSystemBusinessServiceImpl implements DistributorSystemBu
         //有等级挂载的不能修改
         validateHasGrades(idList);
 
-        return distributorGradeSystemService.update(dto);
+        return distributorGradeSystemService.update(dto.clone ( DistributorGradeSystemDTO.class,CloneDirection.FORWARD ));
     }
 }

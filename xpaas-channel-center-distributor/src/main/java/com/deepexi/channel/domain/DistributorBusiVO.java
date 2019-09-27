@@ -1,6 +1,5 @@
 package com.deepexi.channel.domain;
 
-import com.deepexi.channel.domain.AreaDTO;
 import com.deepexi.util.pojo.AbstractObject;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -24,7 +23,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @ApiModel(value="经销商")
-public class DistributorVO extends AbstractObject implements Serializable {
+public class DistributorBusiVO extends AbstractObject implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

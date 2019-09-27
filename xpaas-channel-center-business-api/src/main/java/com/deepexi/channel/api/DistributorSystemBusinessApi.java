@@ -1,6 +1,6 @@
 package com.deepexi.channel.api;
 
-import com.deepexi.channel.domain.DistributorGradeSystemDTO;
+import com.deepexi.channel.domain.DistributorGradeSystemBusiDTO;
 import com.deepexi.channel.domain.DistributorGradeSystemQuery;
 import com.deepexi.channel.domain.StoreDistributorDTO;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +20,7 @@ public interface DistributorSystemBusinessApi {
      * @return 新增记录的ID
      */
     @PostMapping("/systemBusi")
-    Long create(@RequestBody DistributorGradeSystemDTO dto);
+    Long create(@RequestBody DistributorGradeSystemBusiDTO dto);
 
     /**
      * 分页查询
@@ -28,7 +28,7 @@ public interface DistributorSystemBusinessApi {
      * @return 体系集合
      */
     @GetMapping("/systemBusi/page")
-    List<DistributorGradeSystemDTO> findPage(@RequestBody DistributorGradeSystemQuery query);
+    List<DistributorGradeSystemBusiDTO> findPage(@RequestBody DistributorGradeSystemQuery query);
 
     /**
      * 获取详情
@@ -36,7 +36,7 @@ public interface DistributorSystemBusinessApi {
      * @return 体系实体
      */
     @GetMapping("/systemBusi/detail/{id}")
-    DistributorGradeSystemDTO detail(@PathVariable(value = "id") Long pk);
+    DistributorGradeSystemBusiDTO detail(@PathVariable(value = "id") Long pk);
 
     /**
      * 根据经销商id获取所属所有等级体系
@@ -89,5 +89,5 @@ public interface DistributorSystemBusinessApi {
      * @return 是否成功
      */
     @PutMapping("/systemBusi")
-    Boolean update(@RequestBody DistributorGradeSystemDTO dto);
+    Boolean update(@RequestBody DistributorGradeSystemBusiDTO dto);
 }

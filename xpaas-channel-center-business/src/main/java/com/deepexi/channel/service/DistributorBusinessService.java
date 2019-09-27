@@ -16,7 +16,7 @@ public interface DistributorBusinessService {
      * @param dto 新增实体
      * @return 新增记录的ID
      */
-   long create(DistributorDTO dto);
+   long create(DistributorBusiDTO dto);
 
     /**
      * 校验经销商编码是否重复
@@ -68,14 +68,14 @@ public interface DistributorBusinessService {
      * @param query 查询条件
      * @return 经销商集合
      */
-    List<DistributorDTO> findPage(DistributorQuery query);
+    List<DistributorBusiDTO> findPage(DistributorQuery query);
 
     /**
      * 更新经销商
      * @param clone 更新实体
      * @return 是否成功
      */
-    boolean update(DistributorDTO clone);
+    boolean update(DistributorBusiDTO clone);
 
     /**
      * 获取关联的区域信息
@@ -96,14 +96,14 @@ public interface DistributorBusinessService {
      * @param id 经销商ID
      * @return 经销商实体
      */
-    DistributorDTO detail(Long id);
+    DistributorBusiDTO detail(Long id);
 
     /**
      * 获取上级经销商
      * @param gradeId 等级ID
      * @return 经销商集合
      */
-    List<DistributorDTO> listParentDistributorsByGrade(Long gradeId);
+    List<DistributorBusiDTO> listParentDistributorsByGrade(Long gradeId);
 
     /**
      * 获取关联的等级信息

@@ -2,11 +2,11 @@ package com.deepexi.channel.domain;
 
 import com.deepexi.util.pojo.AbstractObject;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
@@ -21,9 +21,8 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-@ApiModel("经销商等级")
-public class DistributorGradeVO extends AbstractObject {
+@ApiModel(value="DistributorGradeList对象", description="经销商等级列表")
+public class DistributorGradeBusiDTO extends AbstractObject {
 
     private static final long serialVersionUID = 1L;
 
@@ -32,13 +31,12 @@ public class DistributorGradeVO extends AbstractObject {
     /**
      * 所属体系
      */
-    @ApiModelProperty("所属体系")
-    private DistributorGradeSystemVO system;
+    private DistributorGradeSystemDTO system;
 
     /**
-     * 直接上级
+     * 直接父级
      */
-    private DistributorGradeVO parent;
+    private DistributorGradeDTO parent;
 
     /**
      * 上级经销商等级编码
@@ -54,43 +52,36 @@ public class DistributorGradeVO extends AbstractObject {
     /**
      * 父级分类ID
      */
-    @ApiModelProperty("父级分类ID")
     private Long parentId;
 
     /**
      * 是否根节点 0 是 1 否
      */
-    @ApiModelProperty("是否根节点 0 否 1 是")
     private int root;
 
     /**
      * 经销商等级名称
      */
-    @ApiModelProperty("经销商等级名称")
     private String distributorGradeName;
 
     /**
-     * 经销商等级名称
+     * 经销商等级名称-英文
      */
-    @ApiModelProperty("经销商等级名称-英文")
     private String distributorGradeNameEn;
 
     /**
      * 经销商等级编码
      */
-    @ApiModelProperty("经销商等级编码")
     private String distributorGradeCode;
 
     /**
-     * 等级体系ID
+     * 所属体系体系ID
      */
-    @ApiModelProperty("等级体系ID")
     private Long gradeSystemId;
 
     /**
      * 描述
      */
-    @ApiModelProperty("描述")
     private String description;
     /**
      * 创建人
@@ -111,4 +102,6 @@ public class DistributorGradeVO extends AbstractObject {
      * 更新时间
      */
     private Date updatedTime;
+
+
 }
