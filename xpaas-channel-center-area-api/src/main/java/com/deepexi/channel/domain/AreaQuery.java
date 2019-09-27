@@ -46,4 +46,10 @@ public class AreaQuery extends CommQuery {
      */
     @ApiModelProperty("区域分类ID")
     private Long areaTypeId;
+
+    /**
+     * 节点是否已挂在树上 0 否 1 是
+     */
+    @ApiModelProperty("节点是否已挂在树上 0 否 1 是")
+    private Integer onTree;
 }

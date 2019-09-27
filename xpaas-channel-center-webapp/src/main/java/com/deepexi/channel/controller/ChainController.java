@@ -15,6 +15,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
 @Api(value = "/连锁管理", description = "连锁管理")
 @RestController
 @RequestMapping("/api/v1/chain")
+@Validated
 public class ChainController {
 
     @Autowired
@@ -75,7 +77,7 @@ public class ChainController {
 
     @PostMapping
     @ApiOperation(value = "创建连锁", notes = "创建连锁,创建成功返回id")
-    public Payload<Boolean> create(@RequestBody ChainDetailVO chainDetailVO) {
+    public Payload<Boolean> create(@RequestBody @Valid ChainDetailVO chainDetailVO) {
         if(chainDetailVO == null){
             return new Payload(false);
         }

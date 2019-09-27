@@ -60,6 +60,9 @@
         <if test="areaCode!=null">
             AND area_code LIKE concat('%',#{areaCode},'%')
         </if>
+        <if test="onTree==1">
+            AND path LIKE concat('%','/','%')
+        </if>
         <if test="startTime != null">
             and created_time &gt;= #{startTime}
         </if>
