@@ -164,7 +164,14 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
 
         log.info ( "设置父级分类ID" );
 
-        Map<Long,AreaBusiDTO> areaMap=areaBusiDTOList.stream().collect(Collectors.toMap(AreaBusiDTO::getId, c->c));
+        //必须查全表数据
+       List<AreaDTO> pageList=areaService.findPage(new AreaQuery (  ));
+
+        if(CollectionUtils.isEmpty ( pageList )){
+            return;
+        }
+
+        Map<Long,AreaDTO> areaMap=pageList.stream().collect(Collectors.toMap(AreaDTO::getId, c->c));
 
         areaBusiDTOList.forEach ( area->{
 
