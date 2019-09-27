@@ -36,7 +36,7 @@ public class AreaBusiVO extends AbstractObject {
     /**
      * 父级分类ID
      */
-    private Long ParentTypeId;
+    private Long parentTypeId;
 
     /**
      * 父节点ID
