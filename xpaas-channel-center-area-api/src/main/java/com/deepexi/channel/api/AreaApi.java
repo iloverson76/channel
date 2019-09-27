@@ -21,7 +21,7 @@ public interface AreaApi {
      * @param dto 新增的区域实体
      * @return 新纪录ID
      */
-    @PostMapping
+    @PostMapping("/area")
     Long create(@RequestBody AreaDTO dto);
 
     /**
@@ -29,7 +29,7 @@ public interface AreaApi {
      * @param dto 更新的区域实体
      * @return 是否成功
      */
-    @PutMapping()
+    @PutMapping("/area")
     boolean update(@RequestBody AreaDTO dto);
 
     /**
@@ -37,7 +37,7 @@ public interface AreaApi {
      * @param query 查询条件
      * @return 区域集合
      */
-    @GetMapping()
+    @GetMapping("/area/page")
     List<AreaDTO> findPage(@ApiParam(name = "query", required = true) AreaQuery query);
 
     /**
@@ -45,7 +45,7 @@ public interface AreaApi {
      * @param pk 主键
      * @return 区域
      */
-    @GetMapping("/{id}")
+    @GetMapping("/area/{id}")
     AreaDTO getAreaById(@PathVariable(value = "id") Long pk);
 
     /**
@@ -53,7 +53,7 @@ public interface AreaApi {
      * @param ids 区域ID集合
      * @return 是否成功
      */
-    @DeleteMapping("/{ids}")
+    @DeleteMapping("/area/{ids}")
     boolean deleteBatch(@RequestBody List<Long> ids);
 
     /**
@@ -61,7 +61,7 @@ public interface AreaApi {
      * @param id 主键
      * @return 是否成功
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/area/{id}")
     boolean deleteById(@PathVariable(value = "id") Long id);
 
     /**
@@ -69,7 +69,7 @@ public interface AreaApi {
      * @param areaId 区域ID
      * @return 区域集合
      */
-    @GetMapping("/listChildrenAreas/{areaId}")
+    @GetMapping("/area/listChildrenAreas/{areaId}")
     List<AreaDTO> listChildrenAreas(@PathVariable(value = "areaId") Long areaId);
 
     /**
@@ -77,7 +77,7 @@ public interface AreaApi {
      * @param areaTypeId 区域分类ID
      * @return 区域集合
      */
-    @GetMapping("/listLinkedAreasByType/{areaTypeId}")
+    @GetMapping("/area/listLinkedAreasByType/{areaTypeId}")
     List<AreaDTO> listLinkedAreasByType(@PathVariable(value = "areaTypeId") Long areaTypeId);
 
     /**
@@ -85,7 +85,7 @@ public interface AreaApi {
      * @param dtoList 区域实体列表
      * @return 是否成功
      */
-    @PutMapping("/updateBatch")
+    @PutMapping("/area/updateBatch")
     boolean updateBatch(@RequestBody List<AreaDTO> dtoList);
 
     /**
@@ -93,34 +93,34 @@ public interface AreaApi {
      * @param ids 区域ID集合
      * @return 区域集合
      */
-    @GetMapping("/findAllByIds")
+    @GetMapping("/area/findAllByIds")
     List<AreaDTO> findAllByIds(@RequestBody List<Long> ids);
 
     /**
      * 查找区域区域树
      * @return 区域树集合
      */
-    @GetMapping("/findTree")
+    @GetMapping("/area/findTree")
     List<AreaDTO> findTree();
 
     /**
      * 获取所有的区域编码
      * @return 区域编码集合
      */
-    @GetMapping("/listAreaCode")
+    @GetMapping("/area/listAreaCode")
     List<String> listAreaCode();
 
     /**
      * 获取所有的区域名称
      * @return 区域中文名集合
      */
-    @GetMapping("/listAreaName")
+    @GetMapping("/area/listAreaName")
     List<String> listAreaName();
 
     /**
      * 获取所有的区域英文名称
      * @return 区域英文名集合
      */
-    @GetMapping("/listAreaNameEn")
+    @GetMapping("/area/listAreaNameEn")
     List<String> listAreaNameEn();
 }

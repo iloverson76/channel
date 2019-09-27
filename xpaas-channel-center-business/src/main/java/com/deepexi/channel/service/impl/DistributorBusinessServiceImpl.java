@@ -253,6 +253,8 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
     @Override
     public void validateHasChildren(List<Long> butorIdList){
 
+        log.info ( "校验是否有下级经销商" );
+
         //是否有下级经销商
         DistributorQuery query = new DistributorQuery();
 
@@ -260,27 +262,28 @@ public class DistributorBusinessServiceImpl implements DistributorBusinessServic
 
         List<DistributorDTO> pageList = distributorService.findPage(query);
 
-        Map<Long, DistributorDTO> pageMap =
-                pageList.stream().collect(Collectors.toMap(DistributorDTO::getId, a -> a,(k1,k2)->k1));
-
-        List<DistributorGradeRelationDTO> dgrList = distributorGradeRelationService.findAllByDistributorIds(butorIdList);
-
-        if(CollectionUtils.isNotEmpty(dgrList)){
-
-            dgrList.forEach(dgr->{
-
-                butorIdList.forEach(butorId->{
-
-                    Long parentId=dgr.getParentId();
-
-                    if(butorId.equals(parentId)){
-
-                        throw new ApplicationException("["+pageMap.get(parentId).getDistributorName()
-                                +"]已挂载下级经销商["+pageMap.get(butorId).getDistributorName()+"]!请解除关联后再操作");
-                    }
-                });
-            });
+        if(CollectionUtils.isEmpty ( pageList )){
+            return;
         }
+
+        List<DistributorGradeRelationDTO> dgrList = distributorGradeRelationService.findAllByDistributorParentIds(butorIdList);
+
+        if(CollectionUtils.isEmpty ( dgrList )){
+            return;
+        }
+
+        dgrList.forEach(dgr->{
+
+            butorIdList.forEach(butorId->{
+
+                Long parentId=dgr.getParentId();
+
+                if(butorId.equals(parentId)){
+
+                    throw new ApplicationException("已有下级经销商挂载!请解除关联后再操作");
+                }
+            });
+        });
     }
 
     @Override

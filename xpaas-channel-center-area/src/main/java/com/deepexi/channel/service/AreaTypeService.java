@@ -3,6 +3,7 @@ package com.deepexi.channel.service;
 
 import com.deepexi.channel.domain.AreaTypeDTO;
 import com.deepexi.channel.domain.AreaTypeQuery;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,7 +31,7 @@ public interface AreaTypeService {
     /**
      * 批量更新区域分类实体
      * @param dtoList 分类实体列表
-     * @return 是够成功
+     * @return 是否成功
      */
     boolean updateAreaTypeByIds(List<AreaTypeDTO> dtoList);
 
@@ -39,7 +40,7 @@ public interface AreaTypeService {
      * @param id 分类ID
      * @return 是否成功
      */
-    boolean deleteAreaTypeById(Long id);
+    boolean deleteAreaTypeById( Long id);
 
     /**
      * 批量删除区域分类实体

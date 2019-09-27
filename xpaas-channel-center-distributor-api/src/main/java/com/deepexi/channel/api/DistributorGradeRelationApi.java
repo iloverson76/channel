@@ -17,7 +17,7 @@ public interface DistributorGradeRelationApi {
      * @param dto 新增实体
      * @return 新纪录ID
      */
-    @PostMapping
+    @PostMapping("/dgr")
     long create(@RequestBody DistributorGradeRelationDTO dto);
 
     /**
@@ -25,7 +25,7 @@ public interface DistributorGradeRelationApi {
      * @param dtoList 新增实体集合
      * @return 是否成功
      */
-    @PostMapping("/createBatch")
+    @PostMapping("/dgr/createBatch")
     boolean createBatch(@RequestBody List<DistributorGradeRelationDTO> dtoList);
 
     /**
@@ -33,7 +33,7 @@ public interface DistributorGradeRelationApi {
      * @param distributorId 经销商ID
      * @return 成功删除的记录数量
      */
-    @DeleteMapping("/distributorId/{distributorId}")
+    @DeleteMapping("/dgr/distributorId/{distributorId}")
     int deleteByDistributorId(@PathVariable(value = "distributorId") long distributorId);
 
     /**
@@ -41,7 +41,7 @@ public interface DistributorGradeRelationApi {
      * @param distributorIdList 经销商ID集合
      * @return 成功删除的记录数量
      */
-    @DeleteMapping("/deleteBatch/distributorIds")
+    @DeleteMapping("/dgr/deleteBatch/distributorIds")
     int deleteBatchByDistributorIds(@RequestBody List<Long> distributorIdList);
 
     /**
@@ -50,7 +50,7 @@ public interface DistributorGradeRelationApi {
      * @param gradeId 等级ID
      * @return 关联关系
      */
-    @GetMapping("/{distributorId}/{gradeId}")
+    @GetMapping("/dgr/{distributorId}/{gradeId}")
     DistributorGradeRelationDTO findOne(@PathVariable(value = "distributorId") long distributorId,
                                         @PathVariable(value = "gradeId") long gradeId);
 
@@ -59,15 +59,24 @@ public interface DistributorGradeRelationApi {
      * @param distributorIds 经销商ID集合
      * @return 关联关系集合
      */
-    @GetMapping("/findAllByDistributorIds")
+    @GetMapping("/dgr/findAllByDistributorIds")
     List<DistributorGradeRelationDTO> findAllByDistributorIds(@RequestBody List<Long> distributorIds);
+
+
+    /**
+     * 根据经销商父级ID集合查找与等级的所有关联关系
+     * @param distributorParentIds 经销商ID集合
+     * @return 关联关系集合
+     */
+    @GetMapping("/dgr/findAllByDistributorParentIds")
+    List<DistributorGradeRelationDTO> findAllByDistributorParentIds(List<Long> distributorParentIds);
 
     /**
      * 根据实体ID集合批量更新经销商与等级的关联关系
      * @param dtoList 实体集合
      * @return 成功删除的记录数量
      */
-    @PutMapping("/updateBatch")
+    @PutMapping("/dgr/updateBatch")
     boolean updateBatchById(@RequestBody List<DistributorGradeRelationDTO> dtoList);
 
     /**
@@ -75,7 +84,7 @@ public interface DistributorGradeRelationApi {
      * @param dtoList 实体集合
      * @return 成功删除的记录数量
      */
-    @PutMapping("/updateBatch/distributorIds")
+    @PutMapping("/dgr/updateBatch/distributorIds")
     boolean updateBatchByDistributorId(@RequestBody List<DistributorGradeRelationDTO> dtoList);
 
     /**
@@ -83,7 +92,7 @@ public interface DistributorGradeRelationApi {
      * @param gradeId 等级ID
      * @return 关联关系集合
      */
-    @GetMapping("/findAllByGradeId/{gradeId}")
+    @GetMapping("/dgr/findAllByGradeId/{gradeId}")
     List<DistributorGradeRelationDTO> findAllByGradeId(@PathVariable(value = "gradeId") Long gradeId);
 
     /**
@@ -91,7 +100,7 @@ public interface DistributorGradeRelationApi {
      * @param gradeIds 等级ID集合
      * @return 关联关系集合
      */
-    @GetMapping("/findAllByGradeIds")
+    @GetMapping("/dgr/findAllByGradeIds")
     List<DistributorGradeRelationDTO> findAllByGradeIds(@RequestBody List<Long> gradeIds);
 
     /**
@@ -99,6 +108,6 @@ public interface DistributorGradeRelationApi {
      * @param systemIds 体系ID集合
      * @return 关联关系集合
      */
-    @GetMapping("/findAllBySystemIds")
+    @GetMapping("/dgr/findAllBySystemIds")
     List<DistributorGradeRelationDTO> findAllBySystemIds(@RequestBody List<Long> systemIds);
 }

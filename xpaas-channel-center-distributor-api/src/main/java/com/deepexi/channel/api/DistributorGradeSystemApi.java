@@ -18,7 +18,7 @@ public interface DistributorGradeSystemApi {
      * @param dto 新增实体
      * @return 新增记录ID
      */
-    @PostMapping
+    @PostMapping("/system")
     long create(@RequestBody DistributorGradeSystemDTO dto);
 
     /**
@@ -26,7 +26,7 @@ public interface DistributorGradeSystemApi {
      * @param dto 更新实体
      * @return 是否成功
      */
-    @PutMapping
+    @PutMapping("/system")
     Boolean update(@RequestBody DistributorGradeSystemDTO dto);
 
     /**
@@ -34,7 +34,7 @@ public interface DistributorGradeSystemApi {
      * @param idList 体系ID集合
      * @return 是否成功
      */
-    @DeleteMapping("/deleteBatch")
+    @DeleteMapping("/system/deleteBatch")
     Boolean deleteBatchByIds(@RequestBody List<Long> idList);
 
     /**
@@ -42,7 +42,7 @@ public interface DistributorGradeSystemApi {
       * @param pk 体系ID
      * @return 体系实体详情
      */
-    @GetMapping("/detail/{id}")
+    @GetMapping("/system/detail/{id}")
     DistributorGradeSystemDTO detail(@PathVariable(value = "id") Long pk);
 
     /**
@@ -50,7 +50,7 @@ public interface DistributorGradeSystemApi {
      * @param id 体系ID
      * @return 体系实体
      */
-    @GetMapping
+    @GetMapping("/system")
     DistributorGradeSystemDTO getById(@PathVariable(value = "id") Long id);
 
     /**
@@ -58,27 +58,27 @@ public interface DistributorGradeSystemApi {
      * @param query 查询条件
      * @return 体系实体集合
      */
-    @GetMapping("/page")
+    @GetMapping("/system/page")
     List<DistributorGradeSystemDTO> findPage(@RequestBody DistributorGradeSystemQuery query);
 
     /**
      * 获取所有体系编码
      * @return 体系编码集合
      */
-    @GetMapping("/listGradeSystemCode")
+    @GetMapping("/system/listGradeSystemCode")
     List<String> listGradeSystemCode();
 
     /**
      * 获取所有体系名称
      * @return 体系名称集合
      */
-    @GetMapping("/listGradeSystemName")
+    @GetMapping("/system/listGradeSystemName")
     List<String> listGradeSystemName();
 
     /**
      * 获取所有体系英文名
      * @return 体系英文名集合
      */
-    @GetMapping("/listGradeSystemNameEn")
+    @GetMapping("/system/listGradeSystemNameEn")
     List<String> listGradeSystemNameEn();
 }

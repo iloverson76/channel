@@ -4,6 +4,7 @@ import com.deepexi.channel.domain.DistributorBankAccountRelationDTO;
 import com.deepexi.channel.api.DistributorBankAccountRelationApi;
 import com.deepexi.channel.service.DistributorBankAccountRelationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * @version 1.0
  * @date 2019-09-26 21:09
  */
+@RestController
 public class DistributorBankAccountRelationApiImpl implements DistributorBankAccountRelationApi {
 
     @Autowired

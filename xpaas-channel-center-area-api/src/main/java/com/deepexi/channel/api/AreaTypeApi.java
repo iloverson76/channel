@@ -18,7 +18,7 @@ public interface AreaTypeApi {
      * @param dto 分类实体
      * @return 新增记录ID
      */
-    @PostMapping
+    @PostMapping("/areaType")
     Long saveAreaType(@RequestBody AreaTypeDTO dto);
 
     /**
@@ -26,7 +26,7 @@ public interface AreaTypeApi {
      * @param dto 分类实体
      * @return 是否成功
      */
-    @PutMapping
+    @PutMapping("/areaType")
     boolean updateAreaTypeById(@RequestBody AreaTypeDTO dto);
 
     /**
@@ -34,7 +34,7 @@ public interface AreaTypeApi {
      * @param dtoList 分类实体列表
      * @return 是够成功
      */
-    @PutMapping("/updateBatch")
+    @PutMapping("/areaType/updateBatch")
     boolean updateAreaTypeByIds(@RequestBody List<AreaTypeDTO> dtoList);
 
     /**
@@ -42,7 +42,7 @@ public interface AreaTypeApi {
      * @param id 分类ID
      * @return 是否成功
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/areaType/{id}")
     boolean deleteAreaTypeById(@PathVariable(value = "id") Long id);
 
     /**
@@ -50,7 +50,7 @@ public interface AreaTypeApi {
      * @param idList 分类ID集合
      * @return 是否成功
      */
-    @DeleteMapping("/deleteBatch")
+    @DeleteMapping("/areaType/deleteBatch")
     boolean deleteAreaTypeByIds(@RequestBody List<Long> idList);
 
     /**
@@ -58,7 +58,7 @@ public interface AreaTypeApi {
      * @param query 查询条件
      * @return 区域分类集合
      */
-    @GetMapping("/page")
+    @GetMapping("/areaType/page")
     List<AreaTypeDTO> listAreaTypePage(@RequestBody AreaTypeQuery query);
 
     /**
@@ -66,7 +66,7 @@ public interface AreaTypeApi {
      * @param id 分类ID
      * @return 区域分类
      */
-    @GetMapping("/type/{id}")
+    @GetMapping("/areaType/type/{id}")
     AreaTypeDTO getAreaTypeById(@PathVariable(value = "id") Long id);
 
     /**
@@ -74,7 +74,7 @@ public interface AreaTypeApi {
      * @param areaTyeIdList 分类ID集合
      * @return 区域分类集合
      */
-    @GetMapping("/listAreaTypeByIds")
+    @GetMapping("/areaType/listAreaTypeByIds")
     List<AreaTypeDTO> listAreaTypeByIds(@RequestBody List<Long> areaTyeIdList);
 
     /**
@@ -82,7 +82,7 @@ public interface AreaTypeApi {
      * @param pk 分类ID
      * @return 区域分类集合
      */
-    @GetMapping("/listLinkedAreas/{id}")
+    @GetMapping("/areaType/listLinkedAreas/{id}")
     List<AreaTypeDTO> listLinkedAreas(@PathVariable(value = "id") long pk);
 
     /**
@@ -90,7 +90,7 @@ public interface AreaTypeApi {
      * @param linkIdList 链路ID集合
      * @return 区域分类集合
      */
-    @GetMapping("/findByAreaIdNotInLinkIdAll")
+    @GetMapping("/areaType/findByAreaIdNotInLinkIdAll")
     List<AreaTypeDTO> findByAreaIdNotInLinkIdAll(@RequestBody List<Long> linkIdList);
 
     /**
@@ -98,7 +98,7 @@ public interface AreaTypeApi {
      * @param id 分类ID
      * @return 区域分类
      */
-    @GetMapping("/{id}")
+    @GetMapping("/areaType/{id}")
     AreaTypeDTO getById(@PathVariable(value = "id") Long id);
 
     /**
@@ -106,27 +106,27 @@ public interface AreaTypeApi {
      * @param pathStr 路径
      * @return 区域分类集合
      */
-    @GetMapping("/listChildNodes/{pathStr}")
+    @GetMapping("/areaType/listChildNodes/{pathStr}")
     List<AreaTypeDTO> listChildNodes(@PathVariable(value = "pathStr") String pathStr);
 
     /**
      * 获取所有区域分类编码
      * @return 区域分类编码集合
      */
-    @GetMapping("/listAreaTypeCode")
+    @GetMapping("/areaType/listAreaTypeCode")
     List<String> listAreaTypeCode();
 
     /**
      * 获取所有区域分类中文名
      * @return 区域分类中文名集合
      */
-    @GetMapping("/listAreaTypeName")
+    @GetMapping("/areaType/listAreaTypeName")
     List<String> listAreaTypeName();
 
     /**
      * 获取所有区域分类英文名
      * @return 区域分类英文名集合
      */
-    @GetMapping("/listAreaTypeNameEn")
+    @GetMapping("/areaType/listAreaTypeNameEn")
     List<String> listAreaTypeNameEn();
 }

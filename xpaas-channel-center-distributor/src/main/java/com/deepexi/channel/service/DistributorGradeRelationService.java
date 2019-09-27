@@ -55,6 +55,13 @@ public interface DistributorGradeRelationService {
     List<DistributorGradeRelationDTO> findAllByDistributorIds(List<Long> distributorIds);
 
     /**
+     * 根据经销商父级ID集合查找与等级的所有关联关系
+     * @param distributorParentIds 经销商ID集合
+     * @return 关联关系集合
+     */
+    List<DistributorGradeRelationDTO> findAllByDistributorParentIds(List<Long> distributorParentIds);
+
+    /**
      * 根据实体ID集合批量更新经销商与等级的关联关系
      * @param dtoList 实体集合
      * @return 成功删除的记录数量

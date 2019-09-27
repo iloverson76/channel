@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.deepexi.channel.dao.DistributorGradeRelationDAO;
 import com.deepexi.channel.domain.DistributorGradeRelationDO;
+import com.deepexi.channel.domain.DistributorGradeRelationDTO;
 import com.deepexi.channel.mapper.DistributorGradeRelationMapper;
 import org.springframework.stereotype.Repository;
 
@@ -105,5 +106,16 @@ public class DistributorGradeRelationDAOImpl extends ServiceImpl<DistributorGrad
         wp.in("system_id",systemIds);
 
         return baseMapper.selectList(wp);
+    }
+
+    @Override
+    public List<DistributorGradeRelationDO> findAllByDistributorParentIds(List<Long> distributorParentIds) {
+
+        QueryWrapper<DistributorGradeRelationDO> wp=new QueryWrapper<>();
+
+        wp.in("parent_id",distributorParentIds);
+
+        return baseMapper.selectList(wp);
+
     }
 }

@@ -84,16 +84,32 @@ public class DistributorGradeRelationServiceImpl implements DistributorGradeRela
     public List<DistributorGradeRelationDTO> findAllByDistributorIds(List<Long> distributorIds) {
 
         if(CollectionUtils.isEmpty(distributorIds)){
-            return null;
+            return Collections.emptyList ();
         }
 
         List<DistributorGradeRelationDO> eoList=distributorGradeRelationDAO.findAllByDistributorIds(distributorIds);
 
         if(CollectionUtils.isEmpty(eoList)){
-            return null;
+            return Collections.emptyList ();
         }
 
         return ObjectCloneUtils.convertList(eoList,DistributorGradeRelationDTO.class,CloneDirection.OPPOSITE);
+    }
+
+    @Override
+    public List<DistributorGradeRelationDTO> findAllByDistributorParentIds(List<Long> distributorParentIds) {
+
+        if(CollectionUtils.isEmpty ( distributorParentIds )){
+            return Collections.emptyList ();
+
+        }
+        List<DistributorGradeRelationDO> eoList= distributorGradeRelationDAO.findAllByDistributorParentIds(distributorParentIds);
+
+        if(CollectionUtils.isEmpty ( eoList )){
+            return Collections.emptyList ();
+        }
+
+        return ObjectCloneUtils.convertList ( eoList,DistributorGradeRelationDTO.class,CloneDirection.OPPOSITE );
     }
 
     @Override

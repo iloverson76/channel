@@ -4,6 +4,7 @@ import com.deepexi.channel.domain.DistributorGradeRelationDTO;
 import com.deepexi.channel.api.DistributorGradeRelationApi;
 import com.deepexi.channel.service.DistributorGradeRelationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * @version 1.0
  * @date 2019-09-26 21:01
  */
+@RestController
 public class DistributorGradeRelationApiImpl implements DistributorGradeRelationApi {
 
     @Autowired
@@ -45,6 +47,11 @@ public class DistributorGradeRelationApiImpl implements DistributorGradeRelation
     @Override
     public List<DistributorGradeRelationDTO> findAllByDistributorIds(List<Long> distributorIds) {
         return distributorGradeRelationService.findAllByDistributorIds ( distributorIds );
+    }
+
+    @Override
+    public List<DistributorGradeRelationDTO> findAllByDistributorParentIds(List<Long> distributorParentIds) {
+        return distributorGradeRelationService.findAllByDistributorParentIds ( distributorParentIds );
     }
 
     @Override

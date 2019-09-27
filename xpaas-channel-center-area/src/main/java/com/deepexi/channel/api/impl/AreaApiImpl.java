@@ -1,10 +1,11 @@
-package com.deepexi.channel.api.impl.impl;
+package com.deepexi.channel.api.impl;
 
 import com.deepexi.channel.api.AreaApi;
 import com.deepexi.channel.domain.AreaDTO;
 import com.deepexi.channel.domain.AreaQuery;
 import com.deepexi.channel.service.AreaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
  * @version 1.0
  * @date 2019-09-26 18:04
  */
+@RestController
 public class AreaApiImpl implements AreaApi {
 
     @Autowired

@@ -18,7 +18,7 @@ public interface DistributorApi {
      * @param dto 新增实体
      * @return 新增记录ID
      */
-    @PostMapping
+    @PostMapping("/distributor")
     long create(@RequestBody DistributorDTO dto);
 
     /**
@@ -26,7 +26,7 @@ public interface DistributorApi {
      * @param idList 实体ID集合
      * @return 是否成功
      */
-    @DeleteMapping("/deleteBatch")
+    @DeleteMapping("/distributor/deleteBatch")
     boolean deleteBatch(@RequestBody List<Long> idList);
 
     /**
@@ -34,7 +34,7 @@ public interface DistributorApi {
      * @param query 查询条件
      * @return 经销商实体集合
      */
-    @GetMapping("/page")
+    @GetMapping("/distributor/page")
     List<DistributorDTO> findPage(@RequestBody DistributorQuery query);
 
     /**
@@ -42,7 +42,7 @@ public interface DistributorApi {
      * @param dto 更新实体
      * @return 是否成功
      */
-    @PostMapping
+    @PutMapping("/distributor")
     boolean update(@RequestBody DistributorDTO dto);
 
     /**
@@ -50,27 +50,27 @@ public interface DistributorApi {
      * @param id 主键
      * @return 经销商实体
      */
-    @GetMapping("/{id}")
+    @GetMapping("/distributor/{id}")
     DistributorDTO getById(@PathVariable(value = "id") Long id);
 
     /**
      * 获取所有的经销商编码
      * @return 编码集合
      */
-    @GetMapping("/listDistributorCode")
+    @GetMapping("/distributor/listDistributorCode")
     List<String> listDistributorCode();
 
     /**
      * 获取所有的经销商中文名
      * @return 中文名集合
      */
-    @GetMapping("/listDistributorName")
+    @GetMapping("/distributor/listDistributorName")
     List<String> listDistributorName();
 
     /**
      * 获取所有的经销商英文名
      * @return 英文名集合
      */
-    @GetMapping("/listDistributorNameEn")
+    @GetMapping("/distributor/listDistributorNameEn")
     List<String> listDistributorNameEn();
 }

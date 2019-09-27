@@ -4,6 +4,7 @@ import com.deepexi.channel.domain.DistributorAreaRelationDTO;
 import com.deepexi.channel.api.DistributorAreaRelationApi;
 import com.deepexi.channel.service.DistributorAreaRelationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * @version 1.0
  * @date 2019-09-26 20:49
  */
+@RestController
 public class DistributorAreaRelationApiImpl implements DistributorAreaRelationApi {
 
     @Autowired

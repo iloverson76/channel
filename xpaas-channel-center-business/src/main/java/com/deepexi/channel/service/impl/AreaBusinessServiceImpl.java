@@ -736,6 +736,8 @@ public class AreaBusinessServiceImpl implements AreaBusinessService {
             });
 
             areaService.updateBatch(children);
+
+            log.info ( "成功更新子节点路径" );
         }
 
         //更新自己

@@ -5,6 +5,7 @@ import com.deepexi.channel.domain.DistributorQuery;
 import com.deepexi.channel.api.DistributorApi;
 import com.deepexi.channel.service.DistributorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
  * @version 1.0
  * @date 2019-09-26 20:20
  */
+@RestController
 public class DistributorApiImpl implements DistributorApi {
 
     @Autowired

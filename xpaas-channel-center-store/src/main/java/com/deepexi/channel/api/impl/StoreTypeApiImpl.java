@@ -1,4 +1,4 @@
-package com.deepexi.channel.api.impl.impl;
+package com.deepexi.channel.api.impl;
 
 import com.deepexi.channel.api.impl.StoreTypeApi;
 import com.deepexi.channel.domain.StoreTypeDTO;

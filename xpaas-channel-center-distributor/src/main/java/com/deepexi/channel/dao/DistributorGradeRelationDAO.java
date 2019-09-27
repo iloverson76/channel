@@ -27,4 +27,6 @@ public interface DistributorGradeRelationDAO extends  IService<DistributorGradeR
     List<DistributorGradeRelationDO> findAllByGradeIds(List<Long> gradeIds);
 
     List<DistributorGradeRelationDO> findAllBySystemIds(List<Long> systemIds);
+
+    List<DistributorGradeRelationDO> findAllByDistributorParentIds(List<Long> distributorParentIds);
 }

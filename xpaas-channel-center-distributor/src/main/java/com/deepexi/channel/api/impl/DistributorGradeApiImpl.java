@@ -5,6 +5,7 @@ import com.deepexi.channel.domain.DistributorGradeQuery;
 import com.deepexi.channel.api.DistributorGradeApi;
 import com.deepexi.channel.service.DistributorGradeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
  * @version 1.0
  * @date 2019-09-26 20:31
  */
+@RestController
 public class DistributorGradeApiImpl implements DistributorGradeApi {
 
     @Autowired

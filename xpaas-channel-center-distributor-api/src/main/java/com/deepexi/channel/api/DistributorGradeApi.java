@@ -18,7 +18,7 @@ public interface DistributorGradeApi {
      * @param dto 新增实体
      * @return 新增记录ID
      */
-    @PostMapping
+    @PostMapping("/grade")
     Long create(@RequestBody DistributorGradeDTO dto);
 
     /**
@@ -26,7 +26,7 @@ public interface DistributorGradeApi {
      * @param pk 主键
      * @return 等级
      */
-    @GetMapping("/{id}")
+    @GetMapping("/grade/{id}")
     DistributorGradeDTO getById(@PathVariable(value = "id") Long pk);
 
     /**
@@ -34,7 +34,7 @@ public interface DistributorGradeApi {
      * @param dto 更新实体
      * @return 是否成功
      */
-    @PutMapping
+    @PutMapping("/grade")
     Boolean updateById(@RequestBody DistributorGradeDTO dto);
 
     /**
@@ -42,7 +42,7 @@ public interface DistributorGradeApi {
      * @param ids ID集合
      * @return 是否成功
      */
-    @DeleteMapping("/deleteBatch")
+    @DeleteMapping("/grade/deleteBatch")
     Boolean deleteBatchByIds(@RequestBody List<Long> ids);
 
     /**
@@ -50,7 +50,7 @@ public interface DistributorGradeApi {
      * @param id 主键
      * @return 是否成功
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/grade/{id}")
     Boolean deleteById(@PathVariable(value = "id") Long id);
 
     /**
@@ -58,7 +58,7 @@ public interface DistributorGradeApi {
      * @param query 查询条件
      * @return 等级集合
      */
-    @GetMapping
+    @GetMapping("/grade/page")
     List<DistributorGradeDTO> findPage(@RequestBody DistributorGradeQuery query);
 
     /**
@@ -66,7 +66,7 @@ public interface DistributorGradeApi {
      * @param systemId 体系ID
      * @return 等级集合
      */
-    @GetMapping("/findAllBySystem")
+    @GetMapping("/grade/findAllBySystem")
     List<DistributorGradeDTO> findAllBySystem(Long systemId);
 
     /**
@@ -74,7 +74,7 @@ public interface DistributorGradeApi {
      * @param dtoList 等级集合
      * @return 是否成功
      */
-    @PutMapping("/updateBatch")
+    @PutMapping("/grade/updateBatch")
     boolean updateBatchById(@RequestBody List<DistributorGradeDTO> dtoList);
 
     /**
@@ -82,7 +82,7 @@ public interface DistributorGradeApi {
      * @param systemId 体系ID
      * @return 等级编码集合
      */
-    @GetMapping("/listDistributorGradeCode")
+    @GetMapping("/grade/listDistributorGradeCode")
     List<String> listDistributorGradeCode(Long systemId);
 
     /**
@@ -90,7 +90,7 @@ public interface DistributorGradeApi {
      * @param systemId 体系ID
      * @return 等级名称集合
      */
-    @GetMapping("/listDistributorGradeName")
+    @GetMapping("/grade/listDistributorGradeName")
     List<String> listDistributorGradeName(Long systemId);
 
     /**
@@ -98,6 +98,6 @@ public interface DistributorGradeApi {
      * @param systemId 体系ID
      * @return 等级英文名集合
      */
-    @GetMapping("/listDistributorGradeNameEn")
+    @GetMapping("/grade/listDistributorGradeNameEn")
     List<String> listDistributorGradeNameEn(Long systemId);
 }

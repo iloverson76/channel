@@ -17,7 +17,7 @@ public interface DistributorBankAccountRelationApi {
      * @param dtoList 新增实体
      * @return 是否成功
      */
-    @PostMapping("/createBatch")
+    @PostMapping("/dbr/createBatch")
     boolean batchCreate(@RequestBody List<DistributorBankAccountRelationDTO> dtoList);
 
     /**
@@ -25,7 +25,7 @@ public interface DistributorBankAccountRelationApi {
      * @param idList 实体ID集合
      * @return 是否成功
      */
-    @DeleteMapping("/deleteBatch/distributorIds")
+    @DeleteMapping("/dbr/deleteBatch/distributorIds")
     boolean deleteBatchByDistributorIds(@RequestBody List<Long> idList);
 
     /**
@@ -33,7 +33,7 @@ public interface DistributorBankAccountRelationApi {
      * @param distributorId 经销商ID
      * @return 成功删除的记录数
      */
-    @DeleteMapping("/distributorId/{distributorId}")
+    @DeleteMapping("/dbr/distributorId/{distributorId}")
     int deleteBatchByDistributorId(@PathVariable(value = "distributorId") Long distributorId);
 
     /**
@@ -41,7 +41,7 @@ public interface DistributorBankAccountRelationApi {
      * @param distributorIds 经销商ID集合
      * @return 关联关系集合
      */
-    @GetMapping("/distibutorIds")
+    @GetMapping("/dbr/distibutorIds")
     List<DistributorBankAccountRelationDTO> findAllByDistributorIds(@RequestBody List<Long> distributorIds);
 
 }

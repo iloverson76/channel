@@ -4,7 +4,9 @@ import com.deepexi.util.pojo.AbstractObject;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -64,7 +66,7 @@ public class AreaBusiVO extends AbstractObject {
     /**
      * 区域英文名称
      */
-    @ApiModelProperty(value = "门店英文名称")
+    @ApiModelProperty(value = "区域英文名称")
     private String areaNameEn;
 
     /**

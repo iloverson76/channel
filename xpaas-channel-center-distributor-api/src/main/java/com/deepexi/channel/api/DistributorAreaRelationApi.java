@@ -16,7 +16,7 @@ public interface DistributorAreaRelationApi {
      * @param dto 新增实体
      * @return 新增记录ID
      */
-    @PostMapping
+    @PostMapping("/dar")
     Long create(@RequestBody DistributorAreaRelationDTO dto);
 
     /**
@@ -24,7 +24,7 @@ public interface DistributorAreaRelationApi {
      * @param dtoList 新增实体集合
      * @return 是否成功
      */
-    @PostMapping("/createBatch")
+    @PostMapping("/dar/createBatch")
     boolean createBatch(@RequestBody List<DistributorAreaRelationDTO> dtoList);
 
     /**
@@ -32,7 +32,7 @@ public interface DistributorAreaRelationApi {
      * @param distributorIdList 经销商ID集合
      * @return 成功删除的记录数
      */
-    @DeleteMapping("/deleteBatch")
+    @DeleteMapping("/dar/deleteBatch")
     int deleteBatchByDistributorIds(@RequestBody List<Long> distributorIdList);
 
     /**
@@ -40,7 +40,7 @@ public interface DistributorAreaRelationApi {
      * @param areaIdList 区域ID集合
      * @return 成功删除的记录数
      */
-    @DeleteMapping("/deleteBatch/areaIds")
+    @DeleteMapping("/dar/deleteBatch/areaIds")
     int deleteBatchByAreaIds(@RequestBody List<Long> areaIdList);
 
     /**
@@ -48,7 +48,7 @@ public interface DistributorAreaRelationApi {
      * @param butorId 经销商ID
      * @return 关联关系集合
      */
-    @GetMapping("/findAllByDistributorId/{distributorId}")
+    @GetMapping("/dar/findAllByDistributorId/{distributorId}")
     List<DistributorAreaRelationDTO> findAllByDistributorId(@PathVariable(value = "distributorId") Long butorId);
 
     /**
@@ -56,7 +56,7 @@ public interface DistributorAreaRelationApi {
      * @param areaIdList 区域ID集合
      * @return 关联关系集合
      */
-    @GetMapping("/findAllByAreaIds/areaIds")
+    @GetMapping("/dar/findAllByAreaIds/areaIds")
     List<DistributorAreaRelationDTO> findAllByAreaIds(@RequestBody List<Long> areaIdList);
 
     /**
@@ -64,6 +64,6 @@ public interface DistributorAreaRelationApi {
      * @param distributorId
      * @return 成功删除的记录数
      */
-    @DeleteMapping("/deleteByDistributorId/{distributorId}")
+    @DeleteMapping("/dar/deleteByDistributorId/{distributorId}")
     Boolean deleteByDistributorId(@PathVariable(value = "distributorId") Long distributorId);
 }
