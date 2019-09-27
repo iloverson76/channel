@@ -34,6 +34,11 @@ public class AreaBusiVO extends AbstractObject {
     private AreaTypeVO areaType;
 
     /**
+     * 父级分类ID
+     */
+    private Long ParentTypeId;
+
+    /**
      * 父节点ID
      */
     @ApiModelProperty(value = "父节点ID")
