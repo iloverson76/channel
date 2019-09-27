@@ -1,7 +1,7 @@
 package com.deepexi.channel.api.impl;
 
 import com.deepexi.channel.domain.DistributorBankAccountRelationDTO;
-import com.deepexi.channel.domain.api.DistributorBankAccountRelationApi;
+import com.deepexi.channel.api.DistributorBankAccountRelationApi;
 import com.deepexi.channel.service.DistributorBankAccountRelationService;
 import org.springframework.beans.factory.annotation.Autowired;
 

@@ -1,8 +1,7 @@
 package com.deepexi.channel.api.impl;
 
 import com.deepexi.channel.domain.DistributorGradeRelationDTO;
-import com.deepexi.channel.domain.api.DistributorGradeRelationApi;
-import com.deepexi.channel.service.DistributorAreaRelationService;
+import com.deepexi.channel.api.DistributorGradeRelationApi;
 import com.deepexi.channel.service.DistributorGradeRelationService;
 import org.springframework.beans.factory.annotation.Autowired;
 

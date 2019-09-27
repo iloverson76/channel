@@ -1,7 +1,7 @@
 package com.deepexi.channel.api.impl;
 
 import com.deepexi.channel.domain.DistributorAreaRelationDTO;
-import com.deepexi.channel.domain.api.DistributorAreaRelationApi;
+import com.deepexi.channel.api.DistributorAreaRelationApi;
 import com.deepexi.channel.service.DistributorAreaRelationService;
 import org.springframework.beans.factory.annotation.Autowired;
 

@@ -212,32 +212,31 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
             if(parentId>0){
 
-                DistributorGradeDTO dto = distributorGradeService.getById(parentId);
+                DistributorGradeDTO parent = distributorGradeService.getById(parentId);
 
-                resultList.add(dto);
+                resultList.add(parent);
 
                 return resultList;
             }
+        }else{
+
+            //新体系返回最后一个等级
+            DistributorGradeQuery query = new DistributorGradeQuery();
+
+            query.setSystemId(systemId);
+
+            List<DistributorGradeDTO> pageList = distributorGradeService.findPage(query);
+
+            List<Long> parentIdList=pageList.stream().map(DistributorGradeDTO::getParentId).collect(Collectors.toList());
+
+            pageList.forEach(grade->{
+
+                if(!parentIdList.contains(grade.getId())){
+
+                    resultList.add(grade);
+                }
+            });
         }
-
-        //新体系返回最后一个等级
-        DistributorGradeQuery query = new DistributorGradeQuery();
-
-        query.setSystemId(systemId);
-
-        List<DistributorGradeDTO> pageList = distributorGradeService.findPage(query);
-
-        List<Long> parentIdList=pageList.stream().map(DistributorGradeDTO::getParentId).collect(Collectors.toList());
-
-
-        pageList.forEach(grade->{
-
-            if(!parentIdList.contains(grade.getId())){
-
-                resultList.add(grade);
-            }
-        });
-
         return  resultList;
     }
 
@@ -335,7 +334,7 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
         //查询原来的数据
         DistributorGradeDTO origDTO=distributorGradeService.getById(id);
 
-        long origSystemId=origDTO.getGradeSystemId();
+        Long origSystemId=origDTO.getGradeSystemId();
 
         //根节点修改的冲突
         if(dto.getRoot()==1){

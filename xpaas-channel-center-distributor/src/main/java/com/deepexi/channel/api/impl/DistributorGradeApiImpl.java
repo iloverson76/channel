@@ -2,7 +2,7 @@ package com.deepexi.channel.api.impl;
 
 import com.deepexi.channel.domain.DistributorGradeDTO;
 import com.deepexi.channel.domain.DistributorGradeQuery;
-import com.deepexi.channel.domain.api.DistributorGradeApi;
+import com.deepexi.channel.api.DistributorGradeApi;
 import com.deepexi.channel.service.DistributorGradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 

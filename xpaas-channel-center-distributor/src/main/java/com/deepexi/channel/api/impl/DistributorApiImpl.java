@@ -2,7 +2,7 @@ package com.deepexi.channel.api.impl;
 
 import com.deepexi.channel.domain.DistributorDTO;
 import com.deepexi.channel.domain.DistributorQuery;
-import com.deepexi.channel.domain.api.DistributorApi;
+import com.deepexi.channel.api.DistributorApi;
 import com.deepexi.channel.service.DistributorService;
 import org.springframework.beans.factory.annotation.Autowired;
 

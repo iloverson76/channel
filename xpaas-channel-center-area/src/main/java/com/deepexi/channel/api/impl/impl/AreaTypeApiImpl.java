@@ -1,6 +1,6 @@
 package com.deepexi.channel.api.impl.impl;
 
-import api.AreaTypeApi;
+import com.deepexi.channel.api.AreaTypeApi;
 import com.deepexi.channel.domain.AreaTypeDTO;
 import com.deepexi.channel.domain.AreaTypeQuery;
 import com.deepexi.channel.service.AreaTypeService;

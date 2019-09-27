@@ -1,4 +1,4 @@
-package com.deepexi.channel.domain.api;
+package com.deepexi.channel.api;
 
 import com.deepexi.channel.domain.DistributorGradeRelationDTO;
 import org.springframework.web.bind.annotation.*;
