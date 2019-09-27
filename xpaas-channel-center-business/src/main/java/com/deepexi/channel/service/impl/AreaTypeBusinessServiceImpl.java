@@ -294,7 +294,6 @@ public class AreaTypeBusinessServiceImpl implements AreaTypeBusinessService {
 
             resultList=areaTypeService.listAreaTypePage(query);
         }
-
         return resultList;
     }
 
