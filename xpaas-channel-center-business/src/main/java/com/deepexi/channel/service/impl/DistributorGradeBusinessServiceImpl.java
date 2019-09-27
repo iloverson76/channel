@@ -336,21 +336,6 @@ public class DistributorGradeBusinessServiceImpl implements DistributorGradeBusi
 
         Long origSystemId=origDTO.getGradeSystemId();
 
-        //根节点修改的冲突
-        if(dto.getRoot()==1){
-
-            DistributorGradeQuery query = new DistributorGradeQuery();
-
-            query.setSystemId(origSystemId);
-
-            findPage(query).forEach(grade->{
-
-                if(grade.getRoot()==1){
-                    throw new ApplicationException("已存在一个根节点"+"["+dto.getDistributorGradeName()+"]");
-                }
-            });
-        }
-
         //改变所属体系
         Long newSystemId=dto.getGradeSystemId();
 
