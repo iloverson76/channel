@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding" addBOMForNewFiles="with NO BOM" />
+  <component name="Encoding" addBOMForNewFiles="with NO BOM">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xpaas-channel-center-area" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xpaas-channel-center-area-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xpaas-channel-center-bank" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xpaas-channel-center-bank-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xpaas-channel-center-business" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xpaas-channel-center-business-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xpaas-channel-center-chain" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xpaas-channel-center-chain-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xpaas-channel-center-common" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xpaas-channel-center-distributor" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xpaas-channel-center-distributor-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xpaas-channel-center-store" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xpaas-channel-center-store-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xpaas-channel-center-webapp" charset="UTF-8" />
+  </component>
 </project>
